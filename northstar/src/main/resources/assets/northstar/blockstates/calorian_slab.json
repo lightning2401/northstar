@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "northstar:block/calorian_slab"
+    },
+    "type=double": {
+      "model": "northstar:block/calorian_planks"
+    },
+    "type=top": {
+      "model": "northstar:block/calorian_slab_top"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "northstar:venus_stone",
+    "northstar:venus_gravel",
+    "create:scoria",
+    "create:ochrum"
+  ]
+}

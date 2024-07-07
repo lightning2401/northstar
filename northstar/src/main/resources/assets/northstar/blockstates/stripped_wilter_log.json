@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "northstar:block/stripped_wilter_log",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "northstar:block/stripped_wilter_log"
+    },
+    "axis=z": {
+      "model": "northstar:block/stripped_wilter_log",
+      "x": 90
+    }
+  }
+}

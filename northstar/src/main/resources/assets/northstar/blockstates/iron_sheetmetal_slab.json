@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "northstar:block/iron_sheetmetal_slab"
+    },
+    "type=double": {
+      "model": "northstar:block/iron_sheetmetal"
+    },
+    "type=top": {
+      "model": "northstar:block/iron_sheetmetal_slab_top"
+    }
+  }
+}

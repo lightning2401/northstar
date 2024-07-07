@@ -1,0 +1,12 @@
+[30May2024 20:55:49.897] [main/DEBUG] [io.netty.util.internal.logging.InternalLoggerFactory/]: Using SLF4J as the default logging framework
+[30May2024 20:55:49.901] [main/DEBUG] [io.netty.util.ResourceLeakDetector/]: -Dio.netty.leakDetection.level: simple
+[30May2024 20:55:49.901] [main/DEBUG] [io.netty.util.ResourceLeakDetector/]: -Dio.netty.leakDetection.targetRecords: 4
+[30May2024 20:55:51.924] [main/INFO] [net.minecraft.util.datafix.DataFixers/]: Building unoptimized datafixer
+[30May2024 20:55:52.796] [main/DEBUG] [net.minecraftforge.common.ForgeI18n/CORE]: Loading I18N data entries: 5642
+[30May2024 20:55:52.800] [main/ERROR] [net.minecraft.server.Main/FATAL]: Failed to start the minecraft server
+java.lang.NullPointerException: Cannot invoke "net.minecraftforge.fml.loading.LoadingModList.getErrors()" because the return value of "net.minecraftforge.fml.loading.FMLLoader.getLoadingModList()" is null
+	at net.minecraftforge.fml.ModLoader.<init>(ModLoader.java:97) ~[fmlcore-1.19.2-43.2.18.jar:?]
+	at net.minecraftforge.fml.ModLoader.get(ModLoader.java:131) ~[fmlcore-1.19.2-43.2.18.jar:?]
+	at net.minecraftforge.server.loading.ServerModLoader.load(ServerModLoader.java:32) ~[forge-1.19.2-43.2.18_mapped_parchment_2022.11.06-1.19.2-recomp.jar:?]
+	at net.minecraft.server.Main.main(Main.java:113) [forge-1.19.2-43.2.18_mapped_parchment_2022.11.06-1.19.2-recomp.jar:?]
+	at net.minecraftforge.gametest.GameTestMain.main(GameTestMain.java:16) [forge-1.19.2-43.2.18_mapped_parchment_2022.11.06-1.19.2-recomp.jar:?]

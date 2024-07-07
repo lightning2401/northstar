@@ -1,0 +1,51 @@
+{
+	"name": "northstar:martian_base_pool",
+	"fallback": "minecraft:empty",
+	"elements": [
+		{
+			"weight": 50,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:martian_base/entrance",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 50,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:martian_base/connecter_start",
+				"processors":"minecraft:empty"
+				}
+		},
+	    {
+			"weight": 50,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:martian_base/connecter",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 50,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:martian_base/hall",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 50,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:martian_base/collapsed_hall",
+				"processors":"minecraft:empty"
+				}
+		}
+	]
+}

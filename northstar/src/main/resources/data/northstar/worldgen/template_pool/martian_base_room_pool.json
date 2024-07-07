@@ -1,0 +1,132 @@
+{
+	"name": "northstar:martian_base_room_pool",
+	"fallback": "minecraft:empty",
+	"elements": [
+		{
+			"weight": 50,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:martian_base/connecter",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 20,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:martian_base/experiment_room1",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 10,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:martian_base/experiment_room2",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 50,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:martian_base/experiment_room3",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 15,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:martian_base/oxy_room",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 15,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:martian_base/collapsed_oxy_room",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 30,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:martian_base/server_room",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 20,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:martian_base/storage",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 8,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:martian_base/ice_box",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 8,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:martian_base/boiler_room",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 12,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:martian_base/mess_hall",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 8,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:martian_base/collapsed_mess_hall",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 20,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:martian_base/barracks",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 10,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:martian_base/collapsed_barracks",
+				"processors":"minecraft:empty"
+				}
+		}
+	]
+}

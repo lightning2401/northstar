@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "northstar:coiler_log",
+    "northstar:stripped_coiler_log",
+    "northstar:wilter_log",
+    "northstar:stripped_wilter_log",
+    "northstar:argyre_log",
+    "northstar:stripped_argyre_log",
+    "northstar:calorian_log"
+  ]
+}

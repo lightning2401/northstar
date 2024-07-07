@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "I#I",
+    "IPI"
+  ],
+  "key": {
+    "#": {
+      "item": "create:fluid_tank"
+    },
+    "I": {
+      "tag": "forge:plates/iron"
+    },
+    "P": {
+      "item": "create:propeller"
+    }
+  },
+  "result": {
+    "item": "northstar:jet_engine"
+  }
+}

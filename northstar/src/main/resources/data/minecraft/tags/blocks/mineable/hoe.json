@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+  			"northstar:argyre_leaves",
+  			"northstar:coiler_leaves",
+  			"northstar:wilter_leaves",
+  			"northstar:mars_worm_nest",
+  			"northstar:mars_roots",
+  			"northstar:glowing_mars_roots"
+  		]
+}

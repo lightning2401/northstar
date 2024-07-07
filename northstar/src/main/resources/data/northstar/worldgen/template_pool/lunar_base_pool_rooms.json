@@ -1,0 +1,78 @@
+{
+	"name": "northstar:lunar_base_pool",
+	"fallback": "minecraft:empty",
+	"elements": [
+		{
+			"weight": 20,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:lunar_base/hall",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 10,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:lunar_base/hall_wall",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 50,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:lunar_base/hall_turn",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 30,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:lunar_base/oxy_room",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 30,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:lunar_base/food_room",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 20,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:lunar_base/brig",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 8,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:lunar_base/mess_hall",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 8,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:lunar_base/steam_room",
+				"processors":"minecraft:empty"
+				}
+		}
+	]
+}

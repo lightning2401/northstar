@@ -1,0 +1,20 @@
+{
+  "type": "northstar:freezing",
+  "ingredients": [
+    {
+      "amount": 200,
+      "fluidTag": "forge:milk"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "processingTime": -20,
+  "results": [
+    {
+      "amount": 200,
+      "fluid": "northstar:vanilla_ice_cream",
+      "nbt": {}
+    }
+  ]
+}

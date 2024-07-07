@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    "northstar:mercury_stone",
+    "northstar:mercury_deep_stone",
+    "northstar:mercury_deep_copper_ore",
+    "northstar:mercury_deep_diamond_ore",
+    "northstar:mercury_deep_glowstone_ore",
+    "northstar:mercury_deep_gold_ore",
+    "northstar:mercury_deep_iron_ore",
+    "northstar:mercury_deep_lapis_ore",
+    "northstar:mercury_deep_redstone_ore",
+    "northstar:mercury_deep_tungsten_ore",
+    "northstar:mercury_deep_zinc_ore",
+    "northstar:mercury_copper_ore",
+    "northstar:mercury_diamond_ore",
+    "northstar:mercury_glowstone_ore",
+    "northstar:mercury_gold_ore",
+    "northstar:mercury_iron_ore",
+    "northstar:mercury_lapis_ore",
+    "northstar:mercury_redstone_ore",
+    "northstar:mercury_tungsten_ore",
+    "northstar:mercury_zinc_ore",
+    "minecraft:andesite",
+    "minecraft:blackstone",
+    "create:scoria",
+    "create:scorchia"
+  ]
+}

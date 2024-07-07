@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "item": "northstar:argyre_log"
+    }
+  ],
+  "result": {
+    "item": "northstar:argyre_planks",
+    "count": 4
+  }
+}

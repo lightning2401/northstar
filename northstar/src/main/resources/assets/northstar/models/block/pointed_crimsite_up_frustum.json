@@ -1,0 +1,6 @@
+{
+  "parent": "northstar:block/pointed_crimsite",
+  "textures": {
+    "cross": "northstar:block/pointed_crimsite_up_frustum"
+  }
+}

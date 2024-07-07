@@ -1,0 +1,8 @@
+{
+"parent":"minecraft:block/inner_stairs",
+"textures":{
+    "bottom": "northstar:block/argyre_planks",
+    "side": "northstar:block/argyre_planks",
+    "top": "northstar:block/argyre_planks"
+	}
+}

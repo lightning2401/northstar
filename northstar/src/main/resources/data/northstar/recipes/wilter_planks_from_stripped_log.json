@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "item": "northstar:stripped_wilter_log"
+    }
+  ],
+  "result": {
+    "item": "northstar:wilter_planks",
+    "count": 4
+  }
+}

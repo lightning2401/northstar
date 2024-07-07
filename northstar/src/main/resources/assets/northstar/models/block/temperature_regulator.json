@@ -1,0 +1,37 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "northstar:block/temperature_regulator",
+		"1": "northstar:block/temperature_regulator_bottom",
+		"particle": "northstar:block/temperature_regulator"
+	},
+	"elements": [
+		{
+			"name": "base",
+			"from": [0, 0, 0],
+			"to": [16, 10, 16],
+			"faces": {
+				"north": {"uv": [8, 0, 16, 5], "texture": "#0"},
+				"east": {"uv": [0, 8, 8, 13], "texture": "#0"},
+				"south": {"uv": [0, 8, 8, 13], "texture": "#0"},
+				"west": {"uv": [0, 8, 8, 13], "texture": "#0"},
+				"up": {"uv": [0, 0, 8, 8], "texture": "#0"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#1"}
+			}
+		},
+		{
+			"name": "base_bottom",
+			"from": [2, 1, 2],
+			"to": [14, 0, 14],
+			"faces": {
+				"north": {"uv": [1, 0, 7, 0.5], "texture": "#0"},
+				"east": {"uv": [1, 0, 7, 0.5], "texture": "#0"},
+				"south": {"uv": [1, 0, 7, 0.5], "texture": "#0"},
+				"west": {"uv": [1, 0, 7, 0.5], "texture": "#0"},
+				"up": {"uv": [2, 2, 14, 14], "texture": "#1"},
+				"down": {"uv": [1, 1, 7, 7], "texture": "#0"}
+			}
+		}
+	]
+}

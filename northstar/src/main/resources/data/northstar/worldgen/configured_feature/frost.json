@@ -1,0 +1,23 @@
+{
+  "type": "northstar:multiface_growth_custom",
+  "config": {
+    "block": "northstar:frost",
+    "search_range": 32,
+    "chance_of_spreading": 0.93,
+    "can_place_on_floor": false,
+    "can_place_on_ceiling": true,
+    "can_place_on_wall": true,
+    "can_be_placed_on": [
+		"northstar:moon_sand",
+		"northstar:moon_deep_stone",
+		"northstar:moon_stone",
+		"minecraft:blackstone",
+		"northstar:mercury_stone",
+		"northstar:mercury_deep_stone",
+		"create:scoria",
+		"create:scorchia",
+		"minecraft:ice",
+		"minecraft:packed_ice"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "northstar:moon_deep_stone",
+    "minecraft:andesite",
+    "minecraft:smooth_basalt",
+    "minecraft:packed_ice",
+    "create:asurine"
+  ]
+}

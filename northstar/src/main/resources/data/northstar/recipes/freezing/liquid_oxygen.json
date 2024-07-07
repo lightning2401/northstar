@@ -1,0 +1,18 @@
+{
+  "type": "northstar:freezing",
+  "ingredients": [
+    {
+      "amount": 1000,
+      "fluid": "northstar:oxygen",
+      "nbt": {}
+    }
+  ],
+  "processingTime": 185,
+  "results": [
+    {
+      "amount": 1000,
+      "fluid": "northstar:liquid_oxygen",
+      "nbt": {}
+    }
+  ]
+}

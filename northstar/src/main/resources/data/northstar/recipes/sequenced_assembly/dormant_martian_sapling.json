@@ -1,0 +1,76 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "northstar:dormant_martian_sapling"
+  },
+  "loops": 2,
+  "results": [
+    {
+      "chance": 120.0,
+      "item": "northstar:coiler_sapling"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:filling",
+      "ingredients": [
+        {
+          "item": "northstar:dormant_martian_sapling_sequenced"
+        },
+        {
+          "amount": 500,
+          "fluid": "minecraft:water",
+          "nbt": {}
+        }
+      ],
+      "results": [
+        {
+          "item": "northstar:dormant_martian_sapling_sequenced"
+        }
+      ]
+    },
+    {
+      "type": "create:filling",
+      "ingredients": [
+        {
+          "item": "northstar:dormant_martian_sapling_sequenced"
+        },
+        {
+      		"amount": 25,
+     		 "fluid": "create:potion",
+     		 "nbt": {
+      		  "Bottle": "REGULAR",
+      		  "Potion": "minecraft:healing"
+        }}
+      ],
+      "results": [
+        {
+          "item": "northstar:dormant_martian_sapling_sequenced"
+        }
+      ]
+    },
+    {
+      "type": "create:filling",
+      "ingredients": [
+        {
+          "item": "northstar:dormant_martian_sapling_sequenced"
+        },
+        {
+    	  "amount": 25,
+    	  "fluid": "create:potion",
+    	  "nbt": {
+     	   "Bottle": "REGULAR",
+      	  "Potion": "minecraft:strength"}
+        }
+      ],
+      "results": [
+        {
+          "item": "northstar:dormant_martian_sapling_sequenced"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "northstar:dormant_martian_sapling_sequenced"
+  }
+}

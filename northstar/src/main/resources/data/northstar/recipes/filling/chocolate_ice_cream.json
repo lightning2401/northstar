@@ -1,0 +1,18 @@
+{
+  "type": "create:filling",
+  "ingredients": [
+    {
+      "item": "northstar:ice_cream_cone"
+    },
+    {
+      "amount": 200,
+      "fluid": "northstar:chocolate_ice_cream",
+      "nbt": {}
+    }
+  ],
+  "results": [
+    {
+      "item": "northstar:chocolate_ice_cream"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "northstar:block/tungsten_sheetmetal_slab"
+    },
+    "type=double": {
+      "model": "northstar:block/tungsten_sheetmetal"
+    },
+    "type=top": {
+      "model": "northstar:block/tungsten_sheetmetal_slab_top"
+    }
+  }
+}

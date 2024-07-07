@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "northstar:block/iron_cogwheel",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "northstar:block/iron_cogwheel"
+    },
+    "axis=z": {
+      "model": "northstar:block/iron_cogwheel",
+      "x": 90,
+      "y": 180
+    }
+  }
+}

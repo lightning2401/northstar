@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "has_egg=true":{"model": "northstar:block/worm_nest_full"},
+    "has_egg=false":{"model": "northstar:block/worm_nest"}
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "type": "minecraft:simple_random_selector",
+  "config": {
+    "features": [
+      {
+        "feature": {
+          "type": "northstar:pointed_stone_cluster",
+          "config": {
+            "chance_of_taller_dripstone": 0.3,
+            "chance_of_directional_spread": 0.8,
+            "chance_of_spread_radius2": 0.7,
+            "chance_of_spread_radius3": 0.7,
+			"stone_provider": {
+     			 "type": "minecraft:simple_state_provider",
+      			 "state": {
+       				 "Name": "northstar:icicle"
+   	 			  }
+  			},
+  			     "base_stone_provider": {
+     			 "type": "minecraft:simple_state_provider",
+      			 "state": {
+       				 "Name": "minecraft:packed_ice"
+   	 			  }
+  			}
+    	  }
+        },
+        "placement": [
+          {
+            "type": "minecraft:environment_scan",
+            "direction_of_search": "down",
+            "max_steps": 12,
+            "target_condition": {
+              "type": "minecraft:solid"
+            },
+            "allowed_search_condition": {
+              "type": "minecraft:matching_blocks",
+              "blocks": [
+                "minecraft:air",
+                "minecraft:water"
+              ]
+            }
+          },
+          {
+            "type": "minecraft:random_offset",
+            "xz_spread": 0,
+            "y_spread": 1
+          }
+        ]
+      },
+      {
+        "feature": {
+          "type": "northstar:pointed_stone_cluster",
+          "config": {
+            "chance_of_taller_dripstone": 0.3,
+            "chance_of_directional_spread": 0.8,
+            "chance_of_spread_radius2": 0.7,
+            "chance_of_spread_radius3": 0.7,
+            "stone_provider": {
+     			 "type": "minecraft:simple_state_provider",
+      			 "state": {
+       				 "Name": "northstar:icicle"
+   	 			  }
+  			},
+  			     "base_stone_provider": {
+     			 "type": "minecraft:simple_state_provider",
+      			 "state": {
+       				 "Name": "minecraft:packed_ice"
+   	 			  }
+  			}
+          }
+        },
+        "placement": [
+          {
+            "type": "minecraft:environment_scan",
+            "direction_of_search": "up",
+            "max_steps": 12,
+            "target_condition": {
+              "type": "minecraft:solid"
+            },
+            "allowed_search_condition": {
+              "type": "minecraft:matching_blocks",
+              "blocks": [
+                "minecraft:air",
+                "minecraft:water"
+              ]
+            }
+          },
+          {
+            "type": "minecraft:random_offset",
+            "xz_spread": 0,
+            "y_spread": -1
+          }
+        ]
+      }
+    ]
+  }
+}

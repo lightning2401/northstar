@@ -1,0 +1,8 @@
+{
+  "parent": "northstar:block/vertical_slab",
+  "textures": {
+    "bottom": "northstar:block/tungsten_sheetmetal",
+    "side": "northstar:block/tungsten_sheetmetal",
+    "top": "northstar:block/tungsten_sheetmetal"
+  }
+}

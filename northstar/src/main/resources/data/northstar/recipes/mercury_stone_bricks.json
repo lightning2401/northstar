@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "northstar:mercury_stone"
+    }
+  },
+  "result": {
+    "item": "northstar:mercury_stone_bricks",
+    "count": 4
+  }
+}

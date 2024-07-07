@@ -1,0 +1,25 @@
+{
+  "type": "create:mixing",
+  "heatRequirement": "superheated",
+  "ingredients": [
+        {
+          "item": "northstar:enriched_glowstone_ore"
+        },
+        {
+      		"amount": 50,
+     		 "fluid": "create:potion",
+     		 "nbt": {
+      		  "Bottle": "REGULAR",
+      		  "Potion": "minecraft:strong_healing"
+        }}
+  ],
+  "results": [
+        {
+      		"amount": 50,
+     		 "fluid": "create:potion",
+     		 "nbt": {
+      		  "Bottle": "REGULAR",
+      		  "Potion": "northstar:enhanced_healing"
+        }}
+  ]
+}

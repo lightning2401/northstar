@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:ore",
+  "config": {
+    "size": 5,
+    "discard_chance_on_air_exposure": 0,
+    "targets": [
+      {
+        "target": {
+          "predicate_type": "minecraft:tag_match",
+          "tag": "northstar:venus_stone_replacables"
+        },
+        "state": {
+          "Name": "northstar:venus_gold_ore"
+        }
+      },
+      {
+        "target": {
+          "predicate_type": "minecraft:tag_match",
+          "tag": "northstar:venus_deep_stone_replacables"
+        },
+        "state": {
+          "Name": "northstar:venus_deep_gold_ore"
+        }
+      }
+    ]
+  }
+}

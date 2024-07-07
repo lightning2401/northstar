@@ -1,0 +1,6 @@
+{
+"parent":"block/cube_all",
+  "textures": {
+    "all": "northstar:block/tower_fungus_cap_block"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "northstar:mars_stone_brick_slab"
+    }
+  },
+  "result": {
+    "item": "northstar:chiseled_mars_stone"
+  }
+}

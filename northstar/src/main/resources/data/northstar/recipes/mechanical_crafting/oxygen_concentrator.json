@@ -1,0 +1,35 @@
+{
+  "type": "create:mechanical_crafting",
+  "acceptMirrored": false,
+  "key": {
+    "A": {
+      "tag": "forge:plates/iron"
+    },
+    "P": {
+      "item": "create:propeller"
+    },
+    "F": {
+      "item": "create:fluid_tank"
+    },
+    "L": {
+      "item": "create:shaft"
+    },
+    "S": {
+      "item": "northstar:circuit"
+    },
+    "T": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "pattern": [
+    "T T",
+    "T T",
+    "APA",
+    "SFS",
+    "ALA"
+  ],
+  "result": {
+    "count": 1,
+    "item": "northstar:oxygen_concentrator"
+  }
+}

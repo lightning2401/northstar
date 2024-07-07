@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_single_face",
+  "textures": {
+    "texture": "northstar:block/plate_fungus_stem_block"
+  }
+}

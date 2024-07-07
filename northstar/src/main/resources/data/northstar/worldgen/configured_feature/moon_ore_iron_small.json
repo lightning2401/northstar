@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:ore",
+  "config": {
+    "size": 4,
+    "discard_chance_on_air_exposure": 0,
+    "targets": [
+      {
+        "target": {
+          "predicate_type": "minecraft:tag_match",
+          "tag": "northstar:moon_stone_replaceables"
+        },
+        "state": {
+          "Name": "northstar:moon_iron_ore"
+        }
+      },
+      {
+        "target": {
+          "predicate_type": "minecraft:tag_match",
+          "tag": "northstar:moon_deep_stone_replaceables"
+        },
+        "state": {
+          "Name": "northstar:moon_deep_iron_ore"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+  			"northstar:mars_sand",
+  			"northstar:mars_gravel",
+  			"northstar:mars_soil",
+  			"northstar:martian_grass",
+  			"northstar:mars_farmland",
+  			"northstar:moon_sand",
+  			"northstar:venus_gravel"
+  			]
+}

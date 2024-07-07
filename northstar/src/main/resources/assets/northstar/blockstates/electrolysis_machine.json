@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "northstar:block/electrolysis_machine/block",
+            "y": 90
+    },
+    "facing=north": {
+      "model": "northstar:block/electrolysis_machine/block"
+    },
+    "facing=south": {
+      "model": "northstar:block/electrolysis_machine/block",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "northstar:block/electrolysis_machine/block",
+      "y": 270
+    }
+  }
+}

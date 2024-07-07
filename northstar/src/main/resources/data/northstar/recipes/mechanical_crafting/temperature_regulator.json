@@ -1,0 +1,35 @@
+{
+  "type": "create:mechanical_crafting",
+  "acceptMirrored": false,
+  "key": {
+    "A": {
+      "tag": "forge:plates/iron"
+    },
+    "N": {
+      "item": "minecraft:iron_ingot"
+    },
+    "L": {
+      "item": "create:shaft"
+    },
+    "S": {
+      "item": "northstar:advanced_circuit"
+    },
+    "B": {
+      "item": "minecraft:blaze_rod"
+    },
+    "I": {
+      "item": "minecraft:blue_ice"
+    }
+  },
+  "pattern": [
+    "INB",
+    "INB",
+    "ALA",
+    "SSS",
+    "ALA"
+  ],
+  "result": {
+    "count": 1,
+    "item": "northstar:temperature_regulator"
+  }
+}

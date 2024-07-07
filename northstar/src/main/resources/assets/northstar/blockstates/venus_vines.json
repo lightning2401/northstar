@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "is_tip=true":{"model": "northstar:block/venus_vines_end"},
+    "is_tip=false":{"model": "northstar:block/venus_vines"}
+  }
+}

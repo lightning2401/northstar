@@ -1,0 +1,84 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "item": "northstar:dormant_martian_seed"
+  },
+  "loops": 2,
+  "results": [
+    {
+      "chance": 60.0,
+      "item": "northstar:mars_sprout_seeds"
+    },
+    {
+      "chance": 60.0,
+      "item": "northstar:mars_palm_seeds"
+    },
+    {
+      "chance": 60.0,
+      "item": "northstar:mars_tulip_seeds"
+    }
+  ],
+  "sequence": [
+    {
+      "type": "create:filling",
+      "ingredients": [
+        {
+          "item": "northstar:dormant_martian_seed_sequenced"
+        },
+        {
+          "amount": 500,
+          "fluid": "minecraft:water",
+          "nbt": {}
+        }
+      ],
+      "results": [
+        {
+          "item": "northstar:dormant_martian_seed_sequenced"
+        }
+      ]
+    },
+    {
+      "type": "create:filling",
+      "ingredients": [
+        {
+          "item": "northstar:dormant_martian_seed_sequenced"
+        },
+        {
+      		"amount": 25,
+     		 "fluid": "create:potion",
+     		 "nbt": {
+      		  "Bottle": "REGULAR",
+      		  "Potion": "northstar:enhanced_healing"
+        }}
+      ],
+      "results": [
+        {
+          "item": "northstar:dormant_martian_seed_sequenced"
+        }
+      ]
+    },
+    {
+      "type": "create:filling",
+      "ingredients": [
+        {
+          "item": "northstar:dormant_martian_seed_sequenced"
+        },
+        {
+    	  "amount": 25,
+    	  "fluid": "create:potion",
+    	  "nbt": {
+     	   "Bottle": "REGULAR",
+      	  "Potion": "minecraft:strength"}
+        }
+      ],
+      "results": [
+        {
+          "item": "northstar:dormant_martian_seed_sequenced"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "northstar:dormant_martian_seed_sequenced"
+  }
+}

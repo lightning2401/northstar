@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "northstar:block/oxygen_generator/block",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "northstar:block/oxygen_generator/block"
+    },
+    "facing=south": {
+      "model": "northstar:block/oxygen_generator/block",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "northstar:block/oxygen_generator/block",
+      "y": 270
+    }
+  }
+}

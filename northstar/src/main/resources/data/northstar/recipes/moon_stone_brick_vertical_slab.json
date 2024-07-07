@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#",
+    "#",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "northstar:moon_stone_bricks"
+    }
+  },
+  "result": {
+    "item": "northstar:moon_stone_brick_slab_vertical",
+    "count": 6
+  }
+}

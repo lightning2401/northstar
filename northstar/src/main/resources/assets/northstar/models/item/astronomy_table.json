@@ -1,0 +1,48 @@
+{
+	"credit": "Made with Blockbench",
+	"parent":"block/block",
+	"textures": {
+		"0": "northstar:block/astronomy_table",
+		"1": "northstar:block/astronomy_table_side",
+		"particle": "northstar:block/astronomy_table"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 4, 16],
+			"faces": {
+				"north": {"uv": [8, 2, 16, 0], "texture": "#0"},
+				"east": {"uv": [8, 2, 16, 0], "texture": "#0"},
+				"south": {"uv": [8, 2, 16, 0], "texture": "#0"},
+				"west": {"uv": [8, 2, 16, 0], "texture": "#0"},
+				"up": {"uv": [0, 8, 8, 16], "texture": "#0"},
+				"down": {"uv": [8, 8, 16, 16], "texture": "#0"}
+			}
+		},
+		{
+			"from": [3, 2, 3],
+			"to": [13, 13, 13],
+			"faces": {
+				"north": {"uv": [0, 0, 10, 10], "texture": "#1"},
+				"east": {"uv": [0, 0, 10, 10], "texture": "#1"},
+				"south": {"uv": [0, 0, 10, 10], "texture": "#1"},
+				"west": {"uv": [0, 0, 10, 10], "texture": "#1"},
+				"up": {"uv": [0, 0, 10, 9], "texture": "#missing"},
+				"down": {"uv": [0, 0, 10, 9], "texture": "#missing"}
+			}
+		},
+		{
+			"from": [0, 11, -1],
+			"to": [16, 15, 15],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 14, 8]},
+			"faces": {
+				"north": {"uv": [8, 0, 16, 2], "texture": "#0"},
+				"east": {"uv": [8, 2, 16, 4], "texture": "#0"},
+				"south": {"uv": [8, 4, 16, 6], "texture": "#0"},
+				"west": {"uv": [8, 6, 16, 8], "texture": "#0"},
+				"up": {"uv": [8, 8, 0, 0], "texture": "#0"},
+				"down": {"uv": [8, 8, 0, 16], "texture": "#0"}
+			}
+		}
+	]
+}

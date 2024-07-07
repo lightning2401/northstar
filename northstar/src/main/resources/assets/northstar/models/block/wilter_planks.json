@@ -1,0 +1,6 @@
+{
+"parent":"minecraft:block/leaves",
+"textures":{
+	"all":"northstar:block/wilter_planks"
+	}
+}

@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "northstar:mars_stone",
+    "northstar:mars_deep_stone",
+    "northstar:mars_soil",
+    "northstar:volcanic_ash",
+    "northstar:mars_roots",
+    "northstar:glowing_mars_roots",
+    "northstar:mars_copper_ore",
+    "northstar:mars_deep_copper_ore",
+    "northstar:mars_diamond_ore",
+    "northstar:mars_deep_diamond_ore",
+    "northstar:mars_iron_ore",
+    "northstar:mars_deep_iron_ore",
+    "northstar:mars_quartz_ore",
+    "northstar:mars_deep_quartz_ore",
+    "northstar:mars_redstone_ore",
+    "northstar:mars_deep_redstone_ore"
+  ]
+}

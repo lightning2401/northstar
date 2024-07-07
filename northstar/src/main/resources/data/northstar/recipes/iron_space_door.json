@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PP ",
+    "SSC",
+    "SS "
+  ],
+  "key": {
+    "S": {
+      "tag": "forge:plates/iron"
+    },
+    "P": {
+      "item": "minecraft:glass"
+    },
+    "C": {
+      "item": "northstar:circuit"
+    }
+  },
+  "result": {
+    "item": "northstar:iron_space_door",
+    "count": 2
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "northstar:block/laser"
+    },
+    "facing=east": {
+      "model": "northstar:block/laser",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "northstar:block/laser",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "northstar:block/laser",
+      "x": 270,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "northstar:block/laser",
+      "x": 180
+    },
+    "facing=west": {
+      "model": "northstar:block/laser",
+      "x": 270,
+      "y": 90
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "temperature": 0.8,
+  "downfall": 0.4,
+  "precipitation": "none",
+  "temperature_modifier": "none",
+  "effects": {
+    "sky_color": 15857065,
+    "fog_color": 14538752,
+    "water_color": 4159204,
+    "water_fog_color": 329011
+  },
+  "spawners": {},
+  "spawn_costs": {},
+  "carvers": {
+    "air": [
+      "minecraft:cave_extra_underground",
+      "minecraft:cave"
+    ]
+  },
+  "features": [
+    [],
+    [
+      "minecraft:lake_lava_underground",
+      "northstar:venus_lava_lake",
+      "northstar:venus_basalt_pillars_many",
+      "northstar:venus_ore_copper",
+      "northstar:venus_ore_diamond",
+      "northstar:venus_ore_glowstone",
+      "northstar:venus_ore_gold",
+      "northstar:venus_ore_iron",
+      "northstar:venus_ore_quartz",
+      "northstar:venus_ore_redstone",
+      "northstar:venus_gravel_blob",
+      "northstar:venus_scoria_blob",
+      "northstar:venus_scorchia_blob",
+//      "northstar:volcanic_ash_surface_cluster",
+      "northstar:volcanic_rock_surface_cluster",
+  	  "northstar:magma_cluster",
+   	  "northstar:volcanic_ash_cluster",
+      "northstar:venus_plumes_common",
+      "northstar:venus_tuff_blob",
+      "northstar:venus_sulfuric_acid_lake",
+      "northstar:venus_sulfuric_acid_lake_surface"
+    ],
+    []
+  ]
+}

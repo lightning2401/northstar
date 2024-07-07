@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_single_face",
+  "textures": {
+    "texture": "northstar:block/tower_fungus_cap_block_inside"
+  }
+}

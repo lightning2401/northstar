@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "northstar:block/roof_tall_venus_mycelium"
+  },
+  "render_type":"cutout"
+}

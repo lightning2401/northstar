@@ -1,0 +1,75 @@
+{
+  "temperature": 0.8,
+  "downfall": 0.4,
+  "precipitation": "none",
+  "temperature_modifier": "frozen",
+  "effects": {
+    "sky_color": 13346691,
+    "fog_color": 14471872,
+    "water_color": 4159204,
+    "water_fog_color": 329011
+  },
+  "spawners": {
+	"monster": [
+	      {
+	        "type": "northstar:mars_worm",
+	        "weight": 40,
+	        "minCount": 1,
+	        "maxCount": 4
+	      },
+	      {
+	        "type": "northstar:mars_cobra",
+	        "weight": 20,
+	        "minCount": 1,
+	        "maxCount": 3
+	      },
+	      {
+	        "type": "northstar:mars_toad",
+	        "weight": 20,
+	        "minCount": 3,
+	        "maxCount": 6
+	      },
+	      {
+	        "type": "northstar:mars_moth",
+	        "weight": 20,
+	        "minCount": 1,
+	        "maxCount": 3
+	      }
+		]
+  },
+  "spawn_costs": {},
+  "carvers": {
+    "air": [
+      "minecraft:cave_extra_underground",
+      "minecraft:cave"
+    ]
+  },
+  "features": [
+  [],
+  [
+     "minecraft:lake_lava_underground"
+  ],
+  [
+     "northstar:mars_andesite_blob",
+     "northstar:mars_granite_blob",
+     "northstar:mars_basalt_blob",
+     "northstar:mars_crimsite_blob",
+     "northstar:mars_soil_blob",
+     "northstar:mars_tuff_blob",
+     "northstar:mars_volcanic_ash_blob",
+     "northstar:mars_ore_copper_large",
+     "northstar:mars_ore_copper",
+     "northstar:mars_ore_iron_large",
+     "northstar:mars_ore_iron",
+     "northstar:mars_ore_iron_small",
+     "northstar:mars_ore_diamond",
+     "northstar:mars_ore_gold",
+     "northstar:mars_ore_quartz",
+     "northstar:mars_ore_redstone",
+     "northstar:mars_argyre_tree",
+     "northstar:mars_argyre_tree_ceiling",
+     "northstar:mars_worm_nest",
+     "northstar:mars_roots"
+  ]
+ ]
+}

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "northstar:moon_stone_bricks"
+  },
+  "result": "northstar:moon_stone_brick_stairs",
+  "count": 1
+}

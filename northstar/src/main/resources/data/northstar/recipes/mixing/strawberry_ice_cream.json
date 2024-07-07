@@ -1,0 +1,18 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "amount": 200,
+      "fluid": "northstar:vanilla_ice_cream"
+    },
+    {
+      "item": "northstar:martian_strawberry"
+    }
+  ],
+  "results": [
+    {
+      "amount": 250,
+      "fluid": "northstar:strawberry_ice_cream"
+    }
+  ]
+}

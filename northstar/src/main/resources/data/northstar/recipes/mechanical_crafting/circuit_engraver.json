@@ -1,0 +1,28 @@
+{
+  "type": "create:mechanical_crafting",
+  "acceptMirrored": false,
+  "key": {
+    "A": {
+      "item": "northstar:amethyst_crystal"
+    },
+    "P": {
+      "item": "create:polished_rose_quartz"
+    },
+    "T": {
+      "tag": "forge:plates/iron"
+    },
+    "F": {
+      "item": "create:shaft"
+    }
+  },
+  "pattern": [
+    "TPT",
+    "FPF",
+    "TPT",
+    " A "
+  ],
+  "result": {
+    "count": 1,
+    "item": "northstar:circuit_engraver"
+  }
+}

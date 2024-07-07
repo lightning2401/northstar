@@ -1,0 +1,12 @@
+{
+  "type": "northstar:structure_feature",
+  "config": {
+    "structures": [
+      "northstar:venus_plume/venus_plume_1",
+      "northstar:venus_plume/venus_plume_2",
+      "northstar:venus_plume/venus_plume_3",
+      "northstar:venus_plume/venus_plume_4"
+    ],
+    "vertical_offset": 10
+  }
+}

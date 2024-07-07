@@ -1,0 +1,29 @@
+{
+  "type": "create:mechanical_crafting",
+  "acceptMirrored": false,
+  "key": {
+    "A": {
+      "tag": "forge:plates/iron"
+    },
+    "L": {
+      "item": "create:shaft"
+    },
+    "S": {
+      "item": "northstar:circuit"
+    },
+    "T": {
+      "item": "minecraft:tinted_glass"
+    }
+  },
+  "pattern": [
+    "TTT",
+    "TTT",
+    " L ",
+    "ASA",
+    "ALA"
+  ],
+  "result": {
+    "count": 1,
+    "item": "northstar:solar_panel"
+  }
+}

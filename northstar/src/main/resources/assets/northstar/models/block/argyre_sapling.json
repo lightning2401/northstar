@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "northstar:block/argyre_sapling"
+  },
+  "render_type":"cutout"
+}

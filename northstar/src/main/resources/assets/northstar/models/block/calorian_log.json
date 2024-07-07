@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "northstar:block/calorian_log_top",
+    "side": "northstar:block/calorian_log"
+  }
+}

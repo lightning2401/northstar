@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "northstar:block/argyre_log"
+    },
+    "axis=y": {
+      "model": "northstar:block/argyre_log"
+    },
+    "axis=z": {
+      "model": "northstar:block/argyre_log"
+    }
+  }
+}

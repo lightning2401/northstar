@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "northstar:block/temperature_regulator",
+            "y": 90
+    },
+    "facing=north": {
+      "model": "northstar:block/temperature_regulator"
+    },
+    "facing=south": {
+      "model": "northstar:block/temperature_regulator",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "northstar:block/temperature_regulator",
+      "y": 270
+    }
+  }
+}

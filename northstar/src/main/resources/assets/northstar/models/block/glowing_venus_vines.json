@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "northstar:block/glowing_venus_vine"
+  },
+  "render_type":"cutout"
+}

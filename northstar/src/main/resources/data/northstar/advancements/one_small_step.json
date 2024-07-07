@@ -1,0 +1,30 @@
+{
+  "parent": "northstar:root",
+  "criteria": {
+    "balls": {
+      "trigger": "northstar:one_small_step_builtin",
+      "conditions": {}
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "color": "#DBA213",
+      "translate": "advancement.northstar.one_small_step.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "northstar:moon_sand"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.northstar.one_small_step"
+    }
+  },
+  "requirements": [
+    [
+      "balls"
+    ]
+  ]
+}

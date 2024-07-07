@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "northstar:block/telescope"
+    },
+    "facing=east": {
+      "model": "northstar:block/telescope",
+      "y": 180
+    },
+    "facing=north": {
+      "model": "northstar:block/telescope",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "northstar:block/telescope",
+      "y": 270
+    },
+    "facing=west": {
+      "model": "northstar:block/telescope"
+    }
+  }
+}

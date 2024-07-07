@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "northstar:block/wilter_slab"
+    },
+    "type=double": {
+      "model": "northstar:block/wilter_planks"
+    },
+    "type=top": {
+      "model": "northstar:block/wilter_slab_top"
+    }
+  }
+}

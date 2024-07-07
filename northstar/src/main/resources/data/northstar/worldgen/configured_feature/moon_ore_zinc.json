@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:ore",
+  "config": {
+    "size": 9,
+    "discard_chance_on_air_exposure": 0,
+    "targets": [
+      {
+        "target": {
+          "predicate_type": "minecraft:tag_match",
+          "tag": "northstar:moon_stone_replacables"
+        },
+        "state": {
+          "Name": "northstar:moon_zinc_ore"
+        }
+      },
+      {
+        "target": {
+          "predicate_type": "minecraft:tag_match",
+          "tag": "northstar:moon_deep_stone_replacables"
+        },
+        "state": {
+          "Name": "northstar:moon_deep_zinc_ore"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "tag": "forge:plates/iron"
+  },
+  "loops": 3,
+  "results": [
+    {
+      "chance": 120.0,
+      "item": "northstar:targeting_computer"
+    }
+  ],
+  "sequence": [
+{
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "northstar:unfinished_targeting_computer"
+        },
+        {
+          "item": "northstar:circuit"
+        }
+      ],
+      "results": [
+        {
+          "item": "northstar:unfinished_targeting_computer"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "northstar:unfinished_targeting_computer"
+        },
+        {
+          "item": "create:precision_mechanism"
+        }
+      ],
+      "results": [
+        {
+          "item": "northstar:unfinished_targeting_computer"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "northstar:unfinished_targeting_computer"
+        },
+        {
+          "item": "northstar:polished_diamond"
+        }
+      ],
+      "results": [
+        {
+          "item": "northstar:unfinished_targeting_computer"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "northstar:unfinished_targeting_computer"
+  }
+}

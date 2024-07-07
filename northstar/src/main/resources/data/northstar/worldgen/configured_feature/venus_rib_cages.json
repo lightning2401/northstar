@@ -1,0 +1,20 @@
+{
+  "type": "northstar:giant_skeleton",
+  "config": {
+    "max_empty_corners_allowed": 4,
+    "fossil_structures": [
+      "northstar:fossil/ribs_1",
+      "northstar:fossil/ribs_2",
+      "northstar:fossil/ribs_3",
+      "northstar:fossil/ribs_4"
+    ],
+    "overlay_structures": [
+      "northstar:fossil/ribs_1_coal",
+      "northstar:fossil/ribs_2_coal",
+      "northstar:fossil/ribs_3_coal",
+      "northstar:fossil/ribs_4_coal"
+    ],
+    "fossil_processors": "minecraft:fossil_rot",
+    "overlay_processors": "minecraft:fossil_coal"
+  }
+}
