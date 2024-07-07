@@ -1,0 +1,8 @@
+{
+"parent":"minecraft:block/slab",
+"textures":{
+    "bottom": "northstar:block/wilter_planks",
+    "side": "northstar:block/wilter_planks",
+    "top": "northstar:block/wilter_planks"
+	}
+}

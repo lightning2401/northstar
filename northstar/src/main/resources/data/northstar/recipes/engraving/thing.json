@@ -1,0 +1,13 @@
+{
+  "type": "northstar:engraving",
+  "ingredients": [
+    {
+      "tag": "forge:ingots/brass"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:dirt"
+    }
+  ]
+}

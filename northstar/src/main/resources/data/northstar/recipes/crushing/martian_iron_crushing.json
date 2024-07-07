@@ -1,0 +1,31 @@
+{
+  "type": "create:crushing",
+  "ingredients": [
+    {
+      "item": "northstar:raw_martian_iron_ore"
+    }
+  ],
+  "processingTime": 250,
+  "results": [
+    {
+      "count": 2,
+      "item": "create:crushed_raw_iron"
+    },
+    {
+      "chance": 2,
+      "item": "create:crushed_raw_iron"
+    },
+    {
+      "chance": 0.5,
+      "item": "create:crushed_raw_iron"
+    },
+    {
+      "chance": 0.25,
+      "item": "create:crushed_raw_iron"
+    },
+    {
+      "chance": 1,
+      "item": "create:experience_nugget"
+    }
+  ]
+}

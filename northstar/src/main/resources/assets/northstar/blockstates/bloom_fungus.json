@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "is_on_ceiling=true":{"model": "northstar:block/bloom_fungus_ceiling"},
+    "is_on_ceiling=false":{"model": "northstar:block/bloom_fungus"}
+  }
+}

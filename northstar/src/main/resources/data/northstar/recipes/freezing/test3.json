@@ -1,0 +1,15 @@
+{
+  "type": "northstar:freezing",
+  "ingredients": [
+    {
+      "amount": 1000,
+      "fluid": "minecraft:water",
+      "nbt": {}
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:ice"
+    }
+  ]
+}

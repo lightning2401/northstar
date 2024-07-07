@@ -1,0 +1,15 @@
+{
+  "type": "create:mixing",
+  "heatRequirement": "heated",
+  "ingredients": [
+    {
+      "item": "minecraft:snow"
+    }
+  ],
+  "results": [
+    {
+      "amount": 500,
+      "fluid": "minecraft:water"
+    }
+  ]
+}

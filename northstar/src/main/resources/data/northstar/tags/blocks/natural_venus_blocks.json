@@ -1,0 +1,28 @@
+{
+  "replace": false,
+  "values": [
+    "northstar:venus_stone",
+    "northstar:venus_plume",
+    "northstar:venus_deep_stone",
+    "minecraft:basalt",
+    "northstar:venus_gravel",
+    "northstar:volcanic_ash",
+    "northstar:venus_copper_ore",
+    "northstar:venus_deep_copper_ore",
+    "northstar:venus_diamond_ore",
+    "northstar:venus_deep_diamond_ore",
+    "northstar:venus_glowstone_ore",
+    "northstar:venus_deep_glowstone_ore",
+    "northstar:venus_gold_ore",
+    "northstar:venus_deep_gold_ore",
+    "northstar:venus_iron_ore",
+    "northstar:venus_deep_iron_ore",
+    "northstar:venus_quartz_ore",
+    "northstar:venus_deep_quartz_ore",
+    "northstar:venus_redstone_ore",
+    "northstar:venus_deep_redstone_ore",
+    "create:scoria",
+    "create:scorchia",
+    "minecraft:tuff"
+  ]
+}

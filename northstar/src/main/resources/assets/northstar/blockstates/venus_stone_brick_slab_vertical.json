@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "type=double": {
+      "model": "northstar:block/venus_stone_bricks"
+    },
+    "type=north": {
+      "model": "northstar:block/venus_stone_brick_slab_vertical",
+      "y": 90
+    },
+    "type=east": {
+      "model": "northstar:block/venus_stone_brick_slab_vertical",
+      "y": 180
+    },
+    "type=west": {
+      "model": "northstar:block/venus_stone_brick_slab_vertical"
+    },
+    "type=south": {
+      "model": "northstar:block/venus_stone_brick_slab_vertical",
+      "y": 270
+    }
+  }
+}

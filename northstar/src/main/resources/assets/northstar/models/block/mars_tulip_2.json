@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "northstar:block/mars_tulip_2"
+  }
+}

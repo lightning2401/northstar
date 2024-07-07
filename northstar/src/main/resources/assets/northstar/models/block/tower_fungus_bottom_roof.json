@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "northstar:block/tower_fungus_bottom_roof"
+  },
+  "render_type":"cutout"
+}

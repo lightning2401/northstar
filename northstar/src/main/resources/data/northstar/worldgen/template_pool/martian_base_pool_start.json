@@ -1,0 +1,15 @@
+{
+	"name": "northstar:martian_base_pool_start",
+	"fallback": "minecraft:empty",
+	"elements": [
+		{
+			"weight": 50,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:martian_base/entrance",
+				"processors":"minecraft:empty"
+				}
+		}
+	]
+}

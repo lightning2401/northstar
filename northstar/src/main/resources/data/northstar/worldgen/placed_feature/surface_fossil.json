@@ -1,0 +1,31 @@
+{
+  "feature": "northstar:venus_rib_cages",
+  "placement": [
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 56
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "min_inclusive": {
+          "absolute": 0
+        },
+        "max_inclusive": {
+          "below_top": 0
+        }
+      }
+    },
+        {
+      "type": "minecraft:heightmap",
+      "heightmap": "OCEAN_FLOOR"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

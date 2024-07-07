@@ -1,0 +1,18 @@
+{
+  "type": "northstar:mars_roots",
+  "config": {
+    "block": "northstar:mars_roots",
+    "search_range": 32,
+    "chance_of_spreading": 0.93,
+    "can_place_on_floor": false,
+    "can_place_on_ceiling": true,
+    "can_place_on_wall": true,
+    "can_be_placed_on": [
+		"northstar:mars_gravel",
+		"northstar:volcanic_ash",
+		"northstar:mars_stone",
+		"northstar:mars_deep_stone",
+		"minecraft:basalt"
+    ]
+  }
+}

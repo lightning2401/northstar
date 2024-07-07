@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "northstar:block/mars_sprout_big_bottom"
+    },
+    "half=upper": {
+      "model": "northstar:block/mars_sprout_big_top"
+    }
+  }
+}

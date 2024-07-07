@@ -1,0 +1,9 @@
+{
+	"parent": "create:block/cogwheel",
+	"textures": {
+		"0": "create:block/cogwheel_axis",
+		"3": "create:block/axis_top",
+		"1_2": "northstar:block/iron_cogwheel",
+		"particle": "northstar:block/iron_cogwheel"
+	}
+}

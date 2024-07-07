@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:spring_feature",
+  "config": {
+    "state": {
+      "Name": "minecraft:lava",
+      "Properties": {
+        "falling": "true"
+      }
+    },
+    "rock_count": 4,
+    "hole_count": 1,
+    "requires_block_below": true,
+    "valid_blocks": [
+      "minecraft:stone",
+      "minecraft:granite",
+      "minecraft:diorite",
+      "minecraft:andesite",
+      "minecraft:deepslate",
+      "minecraft:tuff",
+      "minecraft:calcite",
+      "minecraft:dirt",
+      "northstar:mars_stone",
+      "northstar:mars_deep_stone",
+      "northstar:volcanic_ash",
+      "create:crimsite",
+      "northstar:mars_soil"
+    ]
+  }
+}

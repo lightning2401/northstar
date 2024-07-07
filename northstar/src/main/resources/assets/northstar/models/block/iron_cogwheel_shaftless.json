@@ -1,0 +1,7 @@
+{
+	"parent": "create:block/cogwheel_shaftless",
+	"textures": {
+		"1_2": "northstar:block/iron_cogwheel",
+		"particle": "northstar:block/iron_cogwheel"
+	}
+}

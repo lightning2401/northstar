@@ -1,0 +1,8 @@
+{
+"parent":"minecraft:block/slab_top",
+"textures":{
+    "bottom": "northstar:block/mercury_stone_bricks",
+    "side": "northstar:block/mercury_stone_bricks",
+    "top": "northstar:block/mercury_stone_bricks"
+	}
+}

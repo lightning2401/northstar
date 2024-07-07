@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": [
+    "northstar:moon_stone",
+    "northstar:moon_deep_stone",
+    "northstar:moon_sand",
+    
+    "northstar:moon_copper_ore",
+	"northstar:moon_iron_ore",
+	"northstar:moon_gold_ore",
+	"northstar:moon_glowstone_ore",
+	"northstar:moon_diamond_ore",
+	"northstar:moon_redstone_ore",
+	"northstar:moon_lapis_ore",
+	"northstar:moon_zinc_ore",
+	
+	"northstar:moon_deep_copper_ore",
+	"northstar:moon_deep_iron_ore",
+	"northstar:moon_deep_gold_ore",
+	"northstar:moon_deep_glowstone_ore",
+	"northstar:moon_deep_diamond_ore",
+	"northstar:moon_deep_redstone_ore",
+	"northstar:moon_deep_lapis_ore",
+	"northstar:moon_deep_zinc_ore"
+  ]
+}

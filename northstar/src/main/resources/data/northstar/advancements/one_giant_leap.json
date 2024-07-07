@@ -1,0 +1,30 @@
+{
+  "parent": "northstar:one_small_step",
+  "criteria": {
+    "balls": {
+      "trigger": "northstar:one_giant_leap_builtin",
+      "conditions": {}
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "color": "#DBA213",
+      "translate": "advancement.northstar.one_giant_leap.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "northstar:mars_sand"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.northstar.one_giant_leap"
+    }
+  },
+  "requirements": [
+    [
+      "balls"
+    ]
+  ]
+}

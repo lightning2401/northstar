@@ -1,0 +1,37 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "northstar:block/oxygen_concentrator_side",
+		"1": "northstar:block/oxygen_concentrator_top",
+		"2": "northstar:block/oxygen_concentrator_bottom",
+		"3": "northstar:block/oxygen_concentrator_back",
+		"4": "northstar:block/oxygen_concentrator_side_2",
+		"particle": "northstar:block/oxygen_concentrator_side"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 12, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 12], "texture": "#0"},
+				"east": {"uv": [0, 0, 16, 12], "texture": "#4"},
+				"south": {"uv": [0, 0, 16, 12], "texture": "#3"},
+				"west": {"uv": [0, 0, 16, 12], "texture": "#4"},
+				"up": {"uv": [16, 16, 0, 0], "texture": "#1"},
+				"down": {"uv": [16, 0, 0, 16], "texture": "#2"}
+			}
+		},
+		{
+			"from": [2, 1, 2],
+			"to": [14, 0, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 12, 8]},
+			"faces": {
+				"north": {"uv": [2, 0, 14, 1], "texture": "#2"},
+				"east": {"uv": [2, 0, 14, 1], "texture": "#2"},
+				"south": {"uv": [2, 0, 14, 1], "texture": "#2"},
+				"west": {"uv": [2, 0, 14, 1], "texture": "#2"},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#1"}
+			}
+		}
+	]
+}

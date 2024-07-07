@@ -1,0 +1,7 @@
+{
+    "parent": "block/template_single_face",
+    "ambientocclusion": false,
+    "textures": {
+        "texture": "northstar:block/spike_fungus_block_inside"
+    }
+}

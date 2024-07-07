@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:ore",
+  "config": {
+    "size": 9,
+    "discard_chance_on_air_exposure": 1,
+    "targets": [
+      {
+        "target": {
+          "predicate_type": "minecraft:tag_match",
+          "tag": "northstar:mercury_stone_replacables"
+        },
+        "state": {
+          "Name": "northstar:mercury_tungsten_ore"
+        }
+      },
+      {
+        "target": {
+          "predicate_type": "minecraft:tag_match",
+          "tag": "northstar:mercury_deep_stone_replacables"
+        },
+        "state": {
+          "Name": "northstar:mercury_deep_tungsten_ore"
+        }
+      }
+    ]
+  }
+}

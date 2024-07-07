@@ -1,0 +1,35 @@
+{
+  "type": "create:mechanical_crafting",
+  "acceptMirrored": false,
+  "key": {
+    "P": {
+      "item": "northstar:circuit"
+    },
+    "T": {
+      "tag": "forge:plates/iron"
+    },
+    "F": {
+      "item": "create:precision_mechanism"
+    },
+    "C": {
+      "item": "northstar:iron_cogwheel"
+    },
+    "L": {
+      "item": "northstar:targeting_computer"
+    },
+    "S": {
+      "item": "create:shaft"
+    }
+  },
+  "pattern": [
+    " TTT ",
+    "TFPFT",
+    "TCLCT",
+    "TFPFT",
+    " TST "
+  ],
+  "result": {
+    "count": 1,
+    "item": "northstar:rocket_station"
+  }
+}

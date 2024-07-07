@@ -1,0 +1,73 @@
+{
+  "temperature": 0.8,
+  "downfall": 0.4,
+  "precipitation": "none",
+  "temperature_modifier": "none",
+  "effects": {
+    "sky_color": 15857065,
+    "fog_color": 14538752,
+    "water_color": 4159204,
+    "water_fog_color": 329011
+  },
+  "spawners": {
+	"monster": [
+	      {
+	        "type": "northstar:venus_scorpion",
+	        "weight": 30,
+	        "minCount": 1,
+	        "maxCount": 4
+	      },
+	      {
+	        "type": "northstar:venus_vulture",
+	        "weight": 30,
+	        "minCount": 1,
+	        "maxCount": 3
+	      },
+	      {
+	        "type": "northstar:venus_stone_bull",
+	        "weight": 30,
+	        "minCount": 2,
+	        "maxCount": 6
+	      },
+	      {
+	        "type": "northstar:venus_mimic",
+	        "weight": 40,
+	        "minCount": 1,
+	        "maxCount": 3
+	      }
+		]
+  },
+  "spawn_costs": {},
+  "carvers": {
+    "air": [
+      "minecraft:cave_extra_underground",
+      "minecraft:cave"
+    ]
+  },
+  "features": [
+    [],
+    [
+      "northstar:venus_gravel_cluster",
+      "minecraft:lake_lava_underground",
+      "northstar:venus_basalt_pillars",
+      "northstar:venus_ore_copper",
+      "northstar:venus_ore_diamond",
+      "northstar:venus_ore_glowstone",
+      "northstar:venus_ore_gold",
+      "northstar:venus_ore_iron",
+      "northstar:venus_ore_quartz",
+      "northstar:venus_ore_redstone",
+      "northstar:venus_gravel_blob",
+      "northstar:venus_scoria_blob",
+      "northstar:venus_scorchia_blob",
+      "northstar:venus_tuff_blob",
+      "northstar:surface_fossil",
+      "northstar:venus_plumes",
+      "northstar:venus_rib_cages_surface",
+      "northstar:venus_lava_lake_surface",
+      "northstar:venus_sulfuric_acid_lake",
+      "northstar:venus_sulfuric_acid_lake_surface"
+    ],
+    []
+  ]
+}

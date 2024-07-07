@@ -1,0 +1,87 @@
+{
+  "temperature": 0.8,
+  "downfall": 0.4,
+  "precipitation": "none",
+  "temperature_modifier": "frozen",
+  "effects": {
+    "sky_color": 14331548,
+    "fog_color": 15264214,
+    "water_color": 4159204,
+    "water_fog_color": 329011,
+    "particle": {
+    }
+  },
+"spawners": {
+	"monster": [
+	      {
+	        "type": "northstar:venus_scorpion",
+	        "weight": 30,
+	        "minCount": 1,
+	        "maxCount": 4
+	      },
+	      {
+	        "type": "northstar:venus_vulture",
+	        "weight": 30,
+	        "minCount": 1,
+	        "maxCount": 3
+	      },
+	      {
+	        "type": "northstar:venus_stone_bull",
+	        "weight": 30,
+	        "minCount": 2,
+	        "maxCount": 6
+	      },
+	      {
+	        "type": "northstar:venus_mimic",
+	        "weight": 40,
+	        "minCount": 1,
+	        "maxCount": 3
+	      }
+		]
+  },
+  "spawn_costs": {},
+  "carvers": {
+    "air": [
+      "minecraft:cave_extra_underground",
+      "minecraft:cave"
+    ]
+  },
+  "features": [
+  [],
+  [
+     "minecraft:lake_lava_underground"
+  ],
+  [
+     "minecraft:lake_lava_underground",
+     "northstar:venus_lava_lake",
+     "northstar:venus_ore_copper",
+     "northstar:venus_ore_diamond",
+     "northstar:venus_ore_glowstone",
+     "northstar:venus_ore_gold",
+     "northstar:venus_ore_iron",
+     "northstar:venus_ore_quartz",
+     "northstar:venus_ore_redstone",
+     "northstar:venus_scoria_blob",
+     "northstar:venus_scorchia_blob",
+     "northstar:venus_tuff_blob",
+     "northstar:spike_fungus",
+     "northstar:spike_fungus_roof",
+     "northstar:bloom_fungus",
+     "northstar:bloom_fungus_roof",
+     "northstar:huge_spike_fungus",
+     "northstar:huge_bloom_fungus",
+     "northstar:huge_bloom_fungus_roof",
+     "northstar:huge_tower_fungus",
+     "northstar:huge_tower_fungus_roof",
+     "northstar:huge_plate_fungus",
+     "northstar:huge_plate_fungus_roof",
+     "northstar:tower_fungus",
+     "northstar:tower_fungus_roof",
+     "northstar:plate_fungus",
+     "northstar:plate_fungus_roof",
+     "northstar:tall_venus_mycelium",
+     "northstar:tall_venus_mycelium_roof",
+     "northstar:venus_vines"
+  ]
+ ]
+}

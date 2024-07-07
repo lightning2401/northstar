@@ -1,0 +1,18 @@
+{
+  "type": "create:filling",
+  "ingredients": [
+    {
+      "item": "minecraft:exposed_copper"
+    },
+    {
+      "amount": 250,
+      "fluid": "northstar:liquid_oxygen",
+      "nbt": {}
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:weathered_copper"
+    }
+  ]
+}

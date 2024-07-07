@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "northstar:mars_stone",
+    "northstar:mars_deep_stone",
+    "minecraft:deepslate",
+    "minecraft:andesite",
+    "minecraft:basalt",
+    "create:crimsite",
+    "northstar:volcanic_ash",
+    "minecraft:tuff"
+  ]
+}

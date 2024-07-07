@@ -1,0 +1,7 @@
+{
+"parent":"minecraft:block/leaves",
+"textures":{
+	"all":"northstar:block/argyre_leaves"
+	},
+	"render_type":"cutout"
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "northstar:block/iron_plating_slab"
+    },
+    "type=double": {
+      "model": "northstar:block/iron_plating"
+    },
+    "type=top": {
+      "model": "northstar:block/iron_plating_slab_top"
+    }
+  }
+}

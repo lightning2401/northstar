@@ -1,0 +1,8 @@
+{
+"parent":"minecraft:block/stairs",
+"textures":{
+    "bottom": "northstar:block/calorian_planks",
+    "side": "northstar:block/calorian_planks",
+    "top": "northstar:block/calorian_planks"
+	}
+}

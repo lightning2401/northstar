@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "northstar:block/rocket_station",
+            "y": 90
+    },
+    "facing=north": {
+      "model": "northstar:block/rocket_station"
+    },
+    "facing=south": {
+      "model": "northstar:block/rocket_station",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "northstar:block/rocket_station",
+      "y": 270
+    }
+  }
+}

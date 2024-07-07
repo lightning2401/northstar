@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "northstar:block/mars_stone_brick_slab"
+    },
+    "type=double": {
+      "model": "northstar:block/mars_stone_bricks"
+    },
+    "type=top": {
+      "model": "northstar:block/mars_stone_brick_slab_top"
+    }
+  }
+}

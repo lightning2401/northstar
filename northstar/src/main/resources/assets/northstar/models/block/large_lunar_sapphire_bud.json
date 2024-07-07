@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "northstar:block/large_lunar_sapphire_bud"
+  }
+}

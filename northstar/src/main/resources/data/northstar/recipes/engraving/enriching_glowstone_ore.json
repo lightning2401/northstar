@@ -1,0 +1,13 @@
+{
+  "type": "northstar:engraving",
+  "ingredients": [
+    {
+      "item":"northstar:raw_glowstone_ore"
+    }
+  ],
+  "results": [
+    {
+      "item": "northstar:enriched_glowstone_ore"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "northstar:block/martian_steel_pillar",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "northstar:block/martian_steel_pillar"
+    },
+    "axis=z": {
+      "model": "northstar:block/martian_steel_pillar",
+      "x": 90
+    }
+  }
+}

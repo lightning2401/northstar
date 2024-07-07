@@ -1,0 +1,33 @@
+{
+	"name": "northstar:lunar_base_pool",
+	"fallback": "minecraft:empty",
+	"elements": [
+		{
+			"weight": 50,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:lunar_base/entrance",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 50,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:lunar_base/hall",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 5 ,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:lunar_base/hall_cap",
+				"processors":"minecraft:empty"
+				}
+		}
+	]
+}

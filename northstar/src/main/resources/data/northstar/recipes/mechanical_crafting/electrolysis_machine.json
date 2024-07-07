@@ -1,0 +1,38 @@
+{
+  "type": "create:mechanical_crafting",
+  "acceptMirrored": false,
+  "key": {
+    "A": {
+      "item": "northstar:amethyst_crystal"
+    },
+    "P": {
+      "item": "northstar:circuit"
+    },
+    "T": {
+      "item": "northstar:martian_steel_sheet"
+    },
+    "F": {
+      "item": "northstar:martian_steel"
+    },
+    "C": {
+      "item": "create:fluid_pipe"
+    },
+    "L": {
+      "item": "create:fluid_tank"
+    },
+    "S": {
+      "item": "create:shaft"
+    }
+  },
+  "pattern": [
+    " TCT ",
+    "TPCPT",
+    "CCLCC",
+    "TPAPT",
+    "FFSFF"
+  ],
+  "result": {
+    "count": 1,
+    "item": "northstar:electrolysis_machine"
+  }
+}

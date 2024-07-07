@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PAP",
+    "ATA",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:plates/copper"
+    },
+    "A": {
+      "item": "create:andesite_alloy"
+    },
+    "T": {
+      "item": "create:fluid_tank"
+    },
+    "P": {
+      "item": "minecraft:piston"
+    }
+  },
+  "result": {
+    "item": "northstar:combustion_engine",
+    "count": 1
+  }
+}

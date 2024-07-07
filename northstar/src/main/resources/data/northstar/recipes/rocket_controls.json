@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "# #",
+    "III",
+    "ICI"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:lever"
+    },
+    "I": {
+      "tag": "forge:plates/iron"
+    },
+    "C": {
+      "item": "northstar:circuit"
+    }
+  },
+  "result": {
+    "item": "northstar:rocket_controls"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "northstar:block/stripped_argyre_log_top",
+    "side": "northstar:block/stripped_argyre_log"
+  }
+}

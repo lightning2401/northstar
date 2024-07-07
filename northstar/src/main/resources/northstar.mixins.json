@@ -1,0 +1,37 @@
+{
+	"required": true,
+	"priority": 1200,
+	"package": "com.lightning.northstar.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+	"GravityStuffMixin",
+	"OxygenAndTempEntityMixin",
+	"ContraptionTestMixin",
+	"BucketItemMixin",
+	"CompassMixin",
+	"ServerLevelMixin",
+	"MinecraftServerMixin",
+	"MobMixin",
+	"PlayerMixin",
+	"gravitystuff.AbstractArrowGravityMixin",
+	"gravitystuff.AbstractMinecartGravityMixin",
+	"gravitystuff.BoatGravityMixin",
+	"gravitystuff.ItemEntityGravityMixin",
+	"gravitystuff.ThrowableProjectileGravityMixin",
+	"dimensionstuff.DimensionSpecialEffectsMixin",
+	"dimensionstuff.LevelRendererMixin",
+	"dimensionstuff.FogRendererMixin",
+	"blockstuff.FluidStateMixin",
+	"blockstuff.IceBlockMixin",
+	"blockstuff.FireBlockMixin",
+	"blockstuff.TorchMixin",
+	"blockstuff.WallTorchMixin",
+	"blockstuff.TorchItemMixin",
+	"blockstuff.CandleBlockMixin",
+	"blockstuff.LanternBlockMixin"
+	],
+	"minVersion": "0.8.5",
+	"injectors": {
+    "defaultRequire": 1
+  }
+}

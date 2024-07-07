@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "northstar:block/lunar_sapphire_cluster"
+  }
+}

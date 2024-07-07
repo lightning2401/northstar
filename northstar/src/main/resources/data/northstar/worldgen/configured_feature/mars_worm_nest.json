@@ -1,0 +1,13 @@
+{
+  "type": "northstar:worm_nest",
+  "config": {
+    "structures": [
+      "northstar:worm_nest/mars_worm_nest",
+      "northstar:worm_nest/mars_worm_nest_2",
+      "northstar:worm_nest/mars_worm_nest_3",
+      "northstar:worm_nest/mars_worm_nest_4",
+      "northstar:worm_nest/mars_worm_nest_big"
+    ],
+    "vertical_offset": 1
+  }
+}

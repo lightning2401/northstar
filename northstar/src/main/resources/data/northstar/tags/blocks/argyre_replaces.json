@@ -1,0 +1,14 @@
+{
+  "values": [
+    "northstar:mars_soil",
+    "northstar:mars_sand",
+    "northstar:mars_stone",
+    "northstar:mars_deep_stone",
+    "minecraft:andesite",
+    "minecraft:basalt",
+    "create:crimsite",
+ 	"minecraft:air",
+ 	"northstar:mars_roots",
+ 	"northstar:glowing_mars_roots"
+  ]
+}

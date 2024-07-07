@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "northstar:martian_base",
+      "weight": 3
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 30084232,
+    "spacing": 36,
+    "separation": 4
+  }
+} 

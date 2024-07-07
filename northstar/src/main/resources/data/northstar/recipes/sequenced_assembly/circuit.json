@@ -1,0 +1,63 @@
+{
+  "type": "create:sequenced_assembly",
+  "ingredient": {
+    "tag": "forge:plates/iron"
+  },
+  "loops": 5,
+  "results": [
+    {
+      "chance": 120.0,
+      "item": "northstar:circuit"
+    }
+  ],
+  "sequence": [
+{
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "northstar:unfinished_circuit"
+        },
+        {
+          "item": "northstar:polished_amethyst"
+        }
+      ],
+      "results": [
+        {
+          "item": "northstar:unfinished_circuit"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "northstar:unfinished_circuit"
+        },
+        {
+          "item": "minecraft:copper_ingot"
+        }
+      ],
+      "results": [
+        {
+          "item": "northstar:unfinished_circuit"
+        }
+      ]
+    },
+    {
+      "type": "northstar:engraving",
+      "ingredients": [
+        {
+          "item": "northstar:unfinished_circuit"
+        }
+      ],
+      "results": [
+        {
+          "item": "northstar:unfinished_circuit"
+        }
+      ]
+    }
+  ],
+  "transitionalItem": {
+    "item": "northstar:unfinished_circuit"
+  }
+}

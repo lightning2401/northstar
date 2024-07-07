@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "northstar:block/circuit_engraver",
+      "y": 180
+    },
+    "facing=north": {
+      "model": "northstar:block/circuit_engraver",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "northstar:block/circuit_engraver",
+      "y": 270
+    },
+    "facing=west": {
+      "model": "northstar:block/circuit_engraver"
+    }
+  }
+}

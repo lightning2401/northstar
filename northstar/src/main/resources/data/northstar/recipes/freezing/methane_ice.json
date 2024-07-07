@@ -1,0 +1,16 @@
+{
+  "type": "northstar:freezing",
+  "ingredients": [
+    {
+      "amount": 1000,
+      "fluid": "northstar:methane",
+      "nbt": {}
+    }
+  ],
+  "processingTime": 182,
+  "results": [
+    {
+      "item": "northstar:methane_ice"
+    }
+  ]
+}

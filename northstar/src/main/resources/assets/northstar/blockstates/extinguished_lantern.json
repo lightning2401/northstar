@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "northstar:block/extinguished_lantern"
+    },
+    "hanging=true": {
+      "model": "northstar:block/extinguished_lantern_hanging"
+    }
+  }
+}

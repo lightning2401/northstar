@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "type=double": {
+      "model": "northstar:block/martian_steel_sheetmetal"
+    },
+    "type=north": {
+      "model": "northstar:block/martian_steel_sheetmetal_vertical_slab",
+      "y": 90
+    },
+    "type=east": {
+      "model": "northstar:block/martian_steel_sheetmetal_vertical_slab",
+      "y": 180
+    },
+    "type=west": {
+      "model": "northstar:block/martian_steel_sheetmetal_vertical_slab"
+    },
+    "type=south": {
+      "model": "northstar:block/martian_steel_sheetmetal_vertical_slab",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,494 @@
+{ 
+  "martian_dust_storm": {
+    "sounds": [
+        "northstar:martian_duststorm1"
+    ],
+    "subtitle": "northstar.subtitle.martian_dust_storm"
+  },
+    "martian_dust_storm_above": {
+    "sounds": [
+        "northstar:martian_duststorm_above"
+    ],
+    "subtitle": "northstar.subtitle.martian_dust_storm_above"
+  },
+	"mars_worm_click_notice": {
+    "sounds": [
+        "northstar:worm_click_notice_1",
+        "northstar:worm_click_notice_2",
+        "northstar:worm_click_notice_3"
+    ],
+    "subtitle": "northstar.subtitle.mars_worm_click_notice"
+  },
+  	"mars_worm_click": {
+    "sounds": [
+        "northstar:mars_worm_click_1",
+        "northstar:mars_worm_click_2",
+        "northstar:mars_worm_click_3"
+    ],
+    "subtitle": "northstar.subtitle.mars_worm_click"
+  },
+    "mars_worm_hurt": {
+    "sounds": [
+        "northstar:worm_hurt_1",
+        "northstar:worm_hurt_2",
+        "northstar:worm_hurt_3"
+    ],
+    "subtitle": "northstar.subtitle.mars_worm_hurt"
+  },
+    "mars_worm_death": {
+    "sounds": [
+        "northstar:worm_death_1",
+        "northstar:worm_death_2",
+        "northstar:worm_death_3"
+    ],
+    "subtitle": "northstar.subtitle.mars_worm_death"
+  },
+      "mars_worm_attack": {
+    "sounds": [
+        "northstar:worm_attack_1",
+        "northstar:worm_attack_2",
+        "northstar:worm_attack_3"
+    ],
+    "subtitle": "northstar.subtitle.mars_worm_attack"
+  },  
+  	"mars_toad_hurt": {
+  	    "sounds": [
+        "northstar:entity/mars_toad/toad_hurt1",
+        "northstar:entity/mars_toad/toad_hurt2",
+        "northstar:entity/mars_toad/toad_hurt3"
+    ],
+    "subtitle": "northstar.subtitle.mars_toad_hurt"
+  }, 
+  	"mars_toad_death": {
+  	    "sounds": [
+        "northstar:entity/mars_toad/toad_die1",
+        "northstar:entity/mars_toad/toad_die2",
+        "northstar:entity/mars_toad/toad_die3"
+    ],
+    "subtitle": "northstar.subtitle.mars_toad_death"
+  },
+    	"mars_toad_idle": {
+  	    "sounds": [
+        "northstar:entity/mars_toad/toad_idle1",
+        "northstar:entity/mars_toad/toad_idle2",
+        "northstar:entity/mars_toad/toad_idle3",
+        "northstar:entity/mars_toad/toad_idle4"
+    ],
+    "subtitle": "northstar.subtitle.mars_toad_idle"
+  },
+   
+   	"mars_cobra_hurt": {
+  	    "sounds": [
+        "northstar:entity/mars_cobra/cobra_hurt1",
+        "northstar:entity/mars_cobra/cobra_hurt2",
+        "northstar:entity/mars_cobra/cobra_hurt3",
+        "northstar:entity/mars_cobra/cobra_hurt4"
+    ],
+    "subtitle": "northstar.subtitle.mars_cobra_hurt"
+  }, 
+  	"mars_cobra_hiss": {
+  	    "sounds": [
+        "northstar:entity/mars_cobra/cobra_hiss1",
+        "northstar:entity/mars_cobra/cobra_hiss2",
+        "northstar:entity/mars_cobra/cobra_hiss3",
+        "northstar:entity/mars_cobra/cobra_hiss4"
+    ],
+    "subtitle": "northstar.subtitle.mars_cobra_hiss"
+  },
+    	"mars_cobra_idle": {
+  	    "sounds": [
+        "northstar:entity/mars_cobra/cobra_idle1",
+        "northstar:entity/mars_cobra/cobra_idle2",
+        "northstar:entity/mars_cobra/cobra_idle3"
+    ],
+    "subtitle": "northstar.subtitle.mars_cobra_idle"
+  },
+  
+     	"mars_moth_hurt": {
+  	    "sounds": [
+        "northstar:entity/mars_moth/moth_hurt1",
+        "northstar:entity/mars_moth/moth_hurt2",
+        "northstar:entity/mars_moth/moth_hurt3"
+    ],
+    "subtitle": "northstar.subtitle.mars_moth_hurt"
+  },
+ 		 "mars_moth_death": {
+  	    "sounds": [
+        "northstar:entity/mars_moth/moth_die1",
+        "northstar:entity/mars_moth/moth_die2",
+        "northstar:entity/mars_moth/moth_die3"
+    ],
+    "subtitle": "northstar.subtitle.mars_moth_death"
+  },
+   		 "mars_moth_snore": {
+  	    "sounds": [
+        "northstar:entity/mars_moth/moth_snore1",
+        "northstar:entity/mars_moth/moth_snore2",
+        "northstar:entity/mars_moth/moth_snore3",
+        "northstar:entity/mars_moth/moth_snore4"
+    ],
+    "subtitle": "northstar.subtitle.mars_moth_snore"
+  },
+     	"mars_moth_idle": {
+  	    "sounds": [
+        "northstar:entity/mars_moth/moth_idle1",
+        "northstar:entity/mars_moth/moth_idle2",
+        "northstar:entity/mars_moth/moth_idle3",
+        "northstar:entity/mars_moth/moth_idle4"
+    ],
+    "subtitle": "northstar.subtitle.mars_moth_idle"
+  },
+  
+    
+      "mercury_roach_idle": {
+  	    "sounds": [
+        "northstar:entity/mercury_roach/idle_1",
+        "northstar:entity/mercury_roach/idle_2",
+        "northstar:entity/mercury_roach/idle_3",
+        "northstar:entity/mercury_roach/idle_4"
+    ],
+    "subtitle": "northstar.subtitle.mercury_roach_idle"
+  },
+        "mercury_roach_hurt": {
+  	    "sounds": [
+        "northstar:entity/mercury_roach/hurt_1",
+        "northstar:entity/mercury_roach/hurt_2",
+        "northstar:entity/mercury_roach/hurt_3"
+    ],
+    "subtitle": "northstar.subtitle.mercury_roach_hurt"
+  },
+        "mercury_roach_die": {
+  	    "sounds": [
+        "northstar:entity/mercury_roach/die_1",
+        "northstar:entity/mercury_roach/die_2",
+        "northstar:entity/mercury_roach/die_3"
+    ],
+    "subtitle": "northstar.subtitle.mercury_roach_die"
+  },
+        "mercury_tortoise_idle": {
+  	    "sounds": [
+        "northstar:entity/mercury_tortoise/idle_1",
+        "northstar:entity/mercury_tortoise/idle_2",
+        "northstar:entity/mercury_tortoise/idle_3",
+        "northstar:entity/mercury_tortoise/idle_4"
+    ],
+    "subtitle": "northstar.subtitle.mercury_tortoise_idle"
+  },
+        "mercury_tortoise_hurt": {
+  	    "sounds": [
+        "northstar:entity/mercury_tortoise/hurt_1",
+        "northstar:entity/mercury_tortoise/hurt_2",
+        "northstar:entity/mercury_tortoise/hurt_3",
+        "northstar:entity/mercury_tortoise/hurt_4"
+    ],
+    "subtitle": "northstar.subtitle.mercury_tortoise_hurt"
+  },
+        "mercury_tortoise_die": {
+  	    "sounds": [
+        "northstar:entity/mercury_tortoise/die_1",
+        "northstar:entity/mercury_tortoise/die_2",
+        "northstar:entity/mercury_tortoise/die_3"
+    ],
+    "subtitle": "northstar.subtitle.mercury_tortoise_die"
+  },
+          "mercury_raptor_idle": {
+  	    "sounds": [
+        "northstar:entity/mercury_raptor/idle_1",
+        "northstar:entity/mercury_raptor/idle_2",
+        "northstar:entity/mercury_raptor/idle_3"
+    ],
+    "subtitle": "northstar.subtitle.mercury_raptor_idle"
+  },
+        "mercury_raptor_hurt": {
+  	    "sounds": [
+        "northstar:entity/mercury_raptor/hurt_1",
+        "northstar:entity/mercury_raptor/hurt_2",
+        "northstar:entity/mercury_raptor/hurt_3",
+        "northstar:entity/mercury_raptor/hurt_4"
+    ],
+    "subtitle": "northstar.subtitle.mercury_raptor_hurt"
+  },
+        "mercury_raptor_die": {
+  	    "sounds": [
+        "northstar:entity/mercury_raptor/die_1",
+        "northstar:entity/mercury_raptor/die_2",
+        "northstar:entity/mercury_raptor/die_3",
+        "northstar:entity/mercury_raptor/die_4"
+    ],
+    "subtitle": "northstar.subtitle.mercury_raptor_die"
+  },
+        "mercury_raptor_attack": {
+  	    "sounds": [
+        "northstar:entity/mercury_raptor/attack_1",
+        "northstar:entity/mercury_raptor/attack_2",
+        "northstar:entity/mercury_raptor/attack_3",
+        "northstar:entity/mercury_raptor/attack_4"
+    ],
+    "subtitle": "northstar.subtitle.mercury_raptor_attack"
+  },
+  
+    "venus_stone_bull_hurt": {
+  	    "sounds": [
+        "northstar:entity/venus_stone_bull/stone_bull_hurt1",
+        "northstar:entity/venus_stone_bull/stone_bull_hurt2",
+        "northstar:entity/venus_stone_bull/stone_bull_hurt3",
+        "northstar:entity/venus_stone_bull/stone_bull_hurt4"
+    ],
+    "subtitle": "northstar.subtitle.venus_stone_bull_hurt"
+  },
+  
+      "venus_stone_bull_idle": {
+  	    "sounds": [
+        "northstar:entity/venus_stone_bull/stone_bull_idle1",
+        "northstar:entity/venus_stone_bull/stone_bull_idle2",
+        "northstar:entity/venus_stone_bull/stone_bull_idle3",
+        "northstar:entity/venus_stone_bull/stone_bull_idle4"
+    ],
+    "subtitle": "northstar.subtitle.venus_stone_bull_idle"
+  },
+        "venus_stone_bull_death": {
+  	    "sounds": [
+        "northstar:entity/venus_stone_bull/stone_bull_die1",
+        "northstar:entity/venus_stone_bull/stone_bull_die2",
+        "northstar:entity/venus_stone_bull/stone_bull_die3"
+    ],
+    "subtitle": "northstar.subtitle.venus_stone_bull_death"
+  },
+  
+      "venus_stone_bull_attack": {
+  	    "sounds": [
+        "northstar:entity/venus_stone_bull/stone_bull_attack1",
+        "northstar:entity/venus_stone_bull/stone_bull_attack2",
+        "northstar:entity/venus_stone_bull/stone_bull_attack3",
+        "northstar:entity/venus_stone_bull/stone_bull_attack4"
+    ],
+    "subtitle": "northstar.subtitle.venus_stone_bull_attack"
+  },
+  
+      "venus_stone_bull_charge": {
+  	    "sounds": [
+        "northstar:entity/venus_stone_bull/stone_bull_charge1",
+        "northstar:entity/venus_stone_bull/stone_bull_charge2"
+    ],
+    "subtitle": "northstar.subtitle.venus_stone_bull_charge"
+  },
+  
+       	"venus_mimic_hurt": {
+  	    "sounds": [
+        "northstar:entity/venus_mimic/mimic_hurt1",
+        "northstar:entity/venus_mimic/mimic_hurt2",
+        "northstar:entity/venus_mimic/mimic_hurt3",
+        "northstar:entity/venus_mimic/mimic_hurt4"
+    ],
+    "subtitle": "northstar.subtitle.mimic_hurt"
+  },
+        "venus_mimic_die": {
+  	    "sounds": [
+        "northstar:entity/venus_mimic/mimic_die1",
+        "northstar:entity/venus_mimic/mimic_die2",
+        "northstar:entity/venus_mimic/mimic_die3",
+        "northstar:entity/venus_mimic/mimic_die4"
+    ],
+    "subtitle": "northstar.subtitle.mimic_die"
+  },
+        "venus_mimic_idle": {
+  	    "sounds": [
+        "northstar:entity/venus_mimic/mimic_idle1",
+        "northstar:entity/venus_mimic/mimic_idle2",
+        "northstar:entity/venus_mimic/mimic_idle3",
+        "northstar:entity/venus_mimic/mimic_idle4"
+    ],
+    "subtitle": "northstar.subtitle.mimic_idle"
+  },
+  
+   	  	"venus_vulture_hurt": {
+  	    "sounds": [
+        "northstar:entity/venus_vulture/vulture_hurt1",
+        "northstar:entity/venus_vulture/vulture_hurt2",
+        "northstar:entity/venus_vulture/vulture_hurt3",
+        "northstar:entity/venus_vulture/vulture_hurt4"
+    ],
+    "subtitle": "northstar.subtitle.venus_vulture_hurt"
+  },
+  		 "venus_vulture_idle": {
+  	    "sounds": [
+        "northstar:entity/venus_vulture/vulture_idle1",
+        "northstar:entity/venus_vulture/vulture_idle2",
+        "northstar:entity/venus_vulture/vulture_idle3",
+        "northstar:entity/venus_vulture/vulture_idle4"
+    ],
+    "subtitle": "northstar.subtitle.venus_vulture_idle"
+  },
+        "venus_vulture_die": {
+  	    "sounds": [
+        "northstar:entity/venus_vulture/vulture_die1",
+        "northstar:entity/venus_vulture/vulture_die2",
+        "northstar:entity/venus_vulture/vulture_die3",
+        "northstar:entity/venus_vulture/vulture_die4"
+    ],
+    "subtitle": "northstar.subtitle.venus_vulture_die"
+  },
+     	"venus_scorpion_hurt": {
+  	    "sounds": [
+        "northstar:entity/venus_scorpion/hurt_1",
+        "northstar:entity/venus_scorpion/hurt_2",
+        "northstar:entity/venus_scorpion/hurt_3",
+        "northstar:entity/venus_scorpion/hurt_4"
+    ],
+    "subtitle": "northstar.subtitle.venus_scorpion_hurt"
+  },
+  		"venus_scorpion_idle": {
+  	    "sounds": [
+        "northstar:entity/venus_scorpion/idle_1",
+        "northstar:entity/venus_scorpion/idle_2",
+        "northstar:entity/venus_scorpion/idle_3",
+        "northstar:entity/venus_scorpion/idle_4"
+    ],
+    "subtitle": "northstar.subtitle.venus_scorpion_idle"
+  },
+        "venus_scorpion_die": {
+  	    "sounds": [
+        "northstar:entity/venus_scorpion/die_1",
+        "northstar:entity/venus_scorpion/die_2",
+        "northstar:entity/venus_scorpion/die_3",
+        "northstar:entity/venus_scorpion/die_4"
+    ],
+    "subtitle": "northstar.subtitle.venus_scorpion_die"
+  },
+  
+      	"moon_snail_hurt": {
+  	    "sounds": [
+        "minecraft:mob/slime/attack1",
+        "minecraft:mob/slime/attack2"
+    ],
+    "subtitle": "northstar.subtitle.moon_snail_hurt"
+  },
+  
+       	"moon_snail_idle": {
+  	    "sounds": [
+        "minecraft:mob/slime/big1",
+        "minecraft:mob/slime/big2",
+        "minecraft:mob/slime/big3",
+        "minecraft:mob/slime/big4"
+    ],
+    "subtitle": "northstar.subtitle.moon_snail_idle"
+  },
+        "moon_snail_die": {
+  	    "sounds": [
+        "minecraft:mob/slime/small1",
+        "minecraft:mob/slime/small2",
+        "minecraft:mob/slime/small3",
+        "minecraft:mob/slime/small4"
+    ],
+    "subtitle": "northstar.subtitle.moon_snail_die"
+  },
+  
+        "moon_eel_hurt": {
+  	    "sounds": [
+        "minecraft:entity/fish/hurt1",
+        "minecraft:entity/fish/hurt2",
+        "minecraft:entity/fish/hurt3",
+        "minecraft:entity/fish/hurt4"
+    ],
+    "subtitle": "northstar.subtitle.moon_eel_hurt"
+  },
+  
+       	"moon_eel_idle": {
+  	    "sounds": [
+        "minecraft:entity/fish/flop1",
+        "minecraft:entity/fish/flop2",
+        "minecraft:entity/fish/flop3",
+        "minecraft:entity/fish/flop4"
+    ],
+    "subtitle": "northstar.subtitle.moon_eel_idle"
+  },
+        "moon_eel_die": {
+  	    "sounds": [
+        "minecraft:mob/slime/small1",
+        "minecraft:mob/slime/small2",
+        "minecraft:mob/slime/small3",
+        "minecraft:mob/slime/small4"
+    ],
+    "subtitle": "northstar.subtitle.moon_eel_die"
+  },
+       	"moon_lunargrade_hurt": {
+  	    "sounds": [
+        "northstar:entity/moon_lunargrade/hurt_1",
+        "northstar:entity/moon_lunargrade/hurt_2",
+        "northstar:entity/moon_lunargrade/hurt_3",
+        "northstar:entity/moon_lunargrade/hurt_4",
+        "northstar:entity/moon_lunargrade/hurt_5"
+    ],
+    "subtitle": "northstar.subtitle.moon_lunargrade_hurt"
+  },
+  
+       	"moon_lunargrade_idle": {
+  	    "sounds": [
+        "northstar:entity/moon_lunargrade/idle_1",
+        "northstar:entity/moon_lunargrade/idle_2",
+        "northstar:entity/moon_lunargrade/idle_3"
+    ],
+    "subtitle": "northstar.subtitle.moon_lunargrade_idle"
+  },
+        "moon_lunargrade_die": {
+  	    "sounds": [
+        "northstar:entity/moon_lunargrade/die_1"
+    ],
+    "subtitle": "northstar.subtitle.moon_lunargrade_die"
+  },
+  	
+      "laser_ambient": {
+    "sounds": [
+        "northstar:laser_ambient"
+    ],
+    "subtitle": "northstar.subtitle.block.laser.ambient"
+  },
+  "laser_burn": {
+    "sounds": [
+        "northstar:laser_burn1",
+        "northstar:laser_burn2",
+        "northstar:laser_burn3"
+        
+    ],
+    "subtitle": "northstar.subtitle.block.laser.burn"
+  },
+  "rocket_takeoff": {
+    "sounds": [
+        "northstar:rocket_takeoff1",
+        "northstar:rocket_takeoff2"
+    ],
+    "subtitle": "northstar.subtitle.takeoff"
+  },
+    "rocket_blast": {
+    "sounds": [
+        "northstar:rocket_blast_1",
+        "northstar:rocket_blast_2",
+        "northstar:rocket_blast_3",
+        "northstar:rocket_blast_4",
+        "northstar:rocket_blast_5",
+        "northstar:rocket_blast_6"
+    ],
+    "subtitle": "northstar.subtitle.takeoff"
+  },
+    "rocket_landing": {
+    "sounds": [
+        "northstar:rocket_land_1",
+        "northstar:rocket_land_2",
+        "northstar:rocket_land_3",
+        "northstar:rocket_land_4",
+        "northstar:rocket_land_5",
+        "northstar:rocket_land_6"
+    ],
+    "subtitle": "northstar.subtitle.rocket_landing"
+  },
+    "airflow": {
+    "sounds": [
+        "northstar:airflow_1",
+        "northstar:airflow_2",
+        "northstar:airflow_3",
+        "northstar:airflow_4",
+        "northstar:airflow_5"
+    ],
+    "subtitle": "northstar.subtitle.airflow"
+  }
+ }

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "northstar:block/venus_plume_exhaust",
+    "side": "northstar:block/venus_deep_stone"
+  }
+}

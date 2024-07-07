@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "northstar:block/computer_rack/block",
+            "y": 90
+    },
+    "facing=north": {
+      "model": "northstar:block/computer_rack/block"
+    },
+    "facing=south": {
+      "model": "northstar:block/computer_rack/block",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "northstar:block/computer_rack/block",
+      "y": 270
+    }
+  }
+}

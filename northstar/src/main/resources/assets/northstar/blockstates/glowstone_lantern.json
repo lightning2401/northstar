@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "northstar:block/glowstone_lantern"
+    },
+    "hanging=true": {
+      "model": "northstar:block/glowstone_lantern_hanging"
+    }
+  }
+}

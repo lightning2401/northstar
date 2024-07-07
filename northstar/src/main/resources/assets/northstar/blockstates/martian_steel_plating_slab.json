@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "northstar:block/martian_steel_plating_slab"
+    },
+    "type=double": {
+      "model": "northstar:block/martian_steel_plating"
+    },
+    "type=top": {
+      "model": "northstar:block/martian_steel_plating_slab_top"
+    }
+  }
+}

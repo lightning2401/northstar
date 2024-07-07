@@ -1,0 +1,16 @@
+{
+  "values": [
+	"northstar:iron_space_suit_helmet",
+	"northstar:iron_space_suit_chestpiece",
+	"northstar:iron_space_suit_leggings",
+	"northstar:iron_space_suit_boots",
+	"northstar:martian_steel_space_suit_helmet",
+	"northstar:martian_steel_space_suit_chestpiece",
+	"northstar:martian_steel_space_suit_leggings",
+	"northstar:martian_steel_space_suit_boots",
+	"create:netherite_diving_helmet",
+	"create:netherite_backtank",
+	"minecraft:netherite_leggings",
+	"create:netherite_diving_boots"
+  ]
+}

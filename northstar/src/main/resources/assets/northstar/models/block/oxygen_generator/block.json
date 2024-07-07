@@ -1,0 +1,63 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "northstar:block/oxygen_generator",
+		"1": "northstar:block/oxygen_concentrator_2",
+		"particle": "northstar:block/oxygen_generator"
+	},
+	"elements": [
+		{
+			"name": "oxy_gen_base1",
+			"from": [0, 0, 0],
+			"to": [16, 12, 16],
+			"faces": {
+				"north": {"uv": [8, 6, 16, 12], "texture": "#1"},
+				"east": {"uv": [0, 0, 8, 6], "texture": "#0"},
+				"south": {"uv": [0, 5, 8, 11], "texture": "#1"},
+				"west": {"uv": [0, 0, 8, 6], "texture": "#0"},
+				"up": {"uv": [0, 6, 8, 14], "texture": "#0"},
+				"down": {"uv": [0, 6, 8, 14], "texture": "#0"}
+			}
+		},
+		{
+			"name": "oxy_gen_base2",
+			"from": [1, 12, 1],
+			"to": [15, 16, 15],
+			"faces": {
+				"north": {"uv": [8, 4, 15, 6], "texture": "#0"},
+				"east": {"uv": [8, 4, 15, 6], "texture": "#0"},
+				"south": {"uv": [8, 4, 15, 6], "texture": "#0"},
+				"west": {"uv": [8, 4, 15, 6], "texture": "#0"},
+				"up": {"uv": [8, 6, 15, 13], "texture": "#0"},
+				"down": {"uv": [0, 0, 7, 7], "texture": "#missing"}
+			}
+		},
+		{
+			"name": "oxy_gen_base3",
+			"from": [2, 1, 2],
+			"to": [14, 0, 14],
+			"faces": {
+				"north": {"uv": [1, 0, 7, 0.5], "texture": "#0"},
+				"east": {"uv": [1, 0, 7, 0.5], "texture": "#0"},
+				"south": {"uv": [1, 0, 7, 0.5], "texture": "#0"},
+				"west": {"uv": [1, 0, 7, 0.5], "texture": "#0"},
+				"up": {"uv": [1, 7, 7, 13], "texture": "#0"},
+				"down": {"uv": [10, 0, 16, 6], "texture": "#1"}
+			}
+		},
+		{
+			"name": "oxy_gen_base4",
+			"from": [3, 16, 3],
+			"to": [13, 8, 13],
+			"faces": {
+				"north": {"uv": [1.5, 2.5, 6.5, 6.5], "texture": "#0"},
+				"east": {"uv": [1.5, 2.5, 6.5, 6.5], "texture": "#0"},
+				"south": {"uv": [1.5, 2.5, 6.5, 6.5], "texture": "#0"},
+				"west": {"uv": [1.5, 2.5, 6.5, 6.5], "texture": "#0"},
+				"up": {"uv": [0, 0, 5, 5], "texture": "#1"},
+				"down": {"uv": [1.5, 7.5, 6.5, 12.5], "texture": "#0"}
+			}
+		}
+	]
+}

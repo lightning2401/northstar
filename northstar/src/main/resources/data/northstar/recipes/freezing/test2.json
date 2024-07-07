@@ -1,0 +1,14 @@
+{
+  "type": "northstar:freezing",
+  "ingredients": [
+    {
+      "item": "create:brass_ingot"
+    }
+  ],
+  "processingTime": 100,
+  "results": [
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ]
+}

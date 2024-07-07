@@ -1,0 +1,19 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "amount": 200,
+      "fluid": "northstar:vanilla_ice_cream"
+    },
+    {
+      "amount": 50,
+      "fluid": "create:chocolate"
+    }
+  ],
+  "results": [
+    {
+      "amount": 250,
+      "fluid": "northstar:chocolate_ice_cream"
+    }
+  ]
+}

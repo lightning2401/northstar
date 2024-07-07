@@ -1,0 +1,21 @@
+{
+  "type": "create:mechanical_crafting",
+  "acceptMirrored": false,
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "tag": "forge:plates/iron"
+    }
+  },
+  "pattern": [
+    "I   I",
+    "ISSSI",
+    "I   I"
+  ],
+  "result": {
+    "count": 3,
+    "item": "northstar:computer_rack"
+  }
+}

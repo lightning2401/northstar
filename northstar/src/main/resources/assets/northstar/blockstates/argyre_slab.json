@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "northstar:block/argyre_slab"
+    },
+    "type=double": {
+      "model": "northstar:block/argyre_planks"
+    },
+    "type=top": {
+      "model": "northstar:block/argyre_slab_top"
+    }
+  }
+}

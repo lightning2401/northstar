@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "X": {
+      "item": "minecraft:iron_ingot"
+    },
+    "Y": {
+      "item": "minecraft:redstone"
+    },
+    "Z": {
+      "item": "northstar:polished_amethyst"
+    }
+  },
+  "pattern": [
+    " Z ",
+    "YZY",
+    "XZX"
+  ],
+  "result": {
+    "item": "northstar:amethyst_crystal"
+  }
+}

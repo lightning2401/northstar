@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_slab",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "northstar:argyre_planks"
+    }
+  },
+  "result": {
+    "item": "northstar:argyre_slab",
+    "count": 6
+  }
+}

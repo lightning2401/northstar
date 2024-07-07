@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "northstar:block/small_lunar_sapphire_bud",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "northstar:block/small_lunar_sapphire_bud",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "northstar:block/small_lunar_sapphire_bud",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "northstar:block/small_lunar_sapphire_bud",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "northstar:block/small_lunar_sapphire_bud"
+    },
+    "facing=west": {
+      "model": "northstar:block/small_lunar_sapphire_bud",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

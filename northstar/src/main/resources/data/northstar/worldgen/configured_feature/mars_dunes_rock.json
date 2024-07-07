@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:iceberg",
+  "config": {
+    "state": {
+      "Name": "northstar:mars_deep_stone"
+     }
+    
+  }
+}

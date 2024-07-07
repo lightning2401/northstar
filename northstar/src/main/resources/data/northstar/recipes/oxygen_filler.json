@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "APA",
+    "ATA",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:plates/iron"
+    },
+    "A": {
+      "item": "minecraft:iron_ingot"
+    },
+    "T": {
+      "item": "create:fluid_tank"
+    },
+    "P": {
+      "item": "northstar:circuit"
+    }
+  },
+  "result": {
+    "item": "northstar:oxygen_filler",
+    "count": 1
+  }
+}

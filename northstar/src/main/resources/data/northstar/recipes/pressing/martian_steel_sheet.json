@@ -1,0 +1,13 @@
+{
+  "type": "create:pressing",
+  "ingredients": [
+    {
+      "item": "northstar:martian_steel"
+    }
+  ],
+  "results": [
+    {
+      "item": "northstar:martian_steel_sheet"
+    }
+  ]
+}

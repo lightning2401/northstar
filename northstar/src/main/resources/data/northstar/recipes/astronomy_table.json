@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X#X",
+    " S ",
+    "XPX"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:paper"
+    },
+    "X": {
+      "tag": "minecraft:wooden_slabs"
+    },
+    "S": {
+      "item": "minecraft:iron_ingot"
+    },
+    "P": {
+      "tag": "forge:stripped_logs"
+    }
+  },
+  "result": {
+    "item": "northstar:astronomy_table"
+  }
+}

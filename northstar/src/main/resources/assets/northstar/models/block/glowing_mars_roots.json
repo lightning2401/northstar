@@ -1,0 +1,21 @@
+{
+    "ambientocclusion": false,
+    "textures": {
+        "particle": "northstar:block/glowing_mars_roots",
+        "vine": "northstar:block/glowing_mars_roots"
+        
+    },
+    "elements": [
+        {   "from": [ 0, 0, 0.8 ],
+            "to": [ 16, 16, 0.8 ],
+            "render_type":"cutout",
+            "shade": false,
+            "faces": {
+                "north": { "uv": [ 16, 0, 0, 16 ], "texture": "#vine", "tintindex": 0 },
+                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#vine", "tintindex": 0 }
+            }
+            
+        }
+    ]
+    
+}

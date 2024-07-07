@@ -1,0 +1,6 @@
+# Made in Blockbench 4.8.3
+newmtl m_a99a92be-1a8b-57be-6105-1f3ef4ec73c9
+map_Kd solar_panel_texture.png 
+newmtl m_b2c9b28d-55d6-7ca4-3a5f-92c285398636
+map_Kd panel_texture.png 
+newmtl none

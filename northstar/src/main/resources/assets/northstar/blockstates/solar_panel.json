@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "northstar:block/solar_panel"
+    },
+    "facing=east": {
+      "model": "northstar:block/solar_panel",
+      "y": 180
+    },
+    "facing=north": {
+      "model": "northstar:block/solar_panel",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "northstar:block/solar_panel",
+      "y": 270
+    },
+    "facing=west": {
+      "model": "northstar:block/solar_panel"
+    }
+  }
+}
