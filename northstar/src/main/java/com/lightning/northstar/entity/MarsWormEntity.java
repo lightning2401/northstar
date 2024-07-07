@@ -388,7 +388,7 @@ public class MarsWormEntity extends Monster implements IAnimatable, IAnimationTi
 			if(!this.aggro)
 			{this.playSound(NorthstarSounds.MARS_WORM_CLICK_NOTICE.get(), 5.0F, this.getVoicePitch());}
 			BlockPos blockpos = pSourcePos;
-			MarsWormAI.setDisturbanceLocation(this, blockpos);
+			MarsWormAi.setDisturbanceLocation(this, blockpos);
 			if(this.notTarget != null && !aggro && (this.notTarget == pSourceEntity || this.notTarget == pProjectileOwner)) {
 				aggro = true;
 			}
