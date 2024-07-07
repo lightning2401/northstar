@@ -8,7 +8,7 @@ import net.minecraft.world.entity.ai.behavior.BlockPosTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.schedule.Activity;
 
-public class MarsWormAI {
+public class MarsWormAi {
 
 	
 	public static void updateActivity(MarsWormEntity pWarden) {
