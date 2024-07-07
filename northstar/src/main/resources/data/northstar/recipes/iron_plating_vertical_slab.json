@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#",
+    "#",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "northstar:iron_plating"
+    }
+  },
+  "result": {
+    "item": "northstar:iron_plating_vertical_slab",
+    "count": 6
+  }
+}
