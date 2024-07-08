@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SWS",
+    "WPW",
+    "SWS"
+  ],
+  "key": {
+    "S": {
+	  "item": "northstar:martian_steel_sheet"	
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    },
+    "P": {
+	  "item": "northstar:martian_steel_leggings"	
+    }
+  },
+  "result": {
+    "item": "northstar:martian_steel_space_suit_leggings",
+    "count": 1
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SCS",
+    "WPW",
+    "SWS"
+  ],
+  "key": {
+    "S": {
+      "tag": "forge:plates/iron"
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    },
+    "C": {
+      "item": "create:copper_backtank"
+    },
+    "P": {
+      "item": "minecraft:iron_chestplate"
+    }
+  },
+  "result": {
+    "item": "northstar:iron_space_suit_chestpiece",
+    "count": 1
+  }
+}

@@ -41,6 +41,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -55,7 +56,9 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 public class RocketStationBlockEntity extends SmartBlockEntity implements IDisplayAssemblyExceptions, IControlContraption, MenuProvider {
 	
@@ -64,6 +67,7 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 	protected AssemblyException lastException;
 	public TrackTargetingBehaviour<GlobalStation> edgePoint;
 	protected ItemStackHandler inventory;
+	protected LazyOptional<IItemHandlerModifiable> itemCapability;
 	public String name = "Bing Bong's Big Bonanza";
 	
 	protected int failedCarriageIndex;
@@ -91,28 +95,18 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 	protected float clientOffsetDiff;
 	public ResourceKey<Level> target;
 	
-	public final SimpleContainer container = new SimpleContainer(1) {
-		public boolean canPlaceItem(int p_39066_, ItemStack itemstack) {
-			return itemstack.is(NorthstarItems.STAR_MAP.get());
-		}
-		public int getMaxStackSize() {
-			return 1;
-		}
-	};
 	
-	
-	public ItemStack item = ItemStack.EMPTY;
-	
+	public final Container container = new SimpleContainer(1) {};
 	
 	
 	public static WorldAttached<Map<BlockPos, BoundingBox>> assemblyAreas = new WorldAttached<>(w -> new HashMap<>());
 
 	public RocketStationBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
 		super(typeIn, pos, state);
+		inventory = new ItemStackHandler();
+		itemCapability = LazyOptional.of(() -> new CombinedInvWrapper(inventory));
 	}
-	public boolean hasItem() {
-		return this.item.is(NorthstarItems.STAR_MAP.get());
-	}
+	
 	@Override
 	public void addBehaviours(List<BlockEntityBehaviour> behaviours) {}
 	
@@ -122,11 +116,7 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 		if (!getBlockState().canSurvive(level, worldPosition))
 			level.destroyBlock(worldPosition, true);
 	}
-	
-	public ItemStack getItem() {
-		return this.item;
-	}
-	
+
 	public void queueAssembly(Player player) {
 		owner = player;
 		assembleNextTick = true;
@@ -145,8 +135,8 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 		super.tick();
 		i++;
 		if (i % 20 == 0 && !level.isClientSide) {}
-		item = container.getItem(0);
-		if (item.getItem() == NorthstarItems.STAR_MAP.get()) {
+		ItemStack item = container.getItem(0);
+		if (item.getItem() == NorthstarItems.STAR_MAP.get() || item.getItem() == NorthstarItems.RETURN_TICKET.get()) {
 			if(item.getTagElement("Planet") != null)
 			target = NorthstarPlanets.getPlanetDimension(NorthstarPlanets.targetGetter(item.getTagElement("Planet").toString()));
 		}
@@ -240,6 +230,7 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 		movedContraption.setPos(anchor.getX(), anchor.getY(), anchor.getZ());
 		AllSoundEvents.CONTRAPTION_ASSEMBLE.playOnServer(level, worldPosition);
 		movedContraption.destination = target;
+		movedContraption.home = this.level.dimension();
 		level.addFreshEntity(movedContraption);
 		RocketHandler.ROCKETS.add(movedContraption);
 		System.out.println("Heat Cost: " + heatCost + "     Heat Shielding: " + heatShielding);
@@ -301,38 +292,24 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 		return cost * 8;
 	}
 	
+	// this is extremely buggy for some reason, this NEEDS to be fixed before release
+	//not sure what's making it so buggy but it saves really inconsistently despite sharing the code of the oxygen filler which works fine
 	@Override
 	protected void write(CompoundTag compound, boolean clientPacket) {
-		compound.put("map", this.container.getItem(0).save(new CompoundTag()));
-		compound.put("item", this.item.save(new CompoundTag()));
 		super.write(compound, clientPacket);
+		compound.put("item", container.getItem(0).serializeNBT());
 	}
-	
 	@Override
 	public void writeSafe(CompoundTag compound) {
 		super.writeSafe(compound);
-		compound.put("map", this.container.getItem(0).save(new CompoundTag()));
-		compound.put("item", this.item.save(new CompoundTag()));
+		compound.put("item", container.getItem(0).serializeNBT());
 	}
-
 	@Override
 	protected void read(CompoundTag compound, boolean clientPacket) {
-		this.container.setItem(0, ItemStack.of(compound.getCompound("map")));
-		this.item = ItemStack.of(compound.getCompound("item"));
 		super.read(compound, clientPacket);
+	    if (compound.contains("item", 10)) {
+		container.setItem(0, ItemStack.of(compound.getCompound("item")));}
 	}
-	
-	
-	public ItemStackHandler getInventoryOfBlock() {
-		return inventory;
-	}
-
-	public void applyInventoryToBlock(ItemStackHandler handler) {
-		for (int i = 0; i < inventory.getSlots(); i++)
-			inventory.setStackInSlot(i, i < handler.getSlots() ? handler.getStackInSlot(i) : ItemStack.EMPTY);
-	}
-	
-	public boolean hasInventory() { return true; }
 	
 	private void exception(AssemblyException exception, int carriage) {
 		failedCarriageIndex = carriage;

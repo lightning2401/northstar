@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SWS",
+    "WPW",
+    "SWS"
+  ],
+  "key": {
+    "S": {
+      "tag": "forge:plates/iron"
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    },
+    "P": {
+      "item": "minecraft:iron_boots"
+    }
+  },
+  "result": {
+    "item": "northstar:iron_space_suit_boots",
+    "count": 1
+  }
+}

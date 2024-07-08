@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SCS",
+    "WPW",
+    "SWS"
+  ],
+  "key": {
+    "S": {
+	  "item": "northstar:martian_steel_sheet"	
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    },
+    "C": {
+      "item": "create:copper_backtank"
+    },
+    "P": {
+	  "item": "northstar:martian_steel_chestplate"	
+    }
+  },
+  "result": {
+    "item": "northstar:martian_steel_space_suit_chestpiece",
+    "count": 1
+  }
+}

@@ -146,7 +146,9 @@ public class NorthstarItems {
 	
 	public static final RegistryObject<Item> ASTRONOMICAL_READING = ITEMS.register("astronomical_reading", () -> new Item(new Item.Properties().tab(NorthstarCreativeModeTab.NORTHSTAR_TAB)));
 	public static final RegistryObject<StarMapItem> STAR_MAP = ITEMS.register("star_map", () -> new StarMapItem(new Item.Properties().stacksTo(1).tab(NorthstarCreativeModeTab.NORTHSTAR_TAB)));
-	
+
+	public static final RegistryObject<Item> RETURN_TICKET = ITEMS.register("return_ticket", () -> new Item(new Item.Properties().stacksTo(1)));
+
 	public static final RegistryObject<Item> LUNAR_SAPPHIRE_SHARD = ITEMS.register("lunar_sapphire_shard", () -> new Item(new Item.Properties().tab(NorthstarCreativeModeTab.NORTHSTAR_TAB)));
 	
 	public static final RegistryObject<Item> POLISHED_LUNAR_SAPPHIRE = ITEMS.register("polished_lunar_sapphire", () -> new Item(new Item.Properties().tab(NorthstarCreativeModeTab.NORTHSTAR_TAB)));

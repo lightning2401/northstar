@@ -15,6 +15,7 @@ import com.lightning.northstar.block.tech.oxygen_generator.OxygenGeneratorBlockE
 import com.lightning.northstar.block.tech.rocket_station.RocketStationBlockEntity;
 import com.lightning.northstar.block.tech.temperature_regulator.TemperatureRegulatorBlockEntity;
 import com.lightning.northstar.item.NorthstarItems;
+import com.lightning.northstar.world.dimension.NorthstarPlanets;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.AssemblyException;
 import com.simibubi.create.content.contraptions.ContraptionType;
@@ -38,6 +39,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -50,6 +52,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class RocketContraption extends TranslatingContraption{
@@ -66,10 +69,12 @@ public class RocketContraption extends TranslatingContraption{
 	private boolean rocket_station = false;
 	public boolean hasControls = false;
 	private boolean has_fuel = false;
+	private boolean isUsingTicket = false;
 	private int fuelAmount = 0;
 	private int jet_engines = 0;
 	public float computingPower = 0;
 	private List<BlockPos> assembledJets;
+	private BlockPos stationPos;
 	public int fuelTicks;
 	public String name = "Rocket";
 	public Player owner;
@@ -109,6 +114,25 @@ public class RocketContraption extends TranslatingContraption{
 		return true;
 	}
 	public void burnFuel() {
+		if(isUsingTicket) {
+			IItemHandlerModifiable items = storage.getItems();
+			
+			if (items != null) {
+				for (int slot = 0; slot < items.getSlots(); slot++) {
+					ItemStack stack = items.extractItem(slot, 1, true);
+					if(!stack.is(NorthstarItems.RETURN_TICKET.get()))
+						continue;
+	
+					stack = items.extractItem(slot, 1, false);
+					ItemStack containerItem = stack.getCraftingRemainingItem();
+					if (!containerItem.isEmpty())
+						ItemHandlerHelper.insertItemStacked(items, containerItem, false);
+					return;
+				}
+			}
+			
+		}
+		
 		IFluidHandler rocketFuels = storage.getFluids();
 		fuelCost = (int) ((int) weightCost + ((fuelCost - (fuelCost * computingPower))));
 		if(owner != null)
@@ -135,6 +159,12 @@ public class RocketContraption extends TranslatingContraption{
 			BlockEntity ent = world.getBlockEntity(pos);
 			if(ent instanceof RocketStationBlockEntity rsbe) {
 				name = rsbe.name;
+				stationPos = toLocalPos(pos);
+				System.out.println("rocket station: " + rsbe.container.getItem(0));
+				if(rsbe.container.getItem(0).is(NorthstarItems.RETURN_TICKET.get())) {
+					isUsingTicket = true;
+					storage.addBlock(stationPos, rsbe);
+				}
 			}
 		}
 		if(NorthstarTechBlocks.COMPUTER_RACK.has(blockState)) {

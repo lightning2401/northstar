@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "WPW",
+    "WWW"
+  ],
+  "key": {
+    "S": {
+	  "item": "northstar:martian_steel_sheet"	
+    },
+    "W": {
+      "item": "minecraft:tinted_glass"
+    },
+    "P": {
+	  "item": "northstar:martian_steel_helmet"	
+    }
+  },
+  "result": {
+    "item": "northstar:martian_steel_space_suit_helmet",
+    "count": 1
+  }
+}

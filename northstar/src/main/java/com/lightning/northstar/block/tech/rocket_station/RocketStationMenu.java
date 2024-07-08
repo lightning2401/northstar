@@ -62,11 +62,12 @@ public class RocketStationMenu extends AbstractContainerMenu  {
 	      }
 	   }
 	protected boolean mayPickup(Player pPlayer, boolean pHasStack) {
-		ItemStack item1 = this.blockEntity.container.getItem(0);
-		if(item1.getItem() == NorthstarItems.STAR_MAP.get()) {
-			return true;
-		}
-		else return false;
+//		ItemStack item1 = this.blockEntity.container.getItem(0);
+//		if(item1.getItem() == NorthstarItems.STAR_MAP.get() || item1.getItem() == NorthstarItems.RETURN_TICKET.get()) {
+//			return true;
+//		}
+//		else return false;
+		return true;
 	}
 	
 	public int fuelCalc() {
@@ -90,7 +91,7 @@ public class RocketStationMenu extends AbstractContainerMenu  {
 	
 	public void slotsChanged(Container pInventory) {
 		ItemStack item = container.getItem(0);
-		if (container.getItem(0).getItem() == NorthstarItems.STAR_MAP.get()) {
+		if (container.getItem(0).getItem() == NorthstarItems.STAR_MAP.get() || container.getItem(0).getItem() == NorthstarItems.RETURN_TICKET.get()) {
 			if(item.getTagElement("Planet") != null)
 			target = NorthstarPlanets.getPlanetDimension(NorthstarPlanets.targetGetter(item.getTagElement("Planet").toString()));
 		}

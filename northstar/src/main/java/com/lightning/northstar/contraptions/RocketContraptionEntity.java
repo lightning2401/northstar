@@ -10,6 +10,7 @@ import java.util.UUID;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.lightning.northstar.NorthstarPackets;
 import com.lightning.northstar.entity.NorthstarEntityTypes;
+import com.lightning.northstar.item.NorthstarItems;
 import com.lightning.northstar.sound.NorthstarSounds;
 import com.lightning.northstar.world.TemperatureStuff;
 import com.lightning.northstar.world.dimension.NorthstarPlanets;
@@ -36,6 +37,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -43,7 +45,9 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion.BlockInteraction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.CocoaBlock;
@@ -74,10 +78,12 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 	private int maxSpeed = 5;
 	public int launchtime = 0;
 	private boolean activeLaunch = false;
+	public Player owner;
 
 	public double sequencedOffsetLimit;
 	public float lift_vel = 0.5f;
 	public float final_lift_vel = lift_vel - 0.5f;
+	public ResourceKey<Level> home;
 	public ResourceKey<Level> destination;
 	CompoundTag serialisedEntity;
 	Map<Integer, CompoundTag> serialisedPassengers;
@@ -114,6 +120,11 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 		if(launchtime > 0 && activeLaunch) {launchtime--;}
 		if(launchtime == 0 && activeLaunch)
 		{blasting = true;}
+		
+		if(this.owner == null && ((RocketContraption)this.contraption).owner != null) {
+			this.owner = ((RocketContraption)this.contraption).owner;
+		}
+		
 		
 		if(this.tickCount % 40 == 0 && !this.level.isClientSide) {
 			System.out.println("syncing i guess!!!");
@@ -214,8 +225,15 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 		if (customCollision(dir)) {
 			level.playLocalSound(getX(), getY(), getZ(), AllSoundEvents.STEAM.getMainEvent(), SoundSource.BLOCKS, 3, 0, true);
 			flyingSound.stopSound();
-			if (!level.isClientSide && (Math.abs(final_lift_vel) < 3 || hasExploded))
+			if (!level.isClientSide && (Math.abs(final_lift_vel) < 3 || hasExploded)) {
+				if(this.landing) {
+					ItemStack returnTicket = this.createReturnTicket(this);
+					if(owner != null) {
+					Player player = owner;
+			        level.addFreshEntity(new ItemEntity(level, player.getX(), player.getY(), player.getZ(), returnTicket));}
+				}
 				disassemble();
+			}
 			if(Math.abs(final_lift_vel) > 3 && !hasExploded) {
 				level.explode(this, getX(), getY() - 1, getZ(), 30, NorthstarPlanets.getPlanetOxy(destination), BlockInteraction.DESTROY);
 				hasExploded = true;
@@ -256,6 +274,14 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 			rce.lift_vel = packet.lift_vel;
 			rce.setPos(packet.pos.x, packet.pos.y, packet.pos.z);
 		}
+	}
+	
+	public ItemStack createReturnTicket(RocketContraptionEntity entity) {
+		ItemStack result = new ItemStack(NorthstarItems.RETURN_TICKET.get());
+		result.setHoverName(Component.translatable("item.northstar.return_ticket" + "_" +  NorthstarPlanets.getPlanetName(entity.home)).setStyle(Style.EMPTY.withColor(ChatFormatting.AQUA).withItalic(false)));
+        CompoundTag tag = result.getOrCreateTagElement("Planet");
+        tag.putString("name", NorthstarPlanets.getPlanetName(entity.home));
+        return result;
 	}
 	
 	

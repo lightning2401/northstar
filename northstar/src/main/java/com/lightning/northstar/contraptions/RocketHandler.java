@@ -133,6 +133,7 @@ public class RocketHandler {
 	    	  		if(controller == null) {
 	    	  			((RocketContraptionEntity)transportedEntity).setControllingPlayer(controller);
 	    	  		}
+	    	  		((RocketContraptionEntity)transportedEntity).owner = rce.owner;
 	    	  		
 	    	  		
 	    	  		System.out.println(seatMap);

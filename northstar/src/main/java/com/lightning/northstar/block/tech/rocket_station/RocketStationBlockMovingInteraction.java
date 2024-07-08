@@ -24,7 +24,7 @@ public class RocketStationBlockMovingInteraction extends MovingInteractionBehavi
 		}
 		AllSoundEvents.CONTROLLER_CLICK.play(player.level, null,
 			new BlockPos(contraptionEntity.toGlobalVector(Vec3.atCenterOf(localPos), 1)), 1, 1.2f);
-		if(!contraptionEntity.level.isClientSide)
+		if(!contraptionEntity.level.isClientSide && contraptionEntity.level.isInWorldBounds(contraptionEntity.blockPosition()))
 		contraptionEntity.disassemble();
 
 		return true;

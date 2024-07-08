@@ -120,7 +120,7 @@ import net.minecraftforge.fml.ModList;
 @JeiPlugin
 @SuppressWarnings("unused")
 @ParametersAreNonnullByDefault
-public class NorthstarJEI implements IModPlugin {
+public class NorthstarJei implements IModPlugin {
 	
 	private static final ResourceLocation ID = Northstar.asResource("jei_plugin");
 
