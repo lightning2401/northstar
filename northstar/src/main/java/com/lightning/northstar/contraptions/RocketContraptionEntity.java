@@ -71,6 +71,7 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 	public boolean blasting = false;
 	public boolean slowing = false;
 	public boolean hasExploded = false;
+	public boolean isUsingTicket = false;
 	int i = 90;
 	int soundTime = 0;
 	int cooldown = 0;
@@ -125,6 +126,9 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 			this.owner = ((RocketContraption)this.contraption).owner;
 		}
 		
+		if(((RocketContraption)this.contraption).isUsingTicket) {
+			this.isUsingTicket = true;
+		}
 		
 		if(this.tickCount % 40 == 0 && !this.level.isClientSide) {
 			System.out.println("syncing i guess!!!");
@@ -185,12 +189,16 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 		
 		if (slowing && landing) 
 		{this.level.playLocalSound(this.getX(), this.getY() - 8, this.getZ(), NorthstarSounds.ROCKET_LANDING.get(), SoundSource.BLOCKS, 4, 0, false); 
-		i = 0; soundTime = 0; System.out.println("AAAAAAAAA");}
+		i = 0; soundTime = 0; 
+	//	System.out.println("AAAAAAAAA");
+		}
 		entitiesInContraption = this.level.getEntities(this, this.getBoundingBox());
 
 		//blasting is a thing because rocket controls needs it to work
 		if(launched && blasting)
-		{lift_vel += lift_vel / 200;lift_vel = Mth.clamp(lift_vel, 0.5f, maxSpeed); final_lift_vel = lift_vel - 0.5f;	System.out.println(lift_vel);}	
+		{lift_vel += lift_vel / 200;lift_vel = Mth.clamp(lift_vel, 0.5f, maxSpeed); final_lift_vel = lift_vel - 0.5f;	
+//		System.out.println(lift_vel);
+		}	
 		if (landing) {
 			if(cooldown <= cooldownLength)
 			{cooldown++;}
@@ -198,7 +206,7 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 				if(!slowing)
 				{lift_vel -= 0.02;}else {lift_vel -= lift_vel / 10;}
 				lift_vel = Mth.clamp(lift_vel, -maxSpeed, -0.4f);
-				System.out.println(lift_vel);
+//				System.out.println(lift_vel);
 				final_lift_vel = lift_vel;
 			}
 			
@@ -226,13 +234,18 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 			level.playLocalSound(getX(), getY(), getZ(), AllSoundEvents.STEAM.getMainEvent(), SoundSource.BLOCKS, 3, 0, true);
 			flyingSound.stopSound();
 			if (!level.isClientSide && (Math.abs(final_lift_vel) < 3 || hasExploded)) {
-				if(this.landing) {
+				System.out.println("isUsingTicket: " + isUsingTicket);
+				if(this.landing && !isUsingTicket) {
 					ItemStack returnTicket = this.createReturnTicket(this);
 					if(owner != null) {
 					Player player = owner;
 			        level.addFreshEntity(new ItemEntity(level, player.getX(), player.getY(), player.getZ(), returnTicket));}
 				}
 				disassemble();
+				if(this.landing && isUsingTicket) {
+					System.out.println("attempting to delete ticket");
+					RocketHandler.deleteTicket(level, this.blockPosition());
+				}
 			}
 			if(Math.abs(final_lift_vel) > 3 && !hasExploded) {
 				level.explode(this, getX(), getY() - 1, getZ(), 30, NorthstarPlanets.getPlanetOxy(destination), BlockInteraction.DESTROY);
@@ -269,7 +282,7 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 	@SuppressWarnings("resource")
 	@OnlyIn(Dist.CLIENT)
 	public static void handleSyncPacket(RocketContraptionSyncPacket packet) {
-		System.out.println("ALERTA!!! ALERTA!!! HANDLING!!!!");
+//		System.out.println("ALERTA!!! ALERTA!!! HANDLING!!!!");
 		if (Minecraft.getInstance().level.getEntity(packet.contraptionEntityId) instanceof RocketContraptionEntity rce) {
 			rce.lift_vel = packet.lift_vel;
 			rce.setPos(packet.pos.x, packet.pos.y, packet.pos.z);

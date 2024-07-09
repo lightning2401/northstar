@@ -1,0 +1,26 @@
+{
+  "type": "create:mechanical_crafting",
+  "acceptMirrored": false,
+  "key": {
+    "A": {
+      "tag": "forge:plates/iron"
+    },
+    "L": {
+      "item": "northstar:polished_lunar_sapphire"
+    },
+    "S": {
+      "item": "northstar:circuit"
+    }
+  },
+  "pattern": [
+    "ALA",
+    "SLS",
+    "ALA",
+    "SLS",
+    "ALA"
+  ],
+  "result": {
+    "count": 1,
+    "item": "northstar:interplanetary_navigator"
+  }
+}

@@ -744,9 +744,16 @@ public class NorthstarBlocks {
     public static final RegistryObject<Block> TELESCOPE = registerBlock("telescope", 
     		() ->new TelescopeBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_BROWN).sound(SoundType.COPPER)
                     .strength(8f, 8f).noOcclusion().isViewBlocking(NorthstarBlocks::never)), NorthstarCreativeModeTab.NORTHSTAR_TECH);  
+    
+    public static final RegistryObject<Block> INTERPLANETARY_NAVIGATOR = registerBlock("interplanetary_navigator", 
+    		() ->new InterplanetaryNavigatorBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_GRAY).sound(SoundType.METAL)
+                    .strength(8f, 8f).noOcclusion().isViewBlocking(NorthstarBlocks::never)), NorthstarCreativeModeTab.NORTHSTAR_TECH);  
+    
     public static final RegistryObject<Block> OXYGEN_BUBBLE_GENERATOR = registerBlock("oxygen_bubble_generator", 
     		() ->new OxygenBubbleGeneratorBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_GRAY).sound(SoundType.COPPER)
                     .strength(8f, 8f).requiresCorrectToolForDrops()), NorthstarCreativeModeTab.NORTHSTAR_TECH);
+    
+    
 	
 	
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab) {

@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "facing=east,half=lower,waterlogged=false": {
+      "model": "northstar:block/interplanetary_navigator/interplanetary_navigator_bottom",
+            "y": 90
+    },
+    "facing=north,half=lower,waterlogged=false": {
+      "model": "northstar:block/interplanetary_navigator/interplanetary_navigator_bottom"
+    },
+    "facing=south,half=lower,waterlogged=false": {
+      "model": "northstar:block/interplanetary_navigator/interplanetary_navigator_bottom",
+      "y": 180
+    },
+    "facing=west,half=lower,waterlogged=false": {
+      "model": "northstar:block/interplanetary_navigator/interplanetary_navigator_bottom",
+      "y": 270
+    },
+    "facing=east,half=upper,waterlogged=false": {
+      "model": "northstar:block/interplanetary_navigator/interplanetary_navigator_top",
+            "y": 90
+    },
+    "facing=north,half=upper,waterlogged=false": {
+      "model": "northstar:block/interplanetary_navigator/interplanetary_navigator_top"
+    },
+    "facing=south,half=upper,waterlogged=false": {
+      "model": "northstar:block/interplanetary_navigator/interplanetary_navigator_top",
+      "y": 180
+    },
+    "facing=west,half=upper,waterlogged=false": {
+      "model": "northstar:block/interplanetary_navigator/interplanetary_navigator_top",
+      "y": 270
+    },
+    "facing=east,half=lower,waterlogged=true": {
+      "model": "northstar:block/interplanetary_navigator/interplanetary_navigator_bottom",
+            "y": 90
+    },
+    "facing=north,half=lower,waterlogged=true": {
+      "model": "northstar:block/interplanetary_navigator/interplanetary_navigator_bottom"
+    },
+    "facing=south,half=lower,waterlogged=true": {
+      "model": "northstar:block/interplanetary_navigator/interplanetary_navigator_bottom",
+      "y": 180
+    },
+    "facing=west,half=lower,waterlogged=true": {
+      "model": "northstar:block/interplanetary_navigator/interplanetary_navigator_bottom",
+      "y": 270
+    },
+    "facing=east,half=upper,waterlogged=true": {
+      "model": "northstar:block/interplanetary_navigator/interplanetary_navigator_top",
+            "y": 90
+    },
+    "facing=north,half=upper,waterlogged=true": {
+      "model": "northstar:block/interplanetary_navigator/interplanetary_navigator_top"
+    },
+    "facing=south,half=upper,waterlogged=true": {
+      "model": "northstar:block/interplanetary_navigator/interplanetary_navigator_top",
+      "y": 180
+    },
+    "facing=west,half=upper,waterlogged=true": {
+      "model": "northstar:block/interplanetary_navigator/interplanetary_navigator_top",
+      "y": 270
+    }
+  }
+}

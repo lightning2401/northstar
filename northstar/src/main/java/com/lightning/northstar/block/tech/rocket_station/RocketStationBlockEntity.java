@@ -196,7 +196,7 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 			if(heatCostHome > heatCost) {
 				heatCost = heatCostHome;
 			}
-			requiredJets = fuelCost / 800;
+			requiredJets = engineCalc();
 
 			sendData();
 		} catch (AssemblyException e) {
@@ -220,8 +220,19 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 		if(oxyCheck.size() >= OxygenStuff.maximumOxy) {
 			oxygenSealed = false;
 		}
+		boolean interplanetaryFlag = NorthstarPlanets.isInterplanetary(level.dimension(), target);
+		if(interplanetaryFlag) {
+			if(contraption.hasInterplanetaryNavigation) {
+				interplanetaryFlag = false;
+			}
+		}
 		
-		if (engines >= requiredJets && hasStation && hasFuel && fuelAmount > (fuelCost + contraption.weightCost) && heatShielding >= heatCost && oxygenSealed) {
+		if(interplanetaryFlag) {
+			contraption.owner.displayClientMessage(Component.literal
+			("Interplanetary travel requires a Interplanetary Navigator!").withStyle(ChatFormatting.RED), false);
+		}
+		
+		if (engines >= requiredJets && hasStation && hasFuel && fuelAmount > (fuelCost + contraption.weightCost) && heatShielding >= heatCost && oxygenSealed && !interplanetaryFlag) {
 		System.out.println(engines);
 		contraption.removeBlocksFromWorld(level, BlockPos.ZERO);
 		RocketContraptionEntity movedContraption =
@@ -286,10 +297,34 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 		int dif = (int) (Math.pow(home_x - targ_x, 2) + Math.pow(home_y - targ_y, 2));
 		dif = Mth.roundToward(dif, 100) / 20;
 		int cost = dif + NorthstarPlanets.getPlanetAtmosphereCost(this.level.dimension()) + 1000;
+		
 		if (dif != 0) {
 	//		System.out.println(dif);
 		}
 		return cost * 8;
+	}
+	
+	public int engineCalc() {
+		String home = NorthstarPlanets.getPlanetName(this.level.dimension());
+		String targ = NorthstarPlanets.getPlanetName(target);
+		
+		int home_x = (int) NorthstarPlanets.getPlanetX(home);
+		int home_y = (int) NorthstarPlanets.getPlanetY(home);
+		
+		int targ_x = (int) NorthstarPlanets.getPlanetX(targ);
+		int targ_y = (int) NorthstarPlanets.getPlanetY(targ);
+		
+		int dif = (int) (Math.pow(home_x - targ_x, 2) + Math.pow(home_y - targ_y, 2));
+		dif = Mth.roundToward(dif, 100) / 20;
+		int cost = 0;
+		int homeCost = dif + NorthstarPlanets.getPlanetAtmosphereCost(this.level.dimension()) + 1000;
+		int targetCost = dif + NorthstarPlanets.getPlanetAtmosphereCost(this.level.dimension()) + 1000;
+		cost = homeCost >= targetCost ? homeCost : targetCost;
+		
+		if (dif != 0) {
+	//		System.out.println(dif);
+		}
+		return (cost * 8) / 800;
 	}
 	
 	// this is extremely buggy for some reason, this NEEDS to be fixed before release

@@ -353,6 +353,14 @@ public class NorthstarPlanets {
 		
 	}
 	
+	public static boolean isInterplanetary(ResourceKey<Level> home, ResourceKey<Level> dest) {
+		boolean flag = true;
+		if((home == Level.OVERWORLD && dest == NorthstarDimensions.MOON_DIM_KEY) || (dest == Level.OVERWORLD && home == NorthstarDimensions.MOON_DIM_KEY) || (dest == home)) {
+			flag = false;
+		}
+    	return flag;
+	}
+	
 	
 
 

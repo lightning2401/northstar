@@ -9,6 +9,7 @@ import java.util.Map;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.lightning.northstar.NorthstarTags;
+import com.lightning.northstar.block.NorthstarBlocks;
 import com.lightning.northstar.block.NorthstarTechBlocks;
 import com.lightning.northstar.block.tech.computer_rack.TargetingComputerRackBlockEntity;
 import com.lightning.northstar.block.tech.oxygen_generator.OxygenGeneratorBlockEntity;
@@ -39,7 +40,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -52,7 +52,6 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class RocketContraption extends TranslatingContraption{
@@ -68,8 +67,9 @@ public class RocketContraption extends TranslatingContraption{
 	private List<BlockPos> jetEngines;
 	private boolean rocket_station = false;
 	public boolean hasControls = false;
+	public boolean hasInterplanetaryNavigation = false;
 	private boolean has_fuel = false;
-	private boolean isUsingTicket = false;
+	public boolean isUsingTicket;
 	private int fuelAmount = 0;
 	private int jet_engines = 0;
 	public float computingPower = 0;
@@ -114,24 +114,7 @@ public class RocketContraption extends TranslatingContraption{
 		return true;
 	}
 	public void burnFuel() {
-		if(isUsingTicket) {
-			IItemHandlerModifiable items = storage.getItems();
-			
-			if (items != null) {
-				for (int slot = 0; slot < items.getSlots(); slot++) {
-					ItemStack stack = items.extractItem(slot, 1, true);
-					if(!stack.is(NorthstarItems.RETURN_TICKET.get()))
-						continue;
-	
-					stack = items.extractItem(slot, 1, false);
-					ItemStack containerItem = stack.getCraftingRemainingItem();
-					if (!containerItem.isEmpty())
-						ItemHandlerHelper.insertItemStacked(items, containerItem, false);
-					return;
-				}
-			}
-			
-		}
+
 		
 		IFluidHandler rocketFuels = storage.getFluids();
 		fuelCost = (int) ((int) weightCost + ((fuelCost - (fuelCost * computingPower))));
@@ -161,11 +144,24 @@ public class RocketContraption extends TranslatingContraption{
 				name = rsbe.name;
 				stationPos = toLocalPos(pos);
 				System.out.println("rocket station: " + rsbe.container.getItem(0));
+				
+				// this is a bit sketchy in game, it should delete the ticket after it's
+				// actually been used, not when assembling the rocket
+				// though I can't figure that out so this may have to do
+				
 				if(rsbe.container.getItem(0).is(NorthstarItems.RETURN_TICKET.get())) {
-					isUsingTicket = true;
-					storage.addBlock(stationPos, rsbe);
+					if(rsbe.container.getItem(0).getTagElement("Planet") != null) {
+						if(NorthstarPlanets.getPlanetDimension(NorthstarPlanets.targetGetter(rsbe.container.getItem(0).getTagElement("Planet").toString())) == dest)
+						this.isUsingTicket = true;
+						this.isUsingTicket = true;
+						System.out.println("setup isUsingTicket: " + this.isUsingTicket);
+					}
 				}
 			}
+		}
+
+		if (blockState.is(NorthstarBlocks.INTERPLANETARY_NAVIGATOR.get())) {
+			this.hasInterplanetaryNavigation = true;
 		}
 		if(NorthstarTechBlocks.COMPUTER_RACK.has(blockState)) {
 			BlockEntity ent = world.getBlockEntity(pos);

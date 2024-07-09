@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;import org.apache.commons.lang3.mutable.MutableInt;
+import java.util.UUID;
 
+import org.apache.commons.lang3.mutable.MutableInt;
+
+import com.ibm.icu.impl.Pair;
 import com.lightning.northstar.Northstar;
+import com.lightning.northstar.block.tech.rocket_station.RocketStationBlockEntity;
 import com.lightning.northstar.world.dimension.NorthstarDimensions;
 
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientboundChangeDifficultyPacket;
 import net.minecraft.network.protocol.game.ClientboundPlayerAbilitiesPacket;
 import net.minecraft.network.protocol.game.ClientboundRespawnPacket;
@@ -20,8 +25,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.BiomeManager;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.portal.PortalForcer;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.level.storage.LevelData;
@@ -33,6 +40,9 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 @EventBusSubscriber(modid = Northstar.MOD_ID, bus = Bus.FORGE)
 public class RocketHandler {
 	public static List<RocketContraptionEntity> ROCKETS = new ArrayList<>();
+	public static List<Pair<Level, BlockPos>> TICKET_QUEUE = new ArrayList<>();
+	public static long eventTickNumber;
+	public static long eventTickNumberCheck;
 	static int pp = 0;
 	
 	@SubscribeEvent
@@ -40,6 +50,8 @@ public class RocketHandler {
 //		long l = event.level.getGameTime();
 		if(event.level.isClientSide)
 			return;
+		
+		eventTickNumber = event.level.getGameTime();
 		if(ROCKETS.size() != 0) {
 			pp++;
 			for(int p = 0; p < ROCKETS.size(); p++) {
@@ -49,6 +61,29 @@ public class RocketHandler {
 					changeDim(ROCKETS.get(p), event.level);
 					ROCKETS.remove(ROCKETS.get(p));
 				}
+				}
+			}
+		}
+		if(eventTickNumber > eventTickNumberCheck) {
+			
+			
+			//this seems to get the job done, however it only works if the return ticket leads to the current dimension
+			//in other words, this doesnt work when travelling between dimensions (aka 99% of the time)
+			//seems like the contraption's data isnt being saved between dimensions, so it should somehow be stored in the entity
+			if(!TICKET_QUEUE.isEmpty()) {
+				List<Pair<Level, BlockPos>> DELETE_QUEUE = new ArrayList<>();
+				for(Pair<Level,BlockPos> entries : TICKET_QUEUE) {
+					if(event.level.dimension() == entries.first.dimension()) {
+						System.out.println("looking for ticket at:  " + entries.second);
+						if(entries.first.getBlockEntity(entries.second) instanceof RocketStationBlockEntity rsbe) {
+							rsbe.container.setItem(0, new ItemStack(Blocks.AIR.asItem()));
+							System.out.println("ticket should be deleted");
+							DELETE_QUEUE.add(entries);
+						}
+					}
+				}
+				for(Pair<Level,BlockPos> entries : DELETE_QUEUE) {
+					TICKET_QUEUE.remove(entries);
 				}
 			}
 		}
@@ -134,6 +169,7 @@ public class RocketHandler {
 	    	  			((RocketContraptionEntity)transportedEntity).setControllingPlayer(controller);
 	    	  		}
 	    	  		((RocketContraptionEntity)transportedEntity).owner = rce.owner;
+	    	  		((RocketContraptionEntity)transportedEntity).isUsingTicket = rce.isUsingTicket;
 	    	  		
 	    	  		
 	    	  		System.out.println(seatMap);
@@ -215,6 +251,12 @@ public class RocketHandler {
 	          return entity;
 	       
 	}
+	
+	public static void deleteTicket(Level level, BlockPos pos) {
+		TICKET_QUEUE.add(Pair.of(level, pos.above()));
+		eventTickNumberCheck = eventTickNumber + 3;
+	}
+	
 	
 	public static boolean isInRocket(Entity entity) {
 		for(RocketContraptionEntity rockets : ROCKETS) {

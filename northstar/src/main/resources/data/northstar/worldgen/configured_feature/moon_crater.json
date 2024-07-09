@@ -27,7 +27,8 @@
         "max_inclusive": 3
       }
     },
-    "half_height": 2
+    "half_height": 2,
+	"can_delete": "#northstar:natural_moon_blocks"
   }
 }
 
