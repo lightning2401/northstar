@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    	"tag": "northstar:glowstone_ores"
+  },
+  "result": "minecraft:glowstone_dust",
+  "experience": 0.7,
+  "cookingtime": 100
+}

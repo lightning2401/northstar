@@ -65,11 +65,7 @@ public class RocketHandler {
 			}
 		}
 		if(eventTickNumber > eventTickNumberCheck) {
-			
-			
-			//this seems to get the job done, however it only works if the return ticket leads to the current dimension
-			//in other words, this doesnt work when travelling between dimensions (aka 99% of the time)
-			//seems like the contraption's data isnt being saved between dimensions, so it should somehow be stored in the entity
+			//deleting contents of the queue
 			if(!TICKET_QUEUE.isEmpty()) {
 				List<Pair<Level, BlockPos>> DELETE_QUEUE = new ArrayList<>();
 				for(Pair<Level,BlockPos> entries : TICKET_QUEUE) {
@@ -170,6 +166,7 @@ public class RocketHandler {
 	    	  		}
 	    	  		((RocketContraptionEntity)transportedEntity).owner = rce.owner;
 	    	  		((RocketContraptionEntity)transportedEntity).isUsingTicket = rce.isUsingTicket;
+	    	  		((RocketContraptionEntity)transportedEntity).visualEngineCount = rce.visualEngineCount;
 	    	  		
 	    	  		
 	    	  		System.out.println(seatMap);

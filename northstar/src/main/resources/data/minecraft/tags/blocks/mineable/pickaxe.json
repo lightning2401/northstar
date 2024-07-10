@@ -16,6 +16,9 @@
   			"northstar:mars_deep_redstone_ore",
   			"northstar:mars_deep_quartz_ore",
   			
+  			"northstar:iron_cogwheel",
+  			"northstar:iron_large_cogwheel",
+  			
   			"northstar:mars_stone_bricks",
   			"northstar:mars_stone_brick_slab",
   			"northstar:mars_stone_brick_slab_vertical",
@@ -31,6 +34,7 @@
 			"northstar:martian_steel_sheetmetal_slab",
 			"northstar:martian_steel_sheetmetal_vertical_slab",
 			"northstar:martian_steel_plating",
+			"northstar:martian_steel_plating_stairs",
 			"northstar:martian_steel_plating_slab",
 			"northstar:martian_steel_plating_vertical_slab",
 			"northstar:martian_steel_large_plating",
@@ -174,6 +178,7 @@
   			
   			"northstar:telescope",
   			"northstar:electrolysis_machine",
+  			"northstar:interplanetary_navigator",
   			"northstar:iron_space_door",
   			"northstar:computer_rack",
   			"northstar:combustion_engine",

@@ -78,8 +78,10 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 	int cooldownLength = 100;
 	private int maxSpeed = 5;
 	public int launchtime = 0;
+	public int visualEngineCount = 0;
 	private boolean activeLaunch = false;
 	public Player owner;
+	public UUID ownerID;
 
 	public double sequencedOffsetLimit;
 	public float lift_vel = 0.5f;
@@ -121,9 +123,16 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 		if(launchtime > 0 && activeLaunch) {launchtime--;}
 		if(launchtime == 0 && activeLaunch)
 		{blasting = true;}
+		if(visualEngineCount == 0) {
+			visualEngineCount = ((RocketContraption)this.contraption).getVisualJetEngines();
+		}
 		
 		if(this.owner == null && ((RocketContraption)this.contraption).owner != null) {
 			this.owner = ((RocketContraption)this.contraption).owner;
+		}
+		
+		if(this.owner == null && this.ownerID != null) {
+			this.owner = level.getPlayerByUUID(ownerID);
 		}
 		
 		if(((RocketContraption)this.contraption).isUsingTicket) {
@@ -160,6 +169,8 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 		("Required Engines: " + requiredJets).withStyle(ChatFormatting.BLUE), false);
 		contrap.owner.displayClientMessage(Component.literal
 		("Current Engine Count: " + contrap.hasJetEngine()).withStyle(ChatFormatting.BLUE), false);
+		contrap.owner.displayClientMessage(Component.literal
+		("All entities should remain seated for the duration of the flight!").withStyle(ChatFormatting.AQUA), false);
 		printed = true;}
 		if(destination == null) {
 			//bruh :(
@@ -371,6 +382,8 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 		return true;
 	}
 	public boolean clientControl(BlockPos controlsLocalPos, Collection<Integer> heldControls, Player player) {
+		if (player == null)
+			return false;
 		if (player.isSpectator())
 			return false;
 		if(controlsLocalPos == null)
@@ -526,12 +539,53 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 	protected void writeAdditional(CompoundTag compound, boolean spawnPacket) {
 		if (sequencedOffsetLimit >= 0)
 			compound.putDouble("SequencedOffsetLimit", sequencedOffsetLimit);
+		
+		compound.putBoolean("blasting", this.blasting);
+		compound.putBoolean("slowing", this.slowing);
+		compound.putBoolean("isUsingTicket", this.isUsingTicket);
+		compound.putBoolean("launched", this.launched);
+		
+		compound.putBoolean("landing", this.landing);
+		compound.putBoolean("fuelBurned", this.fuelBurned);
+		compound.putBoolean("printed", this.printed);
+		compound.putBoolean("activeLaunch", this.activeLaunch);
+		
+		compound.putString("home", NorthstarPlanets.getPlanetName(home));
+		compound.putString("destination", NorthstarPlanets.getPlanetName(destination));
+		if(this.owner != null)
+		{compound.putUUID("player", this.owner.getUUID());}
+
+		compound.putInt("visualEngineCount", this.visualEngineCount);
+		
+		compound.putFloat("lift_vel", lift_vel);
+		compound.putFloat("final_lift_vel", final_lift_vel);
+		
 		super.writeAdditional(compound, spawnPacket);
 	}
 
 	protected void readAdditional(CompoundTag compound, boolean spawnData) {
 		sequencedOffsetLimit =
 			compound.contains("SequencedOffsetLimit") ? compound.getDouble("SequencedOffsetLimit") : -1;
+		
+		this.blasting = compound.contains("blasting") ? compound.getBoolean("SequencedOffsetLimit") : false;
+		this.slowing = compound.contains("slowing") ? compound.getBoolean("slowing") : false;
+		this.isUsingTicket = compound.contains("isUsingTicket") ? compound.getBoolean("isUsingTicket") : false;
+		this.launched = compound.contains("launched") ? compound.getBoolean("launched") : false;
+		
+		this.landing = compound.contains("landing") ? compound.getBoolean("landing") : false;
+		this.fuelBurned = compound.contains("fuelBurned") ? compound.getBoolean("fuelBurned") : false;
+		this.printed = compound.contains("printed") ? compound.getBoolean("printed") : false;
+		this.activeLaunch = compound.contains("activeLaunch") ? compound.getBoolean("activeLaunch") : false;
+		
+		if(compound.contains("home")) {home = NorthstarPlanets.getPlanetDimension(compound.getString("home"));}
+		if(compound.contains("destination")) {destination = NorthstarPlanets.getPlanetDimension(compound.getString("destination"));}
+		
+		if(compound.contains("player")){this.ownerID = compound.getUUID("player");}
+
+		if(compound.contains("visualEngineCount")){this.visualEngineCount = compound.getInt("visualEngineCount");}
+		if(compound.contains("lift_vel")){this.lift_vel = compound.getFloat("lift_vel");}
+		if(compound.contains("final_lift_vel")){this.final_lift_vel = compound.getFloat("final_lift_vel");}
+		
 		super.readAdditional(compound, spawnData);
 	}
 	

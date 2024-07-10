@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [    
+    "northstar:moon_zinc_ore",
+    "northstar:moon_deep_zinc_ore",
+    
+    "northstar:mercury_zinc_ore",
+    "northstar:mercury_deep_zinc_ore"
+  ]
+}

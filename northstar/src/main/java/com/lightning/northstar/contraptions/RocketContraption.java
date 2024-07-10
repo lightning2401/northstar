@@ -12,6 +12,7 @@ import com.lightning.northstar.NorthstarTags;
 import com.lightning.northstar.block.NorthstarBlocks;
 import com.lightning.northstar.block.NorthstarTechBlocks;
 import com.lightning.northstar.block.tech.computer_rack.TargetingComputerRackBlockEntity;
+import com.lightning.northstar.block.tech.jet_engine.JetEngineBlock;
 import com.lightning.northstar.block.tech.oxygen_generator.OxygenGeneratorBlockEntity;
 import com.lightning.northstar.block.tech.rocket_station.RocketStationBlockEntity;
 import com.lightning.northstar.block.tech.temperature_regulator.TemperatureRegulatorBlockEntity;
@@ -72,6 +73,7 @@ public class RocketContraption extends TranslatingContraption{
 	public boolean isUsingTicket;
 	private int fuelAmount = 0;
 	private int jet_engines = 0;
+	private int visual_jet_engines = 0;
 	public float computingPower = 0;
 	private List<BlockPos> assembledJets;
 	private BlockPos stationPos;
@@ -182,6 +184,9 @@ public class RocketContraption extends TranslatingContraption{
 		}
 		if (NorthstarTechBlocks.JET_ENGINE.has(blockState)) {
 			jet_engines += 1;
+			if(blockState.getValue(JetEngineBlock.BOTTOM)) {
+				visual_jet_engines++;
+			}
 			assembledJets.add(toLocalPos(pos));
 		}
 		if (AllBlocks.FLUID_TANK.has(blockState)) {
@@ -282,6 +287,9 @@ public class RocketContraption extends TranslatingContraption{
 
 	public int hasJetEngine() {
 		return jet_engines;
+	}
+	public int getVisualJetEngines() {
+		return visual_jet_engines;
 	}
 	public boolean hasFuel() {
 		return has_fuel;

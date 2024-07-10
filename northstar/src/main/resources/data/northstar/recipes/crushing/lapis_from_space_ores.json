@@ -1,0 +1,23 @@
+{
+  "type": "create:crushing",
+  "ingredients": [
+    {
+    	"tag": "northstar:lapis_ores"
+    }
+  ],
+  "processingTime": 350,
+  "results": [
+    {
+      "count": 12,
+      "item": "minecraft:lapis_lazuli"
+    },
+    {
+      "chance": 0.5,
+      "item": "minecraft:lapis_lazuli"
+    },
+    {
+      "chance": 0.75,
+      "item": "create:experience_nugget"
+    }
+  ]
+}

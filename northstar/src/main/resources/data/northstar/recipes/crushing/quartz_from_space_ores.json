@@ -1,0 +1,23 @@
+{
+  "type": "create:crushing",
+  "ingredients": [
+    {
+    	"tag": "northstar:quartz_ores"
+    }
+  ],
+  "processingTime": 350,
+  "results": [
+    {
+      "count": 3,
+      "item": "minecraft:quartz"
+    },
+    {
+      "chance": 0.10,
+      "item": "minecraft:quartz"
+    },
+    {
+      "chance": 0.75,
+      "item": "create:experience_nugget"
+    }
+  ]
+}

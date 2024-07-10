@@ -173,12 +173,13 @@ public class NorthstarBlocks {
             () -> new MarsRootBlock(BlockBehaviour.Properties.of(Material.LEAVES, MaterialColor.TERRACOTTA_GRAY).lightLevel((p_50872_) -> {return 10;}).sound(SoundType.VINE)
                     .noOcclusion() .noCollission() .strength(0.2f).randomTicks().isSuffocating(NorthstarBlocks::never).isViewBlocking(NorthstarBlocks::never)), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
     
-    public static final RegistryObject<Block> COILER_LOG = registerBlock("coiler_log",
-            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_LIGHT_GREEN).sound(SoundType.WOOD)
-                    .strength(2f)), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
+
     public static final RegistryObject<Block> STRIPPED_COILER_LOG = registerBlock("stripped_coiler_log",
             () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_LIGHT_GREEN).sound(SoundType.WOOD)
                     .strength(2f)), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
+    public static final RegistryObject<Block> COILER_LOG = registerBlock("coiler_log",
+            () -> new LogBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_LIGHT_GREEN).sound(SoundType.WOOD)
+                    .strength(2f), STRIPPED_COILER_LOG.get()), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
     public static final RegistryObject<Block> COILER_PLANKS = registerBlock("coiler_planks",
             () -> new Block(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_LIGHT_GREEN).sound(SoundType.WOOD)
                     .strength(2f, 3f)), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
@@ -205,12 +206,13 @@ public class NorthstarBlocks {
                     .randomTicks() .instabreak() .noCollission()), null);
     
     
-    public static final RegistryObject<Block> WILTER_LOG = registerBlock("wilter_log",
-            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BLUE).sound(SoundType.WOOD)
-                    .strength(2f)), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
+
     public static final RegistryObject<Block> STRIPPED_WILTER_LOG = registerBlock("stripped_wilter_log",
             () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BLUE).sound(SoundType.WOOD)
                     .strength(2f)), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
+    public static final RegistryObject<Block> WILTER_LOG = registerBlock("wilter_log",
+            () -> new LogBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BLUE).sound(SoundType.WOOD)
+                    .strength(2f), STRIPPED_WILTER_LOG.get()), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
     public static final RegistryObject<Block> WILTER_PLANKS = registerBlock("wilter_planks",
             () -> new Block(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BLUE).sound(SoundType.WOOD)
                     .strength(2f)), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
@@ -222,12 +224,13 @@ public class NorthstarBlocks {
             () -> new StairBlock(OAK_PLANKS.defaultBlockState(), BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BLUE).sound(SoundType.WOOD)
                     .strength(2f, 3f)), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
     
-    public static final RegistryObject<Block> ARGYRE_LOG = registerBlock("argyre_log",
-            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_RED).sound(SoundType.WOOD)
-                    .strength(2f)), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
+
     public static final RegistryObject<Block> STRIPPED_ARGYRE_LOG = registerBlock("stripped_argyre_log",
             () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_RED).sound(SoundType.WOOD)
                     .strength(2f)), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
+    public static final RegistryObject<Block> ARGYRE_LOG = registerBlock("argyre_log",
+            () -> new LogBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_RED).sound(SoundType.WOOD)
+                    .strength(2f), STRIPPED_ARGYRE_LOG.get()), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
     public static final RegistryObject<Block> ARGYRE_LEAVES = registerBlock("argyre_leaves",
             () -> new LeavesBlock(BlockBehaviour.Properties.of(Material.LEAVES, MaterialColor.COLOR_ORANGE).sound(SoundType.GRASS)
                     .noOcclusion() .strength(0.5f).isSuffocating(NorthstarBlocks::never).isViewBlocking(NorthstarBlocks::never)), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);

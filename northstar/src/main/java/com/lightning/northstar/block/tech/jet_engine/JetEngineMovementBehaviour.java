@@ -37,9 +37,12 @@ public class JetEngineMovementBehaviour implements MovementBehaviour {
 		{RandomSource r = context.world.getRandom();
 		Vec3 c = context.position;
 		Vec3 v = c.add(VecHelper.offsetRandomly(Vec3.ZERO, r, .125f).multiply(1, 0, 1));
-		if(((RocketContraptionEntity)context.contraption.entity).blasting) 
-			{context.world.addAlwaysVisibleParticle(new RocketFlameParticleData(), v.x, v.y, v.z, 0, 0, 0);
-			context.world.addAlwaysVisibleParticle(new RocketSmokeParticleData(), v.x, v.y, v.z, 0, 0, 0);}
+		if(((RocketContraptionEntity)context.contraption.entity).blasting){
+			
+			if(((RocketContraptionEntity)context.contraption.entity).visualEngineCount <= 9 || r.nextInt(((RocketContraptionEntity)context.contraption.entity).visualEngineCount) / 2 == 0)
+			context.world.addAlwaysVisibleParticle(new RocketFlameParticleData(), v.x, v.y, v.z, 0, 0, 0);
+			context.world.addAlwaysVisibleParticle(new RocketSmokeParticleData(), v.x, v.y, v.z, 0, 0, 0);
+		}
 		else {context.world.addParticle(new ColdAirParticleData(), v.x, v.y, v.z, 0, 0, 0);}
 		return;}
 		if((context.contraption instanceof RocketContraption) && ((RocketContraptionEntity)context.contraption.entity).lift_vel < 0 && context.contraption.entity.getY() < context.contraption.entity.level.getMaxBuildHeight() + 200) 

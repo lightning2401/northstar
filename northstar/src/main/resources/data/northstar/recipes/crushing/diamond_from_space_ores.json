@@ -1,0 +1,22 @@
+{
+  "type": "create:crushing",
+  "ingredients": [
+    {
+    	"tag": "northstar:diamond_ores"
+    }
+  ],
+  "processingTime": 350,
+  "results": [
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "chance": 0.75,
+      "item": "minecraft:diamond"
+    },
+    {
+      "chance": 0.75,
+      "item": "create:experience_nugget"
+    }
+  ]
+}
