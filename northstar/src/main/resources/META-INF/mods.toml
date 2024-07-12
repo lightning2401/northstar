@@ -27,11 +27,11 @@ displayName="Northstar" #mandatory
 # A URL for the "homepage" for this mod, displayed in the mod UI
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-logoFile="examplemod.png" #optional
+logoFile="logo.png" #optional
 # A text field displayed in the mod UI
-credits="Thanks Obama" #optional
+#credits=""
 # A text field displayed in the mod UI
-authors="Lightning" #optional
+authors="lightning2401" #optional
 # Display Test controls the display for your mod in the server connection screen
 # MATCH_VERSION means that your mod will cause a red X if the versions on client and server differ. This is the default behaviour and should be what you choose if you have server and client elements to your mod.
 # IGNORE_SERVER_VERSION means that your mod will not cause a red X if it's present on the server but not on the client. This is what you should use if you're a server only mod.
@@ -42,7 +42,7 @@ authors="Lightning" #optional
 
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-Space; The Final Frontier.
+Inspired by Micdoodle's Galacticraft, Northstar seeks to return players to the stars with the power of the Create mod. 
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.northstar]] #optional

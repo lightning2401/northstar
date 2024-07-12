@@ -42,6 +42,8 @@ public class NorthstarItems {
 
 	public static final RegistryObject<Item> RAW_MARTIAN_IRON_ORE = ITEMS.register("raw_martian_iron_ore", () -> new Item(new Item.Properties().tab(NorthstarCreativeModeTab.NORTHSTAR_TAB)));
 	public static final RegistryObject<Item> RAW_TUNGSTEN_ORE = ITEMS.register("raw_tungsten_ore", () -> new Item(new Item.Properties().tab(NorthstarCreativeModeTab.NORTHSTAR_TAB)));
+	public static final RegistryObject<Item> CRUSHED_RAW_TUNGSTEN = ITEMS.register("crushed_raw_tungsten", () -> new Item(new Item.Properties().tab(NorthstarCreativeModeTab.NORTHSTAR_TAB)));
+	public static final RegistryObject<Item> TUNGSTEN_NUGGET = ITEMS.register("tungsten_nugget", () -> new Item(new Item.Properties().tab(NorthstarCreativeModeTab.NORTHSTAR_TAB)));
 	public static final RegistryObject<Item> RAW_GLOWSTONE_ORE = ITEMS.register("raw_glowstone_ore", () -> new Item(new Item.Properties().tab(NorthstarCreativeModeTab.NORTHSTAR_TAB)));
 	public static final RegistryObject<Item> ENRICHED_GLOWSTONE_ORE = ITEMS.register("enriched_glowstone_ore", () -> new Item(new Item.Properties().tab(NorthstarCreativeModeTab.NORTHSTAR_TAB)));
 	

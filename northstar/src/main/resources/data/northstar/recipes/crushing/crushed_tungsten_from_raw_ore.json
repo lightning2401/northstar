@@ -2,16 +2,12 @@
   "type": "create:crushing",
   "ingredients": [
     {
-    	"tag": "northstar:tungsten_ores"
+    	"item": "northstar:raw_tungsten_ore"
     }
   ],
   "processingTime": 500,
   "results": [
     {
-      "item": "northstar:crushed_raw_tungsten"
-    },
-    {
-      "chance": 0.75,
       "item": "northstar:crushed_raw_tungsten"
     },
     {
