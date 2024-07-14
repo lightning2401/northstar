@@ -11,7 +11,20 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 @EventBusSubscriber(modid = Northstar.MOD_ID, bus = Bus.FORGE)
-public class NorthstarPlanets {	
+public class NorthstarPlanets {	 
+	
+    private static final double EARTH_GRAV = 1;
+    private static final double MOON_GRAV = 0.16;
+    private static final double OUTER_MOON_GRAV = 0.06;
+    private static final double SUPER_GRAV = 4;
+    private static final double MARS_GRAV = 0.37;
+    private static final double VENUS_GRAV = 0.89;
+    private static final double MERCURY_GRAV = 0.38;
+    
+
+	private static final double GANYMEDE_GRAV = 0.14;
+    private static final double TITAN_GRAV = 0.14;
+    private static final double EUROPA_GRAV = 0.13;
 	
 	// MERCURY COORDS
     public static double mercury_x = 0;
@@ -322,6 +335,16 @@ public class NorthstarPlanets {
     	if(level == NorthstarDimensions.MOON_DIM_KEY) {return false;}
     	if(level == NorthstarDimensions.VENUS_DIM_KEY) {return false;}
     	return true;
+    }
+    
+    public static double getGravMultiplier(ResourceKey<Level> level) {
+    	// I love spaghetti
+    	if(level == NorthstarDimensions.MOON_DIM_KEY) {return MOON_GRAV;}
+    	if(level == NorthstarDimensions.MARS_DIM_KEY) {return MARS_GRAV;}
+    	if(level == NorthstarDimensions.MERCURY_DIM_KEY) {return MERCURY_GRAV;}
+    	if(level == NorthstarDimensions.VENUS_DIM_KEY) {return VENUS_GRAV;}
+    	if(level == NorthstarDimensions.EARTH_ORBIT_DIM_KEY) {return OUTER_MOON_GRAV;}
+		return 1;
     }
     
     public static boolean isCustomDimension(ResourceLocation resourceLocation) {

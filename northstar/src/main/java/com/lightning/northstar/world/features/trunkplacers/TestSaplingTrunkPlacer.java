@@ -241,8 +241,24 @@ public class TestSaplingTrunkPlacer extends TrunkPlacer {
 			         return false;
 			      }
 			   }
+		   protected boolean placeBlackstone(LevelSimulatedReader pLevel, BiConsumer<BlockPos, BlockState> pBlockSetter, RandomSource pRandom, BlockPos pPos, TreeConfiguration treeconfiguration, Function<Object, Object> function, Direction dir) {
+			   if (this.validTreePos(pLevel, pPos)) {
+				   pBlockSetter.accept(pPos, Blocks.BLACKSTONE.defaultBlockState());
+				   return true;
+			   } else {
+				   return false;
+			   }
+		   }
+		   protected boolean placeShroomlight(LevelSimulatedReader pLevel, BiConsumer<BlockPos, BlockState> pBlockSetter, RandomSource pRandom, BlockPos pPos, TreeConfiguration treeconfiguration, Function<Object, Object> function, Direction dir) {
+			   if (this.validTreePos(pLevel, pPos)) {
+				   pBlockSetter.accept(pPos, Blocks.SHROOMLIGHT.defaultBlockState());
+				   return true;
+			   } else {
+				   return false;
+			   }
+		   }
 		   @Override
 		   protected boolean validTreePos(LevelSimulatedReader pLevel, BlockPos pPos) {
-			      return true;
+			   return pLevel.isStateAtPosition(pPos, block -> (block.isAir())) || pLevel.isStateAtPosition(pPos, block -> (block.getMaterial().isReplaceable()));
 		   }
 }

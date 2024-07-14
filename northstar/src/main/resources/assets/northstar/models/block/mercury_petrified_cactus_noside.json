@@ -1,0 +1,44 @@
+{
+	"credit": "Made with Blockbench",
+	"ambientocclusion": false,
+	"textures": {
+		"1": "northstar:block/mercury_petrified_cactus_thorns",
+		"particle": "northstar:block/mercury_petrified_cactus",
+		"texture": "northstar:block/mercury_petrified_cactus"
+	},
+	"elements": [
+		{
+			"from": [4, 4, 4],
+			"to": [12, 12, 12],
+			"faces": {
+				"north": {"uv": [4, 4, 12, 12], "texture": "#texture"}
+			}
+		},
+		{
+			"from": [4, 4, 2],
+			"to": [12, 12, 4],
+			"rotation": {"angle": 0, "axis": "y", "origin": [4, 4, 2]},
+			"faces": {
+				"north": {"uv": [0, 0, 8, 8], "texture": "#1"},
+				"east": {"uv": [10, 0, 8, 8], "texture": "#1"},
+				"south": {"uv": [0, 0, 8, 8], "texture": "#1"},
+				"west": {"uv": [8, 0, 10, 8], "texture": "#1"},
+				"up": {"uv": [0, 8, 8, 10], "texture": "#1"},
+				"down": {"uv": [0, 10, 8, 8], "texture": "#1"}
+			}
+		},
+		{
+			"from": [4, 4, 4],
+			"to": [12, 12, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [4, 4, 10]},
+			"faces": {
+				"north": {"uv": [0, 0, 8, 8], "texture": "#1"},
+				"east": {"uv": [8, 0, 10, 8], "texture": "#1"},
+				"south": {"uv": [0, 0, 8, 8], "texture": "#1"},
+				"west": {"uv": [10, 0, 8, 8], "texture": "#1"},
+				"up": {"uv": [0, 10, 8, 8], "texture": "#1"},
+				"down": {"uv": [0, 8, 8, 10], "texture": "#1"}
+			}
+		}
+	]
+}

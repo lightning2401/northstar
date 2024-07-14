@@ -20,6 +20,7 @@ import com.lightning.northstar.item.NorthstarItems;
 import com.lightning.northstar.world.features.NorthstarConfiguredFeatures;
 import com.lightning.northstar.world.features.grower.ArgyreSaplingTreeGrower;
 import com.lightning.northstar.world.features.grower.CoilerTreeGrower;
+import com.lightning.northstar.world.features.grower.MercuryCactusGrower;
 import com.lightning.northstar.world.features.grower.TestTreeGrower;
 import com.lightning.northstar.world.features.grower.WilterTreeGrower;
 
@@ -724,8 +725,23 @@ public class NorthstarBlocks {
             () -> new StairBlock(CALORIAN_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_GRAY).sound(SoundType.BASALT)
                     .strength(4f, 4f)), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
     
+    public static final RegistryObject<Block> MERCURY_SHELF_FUNGUS = registerBlock("mercury_shelf_fungus",
+            () -> new MercuryShelfFungusBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_GRAY).sound(SoundType.BASALT)
+                    .strength(1f, 1f).noCollission().noOcclusion().isSuffocating(NorthstarBlocks::never).isViewBlocking(NorthstarBlocks::never)), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
+    public static final RegistryObject<Block> MERCURY_SHELF_FUNGUS_BLOCK = registerBlock("mercury_shelf_fungus_block",
+            () -> new HugeMushroomBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_GRAY).sound(SoundType.BASALT)
+            		.strength(4f, 6f).requiresCorrectToolForDrops()), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
+    public static final RegistryObject<Block> MERCURY_CACTUS = registerBlock("mercury_cactus",
+            () -> new MercuryCactusBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_GRAY).sound(SoundType.BASALT)
+            		.strength(4f, 6f).requiresCorrectToolForDrops()), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
+ 
+    
     public static final RegistryObject<Block> TEST = registerBlock("test_sapling",
             () -> new SaplingBlock(new TestTreeGrower(), BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS)
+                    .randomTicks() .instabreak() .noCollission()), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
+    
+    public static final RegistryObject<Block> CACTUS_TEST = registerBlock("cactus_test_sapling",
+            () -> new SaplingBlock(new MercuryCactusGrower(), BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS)
                     .randomTicks() .instabreak() .noCollission()), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
     
     

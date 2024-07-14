@@ -17,6 +17,7 @@ import net.minecraft.world.level.levelgen.feature.FossilFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.MultifaceGrowthConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -44,6 +45,7 @@ public abstract class NorthstarFeatures<FC extends FeatureConfiguration> {
 		public static final RegistryObject<Feature<?>> MARS_ROOTS = FEATURES.register("mars_roots", () -> new MarsRootsFeature(MultifaceGrowthConfiguration.CODEC));
 		public static final RegistryObject<Feature<?>> MULTIFACE_GROWTH_CUSTOM = FEATURES.register("multiface_growth_custom", () -> new MultifaceGrowthCustomFeature(MultifaceGrowthConfiguration.CODEC));
 		public static final RegistryObject<Feature<?>> ROOF_VINES = FEATURES.register("roof_vines", () -> new RoofVinesFeature(RoofVinesConfig.CODEC));
+		public static final RegistryObject<Feature<?>> MERCURY_CACTUS = FEATURES.register("mercury_cactus", () -> new MercuryCactusFeature(NoneFeatureConfiguration.CODEC));
 		
 	    public static void register(IEventBus eventBus) {
 	        FEATURES.register(eventBus);

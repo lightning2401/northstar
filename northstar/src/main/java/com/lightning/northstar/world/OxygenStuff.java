@@ -13,6 +13,7 @@ import com.lightning.northstar.NorthstarTags;
 import com.lightning.northstar.particle.GlowstoneParticleData;
 import com.lightning.northstar.particle.NorthstarParticles;
 import com.lightning.northstar.world.dimension.NorthstarPlanets;
+import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorBlock;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -157,7 +158,11 @@ public class OxygenStuff {
     }
 	
     public static boolean getIsAir(BlockState state) {
-        return state.is(NorthstarTags.NorthstarBlockTags.AIR_PASSES_THROUGH.tag) || !state.getFluidState().isEmpty();
+    	boolean slideFlag = false;
+    	if(state.getBlock() instanceof SlidingDoorBlock) {
+    		slideFlag = state.getValue(SlidingDoorBlock.OPEN);
+    	}
+        return state.is(NorthstarTags.NorthstarBlockTags.AIR_PASSES_THROUGH.tag) || !state.getFluidState().isEmpty() || slideFlag;
      }
     
     

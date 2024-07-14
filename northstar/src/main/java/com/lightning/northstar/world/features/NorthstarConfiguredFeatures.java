@@ -34,6 +34,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.AcaciaFoliagePlacer;
@@ -178,6 +179,12 @@ public class NorthstarConfiguredFeatures {
                     BlockStateProvider.simple(NorthstarBlocks.WILTER_LEAVES.get()),
                     new AcaciaFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0)),
                     new TwoLayersFeatureSize(2, 0, 2)).build()));
+	
+	@SuppressWarnings("unchecked" )
+	public static final RegistryObject<ConfiguredFeature<?, ?>> MERCURY_CACTUS =
+            CONFIGURED_FEATURES.register("mercury_cactus", () ->  
+            new ConfiguredFeature<>((Feature<NoneFeatureConfiguration>)NorthstarFeatures.MERCURY_CACTUS.get(), new NoneFeatureConfiguration()));
+            
 	@SuppressWarnings("unchecked")
 	public static final RegistryObject<ConfiguredFeature<?, ?>> CRIMSITE_COLUMN =
 			CONFIGURED_FEATURES.register("crimsite_column", () ->

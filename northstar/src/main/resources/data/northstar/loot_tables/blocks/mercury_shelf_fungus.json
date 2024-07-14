@@ -7,109 +7,80 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "northstar:mars_roots",
+          "name": "northstar:mercury_shelf_fungus",
           "functions": [
             {
               "function": "minecraft:set_count",
-              "count": 1,
-              "add": true,
+              "count": 2,
+              "add": false,
               "conditions": [
                 {
                   "condition": "minecraft:block_state_property",
-                  "block": "northstar:mars_roots",
+                  "block": "northstar:mercury_shelf_fungus",
                   "properties": {
-                    "down": "true"
+                    "shelves": "2"
                   }
                 }
               ]
             },
             {
               "function": "minecraft:set_count",
-              "count": 1,
-              "add": true,
+              "count": 3,
+              "add": false,
               "conditions": [
                 {
                   "condition": "minecraft:block_state_property",
-                  "block": "northstar:mars_roots",
+                  "block": "northstar:mercury_shelf_fungus",
                   "properties": {
-                    "up": "true"
+                    "shelves": "3"
                   }
                 }
               ]
             },
             {
               "function": "minecraft:set_count",
-              "count": 1,
-              "add": true,
+              "count": 4,
+              "add": false,
               "conditions": [
                 {
                   "condition": "minecraft:block_state_property",
-                  "block": "northstar:mars_roots",
+                  "block": "northstar:mercury_shelf_fungus",
                   "properties": {
-                    "north": "true"
+                    "shelves": "4"
                   }
                 }
               ]
             },
             {
               "function": "minecraft:set_count",
-              "count": 1,
-              "add": true,
+              "count": 5,
+              "add": false,
               "conditions": [
                 {
                   "condition": "minecraft:block_state_property",
-                  "block": "northstar:mars_roots",
+                  "block": "northstar:mercury_shelf_fungus",
                   "properties": {
-                    "south": "true"
+                    "shelves": "5"
                   }
                 }
               ]
             },
             {
               "function": "minecraft:set_count",
-              "count": 1,
-              "add": true,
+              "count": 6,
+              "add": false,
               "conditions": [
                 {
                   "condition": "minecraft:block_state_property",
-                  "block": "northstar:mars_roots",
+                  "block": "northstar:mercury_shelf_fungus",
                   "properties": {
-                    "west": "true"
+                    "shelves": "6"
                   }
                 }
               ]
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": 1,
-              "add": true,
-              "conditions": [
-                {
-                  "condition": "minecraft:block_state_property",
-                  "block": "northstar:mars_roots",
-                  "properties": {
-                    "east": "true"
-                  }
-                }
-              ]
-            },
-            {
-              "function": "minecraft:set_count",
-              "count": -1,
-              "add": true
             },
             {
               "function": "minecraft:explosion_decay"
-            }
-          ],
-          "conditions": [
-            {
-              "condition": "minecraft:match_tool",
-              "predicate": {
-                "items": [
-                  "minecraft:shears"
-                ]
-              }
             }
           ]
         }

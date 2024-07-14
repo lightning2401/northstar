@@ -257,6 +257,7 @@ public class Northstar
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.MARS_ROOTS.get(), RenderType.cutout());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.POINTED_CRIMSITE.get(), RenderType.cutout());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.ICICLE.get(), RenderType.cutout());
+    		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.MERCURY_CACTUS.get(), RenderType.cutout());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.FROST.get(), RenderType.translucent());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.MARTIAN_TALL_GRASS.get(), RenderType.cutout());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.MARTIAN_STRAWBERRY_BUSH.get(), RenderType.cutout());
@@ -269,6 +270,7 @@ public class Northstar
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.MEDIUM_LUNAR_SAPPHIRE_BUD.get(), RenderType.cutout());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.LARGE_LUNAR_SAPPHIRE_BUD.get(), RenderType.cutout());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.MARS_WORM_NEST.get(), RenderType.cutout());
+    		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.MERCURY_SHELF_FUNGUS.get(), RenderType.cutout());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.METHANE_ICE.get(), RenderType.translucent());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.IRON_GRATE.get(), RenderType.cutout());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.MARTIAN_STEEL_GRATE.get(), RenderType.cutout());

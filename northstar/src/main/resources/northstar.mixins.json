@@ -13,6 +13,7 @@
 	"MinecraftServerMixin",
 	"MobMixin",
 	"PlayerMixin",
+	"LivingEntityRendererMixin",
 	"gravitystuff.AbstractArrowGravityMixin",
 	"gravitystuff.AbstractMinecartGravityMixin",
 	"gravitystuff.BoatGravityMixin",

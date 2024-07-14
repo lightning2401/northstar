@@ -68,7 +68,27 @@
     	  "fluid": "create:potion",
     	  "nbt": {
      	   "Bottle": "REGULAR",
-      	  "Potion": "minecraft:strength"}
+      	  "Potion": "northstar:enhanced_strength"}
+        }
+      ],
+      "results": [
+        {
+          "item": "northstar:dormant_martian_seed_sequenced"
+        }
+      ]
+    },
+    {
+      "type": "create:filling",
+      "ingredients": [
+        {
+          "item": "northstar:dormant_martian_seed_sequenced"
+        },
+        {
+    	  "amount": 25,
+    	  "fluid": "create:potion",
+    	  "nbt": {
+     	   "Bottle": "REGULAR",
+      	  "Potion": "northstar:enhanced_regeneration"}
         }
       ],
       "results": [
