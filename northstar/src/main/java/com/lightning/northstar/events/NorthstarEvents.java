@@ -26,7 +26,7 @@ public class NorthstarEvents {
 	}
 	@SubscribeEvent
 	public static void registerCommands(RegisterCommandsEvent event) {
-		VenusWeather.register(event.getDispatcher());
+//		VenusWeather.register(event.getDispatcher());
 //		MarsWeather.register(event.getDispatcher());
 	}
 }
