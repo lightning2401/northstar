@@ -1,6 +1,8 @@
-// This mod requires Create to work! //
+// This mod requires Create & Geckolib to work! //
 
 // https://www.curseforge.com/minecraft/mc-mods/create //
+
+// https://www.curseforge.com/minecraft/mc-mods/geckolib //
 
 Welcome to Northstar!
 
