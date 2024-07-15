@@ -47,27 +47,25 @@ public class MercuryCactusBlock extends PipeBlock {
 	
 	@SuppressWarnings("deprecation")
 	public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
-		if (!pState.canSurvive(pLevel, pCurrentPos)) {
-			pLevel.scheduleTick(pCurrentPos, this, 1);
-			return super.updateShape(pState, pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos);
-		} else {
-			BlockState newState = this.defaultBlockState();
-			for(Direction direction : Direction.values()) {
-				BlockPos blockpos = pCurrentPos.relative(direction);
-				BlockState blockstate1 = pLevel.getBlockState(blockpos);
-				if (blockstate1.is(this) || blockstate1.isSolidRender(pLevel, blockpos)) {
-					newState = newState.setValue(PROPERTY_BY_DIRECTION.get(direction), true);
-				}
+		BlockState newState = this.defaultBlockState();
+		for(Direction direction : Direction.values()) {
+			BlockPos blockpos = pCurrentPos.relative(direction);
+			BlockState blockstate1 = pLevel.getBlockState(blockpos);
+			if (blockstate1.is(this) || blockstate1.isSolidRender(pLevel, blockpos)) {
+				newState = newState.setValue(PROPERTY_BY_DIRECTION.get(direction), true);
 			}
-			return newState;
 		}
+		return newState;
+			
 	}
 
 	public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
+		BlockState newstate = this.updateShape(pState, Direction.UP, pState, pLevel, pPos, pPos);
 		if (!pState.canSurvive(pLevel, pPos)) {
 // kind of debating whether i should keep this or not
 //			pLevel.destroyBlock(pPos, true);
 		}
+		pLevel.setBlock(pPos, newstate, 3);
 	}
 	
 	public void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {

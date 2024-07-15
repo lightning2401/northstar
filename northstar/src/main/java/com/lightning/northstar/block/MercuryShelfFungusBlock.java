@@ -16,6 +16,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BushBlock;
@@ -120,6 +121,18 @@ public class MercuryShelfFungusBlock extends Block implements SimpleWaterloggedB
 	
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
 		pBuilder.add(FACING, WATERLOGGED, SHELVES);
+	}
+	public BlockState getStateForGeneration(BlockState state, WorldGenLevel level, BlockPos blockpos1, Direction direction) {
+		BlockState blockstate = this.defaultBlockState();
+		for(Direction dir : Direction.Plane.HORIZONTAL) {
+			if(level.getBlockState(blockpos1.relative(dir)).isSolidRender(level, blockpos1.relative(dir))) {
+				blockstate = blockstate.setValue(FACING, dir);
+			}
+		}
+		if(blockstate != this.defaultBlockState())
+			return blockstate;
+		else
+			return null;
 	}
 	
 }

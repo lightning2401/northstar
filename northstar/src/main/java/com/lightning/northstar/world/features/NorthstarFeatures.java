@@ -46,6 +46,8 @@ public abstract class NorthstarFeatures<FC extends FeatureConfiguration> {
 		public static final RegistryObject<Feature<?>> MULTIFACE_GROWTH_CUSTOM = FEATURES.register("multiface_growth_custom", () -> new MultifaceGrowthCustomFeature(MultifaceGrowthConfiguration.CODEC));
 		public static final RegistryObject<Feature<?>> ROOF_VINES = FEATURES.register("roof_vines", () -> new RoofVinesFeature(RoofVinesConfig.CODEC));
 		public static final RegistryObject<Feature<?>> MERCURY_CACTUS = FEATURES.register("mercury_cactus", () -> new MercuryCactusFeature(NoneFeatureConfiguration.CODEC));
+		public static final RegistryObject<Feature<?>> MERCURY_LARGE_SHELVES = FEATURES.register("mercury_large_shelves", () -> new MercuryShelvesFeature(NoneFeatureConfiguration.CODEC));
+		public static final RegistryObject<Feature<?>> MERCURY_SMALL_SHELVES = FEATURES.register("mercury_small_shelves", () -> new MercuryShelvesSmallFeature(NoneFeatureConfiguration.CODEC));
 		
 	    public static void register(IEventBus eventBus) {
 	        FEATURES.register(eventBus);
