@@ -31,7 +31,7 @@ public class WormNestFeature extends Feature<StructureFeatureConfig>  {
 		StructureFeatureConfig config = pContext.config();
 
 		int i = randomsource.nextInt(config.structures.size());
-		int nestcount = randomsource.nextIntBetweenInclusive(2,8);
+		int nestcount = randomsource.nextIntBetweenInclusive(2,7);
 		for(int e = 0; e < nestcount;e++) {
 //			System.out.println("e: " + e + "   nestcount: " + nestcount);
 			i = randomsource.nextInt(config.structures.size());
@@ -74,11 +74,11 @@ public class WormNestFeature extends Feature<StructureFeatureConfig>  {
 	
 	protected BlockPos scan(Direction dir, BlockPos pos, WorldGenLevel level, int scanDist) {
 		BlockPos.MutableBlockPos mutable = pos.mutable();
-		if(level.getBlockState(pos).isAir() && !level.getBlockState(pos.below()).isAir()) 
+		if(level.getBlockState(pos).getMaterial().isReplaceable() && !level.getBlockState(pos.below()).getMaterial().isReplaceable()) 
 		{return pos;}
 		for(int i = 0; i < scanDist; i++) {
 			mutable.move(Direction.UP);
-			if(level.getBlockState(mutable).isAir() && !level.getBlockState(mutable.below()).isAir()) {
+			if(level.getBlockState(mutable).getMaterial().isReplaceable() && !level.getBlockState(mutable.below()).getMaterial().isReplaceable()) {
 				System.out.println("WAAAAAAAAAAGGGGGGGGGHHHHHHH");
 				BlockPos newblockpos = new BlockPos(mutable.getX(),mutable.getY(),mutable.getZ());
 				return newblockpos;
@@ -87,7 +87,7 @@ public class WormNestFeature extends Feature<StructureFeatureConfig>  {
 		mutable = pos.mutable();
 		for(int i = 0; i < scanDist; i++) {
 			mutable.move(Direction.DOWN);
-			if(!level.getBlockState(mutable).isAir() && level.getBlockState(mutable.above()).isAir()) {
+			if(!level.getBlockState(mutable).getMaterial().isReplaceable() && level.getBlockState(mutable.above()).getMaterial().isReplaceable()) {
 				BlockPos newblockpos = new BlockPos(mutable.getX(),mutable.getY(),mutable.getZ());
 				return newblockpos;
 			}

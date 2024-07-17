@@ -41,7 +41,7 @@ public class NorthstarCommonListener {
 		event.put(NorthstarEntityTypes.MERCURY_RAPTOR.get(),
 				Monster.createMobAttributes().add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.MAX_HEALTH, 36.0D).add(Attributes.ATTACK_DAMAGE, 8).add(Attributes.MOVEMENT_SPEED, 0.25f).build());
 		event.put(NorthstarEntityTypes.MERCURY_ROACH.get(),
-				Monster.createMobAttributes().add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.MAX_HEALTH, 8.0D).add(Attributes.ARMOR, 20).add(Attributes.MOVEMENT_SPEED, 0.2f).build());
+				Monster.createMobAttributes().add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.MAX_HEALTH, 8.0D).add(Attributes.ATTACK_DAMAGE, 2).add(Attributes.ARMOR, 20).add(Attributes.MOVEMENT_SPEED, 0.2f).build());
 		event.put(NorthstarEntityTypes.MERCURY_TORTOISE.get(),
 				Monster.createMobAttributes().add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.MAX_HEALTH, 30.0D).add(Attributes.ARMOR, 16).add(Attributes.MOVEMENT_SPEED, 0.15f).build());
 		

@@ -259,6 +259,6 @@ public class TestSaplingTrunkPlacer extends TrunkPlacer {
 		   }
 		   @Override
 		   protected boolean validTreePos(LevelSimulatedReader pLevel, BlockPos pPos) {
-			   return pLevel.isStateAtPosition(pPos, block -> (block.isAir())) || pLevel.isStateAtPosition(pPos, block -> (block.getMaterial().isReplaceable()));
+			   return true;
 		   }
 }

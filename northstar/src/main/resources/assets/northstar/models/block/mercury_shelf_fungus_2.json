@@ -9,7 +9,7 @@
 			"name": "shelf_1",
 			"from": [5, 7, 0],
 			"to": [16, 7, 6],
-			"rotation": {"angle": 0, "axis": "y", "origin": [5, 7, 0]},
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [5, 7, 0]},
 			"faces": {
 				"north": {"uv": [0, 0, 11, 0], "texture": "#missing"},
 				"east": {"uv": [0, 0, 6, 0], "texture": "#missing"},
@@ -23,7 +23,7 @@
 			"name": "shelf_2",
 			"from": [0, 11, 0],
 			"to": [12, 11, 4],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, 11, 0]},
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [0, 11, 0]},
 			"faces": {
 				"north": {"uv": [0, 0, 12, 0], "texture": "#missing"},
 				"east": {"uv": [0, 0, 5, 0], "texture": "#missing"},

@@ -72,10 +72,11 @@ public abstract class FogRendererMixin {
 	    		if (playerEyeLevel > 450) {info.cancel();
 			 	  ClientLevel level = Minecraft.getInstance().level;
 			 	  Vec3 toad = level.getSkyColor(Minecraft.getInstance().player.getEyePosition(3), pPartialTicks);
-
-	              fogRed = (float) (toad.x() - ((playerEyeLevel - 450) / 300));
-	              fogGreen = (float) (toad.y() - ((playerEyeLevel - 450) / 300));
-	              fogBlue = (float) (toad.z() - ((playerEyeLevel - 450) / 300));
+	    	      Vector3f fogColor = net.minecraftforge.client.ForgeHooksClient.getFogColor(pActiveRenderInfo, pPartialTicks, pLevel, pRenderDistanceChunks, pBossColorModifier, fogRed, fogGreen, fogBlue);
+	    	      
+	              fogRed = (float) (toad.x() - ((playerEyeLevel - 500) / 250));
+	              fogGreen = (float) (toad.y() - ((playerEyeLevel - 500) / 250));
+	              fogBlue = (float) (toad.z() - ((playerEyeLevel - 500) / 250));
 	              if (fogRed<0) {fogRed=0;}
 	              if (fogGreen<0) {fogGreen=0;}
 	              if (fogBlue<0) {fogBlue=0;}
@@ -315,39 +316,7 @@ public abstract class FogRendererMixin {
 		boolean isSubmerged = !Minecraft.getInstance().gameRenderer.getMainCamera().getBlockAtCamera().getFluidState().isEmpty();
 		if(!isSubmerged) {
 			ResourceKey<Level> player_dim = Minecraft.getInstance().level.dimension();
-	    	if (player_dim == NorthstarDimensions.MARS_DIM_KEY)
-	    	{float playerEyeLevel = (float) Minecraft.getInstance().player.getEyePosition(3).y;
-	        if (playerEyeLevel > 400) {
-	        Vec3 vec3 = Minecraft.getInstance().level.getSkyColor(Minecraft.getInstance().gameRenderer.getMainCamera().getPosition(), 3);
-	        float R = (float) (vec3.x - ((playerEyeLevel - 400) / 300));
-	        float G = (float) (vec3.y - ((playerEyeLevel - 400) / 300));
-	        float B = (float) (vec3.z - ((playerEyeLevel - 400) / 300));
-	        if (R<0) {R=0;}
-	        if (G<0) {G=0;}
-	        if (B<0) {B=0;}
-	        RenderSystem.setShaderFogColor(R, G, B);info.cancel();}}
-	    	if (player_dim == Level.OVERWORLD)
-	    	{float playerEyeLevel = (float) Minecraft.getInstance().player.getEyePosition(3).y;
-	        if (playerEyeLevel > 450) {
-	        Vec3 vec3 = Minecraft.getInstance().level.getSkyColor(Minecraft.getInstance().gameRenderer.getMainCamera().getPosition(), 3);
-	        float R = (float) (vec3.x - ((playerEyeLevel - 450) / 300));
-	        float G = (float) (vec3.y - ((playerEyeLevel - 450) / 300));
-	        float B = (float) (vec3.z - ((playerEyeLevel - 450) / 300));
-	        if (R<0) {R=0;}
-	        if (G<0) {G=0;}
-	        if (B<0) {B=0;}
-	        RenderSystem.setShaderFogColor(R, G, B);info.cancel();}}
-	    	if (player_dim == NorthstarDimensions.VENUS_DIM_KEY)
-	    	{float playerEyeLevel = (float) Minecraft.getInstance().player.getEyePosition(3).y;
-	        if (playerEyeLevel > 600) {
-	        Vec3 vec3 = Minecraft.getInstance().level.getSkyColor(Minecraft.getInstance().gameRenderer.getMainCamera().getPosition(), 3);
-	        float R = (float) (vec3.x - ((playerEyeLevel - 600) / 300));
-	        float G = (float) (vec3.y - ((playerEyeLevel - 600) / 300));
-	        float B = (float) (vec3.z - ((playerEyeLevel - 600) / 300));
-	        if (R<0) {R=0;}
-	        if (G<0) {G=0;}
-	        if (B<0) {B=0;}
-	        RenderSystem.setShaderFogColor(R, G, B);info.cancel();}}
+			RenderSystem.setShaderFogColor(fogRed, fogGreen, fogBlue);
 	    	if (player_dim == NorthstarDimensions.MOON_DIM_KEY || player_dim == null || player_dim == NorthstarDimensions.MERCURY_DIM_KEY || player_dim == NorthstarDimensions.EARTH_ORBIT_DIM_KEY)
 	    	{RenderSystem.setShaderFogColor(0, 0, 0);info.cancel();}
 		}

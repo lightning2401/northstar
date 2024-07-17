@@ -802,7 +802,7 @@ public class LevelRendererMixin {
       if (player_dim == Level.OVERWORLD) {
       float playerEyeLevel = (float) this.minecraft.player.getEyePosition(pPartialTick).y;
       if (playerEyeLevel > 450){
- //   	  info.cancel();
+    	  info.cancel();
           runnable.run();
           BufferBuilder bufferbuilder3 = Tesselator.getInstance().getBuilder();
           RenderSystem.disableTexture();
@@ -865,6 +865,58 @@ public class LevelRendererMixin {
               VertexBuffer.unbind();
               runnable.run();
           }
+          
+          
+          BufferBuilder bufferbuilder_earth_sky = Tesselator.getInstance().getBuilder();
+          Matrix4f matrix4f_earth_sky = pPoseStack.last().pose();
+          float earth_sky_planet_brightness = (float) (this.level.getStarBrightness(pPartialTick) * 1.5) * (this.level.isRaining() && playerEyeLevel < 450 ? 0 : 1);
+          float northstar_brightness = earth_sky_planet_brightness * 2;
+       
+          RenderSystem.enableTexture();
+          RenderSystem.enableBlend();
+          RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+          RenderSystem.depthMask(true);
+          RenderSystem.setShader(GameRenderer::getPositionTexShader);
+          RenderSystem.enableBlend();
+          RenderSystem.defaultBlendFunc();
+       
+          float NS = 2.0F;
+          RenderSystem.setShaderColor(northstar_brightness, northstar_brightness, northstar_brightness, northstar_brightness);
+          RenderSystem.setShader(GameRenderer::getPositionTexShader);
+          RenderSystem.setShaderTexture(0, NORTHERN_STAR);
+          bufferbuilder_earth_sky.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+          bufferbuilder_earth_sky.vertex(matrix4f_earth_sky, -100,  -30 + NS, -NS).uv(0.0F, 0.0F).endVertex();
+          bufferbuilder_earth_sky.vertex(matrix4f_earth_sky, -100, -30 + NS,   NS).uv(1.0F, 0.0F).endVertex();
+          bufferbuilder_earth_sky.vertex(matrix4f_earth_sky, -100, -30 + -NS,   NS).uv(1.0F, 1.0F).endVertex();
+          bufferbuilder_earth_sky.vertex(matrix4f_earth_sky, -100,  -30 + -NS, -NS).uv(0.0F, 1.0F).endVertex();
+          BufferUploader.drawWithShader(bufferbuilder_earth_sky.end());	
+    	 
+          if (playerEyeLevel >= 450) {
+        	  RenderSystem.setShaderColor(1, 1, 1, 1);//System.out.println("we gamin");
+          }
+          else {RenderSystem.setShaderColor(earth_sky_planet_brightness, earth_sky_planet_brightness, earth_sky_planet_brightness, earth_sky_planet_brightness);}
+
+       
+          float VF = 2;
+          RenderSystem.setShaderTexture(0, VENUS_FAR);
+          bufferbuilder_earth_sky.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+          bufferbuilder_earth_sky.vertex(matrix4f_earth_sky, 100, -40f +  VF, 50 +  VF).uv(0, 0).endVertex();
+          bufferbuilder_earth_sky.vertex(matrix4f_earth_sky, 100,  -39.4f +  VF, 50 + -VF).uv(1, 0).endVertex();
+          bufferbuilder_earth_sky.vertex(matrix4f_earth_sky, 100,  -39.4f + -VF, 50 + -VF).uv(1, -1).endVertex();
+          bufferbuilder_earth_sky.vertex(matrix4f_earth_sky, 100, -40f + -VF, 50 +  VF).uv(0, -1).endVertex();
+          BufferUploader.drawWithShader(bufferbuilder_earth_sky.end());
+       
+          float MVF = 1;
+          RenderSystem.setShaderTexture(0, MARS_VERY_FAR);
+          bufferbuilder_earth_sky.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+          bufferbuilder_earth_sky.vertex(matrix4f_earth_sky, -59.25f, -30f +  MVF, -80 +  -MVF).uv(0, 0).endVertex();
+          bufferbuilder_earth_sky.vertex(matrix4f_earth_sky, -60,  -29.65f +  MVF, -80 +  MVF).uv(1, 0).endVertex();
+          bufferbuilder_earth_sky.vertex(matrix4f_earth_sky, -60,  -29.65f + -MVF, -80 +  MVF).uv(1, -1).endVertex();
+          bufferbuilder_earth_sky.vertex(matrix4f_earth_sky, -59.25f, -30f + -MVF, -80 +  -MVF).uv(0, -1).endVertex();
+          BufferUploader.drawWithShader(bufferbuilder_earth_sky.end());
+          RenderSystem.disableBlend();
+          RenderSystem.depthMask(true);
+          RenderSystem.enableBlend();
         
           
           RenderSystem.enableTexture();
@@ -899,6 +951,7 @@ public class LevelRendererMixin {
           bufferbuilder3.vertex(matrix4f3, f12, -100.0F, -f12).uv(f13, f14).endVertex();
           bufferbuilder3.vertex(matrix4f3, -f12, -100.0F, -f12).uv(f15, f14).endVertex();
           BufferUploader.drawWithShader(bufferbuilder3.end());
+          RenderSystem.enableDepthTest();
           pPoseStack.popPose();
           float earth_alpha = (playerEyeLevel - 450) / 300;
           float earth_dist = (playerEyeLevel - 450) / 10;
@@ -1064,7 +1117,8 @@ public class LevelRendererMixin {
             runnable.run();
             runnable.run();
         }
-   
+        float planetBrightness = Mth.clamp(starBrightness, 0, 1);
+        RenderSystem.setShaderColor(planetBrightness, planetBrightness, planetBrightness, planetBrightness);
         float EF = 3;
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, EARTH_FAR);
@@ -1551,6 +1605,7 @@ public class LevelRendererMixin {
    }
 	
 	//THIS IS FOR THE OVERWORLD ONLY, OTHERWISE IT (probably) WONT BE CALLED
+	// THIS IS FOR WHEN THE PLAYER IS **NOT** LEAVING THE PLANET
 	@SuppressWarnings("resource")
 	@Inject(method = "renderSky", at = @At("TAIL"), cancellable = true)
     private void renderSky2(PoseStack pPoseStack, Matrix4f pProjectionMatrix, float pPartialTick, Camera camera, boolean thing, Runnable runnable, CallbackInfo info) {

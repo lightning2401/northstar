@@ -24,9 +24,13 @@ public class MercuryCactusFeature extends Feature<NoneFeatureConfiguration> {
 		
 		if(level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, newpos).getY() <= newpos.getY()) 
 		{return false;}
-		
+		BlockPos caveCeilingPos = scan(Direction.UP, pos, level, 24);
+		if(caveCeilingPos == pos) 
+		{System.out.println("UH OH RETURNING FALSE :("); return false;}
+		int caveHeight = caveCeilingPos.getY() / 2;
 		RandomSource rando = pContext.random();
-		int height = rando.nextInt(5, 10);
+		int height = caveHeight;
+//		int height = rando.nextInt(5, 10);
 		
 		for(int i = 0; i < height;) {
 			if(level.getBlockState(newpos).isAir() || level.getBlockState(newpos).getMaterial().isReplaceable())
@@ -61,4 +65,17 @@ public class MercuryCactusFeature extends Feature<NoneFeatureConfiguration> {
 			{i+= 99999;}
 		}
 	}
+	
+	protected BlockPos scan(Direction dir, BlockPos pos, WorldGenLevel level, int scanDist) {
+		BlockPos newblockpos = pos;
+		for(int i = 0; i < scanDist; i++) {
+			newblockpos = newblockpos.relative(Direction.UP);
+			if(level.getBlockState(newblockpos).isAir() && !level.getBlockState(newblockpos.above()).isAir()) {
+				System.out.println("WAAAAAAAAAAGGGGGGGGGHHHHHHH");
+				return newblockpos;
+			}
+		}		
+		return pos;
+	}
+	
 }
