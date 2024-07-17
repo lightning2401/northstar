@@ -11,11 +11,7 @@ import javax.annotation.Nonnull;
 import com.lightning.northstar.item.NorthstarRecipeTypes;
 import com.lightning.northstar.world.TemperatureStuff;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
-import com.simibubi.create.content.fluids.potion.PotionMixingRecipes;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
-import com.simibubi.create.content.kinetics.mixer.MixingRecipe;
-import com.simibubi.create.content.processing.basin.BasinBlockEntity;
-import com.simibubi.create.content.processing.basin.BasinInventory;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
@@ -35,7 +31,6 @@ import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.LangBuilder;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
-import com.simibubi.create.infrastructure.config.AllConfigs;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -57,7 +52,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -66,6 +60,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
+@SuppressWarnings({"unused", "removal"})
 public class IceBoxBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation{
 
 	private boolean contentsChanged;

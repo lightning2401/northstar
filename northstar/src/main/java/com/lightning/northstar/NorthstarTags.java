@@ -25,6 +25,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 
+@SuppressWarnings("unused")
 public class NorthstarTags {
 	public static <T> TagKey<T> optionalTag(IForgeRegistry<T> registry,
 			ResourceLocation id) {

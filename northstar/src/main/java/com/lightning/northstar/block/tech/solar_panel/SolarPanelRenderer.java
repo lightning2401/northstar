@@ -1,7 +1,6 @@
 package com.lightning.northstar.block.tech.solar_panel;
 
 import com.jozufozu.flywheel.backend.Backend;
-import com.lightning.northstar.block.tech.circuit_engraver.CircuitEngraverBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;

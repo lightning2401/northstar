@@ -30,6 +30,7 @@ public class CustomIceBlock extends HalfTransparentBlock {
 	public CustomIceBlock(BlockBehaviour.Properties pProperties) {
 		super(pProperties);
 	}
+	@SuppressWarnings("deprecation")
 	public void playerDestroy(Level pLevel, Player pPlayer, BlockPos pPos, BlockState pState, @Nullable BlockEntity pTe, ItemStack pStack) {
 		super.playerDestroy(pLevel, pPlayer, pPos, pState, pTe, pStack);
 		if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, pStack) == 0) {

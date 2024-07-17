@@ -45,7 +45,6 @@ public class MercuryCactusBlock extends PipeBlock {
 				.setValue(WEST, Boolean.valueOf(blockstate5.is(this) || blockstate5.isSolidRender(pLevel, pPos.west())));
 	}
 	
-	@SuppressWarnings("deprecation")
 	public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
 		BlockState newState = this.defaultBlockState();
 		for(Direction direction : Direction.values()) {

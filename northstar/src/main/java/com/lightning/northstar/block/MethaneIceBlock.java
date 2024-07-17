@@ -13,7 +13,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -25,7 +24,6 @@ import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.PushReaction;
 
 public class MethaneIceBlock extends HalfTransparentBlock {	
@@ -33,6 +31,7 @@ public class MethaneIceBlock extends HalfTransparentBlock {
 		super(pProperties);
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void playerDestroy(Level pLevel, Player pPlayer, BlockPos pPos, BlockState pState, @Nullable BlockEntity pTe, ItemStack pStack) {
 		super.playerDestroy(pLevel, pPlayer, pPos, pState, pTe, pStack);

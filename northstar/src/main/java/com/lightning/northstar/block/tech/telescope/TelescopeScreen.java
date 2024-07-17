@@ -28,6 +28,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
+@SuppressWarnings("unused")
 public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
     private static final ResourceLocation TELESCOPE_TEXTURE = new ResourceLocation(Northstar.MOD_ID, "textures/gui/telescope_gui.png");
     private static final ResourceLocation TELESCOPE_TEXTURE_SIDE = new ResourceLocation(Northstar.MOD_ID, "textures/gui/telescope_gui_side.png");
@@ -54,7 +55,7 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
     
     private int minX = Integer.MAX_VALUE;
     private int minY = Integer.MAX_VALUE;
-    private int maxX = Integer.MIN_VALUE;
+	private int maxX = Integer.MIN_VALUE;
     private int maxY = Integer.MIN_VALUE;
     private Level level;
     private Inventory inv;

@@ -81,6 +81,7 @@ public class NorthstarBlocks {
     		() -> new SlabBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_BLACK) .sound(SoundType.NETHERITE_BLOCK) .strength(5f,15f) .requiresCorrectToolForDrops()), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
     public static final RegistryObject<Block> MARTIAN_STEEL_PLATING_VERTICAL_SLAB = registerBlock("martian_steel_plating_vertical_slab",
     		() -> new VerticalSlabBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_BLACK) .sound(SoundType.NETHERITE_BLOCK) .strength(5f,15f) .requiresCorrectToolForDrops()), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
+	@SuppressWarnings("deprecation")
 	public static final RegistryObject<Block> MARTIAN_STEEL_PLATING_STAIRS = registerBlock("martian_steel_plating_stairs",
     		() -> new StairBlock(MARTIAN_STEEL_PLATING.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_BLACK) .sound(SoundType.NETHERITE_BLOCK) .strength(5f,15f) .requiresCorrectToolForDrops()), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
     public static final RegistryObject<Block> MARTIAN_STEEL_PILLAR = registerBlock("martian_steel_pillar",
@@ -106,7 +107,8 @@ public class NorthstarBlocks {
     		() -> new SlabBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_GRAY) .sound(SoundType.NETHERITE_BLOCK) .strength(4f,12f) .requiresCorrectToolForDrops()), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
     public static final RegistryObject<Block> IRON_PLATING_VERTICAL_SLAB = registerBlock("iron_plating_vertical_slab",
     		() -> new VerticalSlabBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_GRAY) .sound(SoundType.NETHERITE_BLOCK) .strength(4f,12f) .requiresCorrectToolForDrops()), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
-    public static final RegistryObject<Block> IRON_PLATING_STAIRS = registerBlock("iron_plating_stairs",
+    @SuppressWarnings("deprecation")
+	public static final RegistryObject<Block> IRON_PLATING_STAIRS = registerBlock("iron_plating_stairs",
     		() -> new StairBlock(IRON_PLATING.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_GRAY) .sound(SoundType.NETHERITE_BLOCK) .strength(4f,12f) .requiresCorrectToolForDrops()), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
     public static final RegistryObject<Block> IRON_PILLAR = registerBlock("iron_pillar",
     		() -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_GRAY) .sound(SoundType.NETHERITE_BLOCK) .strength(4f,12f) .requiresCorrectToolForDrops()), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
@@ -135,7 +137,8 @@ public class NorthstarBlocks {
     		() -> new SlabBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_GRAY) .sound(SoundType.NETHERITE_BLOCK) .strength(6f,16f) .requiresCorrectToolForDrops()), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
     public static final RegistryObject<Block> TUNGSTEN_PLATING_VERTICAL_SLAB = registerBlock("tungsten_plating_vertical_slab",
     		() -> new VerticalSlabBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_GRAY) .sound(SoundType.NETHERITE_BLOCK) .strength(6f,16f) .requiresCorrectToolForDrops()), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
-    public static final RegistryObject<Block> TUNGSTEN_PLATING_STAIRS = registerBlock("tungsten_plating_stairs",
+    @SuppressWarnings("deprecation")
+	public static final RegistryObject<Block> TUNGSTEN_PLATING_STAIRS = registerBlock("tungsten_plating_stairs",
     		() -> new StairBlock(TUNGSTEN_PLATING.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_GRAY) .sound(SoundType.NETHERITE_BLOCK) .strength(6f,16f) .requiresCorrectToolForDrops()), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
     public static final RegistryObject<Block> TUNGSTEN_PILLAR = registerBlock("tungsten_pillar",
     		() -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_GRAY) .sound(SoundType.NETHERITE_BLOCK) .strength(6f,16f) .requiresCorrectToolForDrops()), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);

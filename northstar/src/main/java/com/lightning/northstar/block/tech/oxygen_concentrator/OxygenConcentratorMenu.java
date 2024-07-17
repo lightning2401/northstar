@@ -3,13 +3,7 @@ package com.lightning.northstar.block.tech.oxygen_concentrator;
 import javax.annotation.Nullable;
 
 import com.lightning.northstar.NorthstarMenuTypes;
-import com.lightning.northstar.block.tech.astronomy_table.AstronomyTableMenu;
-import com.lightning.northstar.fluids.NorthstarFluids;
-import com.lightning.northstar.item.NorthstarItems;
-import com.lightning.northstar.world.dimension.NorthstarPlanets;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -22,8 +16,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 public class OxygenConcentratorMenu extends AbstractContainerMenu {
 	public OxygenConcentratorBlockEntity blockEntity;

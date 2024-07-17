@@ -4,7 +4,6 @@ import javax.annotation.Nullable;
 
 import com.lightning.northstar.particle.GlowstoneParticleData;
 import com.lightning.northstar.world.OxygenStuff;
-import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

@@ -2,23 +2,19 @@ package com.lightning.northstar.world;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Set;
 
 import com.lightning.northstar.Northstar;
 import com.lightning.northstar.NorthstarTags;
 import com.lightning.northstar.particle.GlowstoneParticleData;
-import com.lightning.northstar.particle.NorthstarParticles;
 import com.lightning.northstar.world.dimension.NorthstarPlanets;
 import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorBlock;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;

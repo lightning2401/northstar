@@ -4,8 +4,6 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
-import com.lightning.northstar.block.NorthstarBlocks;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;

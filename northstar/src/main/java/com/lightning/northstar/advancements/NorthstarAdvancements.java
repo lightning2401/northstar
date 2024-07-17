@@ -16,7 +16,6 @@ import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
 import com.lightning.northstar.block.NorthstarBlocks;
 import com.mojang.logging.LogUtils;
-import com.simibubi.create.AllBlocks;
 
 import net.minecraft.advancements.Advancement;
 import net.minecraft.data.CachedOutput;

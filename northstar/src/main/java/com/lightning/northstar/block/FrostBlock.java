@@ -121,6 +121,7 @@ public class FrostBlock extends MultifaceBlock {
 		return state;
 	}
 
+	@SuppressWarnings("static-access")
 	@Nullable
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext pContext) {
@@ -163,6 +164,7 @@ public class FrostBlock extends MultifaceBlock {
 		{return newstate;}
 	}
 	
+	@SuppressWarnings("static-access")
 	private BlockState getUpdatedState(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
 		BlockPos blockpos = pPos.above();
 		BlockState blockstate = null;

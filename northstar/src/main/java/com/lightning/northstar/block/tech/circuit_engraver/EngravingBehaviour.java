@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.lightning.northstar.sound.NorthstarSounds;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.kinetics.belt.behaviour.BeltProcessingBehaviour;
 import com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackHandlerBehaviour;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;

@@ -9,7 +9,6 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerListener;
 import net.minecraft.world.item.ItemStack;
@@ -21,11 +20,9 @@ public class AstronomyTableScreen<T extends AstronomyTableMenu> extends Abstract
 	   private static final ResourceLocation TABLE_LOCATION =  Northstar.asResource("textures/gui/astronomy_table.png");
 	   private static final Component DIFFERENT_PLANETS_TEXT = Component.translatable("container.northstar.different_planets");
 	   private static final Component CLOSE_DATA_TEXT = Component.translatable("container.northstar.close_data");
-	   private final Player player;
 
 	public AstronomyTableScreen(T pMenu, Inventory pPlayerInventory, Component pTitle) {
 		super(pMenu, pPlayerInventory, pTitle);
-		this.player = pPlayerInventory.player;
 	}
 
 	   protected void subInit() {
@@ -71,7 +68,8 @@ public class AstronomyTableScreen<T extends AstronomyTableMenu> extends Abstract
 		      
 	   }
 
-	   protected void renderBg(PoseStack pPoseStack, float pPartialTick, int pX, int pY) {
+	   @SuppressWarnings("static-access")
+	protected void renderBg(PoseStack pPoseStack, float pPartialTick, int pX, int pY) {
 	      RenderSystem.setShader(GameRenderer::getPositionTexShader);
 	      RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 	      RenderSystem.setShaderTexture(0, this.TABLE_LOCATION);

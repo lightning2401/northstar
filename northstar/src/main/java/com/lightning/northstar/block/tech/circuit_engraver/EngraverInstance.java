@@ -4,12 +4,9 @@ import com.jozufozu.flywheel.api.MaterialManager;
 import com.jozufozu.flywheel.api.instance.DynamicInstance;
 import com.lightning.northstar.block.tech.NorthstarPartialModels;
 import com.lightning.northstar.sound.NorthstarSounds;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
 import com.simibubi.create.content.kinetics.base.ShaftInstance;
 import com.simibubi.create.content.kinetics.base.flwdata.RotatingData;
 import com.simibubi.create.foundation.render.AllMaterialSpecs;
-import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 
 import net.minecraft.core.Direction;
@@ -37,10 +34,6 @@ public class EngraverInstance extends ShaftInstance<CircuitEngraverBlockEntity> 
 
 		crystalHead.setRotationAxis(Direction.Axis.Y);
 		crystalLaser.setRotationAxis(Direction.Axis.Y);
-
-		Quaternion q = Vector3f.YP
-			.rotationDegrees(AngleHelper.horizontalAngle(blockState.getValue(CircuitEngraverBlock.HORIZONTAL_FACING)));
-
 		transformModels();
 	}
 

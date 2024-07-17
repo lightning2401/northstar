@@ -31,6 +31,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
+@SuppressWarnings("removal")
 public class OxygenGeneratorBlockEntity extends KineticBlockEntity implements IHaveGoggleInformation{
 	public int maxOxy;
 	public int minOxy;
@@ -41,6 +42,7 @@ public class OxygenGeneratorBlockEntity extends KineticBlockEntity implements IH
 		super(typeIn, pos, state);
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void tick() {
 //	  System.out.println("big fart" + pBlockEntity.tickCount);

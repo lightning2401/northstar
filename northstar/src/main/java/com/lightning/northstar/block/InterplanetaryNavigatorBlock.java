@@ -47,6 +47,7 @@ public class InterplanetaryNavigatorBlock extends Block implements SimpleWaterlo
 		return AABB;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
 		DoubleBlockHalf doubleblockhalf = pState.getValue(HALF);
 		if (pFacing.getAxis() == Direction.Axis.Y && doubleblockhalf == DoubleBlockHalf.LOWER == (pFacing == Direction.UP)) {
@@ -81,6 +82,7 @@ public class InterplanetaryNavigatorBlock extends Block implements SimpleWaterlo
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public FluidState getFluidState(BlockState pState) {
 		return pState.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(pState);
 	}

@@ -10,23 +10,10 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 
 public class AstronomyTableBlockEntity extends BlockEntity implements MenuProvider  {
 	
 	protected final ContainerData data;
-	
-    private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
-        @Override
-        protected void onContentsChanged(int slot) {
-            setChanged();
-        }
-    };
-    
-    private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
-	
 
 	public AstronomyTableBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
 		super(pType, pPos, pBlockState);

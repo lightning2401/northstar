@@ -43,6 +43,7 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
+@SuppressWarnings("removal")
 public class IceBoxBlock extends Block implements IBE<IceBoxBlockEntity>, IWrenchable {
 	
 	public static final DirectionProperty FACING = BlockStateProperties.FACING_HOPPER;
@@ -57,6 +58,7 @@ public class IceBoxBlock extends Block implements IBE<IceBoxBlockEntity>, IWrenc
 		super.createBlockStateDefinition(p_206840_1_.add(FACING));
 	}
 
+	@SuppressWarnings("resource")
 	@Override
 	public InteractionResult onWrenched(BlockState state, UseOnContext context) {
 		if (!context.getLevel().isClientSide)
@@ -65,6 +67,7 @@ public class IceBoxBlock extends Block implements IBE<IceBoxBlockEntity>, IWrenc
 		return InteractionResult.SUCCESS;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn,
 		BlockHitResult hit) {

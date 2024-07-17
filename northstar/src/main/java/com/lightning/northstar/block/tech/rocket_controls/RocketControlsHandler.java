@@ -43,6 +43,7 @@ public class RocketControlsHandler {
 		currentlyPressed.clear();
 	}
 
+	@SuppressWarnings("resource")
 	public static void startControlling(RocketContraptionEntity entity, BlockPos controllerLocalPos) {
 		entityRef = new WeakReference<RocketContraptionEntity>(entity);
 		controlsPos = controllerLocalPos;
@@ -52,6 +53,7 @@ public class RocketControlsHandler {
 
 	}
 
+	@SuppressWarnings("resource")
 	public static void stopControlling() {
 		ControlsUtil.getControls()
 			.forEach(kb -> kb.setDown(ControlsUtil.isActuallyPressed(kb)));
@@ -70,6 +72,7 @@ public class RocketControlsHandler {
 			true);
 	}
 
+	@SuppressWarnings("resource")
 	public static void tick() {
 		RocketContraptionEntity entity = entityRef.get();
 		LocalPlayer player = Minecraft.getInstance().player;

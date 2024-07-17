@@ -1,12 +1,8 @@
 package com.lightning.northstar.block.tech.temperature_regulator;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
-import com.lightning.northstar.NorthstarTags;
 import com.lightning.northstar.particle.SnowflakeParticleData;
-import com.lightning.northstar.world.OxygenStuff;
 import com.lightning.northstar.world.TemperatureStuff;
 import com.lightning.northstar.world.dimension.NorthstarPlanets;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;

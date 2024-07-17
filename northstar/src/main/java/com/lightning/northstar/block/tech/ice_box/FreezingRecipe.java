@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import com.lightning.northstar.item.NorthstarRecipeTypes;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder.ProcessingRecipeParams;
@@ -30,6 +28,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
+@SuppressWarnings("removal")
 public class FreezingRecipe extends ProcessingRecipe<SmartInventory>  {
 	
 	//im gonna cry I just want this to work

@@ -38,7 +38,6 @@ import com.lightning.northstar.block.tech.telescope.TelescopeBlockEntity;
 import com.lightning.northstar.block.tech.temperature_regulator.TemperatureRegulatorBlockEntity;
 import com.lightning.northstar.block.tech.temperature_regulator.TemperatureRegulatorInstance;
 import com.lightning.northstar.block.tech.temperature_regulator.TemperatureRegulatorRenderer;
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorBlockEntity;
 import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorRenderer;
 import com.simibubi.create.content.kinetics.base.ShaftInstance;

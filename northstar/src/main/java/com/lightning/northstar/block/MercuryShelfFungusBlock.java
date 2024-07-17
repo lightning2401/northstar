@@ -6,20 +6,16 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import com.lightning.northstar.particle.GlowstoneParticleData;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -63,6 +59,7 @@ public class MercuryShelfFungusBlock extends Block implements SimpleWaterloggedB
 	public boolean propagatesSkylightDown(BlockState pState, BlockGetter pReader, BlockPos pPos) {
 		return pState.getFluidState().isEmpty();
 	}
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean isPathfindable(BlockState pState, BlockGetter pLevel, BlockPos pPos, PathComputationType pType) {
 		return pType == PathComputationType.AIR && !this.hasCollision ? true : super.isPathfindable(pState, pLevel, pPos, pType);

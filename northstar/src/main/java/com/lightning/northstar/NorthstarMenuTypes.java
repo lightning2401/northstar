@@ -4,7 +4,6 @@ import com.lightning.northstar.block.tech.astronomy_table.AstronomyTableMenu;
 import com.lightning.northstar.block.tech.oxygen_concentrator.OxygenConcentratorMenu;
 import com.lightning.northstar.block.tech.rocket_station.RocketStationMenu;
 import com.lightning.northstar.block.tech.telescope.TelescopeMenu;
-import com.lightning.northstar.block.tech.temperature_regulator.TemperatureRegulatorMenu;
 
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;

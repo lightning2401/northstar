@@ -56,8 +56,6 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class RocketContraption extends TranslatingContraption{
-	
-	private Direction assemblyDirection = Direction.UP;
 
 	public Map<BlockPos, Couple<Boolean>> conductorSeats;
 	public ArrivalSoundQueue soundQueue;
@@ -65,7 +63,6 @@ public class RocketContraption extends TranslatingContraption{
 	public int weightCost = 0;
 	public int heatShielding = 0;
 	public int blockCount = 0;
-	private List<BlockPos> jetEngines;
 	private boolean rocket_station = false;
 	public boolean hasControls = false;
 	public boolean hasInterplanetaryNavigation = false;
@@ -76,7 +73,6 @@ public class RocketContraption extends TranslatingContraption{
 	private int visual_jet_engines = 0;
 	public float computingPower = 0;
 	private List<BlockPos> assembledJets;
-	private BlockPos stationPos;
 	public int fuelTicks;
 	public String name = "Rocket";
 	public Player owner;
@@ -98,7 +94,6 @@ public class RocketContraption extends TranslatingContraption{
 	
 	public RocketContraption() {
 		conductorSeats = new HashMap<>();
-		jetEngines = new ArrayList<>();
 		assembledJets = new ArrayList<>();
 		soundQueue = new ArrivalSoundQueue();
 		portalCutoffMin = Integer.MIN_VALUE;
@@ -144,7 +139,6 @@ public class RocketContraption extends TranslatingContraption{
 			BlockEntity ent = world.getBlockEntity(pos);
 			if(ent instanceof RocketStationBlockEntity rsbe) {
 				name = rsbe.name;
-				stationPos = toLocalPos(pos);
 				System.out.println("rocket station: " + rsbe.container.getItem(0));
 				
 				// this is a bit sketchy in game, it should delete the ticket after it's

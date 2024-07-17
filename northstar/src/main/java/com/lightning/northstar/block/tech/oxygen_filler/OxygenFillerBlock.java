@@ -2,11 +2,8 @@ package com.lightning.northstar.block.tech.oxygen_filler;
 
 import com.lightning.northstar.block.entity.NorthstarBlockEntityTypes;
 import com.simibubi.create.Create;
-import com.simibubi.create.api.connectivity.ConnectivityHandler;
 import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;
-import com.simibubi.create.content.logistics.vault.ItemVaultBlockEntity;
 import com.simibubi.create.foundation.block.IBE;
-import com.simibubi.create.foundation.item.ItemHelper;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
