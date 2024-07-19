@@ -65,7 +65,8 @@ public class TelescopeBlock extends BaseEntityBlock implements IBE<TelescopeBloc
 	  public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos,Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
 	        if (!pLevel.isClientSide()) {
 	            BlockEntity entity = pLevel.getBlockEntity(pPos);
-	            if(entity instanceof TelescopeBlockEntity && pLevel.canSeeSky(pPos.above()) && (pLevel.isNight() || NorthstarPlanets.canSeeSkyAtDay(pLevel.dimension())) && !pLevel.isRaining()) {
+	            if(entity instanceof TelescopeBlockEntity && pLevel.canSeeSky(pPos.above()) && 
+	            		(pLevel.isNight() || NorthstarPlanets.canSeeSkyAtDay(pLevel.dimension())) && (!pLevel.isRaining() || !NorthstarPlanets.hasWeather(pLevel.dimension()) )) {
 	                NetworkHooks.openScreen(((ServerPlayer)pPlayer), (TelescopeBlockEntity)entity, pPos);
 
 	            } else {
