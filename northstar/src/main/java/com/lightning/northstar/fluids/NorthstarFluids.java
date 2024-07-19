@@ -48,6 +48,10 @@ public class NorthstarFluids {
 			.lang("Hydrogen")
 			.tag(AllTags.forgeFluidTag("hydrogen"))
 			.register();
+	public static final FluidEntry<VirtualFluid> LIQUID_HYDROGEN = REGISTRATE.virtualFluid("liquid_hydrogen")
+			.lang("Liquid Hydrogen")
+			.tag(AllTags.forgeFluidTag("liquid_hydrogen"))
+			.register();
 	public static final FluidEntry<VirtualFluid> CHOCOLATE_ICE_CREAM = REGISTRATE.virtualFluid("chocolate_ice_cream")
 			.lang("Chocolate Ice Cream")
 			.tag(AllTags.forgeFluidTag("chocolate_ice_cream"))

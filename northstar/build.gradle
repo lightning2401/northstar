@@ -219,7 +219,7 @@ jar {
         attributes([
                 "Specification-Title"     : "northstar",
                 "Specification-Vendor"    : "lightning",
-                "Specification-Version"   : "1", // We are version 1 of ourselves
+                "Specification-Version"   : "0.1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "lightning",
