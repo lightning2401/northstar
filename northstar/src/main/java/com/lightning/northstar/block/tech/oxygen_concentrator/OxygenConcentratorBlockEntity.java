@@ -16,10 +16,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -29,7 +25,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 @SuppressWarnings("removal")
-public class OxygenConcentratorBlockEntity  extends KineticBlockEntity implements IHaveGoggleInformation, MenuProvider {
+public class OxygenConcentratorBlockEntity  extends KineticBlockEntity implements IHaveGoggleInformation {
 	
 	public int airLevel;
 	public int airTimer;
@@ -162,17 +158,4 @@ public class OxygenConcentratorBlockEntity  extends KineticBlockEntity implement
 		tank.getCapability().cast();
 		return super.getCapability(cap, side);
 	}
-	
-
-
-	@Override
-	public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-		return new OxygenConcentratorMenu(pContainerId, pPlayerInventory, this);
-	}
-	
-	@Override
-	public Component getDisplayName() {
-		return Component.literal("Oxygen Concentrator");
-	}
-
 }

@@ -31,8 +31,8 @@ public class MethaneIceBlock extends HalfTransparentBlock {
 		super(pProperties);
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Override
+	@SuppressWarnings("deprecation")
 	public void playerDestroy(Level pLevel, Player pPlayer, BlockPos pPos, BlockState pState, @Nullable BlockEntity pTe, ItemStack pStack) {
 		super.playerDestroy(pLevel, pPlayer, pPos, pState, pTe, pStack);
 		System.out.println("BREAKING!!!!!!");
@@ -94,12 +94,4 @@ public class MethaneIceBlock extends HalfTransparentBlock {
         }
 	}
 
-	/**
-	* @deprecated call via {@link
-	* net.minecraft.world.level.block.state.BlockBehaviour.BlockStateBase#getPistonPushReaction} whenever possible.
-	* Implementing/overriding is fine.
-	*/
-	public PushReaction getPistonPushReaction(BlockState pState) {
-		return PushReaction.NORMAL;
-	}
 }

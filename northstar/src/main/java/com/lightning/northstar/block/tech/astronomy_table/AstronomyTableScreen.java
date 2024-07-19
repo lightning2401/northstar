@@ -16,12 +16,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class AstronomyTableScreen<T extends AstronomyTableMenu> extends AbstractContainerScreen<T> implements ContainerListener {
+public class AstronomyTableScreen extends AbstractContainerScreen<AstronomyTableMenu> implements ContainerListener {
 	   private static final ResourceLocation TABLE_LOCATION =  Northstar.asResource("textures/gui/astronomy_table.png");
 	   private static final Component DIFFERENT_PLANETS_TEXT = Component.translatable("container.northstar.different_planets");
 	   private static final Component CLOSE_DATA_TEXT = Component.translatable("container.northstar.close_data");
 
-	public AstronomyTableScreen(T pMenu, Inventory pPlayerInventory, Component pTitle) {
+	public AstronomyTableScreen(AstronomyTableMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
 		super(pMenu, pPlayerInventory, pTitle);
 	}
 

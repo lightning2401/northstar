@@ -103,71 +103,7 @@ public class MinecraftServerMixin{
 	   ///HELP!!!!!!!!!!
 	   /// IM STRUGGLING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	   //I JUST WANT DIFFERENT PLANETS TO HAVE DIFFERENT SEEDS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    @Inject(method = "createLevels", at = @At("HEAD"), cancellable = true)
-	private void createLevels(ChunkProgressListener p_129816_, CallbackInfo info) {
-    	MinecraftServer mcServer = (MinecraftServer) (Object) this;
-    	ServerLevelData serverleveldata = this.worldData.overworldData();
-        WorldGenSettings worldgensettings = this.worldData.worldGenSettings();
-        boolean flag = worldgensettings.isDebug();
-        long i = worldgensettings.seed();
-        long j = BiomeManager.obfuscateSeed(i);
-        List<CustomSpawner> list = ImmutableList.of(new PhantomSpawner(), new PatrolSpawner(), new CatSpawner(), new VillageSiege(), new WanderingTraderSpawner(serverleveldata));
-        Registry<LevelStem> registry = worldgensettings.dimensions();
-        LevelStem levelstem = registry.get(LevelStem.OVERWORLD);
-        ServerLevel serverlevel = new ServerLevel(mcServer, this.executor, this.storageSource, serverleveldata, Level.OVERWORLD, levelstem, p_129816_, flag, j, list, true);
-        this.levels.put(Level.OVERWORLD, serverlevel);
-        DimensionDataStorage dimensiondatastorage = serverlevel.getDataStorage();
-        this.readScoreboard(dimensiondatastorage);
-        this.commandStorage = new CommandStorage(dimensiondatastorage);
-        WorldBorder worldborder = serverlevel.getWorldBorder();
-        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.level.LevelEvent.Load(levels.get(Level.OVERWORLD)));
-        if (!serverleveldata.isInitialized()) {
-           try {
-              setInitialSpawn(serverlevel, serverleveldata, worldgensettings.generateBonusChest(), flag);
-              serverleveldata.setInitialized(true);
-              if (flag) {
-                 this.setupDebugLevel(this.worldData);
-              }
-           } catch (Throwable throwable1) {
-              CrashReport crashreport = CrashReport.forThrowable(throwable1, "Exception initializing level");
-
-              try {
-                 serverlevel.fillReportDetails(crashreport);
-              } catch (Throwable throwable) {
-              }
-
-              throw new ReportedException(crashreport);
-           }
-
-           serverleveldata.setInitialized(true);
-        }
-
-        this.getPlayerList().addWorldborderListener(serverlevel);
-        if (this.worldData.getCustomBossEvents() != null) {
-           this.getCustomBossEvents().load(this.worldData.getCustomBossEvents());
-        }
-        int num = 0;
-        for(Map.Entry<ResourceKey<LevelStem>, LevelStem> entry : registry.entrySet()) {
-           num++;
-           ResourceKey<LevelStem> resourcekey = entry.getKey();
-           if (resourcekey != LevelStem.OVERWORLD) {
-        	  long seed = j;
-        	  if(NorthstarPlanets.isCustomDimension(resourcekey.location())) {
-        		  seed = j + (num * 10);
-        		  Northstar.LOGGER.debug("Registering " + resourcekey.location());
-        	  }
-              ResourceKey<Level> resourcekey1 = ResourceKey.create(Registry.DIMENSION_REGISTRY, resourcekey.location());
-              DerivedLevelData derivedleveldata = new DerivedLevelData(this.worldData, serverleveldata);
-              ServerLevel serverlevel1 = new ServerLevel(mcServer, this.executor, this.storageSource, derivedleveldata, resourcekey1, entry.getValue(), p_129816_, flag, seed, ImmutableList.of(), false);
-              worldborder.addListener(new BorderChangeListener.DelegateBorderChangeListener(serverlevel1.getWorldBorder()));
-              this.levels.put(resourcekey1, serverlevel1);
-              net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.level.LevelEvent.Load(levels.get(resourcekey)));
-           }
-        }
-
-        worldborder.applySettings(serverleveldata.getWorldBorder());		   
-        info.cancel();
-	}
+   
 
     private void readScoreboard(DimensionDataStorage pDataStorage) {
         pDataStorage.computeIfAbsent(this.getScoreboard()::createData, this.getScoreboard()::createData, "scoreboard");

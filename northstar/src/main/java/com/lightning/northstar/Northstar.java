@@ -9,7 +9,6 @@ import com.lightning.northstar.block.NorthstarTechBlocks;
 import com.lightning.northstar.block.entity.NorthstarBlockEntityTypes;
 import com.lightning.northstar.block.tech.NorthstarPartialModels;
 import com.lightning.northstar.block.tech.astronomy_table.AstronomyTableScreen;
-import com.lightning.northstar.block.tech.oxygen_concentrator.OxygenConcentratorScreen;
 import com.lightning.northstar.block.tech.rocket_station.RocketStationScreen;
 import com.lightning.northstar.block.tech.telescope.TelescopeScreen;
 import com.lightning.northstar.client.renderer.armor.BrokenIronSpaceSuitLayerRenderer;
@@ -229,8 +228,6 @@ public class Northstar
             MenuScreens.register(NorthstarMenuTypes.TELESCOPE_MENU.get(), TelescopeScreen::new);
             MenuScreens.register(NorthstarMenuTypes.ASTRONOMY_TABLE_MENU.get(), AstronomyTableScreen::new);
             MenuScreens.register(NorthstarMenuTypes.ROCKET_STATION.get(), RocketStationScreen::new);
- //           MenuScreens.register(NorthstarMenuTypes.TEMPERATURE_REGULATOR.get(), TemperatureRegulatorScreen::new);
-            MenuScreens.register(NorthstarMenuTypes.OXYGEN_CONCENTRATOR.get(), OxygenConcentratorScreen::new);
         }
     	@SubscribeEvent
     	public static void registerRenderers(final EntityRenderersEvent.AddLayers event) {
@@ -240,7 +237,7 @@ public class Northstar
     			GeoArmorRenderer.registerArmorRenderer(MartianSteelSpaceSuitArmorItem.class, () -> new MartianSteelSpaceSuitModelRenderer());
     		}
     	}
-		@SubscribeEvent
+		@SubscribeEvent	
 		public static void addEntityRendererLayers(EntityRenderersEvent.AddLayers event) {
 			EntityRenderDispatcher dispatcher = Minecraft.getInstance()
 					.getEntityRenderDispatcher();

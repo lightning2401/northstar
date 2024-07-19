@@ -181,7 +181,10 @@ dependencies {
     // Specify the version of Minecraft to use. If this is any group other than 'net.minecraft', it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.19.2-43.2.18'
+    minecraft 'net.minecraftforge:forge:1.19.2-43.4.0'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    
+    implementation('cpw.mods:securejarhandler') { version { strictly '0.9.45' } }
     
     implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.19:3.1.40')
     
@@ -204,7 +207,7 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 }
 mixin {
-    // add sourceSets.main, 'createaddition.refmap.json'
+    add sourceSets.main, 'northstar.refmap.json'
     config 'northstar.mixins.json'
 
     debug.verbose = true

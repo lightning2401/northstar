@@ -3,6 +3,7 @@
 	"priority": 1200,
 	"package": "com.lightning.northstar.mixin",
 	"compatibilityLevel": "JAVA_17",
+	"refmap": "northstar.refmap.json",
 	"mixins": [
 	"GravityStuffMixin",
 	"OxygenAndTempEntityMixin",

@@ -1,6 +1,7 @@
 package com.lightning.northstar.mixin.dimensionstuff;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -29,9 +30,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 @Mixin(FogRenderer.class)
 public abstract class FogRendererMixin {
-	
+	@Shadow
 	private static float fogRed;
+	@Shadow
 	private static float fogGreen;
+	@Shadow
 	private static float fogBlue;
 	private static float p = 1;
 	

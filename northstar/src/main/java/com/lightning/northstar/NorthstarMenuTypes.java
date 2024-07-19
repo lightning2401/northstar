@@ -1,7 +1,6 @@
 package com.lightning.northstar;
 
 import com.lightning.northstar.block.tech.astronomy_table.AstronomyTableMenu;
-import com.lightning.northstar.block.tech.oxygen_concentrator.OxygenConcentratorMenu;
 import com.lightning.northstar.block.tech.rocket_station.RocketStationMenu;
 import com.lightning.northstar.block.tech.telescope.TelescopeMenu;
 
@@ -25,10 +24,6 @@ public class NorthstarMenuTypes {
            registerMenuType(AstronomyTableMenu::new, "astronomy_table_menu");
    public static final RegistryObject<MenuType<RocketStationMenu>> ROCKET_STATION =
            registerMenuType(RocketStationMenu::new, "rocket_station");
-   public static final RegistryObject<MenuType<OxygenConcentratorMenu>> OXYGEN_CONCENTRATOR =
-           registerMenuType(OxygenConcentratorMenu::new, "oxygen_concenrtator");
-//   public static final RegistryObject<MenuType<TemperatureRegulatorMenu>> TEMPERATURE_REGULATOR =
-//           registerMenuType(TemperatureRegulatorMenu::new, "temperature_regulator");
 
 
     private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuType(IContainerFactory<T> factory,

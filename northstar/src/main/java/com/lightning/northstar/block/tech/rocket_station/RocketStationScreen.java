@@ -20,10 +20,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class RocketStationScreen<T extends RocketStationMenu> extends AbstractContainerScreen<T> implements ContainerListener {
+public class RocketStationScreen extends AbstractContainerScreen<RocketStationMenu> implements ContainerListener {
 	   private final ResourceLocation TABLE_LOCATION =  Northstar.asResource("textures/gui/rocket_station.png");
 
-	public RocketStationScreen(T pMenu, Inventory pPlayerInventory, Component pTitle) {
+	public RocketStationScreen(RocketStationMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
 		super(pMenu, pPlayerInventory, pTitle);
 
 	}

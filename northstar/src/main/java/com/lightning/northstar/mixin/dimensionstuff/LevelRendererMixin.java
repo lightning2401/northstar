@@ -3,6 +3,7 @@ package com.lightning.northstar.mixin.dimensionstuff;
 import javax.annotation.Nullable;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -81,12 +82,15 @@ public class LevelRendererMixin {
 	
 	@Nullable
 	private VertexBuffer darkBuffer;
+	@Shadow
 	private VertexBuffer skyBuffer;
+	@Shadow
 	private VertexBuffer starBuffer;
 	private VertexBuffer starBuffer2;
 	private VertexBuffer starBuffer3;
 	
 	@Nullable
+	@Shadow
 	private VertexBuffer cloudBuffer;
 	@Nullable
 	private VertexBuffer cloudBuffer2;
@@ -99,7 +103,9 @@ public class LevelRendererMixin {
 	private CloudStatus prevCloudsType;
 	
 	@Nullable
+	@Shadow
 	private ClientLevel level;
+	@Shadow
 	private Minecraft minecraft;
 	private float f_alpha = 1;
 	private int ticks;
@@ -114,20 +120,22 @@ public class LevelRendererMixin {
 	private final float[] rainSizeX = new float[1024];
 	private final float[] rainSizeZ = new float[1024];
 	
-	@Inject(method = "renderLevel", at = @At("HEAD"), cancellable = true)
-	public void renderLevel(PoseStack pPoseStack, float pPartialTick, long pFinishNanoTime, boolean pRenderBlockOutline, Camera pCamera, GameRenderer pGameRenderer, LightTexture pLightTexture, Matrix4f pProjectionMatrix, CallbackInfo info) {
-		 if(this.level.dimension() == NorthstarDimensions.VENUS_DIM_KEY)
-		 {RenderSystem.setupLevelDiffuseLighting(VENUS_DIFFUSE_1, VENUS_DIFFUSE_2, pPoseStack.last().pose());}
-	}
+//	@Inject(method = "renderLevel", at = @At("HEAD"), cancellable = true)
+//	public void renderLevel(PoseStack pPoseStack, float pPartialTick, long pFinishNanoTime, boolean pRenderBlockOutline, Camera pCamera, GameRenderer pGameRenderer, LightTexture pLightTexture, Matrix4f pProjectionMatrix, CallbackInfo info) {
+//		 if(this.level.dimension() == NorthstarDimensions.VENUS_DIM_KEY)
+//		 {RenderSystem.setupLevelDiffuseLighting(VENUS_DIFFUSE_1, VENUS_DIFFUSE_2, pPoseStack.last().pose());}
+//	}
 	
 	@SuppressWarnings("resource")
 	@Inject(method = "renderSnowAndRain", at = @At("HEAD"), cancellable = true)
 	private void renderWeather(LightTexture pLightTexture, float pPartialTick, double pCamX, double pCamY, double pCamZ, CallbackInfo info) {
-        float playerEyeLevel = (float) this.minecraft.player.getEyePosition().y;
-        if (playerEyeLevel > 450) {
-        	info.cancel();
-        	return;
-        }
+		if(this.minecraft != null) {
+	        float playerEyeLevel = (float) this.minecraft.player.getEyePosition().y;
+	        if (playerEyeLevel > 450) {
+	        	info.cancel();
+	        	return;
+	        }
+		}
 		ResourceKey<Level> player_dim = Minecraft.getInstance().level.dimension();		
 	 	if (player_dim == NorthstarDimensions.MARS_DIM_KEY) {info.cancel();
 //		Minecraft.getInstance().level.setRainLevel(15);
@@ -373,11 +381,13 @@ public class LevelRendererMixin {
 	@SuppressWarnings("resource")
 	@Inject(method = "tickRain", at = @At("HEAD"), cancellable = true)
 	private void tickRain(Camera pCamera, CallbackInfo info) {
-        float playerEyeLevel = (float) this.minecraft.player.getEyePosition().y;
-        if (playerEyeLevel > 450) {
-        	info.cancel();
-        	return;
-        }
+		if(this.minecraft != null) {
+	        float playerEyeLevel = (float) this.minecraft.player.getEyePosition().y;
+	        if (playerEyeLevel > 450) {
+	        	info.cancel();
+	        	return;
+	        }
+		}
 		ResourceKey<Level> player_dim = Minecraft.getInstance().level.dimension();		
 		
 	 	if (player_dim == NorthstarDimensions.MARS_DIM_KEY) {info.cancel();
@@ -605,7 +615,8 @@ public class LevelRendererMixin {
 	@Inject(method = "renderSky", at = @At("HEAD"), cancellable = true)
     private void renderSky(PoseStack pPoseStack, Matrix4f pProjectionMatrix, float pPartialTick, Camera camera, boolean thing, Runnable runnable, CallbackInfo info) {
 		ResourceKey<Level> player_dim = Minecraft.getInstance().level.dimension();
- 		float rain_det = this.minecraft.level.getRainLevel(pPartialTick);
+		if(this.minecraft != null) {
+ 		float rain_det = 0;
     	if (player_dim == NorthstarDimensions.MARS_DIM_KEY)
     	{info.cancel();
         runnable.run();
@@ -1601,6 +1612,7 @@ public class LevelRendererMixin {
   	          BufferUploader.drawWithShader(bufferbuilder2.end());pPoseStack.popPose();RenderSystem.depthMask(true);  
   	          }RenderSystem.depthMask(true);  
   	      }
+		}
       
    }
 	
@@ -1609,6 +1621,7 @@ public class LevelRendererMixin {
 	@SuppressWarnings("resource")
 	@Inject(method = "renderSky", at = @At("TAIL"), cancellable = true)
     private void renderSky2(PoseStack pPoseStack, Matrix4f pProjectionMatrix, float pPartialTick, Camera camera, boolean thing, Runnable runnable, CallbackInfo info) {
+		if(this.minecraft != null) {
 		ResourceKey<Level> player_dim = Minecraft.getInstance().level.dimension();
     	if (player_dim == Level.OVERWORLD)
     	{float playerEyeLevel = (float) this.minecraft.player.getEyePosition(pPartialTick).y;
@@ -1671,6 +1684,7 @@ public class LevelRendererMixin {
          RenderSystem.enableBlend();      
          pPoseStack.popPose();
     	}
+		}
 		
 	}
 	
@@ -1679,6 +1693,7 @@ public class LevelRendererMixin {
 	@Inject(method = "renderClouds", at = @At("HEAD"), cancellable = true)
    public void renderClouds(PoseStack pPoseStack, Matrix4f pProjectionMatrix, float pPartialTick, double pCamX, double pCamY, double pCamZ, CallbackInfo info) {
 		ResourceKey<Level> player_dim = Minecraft.getInstance().level.dimension();
+		if(this.minecraft != null) {
 	    float playerEyeLevel = (float) this.minecraft.player.getEyePosition(pPartialTick).y;
 		if (player_dim == NorthstarDimensions.MARS_DIM_KEY)
     	{info.cancel();}
@@ -1776,6 +1791,7 @@ public class LevelRendererMixin {
 		      }
 		}else if(player_dim == NorthstarDimensions.VENUS_DIM_KEY && playerEyeLevel > 500) {
 			info.cancel();
+		}
 		}
 	}
 	
