@@ -55,7 +55,7 @@ public class OxygenStuff {
     	}
     	return false;
 	}
-	@SubscribeEvent
+//	@SubscribeEvent
     public static void onWorldTick(TickEvent.LevelTickEvent event){
     	long t = event.level.getGameTime();
     	if(t % 40 == 0) {

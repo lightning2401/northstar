@@ -25,6 +25,10 @@
     "minecraft:stray",
     "minecraft:wither_skeleton",
     "minecraft:iron_golem",
-    "minecraft:snow_golem"
+    "minecraft:snow_golem",
+    "minecraft:tropical_fish",
+    "minecraft:cod",
+    "minecraft:salmon",
+    "minecraft:tadpole"
   ]
 }

@@ -60,6 +60,7 @@ public class RocketContraption extends TranslatingContraption{
 	public Map<BlockPos, Couple<Boolean>> conductorSeats;
 	public ArrivalSoundQueue soundQueue;
 	public int fuelCost = 0;
+	public int fuelReturnCost = 0;
 	public int weightCost = 0;
 	public int heatShielding = 0;
 	public int blockCount = 0;
@@ -222,7 +223,7 @@ public class RocketContraption extends TranslatingContraption{
 		{weightCost += 10;} 
 		else if(!blockState.is(Blocks.AIR)){weightCost+=1;}
 		if(blockState.is(NorthstarTags.NorthstarBlockTags.TIER_1_HEAT_RESISTANCE.tag) && !blockState.is(Blocks.AIR)) 
-		{heatShielding++;}
+		{heatShielding += 3;}
 		if(blockState.is(NorthstarTags.NorthstarBlockTags.TIER_2_HEAT_RESISTANCE.tag) && !blockState.is(Blocks.AIR)) 
 		{heatShielding += 8;}
 		if(blockState.is(NorthstarTags.NorthstarBlockTags.TIER_3_HEAT_RESISTANCE.tag) && !blockState.is(Blocks.AIR))

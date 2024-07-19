@@ -161,6 +161,8 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 		("Full Fuel Cost: " + (int)(contrap.weightCost + (contrap.fuelCost - (contrap.fuelCost * contrap.computingPower)))).withStyle(ChatFormatting.GOLD), false);
 		contrap.owner.displayClientMessage(Component.literal
 		("Current Fuel Supply: " + contrap.fuelAmount()).withStyle(ChatFormatting.GOLD), false);
+		contrap.owner.displayClientMessage(Component.literal
+		("Estimated Return Cost: " + contrap.fuelReturnCost).withStyle(ChatFormatting.GOLD), false);
 		contrap.owner.displayClientMessage(Component.literal   
 		("Required Heat Shielding: " + heatCost).withStyle(ChatFormatting.YELLOW), false);
 		contrap.owner.displayClientMessage(Component.literal

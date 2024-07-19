@@ -78,6 +78,7 @@ public class NorthstarTechBlocks {
     		.transform(pickaxeOnly())
     		.addLayer(() -> RenderType::cutoutMipped)
     		.simpleItem()
+    		
     		.register();
     public static final BlockEntry<LaserBlock> LASER = REGISTRATE.block("laser", LaserBlock::new)
     		.initialProperties(SharedProperties::softMetal)
@@ -297,16 +298,16 @@ public class NorthstarTechBlocks {
 			.item(CogwheelBlockItem::new)
 			.build()
 			.register();
-	public static final BlockEntry<CogWheelBlock> IRON_LARGE_COGWHEEL = REGISTRATE.block("iron_large_cogwheel", CogWheelBlock::large)
-			.initialProperties(SharedProperties::softMetal)
-			.properties(p -> p.sound(SoundType.METAL))
-			.properties(p -> p.color(MaterialColor.COLOR_GRAY))
-			.transform(BlockStressDefaults.setNoImpact())
-			.blockstate(BlockStateGen.axisBlockProvider(false))
-			.onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
-			.item(CogwheelBlockItem::new)
-			.build()
-			.register();
+//	public static final BlockEntry<CogWheelBlock> IRON_LARGE_COGWHEEL = REGISTRATE.block("iron_large_cogwheel", CogWheelBlock::large)
+//			.initialProperties(SharedProperties::softMetal)
+//			.properties(p -> p.sound(SoundType.METAL))
+//			.properties(p -> p.color(MaterialColor.COLOR_GRAY))
+//			.transform(BlockStressDefaults.setNoImpact())
+//			.blockstate(BlockStateGen.axisBlockProvider(false))
+//			.onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+//			.item(CogwheelBlockItem::new)
+//			.build()
+//			.register();
     
 	public static void register() {}
 	

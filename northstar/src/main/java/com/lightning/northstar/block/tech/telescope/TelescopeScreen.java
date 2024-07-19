@@ -150,7 +150,7 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
         this.blit(pPoseStack, ((venus_x * 20) + (int)scrollX * 20), ((venus_y * 20) + (int)scrollY * 20), 0, 0, 255, 255);
         pPoseStack.popPose();}
 
-    	if (player_dim == NorthstarDimensions.MERCURY_DIM_KEY) {
+    	if (player_dim != NorthstarDimensions.MERCURY_DIM_KEY) {
         int mercury_x = (int) NorthstarPlanets.mercury_x;
         int mercury_y = (int) NorthstarPlanets.mercury_y;
         pPoseStack.pushPose();

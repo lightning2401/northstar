@@ -168,7 +168,7 @@ public class NorthstarPlanets {
 
     @SubscribeEvent
     public static void onWorldTick(TickEvent.LevelTickEvent event){
-    	time = event.level.getLevelData().getGameTime();
+    	time = (long) (event.level.getGameTime() * 1.2);
         //mercury!!!! yeah cool
         double mercury_radian = mercury_orbit_speed * time;
         mercury_x = (mercury_origin_x + (Math.cos(mercury_radian)* mercury_orbit_radius_x));
@@ -344,6 +344,16 @@ public class NorthstarPlanets {
     	if(level == NorthstarDimensions.MERCURY_DIM_KEY) {return MERCURY_GRAV;}
     	if(level == NorthstarDimensions.VENUS_DIM_KEY) {return VENUS_GRAV;}
     	if(level == NorthstarDimensions.EARTH_ORBIT_DIM_KEY) {return OUTER_MOON_GRAV;}
+		return 1;
+    }
+    
+    public static double getEngineConstant(ResourceKey<Level> level) {
+    	// I love spaghetti
+    	if(level == NorthstarDimensions.MOON_DIM_KEY) {return 1;}
+    	if(level == NorthstarDimensions.MARS_DIM_KEY) {return 3;}
+    	if(level == NorthstarDimensions.MERCURY_DIM_KEY) {return 6;}
+    	if(level == NorthstarDimensions.VENUS_DIM_KEY) {return 9;}
+    	if(level == NorthstarDimensions.EARTH_ORBIT_DIM_KEY) {return 1;}
 		return 1;
     }
     

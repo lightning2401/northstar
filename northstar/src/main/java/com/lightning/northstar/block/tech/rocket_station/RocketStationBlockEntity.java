@@ -80,6 +80,7 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 	
 	public float offset;
 	public int fuelCost;
+	public int fuelReturnCost;
 	public boolean running;
 	public boolean needsContraption;
 	public AbstractContraptionEntity movedContraption;
@@ -141,6 +142,7 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 			target = NorthstarPlanets.getPlanetDimension(NorthstarPlanets.targetGetter(item.getTagElement("Planet").toString()));
 		}
 		fuelCost = fuelCalc();
+		fuelReturnCost = fuelReturnCalc();
 		
 
 		if (level.isClientSide)
@@ -190,6 +192,7 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 			hasStation |= contraption.hasRocketStation();
 			contraption.owner = owner;
 			contraption.fuelCost = fuelCost;
+			contraption.fuelReturnCost = fuelReturnCost;
 			System.out.println(this.container);
 			heatCost = (TemperatureStuff.getHeatRating(target) * (contraption.blockCount)) + TemperatureStuff.getHeatConstant(target);
 			heatCostHome = (TemperatureStuff.getHeatRating(level.dimension()) * (contraption.blockCount)) + TemperatureStuff.getHeatConstant(level.dimension());
@@ -252,6 +255,8 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 			contraption.owner.displayClientMessage(Component.literal
 			("Current Fuel Supply: " + contraption.fuelAmount()).withStyle(ChatFormatting.GOLD), false);
 			contraption.owner.displayClientMessage(Component.literal
+			("Estimated Return Cost: " + (contraption.weightCost + fuelReturnCost)).withStyle(ChatFormatting.GOLD), false);
+			contraption.owner.displayClientMessage(Component.literal
 			("Required Heat Shielding: " + heatCost).withStyle(ChatFormatting.YELLOW), false);
 			contraption.owner.displayClientMessage(Component.literal
 			("Current Heat Shielding: " + contraption.heatShielding()).withStyle(ChatFormatting.YELLOW), false);
@@ -264,6 +269,18 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 			if(!oxygenSealed) {
 				contraption.owner.displayClientMessage(Component.literal
 				("Cockpit is not sealed, or too large!").withStyle(ChatFormatting.AQUA), false);
+			}
+			if(contraption.fuelAmount() < contraption.fuelCost) {
+				contraption.owner.displayClientMessage(Component.literal
+				("Insufficient fuel!").withStyle(ChatFormatting.DARK_RED), false);
+			}
+			if(contraption.heatShielding() < heatCost) {
+				contraption.owner.displayClientMessage(Component.literal
+				("Insufficient heat shielding!").withStyle(ChatFormatting.DARK_RED), false);
+			}
+			if(contraption.hasJetEngine() < requiredJets) {
+				contraption.owner.displayClientMessage(Component.literal
+				("Not enough Jet Engines!").withStyle(ChatFormatting.DARK_RED), false);
 			}
 			contraption.owner.displayClientMessage(Component.literal
 			("Rocket failed to assemble!").withStyle(ChatFormatting.RED), false);
@@ -303,8 +320,8 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 		}
 		return cost * 8;
 	}
-	
-	public int engineCalc() {
+
+	public int fuelReturnCalc() {
 		String home = NorthstarPlanets.getPlanetName(this.level.dimension());
 		String targ = NorthstarPlanets.getPlanetName(target);
 		
@@ -316,15 +333,30 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 		
 		int dif = (int) (Math.pow(home_x - targ_x, 2) + Math.pow(home_y - targ_y, 2));
 		dif = Mth.roundToward(dif, 100) / 20;
-		int cost = 0;
-		int homeCost = dif + NorthstarPlanets.getPlanetAtmosphereCost(this.level.dimension()) + 1000;
-		int targetCost = dif + NorthstarPlanets.getPlanetAtmosphereCost(this.level.dimension()) + 1000;
-		cost = homeCost >= targetCost ? homeCost : targetCost;
+		int cost = dif + NorthstarPlanets.getPlanetAtmosphereCost(target) + 1000;
 		
 		if (dif != 0) {
 	//		System.out.println(dif);
 		}
-		return (cost * 8) / 800;
+		return cost * 8;
+	}
+	
+	public int engineCalc() {
+		int homeAtmos = NorthstarPlanets.getPlanetAtmosphereCost(level.dimension()) / 100;
+		int targetAtmos = NorthstarPlanets.getPlanetAtmosphereCost(target) / 100;
+		
+		double grav = NorthstarPlanets.getGravMultiplier(target);
+		double homeGrav = NorthstarPlanets.getGravMultiplier(level.dimension());
+		if(grav < homeGrav) {
+			grav = homeGrav;
+		}
+		double constant = NorthstarPlanets.getEngineConstant(target);
+		double homeConstant = NorthstarPlanets.getEngineConstant(level.dimension());
+		if(constant < homeConstant) {
+			constant = homeConstant;
+		}
+		
+		return (int) (Mth.clamp(((targetAtmos + homeAtmos) * grav), 6, 64)  + constant);
 	}
 	
 	// this is extremely buggy for some reason, this NEEDS to be fixed before release
