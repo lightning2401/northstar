@@ -3,6 +3,7 @@ package com.lightning.northstar.block.tech.telescope;
 import javax.annotation.Nullable;
 
 import com.lightning.northstar.block.entity.NorthstarBlockEntityTypes;
+import com.lightning.northstar.world.dimension.NorthstarPlanets;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.utility.Lang;
 
@@ -59,17 +60,17 @@ public class TelescopeBlock extends BaseEntityBlock implements IBE<TelescopeBloc
 	}
 
 	
-	 @Override
+	 @SuppressWarnings("resource")
+	@Override
 	  public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos,Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
 	        if (!pLevel.isClientSide()) {
 	            BlockEntity entity = pLevel.getBlockEntity(pPos);
-	            if(entity instanceof TelescopeBlockEntity) {
+	            if(entity instanceof TelescopeBlockEntity && pLevel.canSeeSky(pPos.above()) && (pLevel.isNight() || NorthstarPlanets.canSeeSkyAtDay(pLevel.dimension())) && !pLevel.isRaining()) {
 	                NetworkHooks.openScreen(((ServerPlayer)pPlayer), (TelescopeBlockEntity)entity, pPos);
 
 	            } else {
 	        		Minecraft.getInstance().player.displayClientMessage(
 	        				Lang.translateDirect("northstar.gui.telescope_fail"), true);
-	                throw new IllegalStateException("Our Container provider is missing!");
 	            }
 	        }
 

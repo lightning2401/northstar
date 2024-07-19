@@ -499,6 +499,8 @@
 "create.contraption.controls.rocket_tut": "Press Space to begin launch sequence!",
 "create.contraption.controls.landing_warning": "Hold Space to slow down!",
 
+"create.northstar.gui.telescope_fail": "Telescope must be able to see stars",
+
 "create.recipe.engraving": "Engraving",
 "create.recipe.freezing": "Freezing",
 "create.recipe.electrolysis": "Electrolysis",

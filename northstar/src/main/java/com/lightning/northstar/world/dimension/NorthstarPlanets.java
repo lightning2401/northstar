@@ -337,6 +337,13 @@ public class NorthstarPlanets {
     	return true;
     }
     
+    public static boolean canSeeSkyAtDay(ResourceKey<Level> level) {
+    	if(level == NorthstarDimensions.EARTH_ORBIT_DIM_KEY) {return true;}
+    	if(level == NorthstarDimensions.MERCURY_DIM_KEY) {return true;}
+    	if(level == NorthstarDimensions.MOON_DIM_KEY) {return true;}
+    	return false;
+    }
+    
     public static double getGravMultiplier(ResourceKey<Level> level) {
     	// I love spaghetti
     	if(level == NorthstarDimensions.MOON_DIM_KEY) {return MOON_GRAV;}
