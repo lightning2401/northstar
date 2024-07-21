@@ -18,8 +18,6 @@ public class MobMixin {
 	private void doHurtTarget(Entity pEntity, CallbackInfoReturnable<Boolean> info) {
 		int i = EnchantmentHelper.getEnchantmentLevel(NorthstarEnchantments.FROSTBITE.get(), (Mob)(Object) this);
 		if (i > 0) {
-     	   System.out.println("frezzing");
-     	   System.out.println(i * 20);
 			pEntity.setTicksFrozen((i * 80) + 150);
 		}
 

@@ -104,7 +104,6 @@ public class PushRedstoneComponentsGoal extends MoveToBlockGoal {
 	      
 	      if (this.isReachedTarget() && this.disruptor.disruptTimer == 0) {
 	    	  BlockState newstate = level.getBlockState(pos);
-	    	  System.out.println("at the thingy!!!");
 	    	  disruptor.disruptTimer = 600;
 	    	  ++this.ticksSinceReachedGoal;
 	    	  if(newstate.getBlock() instanceof SlidingDoorBlock sliding) 
@@ -115,21 +114,18 @@ public class PushRedstoneComponentsGoal extends MoveToBlockGoal {
 	    	  if(newstate.getBlock() instanceof DoorBlock door) 
 	    	  {
 	    	      disruptor.timeSpentAttacking = 0;
-		    	  System.out.println("trying to open the thingy!!");
 		    	  door.setOpen(disruptor, level, newstate, pos, !newstate.getValue(DoorBlock.OPEN));
 	    		  return;
 	    	  }
 	    	  if(newstate.getBlock() instanceof ButtonBlock button) 
 	    	  {
 	    	      disruptor.timeSpentAttacking = 0;
-		    	  System.out.println("trying to open the thingy!!");
 		    	  button.press(newstate, level, pos);
 	    		  return;
 	    	  }
 	    	  if(newstate.getBlock() instanceof LeverBlock lever) 
 	    	  {
 	    	      disruptor.timeSpentAttacking = 0;
-		    	  System.out.println("trying to open the thingy!!");
 		    	  BlockState pulledState = lever.pull(state, level, pos);
 	    		  level.setBlockAndUpdate(pos, pulledState);
 	    		  float f = pulledState.getValue(LeverBlock.POWERED) ? 0.6F : 0.5F;

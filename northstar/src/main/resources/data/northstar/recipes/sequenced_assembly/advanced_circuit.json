@@ -3,7 +3,7 @@
   "ingredient": {
     "item": "northstar:martian_steel_sheet"
   },
-  "loops": 3,
+  "loops": 5,
   "results": [
     {
       "chance": 120.0,
@@ -35,6 +35,22 @@
         },
         {
           "item": "minecraft:copper_ingot"
+        }
+      ],
+      "results": [
+        {
+          "item": "northstar:unfinished_advanced_circuit"
+        }
+      ]
+    },
+    {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "northstar:unfinished_advanced_circuit"
+        },
+        {
+          "item": "minecraft:gold_ingot"
         }
       ],
       "results": [

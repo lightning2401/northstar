@@ -1,7 +1,7 @@
 {
-  "type": "minecraft:ore",
+  "type": "northstar:glowing_ore",
   "config": {
-    "size": 5,
+    "size": 4,
     "discard_chance_on_air_exposure": 0,
     "targets": [
       {

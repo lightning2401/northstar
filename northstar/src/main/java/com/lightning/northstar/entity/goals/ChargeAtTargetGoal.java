@@ -38,7 +38,6 @@ public class ChargeAtTargetGoal extends MoveToBlockGoal {
 		  if(chargingMob.chargeCooldown > 0 ) {
 			  return false;
 		  }else if (this.chargingMob.chargeTimer > 0) {
-	    	  System.out.println("eerrmm... pa lermpa????");
 	    	  return true;
 	      } else if (this.searchForTarget()) {
 	         this.nextStartTick = reducedTickDelay(20);
@@ -103,7 +102,6 @@ public class ChargeAtTargetGoal extends MoveToBlockGoal {
 	   public void tick() {
 		  //im gonna scream i cant figure this out im so dumb 
 	      if(chargingMob.ticksSpentCharging > 60) {
-	    	  System.out.println("STOPPING!!!!!!");
 	    	  chargingMob.moveDirection = Vec3.ZERO;
 	    	  chargingMob.targetPos = null;
 	    	  chargingMob.chargeTimer = 0;
@@ -151,7 +149,6 @@ public class ChargeAtTargetGoal extends MoveToBlockGoal {
 		      if(chargingMob.moveDirection.z < 0) {zFlag = subVec.z > 0;}
 			      
 		      if (xFlag && zFlag && !chargingMob.passedTarget) {
-		    	  System.out.println("THIS SHOULD BE STOPPING  AHHH!!!!");
 		    	  if(!chargingMob.passedTarget) {
 		    		  chargingMob.passedTarget = true;
 		    		  chargingMob.level.broadcastEntityEvent(chargingMob, (byte) 66);

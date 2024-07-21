@@ -121,7 +121,6 @@ public class ScourChestGoal extends MoveToBlockGoal {
 	      }
 	      if (this.isReachedTarget() && this.disruptor.stealTimer == 0) {
 	    	  BlockState newstate = level.getBlockState(pos);
-	    	  System.out.println("at the thingy!!!");
 	    	  disruptor.stealTimer = 600;
 	    	  ++this.ticksSinceReachedGoal;
 	    	  if(newstate.getBlock() instanceof ChestBlock chest && searchTime == 0) 

@@ -189,9 +189,6 @@ public class WilterTrunkPlacer extends TrunkPlacer {
 			      List<FoliagePlacer.FoliageAttachment> list = Lists.newArrayList();   
 			      BlockPos.MutableBlockPos blockpos$mutableblockpos3 = new BlockPos.MutableBlockPos();
 				  this.placeShroomLight(pLevel, pBlockSetter, pRandom, blockpos$mutableblockpos3.set(pPos.getX(), pPos.getY()+12, pPos.getZ()), pConfig);
-				  System.out.println(this.placeShroomLight(pLevel, pBlockSetter, pRandom, blockpos$mutableblockpos3.set(pPos.getX(), pPos.getY()+12, pPos.getZ()), pConfig));
-				  System.out.println("YOOOOOOOOOOOOOOOO, BIOLUMINESCENCE");
-				  System.out.println(pPos.getX() + "X    " + (pPos.getY()+12) + "Y    " + pPos.getZ() + "Z" );
 
 			      return list;
 		   }  

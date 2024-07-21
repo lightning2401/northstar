@@ -229,8 +229,6 @@ public class TemperatureRegulatorScreen extends AbstractSimiScreen {
 			.writingTo(envLabel)
 			.titled(Component.literal("Fill Mode"))
 			.calling(state -> {
-				System.out.println("State: " + state);
-				System.out.println("envFill: " + blockEntity.envFill);
 				blockEntity.envFill = state == 1;
 				envFill = state == 1;
 				envLabel.x = x + 200  - font.width(envLabel.text) / 2;});

@@ -140,7 +140,6 @@ public class RocketContraption extends TranslatingContraption{
 			BlockEntity ent = world.getBlockEntity(pos);
 			if(ent instanceof RocketStationBlockEntity rsbe) {
 				name = rsbe.name;
-				System.out.println("rocket station: " + rsbe.container.getItem(0));
 				
 				// this is a bit sketchy in game, it should delete the ticket after it's
 				// actually been used, not when assembling the rocket
@@ -151,7 +150,6 @@ public class RocketContraption extends TranslatingContraption{
 						if(NorthstarPlanets.getPlanetDimension(NorthstarPlanets.targetGetter(rsbe.container.getItem(0).getTagElement("Planet").toString())) == dest)
 						this.isUsingTicket = true;
 						this.isUsingTicket = true;
-						System.out.println("setup isUsingTicket: " + this.isUsingTicket);
 					}
 				}
 			}
@@ -162,13 +160,11 @@ public class RocketContraption extends TranslatingContraption{
 		}
 		if(NorthstarTechBlocks.COMPUTER_RACK.has(blockState)) {
 			BlockEntity ent = world.getBlockEntity(pos);
-			System.out.println("COMPUTER RACK DETECTED!");
 			if(ent instanceof TargetingComputerRackBlockEntity crbe) {
 				for(int b = 0; b < crbe.container.getContainerSize(); b++){
 					if(crbe.container.getItem(b).is(NorthstarItems.TARGETING_COMPUTER.get())) {
 						if(computingPower < 0.4)
 							computingPower += 0.0025;
-						System.out.println("CPU detected! " + computingPower);
 					}
 				}
 			}
@@ -190,19 +186,16 @@ public class RocketContraption extends TranslatingContraption{
 			if (NorthstarTags.NorthstarFluidTags.TIER_1_ROCKET_FUEL.matches(fluid.getFluid().getFluid())) {
 				if(fluid.getFluidAmount() != 0)
 				fuelAmount += fluid.getFluidAmount();
-				System.out.println("Fuel Amount: " + fuelAmount);
 				has_fuel = true;
 			}
 			if (NorthstarTags.NorthstarFluidTags.TIER_2_ROCKET_FUEL.matches(fluid.getFluid().getFluid())) {
 				if(fluid.getFluidAmount() != 0)
 				fuelAmount += fluid.getFluidAmount() * 2;
-				System.out.println("Fuel Amount: " + fuelAmount);
 				has_fuel = true;
 			}
 			if (NorthstarTags.NorthstarFluidTags.TIER_3_ROCKET_FUEL.matches(fluid.getFluid().getFluid())) {
 				if(fluid.getFluidAmount() != 0)
 				fuelAmount += fluid.getFluidAmount() * 4;
-				System.out.println("Fuel Amount: " + fuelAmount);
 				has_fuel = true;
 			}
 		}
@@ -244,7 +237,6 @@ public class RocketContraption extends TranslatingContraption{
 		}
 		entity.changeDimension(target);
 		entity.getContraption().getContraptionWorld();
-		System.out.println("AAAAAAAA WE ARE IN SPACE!!!!!! PANIC PANIC PANIC PANIC");
 		entity.level.getProfiler().pop();
 	}
 	

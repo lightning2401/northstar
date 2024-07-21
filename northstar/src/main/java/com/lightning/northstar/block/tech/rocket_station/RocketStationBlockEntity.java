@@ -149,7 +149,6 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 			return;
 
 		if (assembleNextTick == true) {
-			System.out.println("BAINZGEA 2!!!!!!");
 			tryAssemble();
 			assembleNextTick = false;
 		}
@@ -158,19 +157,17 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 	
 	
 	private void tryAssemble() {
-		System.out.println("HUH");
 		if (level.isClientSide)
 			return;
 		BlockState blockState = getBlockState();
-		System.out.println("im tryin over here man :(");
 		if (!(blockState.getBlock() instanceof RocketStationBlock))
-			{System.out.println("what"); return;}
+			{return;}
 
 		RocketContraption contraption = new RocketContraption();
 
 		BlockEntity blockEntity = level.getBlockEntity(worldPosition);
 		if (!(blockEntity instanceof RocketStationBlockEntity))
-			{System.out.println("ruh roh raggy"); return; }
+			{return; }
 		Direction movementDirection = Direction.UP;
 		
 		int engines = 0;
@@ -184,7 +181,7 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 		try {
 			lastException = null;
 			if (!contraption.assemble(level, worldPosition))
-				{System.out.println("IT DOESNT WORK AHHHHHH");return;} 
+				{return;} 
 			engines = contraption.hasJetEngine();
 			hasFuel = contraption.hasFuel();
 			fuelAmount = contraption.fuelAmount();
@@ -209,11 +206,10 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 		}
 		if (ContraptionCollider.isCollidingWithWorld(level, contraption, worldPosition.relative(movementDirection),
 			movementDirection))
-			{System.out.println("Many such cases! Sad!"); return;}else {System.out.println("Obamna");}
+			{return;}else {System.out.println("Obamna");}
 		
 		Set<BlockPos> oxyCheck = new HashSet<BlockPos>();
 		boolean oxygenSealed = true;
-		System.out.println("SPREAD THE DISEASE SPREAD THE DISEASE");
 		if(!oxyCheck.contains(this.getBlockPos().above()))
 			oxyCheck.add(this.getBlockPos().above());
 		if(oxyCheck.size() < OxygenStuff.maximumOxy) {		  
@@ -246,9 +242,7 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 		movedContraption.destination = target;
 		movedContraption.home = this.level.dimension();
 		level.addFreshEntity(movedContraption);
-		RocketHandler.ROCKETS.add(movedContraption);
-		System.out.println("Heat Cost: " + heatCost + "     Heat Shielding: " + heatShielding);
-		System.out.println("Weight Cost: " + contraption.weightCost + "      Fuel Cost: " + fuelCost);}else
+		RocketHandler.ROCKETS.add(movedContraption);}else
 		{
 			contraption.owner.displayClientMessage(Component.literal
 			("Full Fuel Cost: " + (contraption.weightCost + contraption.fuelCost)).withStyle(ChatFormatting.GOLD), false);
@@ -285,8 +279,8 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 			contraption.owner.displayClientMessage(Component.literal
 			("Rocket failed to assemble!").withStyle(ChatFormatting.RED), false);
 			System.out.println("No station or jet engine, Bruh!");
-			System.out.println("Heat Cost: " + heatCost + "     Heat Shielding: " + heatShielding);
-			System.out.println("Weight Cost: " + contraption.weightCost + "      Fuel Cost: " + fuelCost);
+//			System.out.println("Heat Cost: " + heatCost + "     Heat Shielding: " + heatShielding);
+//			System.out.println("Weight Cost: " + contraption.weightCost + "      Fuel Cost: " + fuelCost);
 			exception(new AssemblyException(Lang.translateDirect("train_assembly.no_controls")), -1);
 		}
 	}

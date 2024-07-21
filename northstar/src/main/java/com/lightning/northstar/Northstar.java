@@ -109,7 +109,6 @@ public class Northstar
 
     public Northstar()
     {
-    	System.out.println("big fart");
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         
 		IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
@@ -273,6 +272,7 @@ public class Northstar
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.MARTIAN_STEEL_GRATE.get(), RenderType.cutout());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.TUNGSTEN_GRATE.get(), RenderType.cutout());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.VENT_BLOCK.get(), RenderType.cutout());
+
     	}
     }
 	public static ResourceLocation asResource(String path) {

@@ -184,7 +184,6 @@ public class VenusVultureEntity extends Monster implements IAnimatable, IAnimati
 				}
 				if(level.random.nextInt(3000) == 0) {
 					setIsLanding(true);
-					System.out.println("BEGINNING LANDING!!!");
 				}
 			}
 			else {
@@ -256,20 +255,17 @@ public class VenusVultureEntity extends Monster implements IAnimatable, IAnimati
 			}
 			
 			if(pollinating && this.targetPosition.closerToCenterThan(this.position(), 0.5D)) {
-				System.out.println("I AM POLLINATING A FLOWER!!!!!!!!!!!!!!!!!!!!!!");
 				this.pollinating = false;
 				this.pollinationTimer = 6000;
 				if(this.level.getBlockState(this.targetPosition).getBlock() instanceof MartianFlowerBlock) {
 					Item item = ((MartianFlowerBlock)this.level.getBlockState(this.targetPosition).getBlock()).getSeedItem();
 					ItemEntity spawnedItem = new ItemEntity(level, this.getX(), this.getY(), this.getZ(), new ItemStack(item, 1));
 					this.level.addFreshEntity(spawnedItem);
-					System.out.println("I AM POLLINATING A RANDOM FLOWER!!!!!");
 				}
 				else if(this.level.getBlockState(this.targetPosition).getBlock() instanceof MartianTallFlowerBlock) {
 					Item item = NorthstarItems.MARS_SPROUT_SEEDS.get();
 					ItemEntity spawnedItem = new ItemEntity(level, this.getX(), this.getY(), this.getZ(), new ItemStack(item, 1));
 					this.level.addFreshEntity(spawnedItem);
-					System.out.println("I AM POLLINATING A TALL SPROUT FLOWER!!!!!");
 				}
 				this.targetPosition = null;
 			}

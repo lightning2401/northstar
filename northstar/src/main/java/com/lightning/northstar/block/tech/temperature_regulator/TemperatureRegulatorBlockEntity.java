@@ -69,8 +69,7 @@ public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implemen
 					  TEMP_ZONES = newList;
 				  }      
 				 }
-				else {TemperatureStuff.markTemp(this.getBlockPos(), this.level, this.TEMP_ZONES, this.temp, this.sizeX, this.sizeY, this.sizeZ, this.offsetX, this.offsetY, this.offsetZ);
-				  System.out.println("working maybe???");}
+				else {TemperatureStuff.markTemp(this.getBlockPos(), this.level, this.TEMP_ZONES, this.temp, this.sizeX, this.sizeY, this.sizeZ, this.offsetX, this.offsetY, this.offsetZ);}
 			}
 			else {
 				removeTemp(this);
@@ -148,7 +147,6 @@ public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implemen
 	
 	@Override
 	protected void read(CompoundTag tag, boolean clientPacket) {		
-		System.out.println("sizeX read:" + tag.getInt("sizeX"));
 		sizeX = tag.getInt("sizeX");
 		sizeY = tag.getInt("sizeY");
 		sizeZ = tag.getInt("sizeZ");

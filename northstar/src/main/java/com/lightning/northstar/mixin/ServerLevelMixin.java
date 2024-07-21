@@ -46,7 +46,8 @@ public class ServerLevelMixin {
 		        ProfilerFiller profilerfiller = level.getProfiler();
 		        profilerfiller.push("thunder");
 		        if (flag && level.random.nextInt(15000) == 0) {
-		           System.out.println("THUNDER TIME YEEHAW");
+
+			           // THUNDER TIME YEEHAW
 		           BlockPos blockpos = this.findLightningTargetAround(level.getBlockRandomPos(i, 0, j, 15));
 		           LightningBolt lightningbolt = EntityType.LIGHTNING_BOLT.create(level);
 		           lightningbolt.moveTo(Vec3.atBottomCenterOf(blockpos));

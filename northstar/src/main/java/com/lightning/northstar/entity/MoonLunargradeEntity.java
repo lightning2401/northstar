@@ -164,7 +164,6 @@ public class MoonLunargradeEntity extends Monster implements IAnimatable, IAnima
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", EDefaultLoopTypes.LOOP));
 			event.getController().animationSpeed = event.getLimbSwingAmount();
 		} else if (spitTimer > 0) {
-			System.out.println("AAAAAAAAA!!!!!!! SPIT TIMER !!!!! " + spitTimer);
 			event.getController().setAnimation(new AnimationBuilder().addAnimation("spit", EDefaultLoopTypes.PLAY_ONCE));
 			event.getController().animationSpeed = 1;
 		} else {

@@ -50,10 +50,8 @@ public class NorthstarAdvancement {
 		Builder t = new Builder();
 		b.apply(t);
 		
-		System.out.println("CHECKING FOR EXTERNAL TRIGGER");
 		if (!t.externalTrigger) {
-			System.out.println("AAAAAAAAAA IS THIS WORKING!!!!!!!!!??????");
-			System.out.println(id + "_builtin");
+
 			builtinTrigger = NorthstarTriggers.addSimple(id + "_builtin");
 			builder.addCriterion("0", builtinTrigger.instance());
 		}

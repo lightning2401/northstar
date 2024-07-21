@@ -56,7 +56,6 @@ public class RocketHandler {
 			pp++;
 			for(int p = 0; p < ROCKETS.size(); p++) {
 				if( pp % 800 == 0) {
-					System.out.println("YOO THSI IS ESFPKC" + pp);
 				if(ROCKETS.get(p).level.dimension() != ROCKETS.get(p).destination && ROCKETS.get(p).getY() > 1750) {
 					changeDim(ROCKETS.get(p), event.level);
 					ROCKETS.remove(ROCKETS.get(p));
@@ -70,10 +69,8 @@ public class RocketHandler {
 				List<Pair<Level, BlockPos>> DELETE_QUEUE = new ArrayList<>();
 				for(Pair<Level,BlockPos> entries : TICKET_QUEUE) {
 					if(event.level.dimension() == entries.first.dimension()) {
-						System.out.println("looking for ticket at:  " + entries.second);
 						if(entries.first.getBlockEntity(entries.second) instanceof RocketStationBlockEntity rsbe) {
 							rsbe.container.setItem(0, new ItemStack(Blocks.AIR.asItem()));
-							System.out.println("ticket should be deleted");
 							DELETE_QUEUE.add(entries);
 						}
 					}
@@ -98,10 +95,8 @@ public class RocketHandler {
 		HashMap<Entity,Integer> seatMap = new HashMap<Entity,Integer>();
 		UUID controller = null;
 		Map<Entity, MutableInt> colliders = new HashMap<Entity, MutableInt>();
-		System.out.println("Pre Travel Seat Map: " + entity.getContraption().getSeatMapping());
 		for(Entity passengers : entity.entitiesInContraption) {
 			if(passengers.level.getServer().getLevel(passengers.level.dimension()) != destLevel && !passengers.level.isClientSide) {
-				System.out.println("PASSERNGSER ARE REALS");
 				if(passengers instanceof ServerPlayer) {
 					changePlayerDimension(destLevel, (ServerPlayer) passengers, new PortalForcer(destLevel), seatMap, entity.getContraption(), entity, controller);		
 					continue;
@@ -110,7 +105,7 @@ public class RocketHandler {
 			}
 		}
 		changeDimensionCustom(destLevel, entity, new PortalForcer(destLevel), seatMap, colliders, entity.getContraption(), entity, controller);
-		System.out.println(entity.getContraption().getSeatMapping() + "Please for the love of all that is holy work");
+		
 	}
 	
 	public static Entity changeDimensionCustom(ServerLevel pDestination, Entity entity, net.minecraftforge.common.util.ITeleporter teleporter,
@@ -169,19 +164,14 @@ public class RocketHandler {
 	    	  		((RocketContraptionEntity)transportedEntity).visualEngineCount = rce.visualEngineCount;
 	    	  		
 	    	  		
-	    	  		System.out.println(seatMap);
-	    	  		System.out.println("Seat Mapping: " + ((RocketContraptionEntity)transportedEntity).getContraption().getSeatMapping());
 	    	  	}
 	    	  	if(seatNumber != -12345 ) {
 	    	  		seatMap.put(transportedEntity, seatNumber);
 	    	  	}
 		    	if(contrapEnt.collidingEntities.containsKey(entity)) {
 		    		colliders.put(transportedEntity, contrapEnt.collidingEntities.get(entity));
-		    		System.out.println("TRUCK NUTS!!!!!!!!!!!!!!!!!!!!");
+		    		// TRUCK NUTS!!!!!!
 		    	}
-	    	  
-	    	  
-	            	System.out.println("Errrrmmmm, did that just happen??   " + transportedEntity);
 	            
 	            entity.setRemoved(Entity.RemovalReason.CHANGED_DIMENSION);
 	            entity.level.getProfiler().pop();
@@ -240,7 +230,6 @@ public class RocketHandler {
 	             
 	          }
 	          if(seatNumber != -12345 ) {
-	        	  System.out.println("WE HAVE A SEAT YEAHHHHH WOOOOO!!!!!" + seatNumber + "     " + entity.getUUID());
 	        	  seatMap.put(entity, seatNumber);
 			  }
 	          

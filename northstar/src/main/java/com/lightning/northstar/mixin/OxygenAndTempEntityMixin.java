@@ -53,7 +53,7 @@ public class OxygenAndTempEntityMixin {
         ResourceKey<Level> dim = entity.level.dimension();
         boolean posHasAir = OxygenStuff.checkForAir(entity);
         if(entity.canBreatheUnderwater()) {posHasAir = true;}
-        boolean oxygenated = OxygenStuff.oxygenatedEntities.contains(entity);
+        boolean oxygenated = OxygenStuff.oxygenatedEntities.contains(entity) || NorthstarEntityTags.DOESNT_REQUIRE_OXYGEN.matches(entity);
         int temp = checkTemp(entity);
         boolean hasInsulation = TemperatureStuff.hasInsulation(entity);
         boolean hasHeatProtection = TemperatureStuff.hasHeatProtection(entity);
@@ -100,17 +100,7 @@ public class OxygenAndTempEntityMixin {
         if(getFluidAtPos(entity, entity.level) == NorthstarFluids.SULFURIC_ACID.get() || getFluidAtPos(entity, entity.level) == NorthstarFluids.SULFURIC_ACID.getSource().getSource()) {
         	sulfurBurn(entity, entity.getRandom());
         }
-    	if(entity.getY() > 800) {
-    		if(!oxygenated) {
-    			entity.hurt(DamageSource.DROWN, 2f);
-    		}
-    		if(!hasInsulation) {
-    			boolean flag = entity.getType().is(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES);
-    	        int j = flag ? 7 : 2;
-    	        entity.hurt(DamageSource.FREEZE, (float)j);
-    		}
-    	}
-        
+
         // Test code to figure out how changing dimensions works
 //        if(entity instanceof ServerPlayer && entity.getItemInHand(InteractionHand.MAIN_HAND).getItem() == Items.FLINT_AND_STEEL && !entity.level.isClientSide && entity.level.dimension() == Level.OVERWORLD) {
 //    		ResourceKey<Level> dest = NorthstarDimensions.MOON_DIM_KEY;

@@ -19,7 +19,6 @@ public class RocketEntity extends Entity {
 		   int i = 0;
 		   i++;
 		   if(i % 10 == 0) {
-			   System.out.println("I AM A ROCKET AND I EXIST!!!!!!!!");
 		   }
 	   }
 	

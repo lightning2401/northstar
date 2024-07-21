@@ -22,7 +22,7 @@ public class RocketControlsInteractionBehaviour extends MovingInteractionBehavio
 			return false;
 		if (AllItems.WRENCH.isIn(player.getItemInHand(activeHand)))
 			return false;
-		System.out.println("Huhh????");
+//		System.out.println("Huhh????");
 
 		UUID currentlyControlling = rce.getControllingPlayer()
 			.orElse(null);
@@ -33,7 +33,7 @@ public class RocketControlsInteractionBehaviour extends MovingInteractionBehavio
 				return true;
 		}
 
-		System.out.println("I LIVED!!!!!!!!!");
+//		System.out.println("I LIVED!!!!!!!!!");
 		if (!contraptionEntity.startControlling(localPos, player))
 			return false;
 

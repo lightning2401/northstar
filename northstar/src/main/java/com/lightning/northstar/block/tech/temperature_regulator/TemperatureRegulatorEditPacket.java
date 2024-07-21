@@ -71,7 +71,7 @@ public class TemperatureRegulatorEditPacket extends BlockEntityConfigurationPack
 	}
 	@Override
 	protected void applySettings(TemperatureRegulatorBlockEntity be) {
-		be.changeTemp(temp);System.out.println("WE CHANGING!!!!!!");
+		be.changeTemp(temp);
 		be.changeSize(sizeChangeX, sizeChangeY, sizeChangeZ, offsetX, offsetY, offsetZ, envFill);
 	}
 

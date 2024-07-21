@@ -51,7 +51,6 @@ public class TowerTrunkPlacer extends TrunkPlacer {
 		   }
 		   public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedReader pLevel, BiConsumer<BlockPos, BlockState> pBlockSetter, RandomSource pRandom, int pFreeTreeHeight, BlockPos pPos, TreeConfiguration pConfig) {
 			      List<FoliagePlacer.FoliageAttachment> list = Lists.newArrayList();
-			      System.out.println(pPos + "BLOOM FUNGUS!!!!!");
 			      BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
 			      for(int i = 0; i < pFreeTreeHeight; ++i) {

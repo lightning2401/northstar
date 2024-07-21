@@ -44,6 +44,22 @@
       ]
     },
     {
+      "type": "create:deploying",
+      "ingredients": [
+        {
+          "item": "northstar:unfinished_circuit"
+        },
+        {
+          "item": "minecraft:gold_ingot"
+        }
+      ],
+      "results": [
+        {
+          "item": "northstar:unfinished_circuit"
+        }
+      ]
+    },
+    {
       "type": "northstar:engraving",
       "ingredients": [
         {

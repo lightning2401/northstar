@@ -229,20 +229,17 @@ public class MarsMothEntity extends Monster implements IAnimatable, IAnimationTi
 			}
 			
 			if(pollinating && this.targetPosition.closerToCenterThan(this.position(), 0.5D)) {
-				System.out.println("I AM POLLINATING A FLOWER!!!!!!!!!!!!!!!!!!!!!!");
 				this.pollinating = false;
 				this.pollinationTimer = 6000;
 				if(this.level.getBlockState(this.targetPosition).getBlock() instanceof MartianFlowerBlock) {
 					Item item = ((MartianFlowerBlock)this.level.getBlockState(this.targetPosition).getBlock()).getSeedItem();
 					ItemEntity spawnedItem = new ItemEntity(level, this.getX(), this.getY(), this.getZ(), new ItemStack(item, 1));
 					this.level.addFreshEntity(spawnedItem);
-					System.out.println("I AM POLLINATING A RANDOM FLOWER!!!!!");
 				}
 				else if(this.level.getBlockState(this.targetPosition).getBlock() instanceof MartianTallFlowerBlock) {
 					Item item = NorthstarItems.MARS_SPROUT_SEEDS.get();
 					ItemEntity spawnedItem = new ItemEntity(level, this.getX(), this.getY(), this.getZ(), new ItemStack(item, 1));
 					this.level.addFreshEntity(spawnedItem);
-					System.out.println("I AM POLLINATING A TALL SPROUT FLOWER!!!!!");
 				}
 				this.targetPosition = null;
 			}
@@ -354,13 +351,11 @@ public class MarsMothEntity extends Monster implements IAnimatable, IAnimationTi
 							if(state.getValue(MartianFlowerBlock.AGE) == 2) 
 							{timeForPollination = 400;
 							pollinating = true;
-							System.out.println("I AM SEARCHING FOR A FLOWER");
 							return blockpo;};
 
 						}else if(state.getBlock() instanceof MartianTallFlowerBlock && this.level.random.nextInt(4) == 0) {
 							timeForPollination = 400;
 							pollinating = true;
-							System.out.println("I AM SEARCHING FOR A FLOWER");
 							return blockpo;
 						}
 					}

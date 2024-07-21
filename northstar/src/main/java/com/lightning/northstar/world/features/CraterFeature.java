@@ -26,6 +26,8 @@ public class CraterFeature extends Feature<CraterConfig> {
 	      boolean flag = false;
 	      int i = blockpos.getY();
 	      int j = i + config.half_height.sample(randomsource);
+	      if(j == 0)
+	    	  return false;
 	      int k = i - config.half_height.sample(randomsource) - 1;
 	      int l = config.radius.sample(randomsource);
 	      BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();

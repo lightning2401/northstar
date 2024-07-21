@@ -157,7 +157,6 @@ public class VenusMimicEntity extends Monster implements IAnimatable, IAnimation
 		
 		if(this.level.random.nextInt(250) == 0 && this.getTarget() == null && !hiding && !this.level.isClientSide) {
 			if(ignoreHideTimer <= 0) {
-				System.out.println("EVERYONE IS DEAD");
 	    		this.level.broadcastEntityEvent(this, (byte)8);
 				hiding = true; 
 				hideTick = 12;
@@ -165,7 +164,6 @@ public class VenusMimicEntity extends Monster implements IAnimatable, IAnimation
 			}
 		}
 		if(hiding && this.level.random.nextInt(2000) == 0 && !this.level.isClientSide){
-			System.out.println("EVERYONE IS NOT DEAD");
     		this.level.broadcastEntityEvent(this, (byte)9);
 			this.ignoreHideTimer = 100;
 			hiding = false;

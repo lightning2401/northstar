@@ -66,7 +66,7 @@ public class GravityStuffMixin {
     public void northstar$travel(CallbackInfo ci) {
     	LivingEntity entity = (LivingEntity) (Object) this;
     	
-    	if(fall_disabled > 0) {fall_disabled--; entity.fallDistance = 0; System.out.println("Fall Disabled: " + fall_disabled);}
+    	if(fall_disabled > 0) {fall_disabled--; entity.fallDistance = 0;}
     	if(RocketHandler.isInRocket(entity) && entity.getY() > 1500) {
     		fall_disabled = 400;
     	}
@@ -121,8 +121,7 @@ public class GravityStuffMixin {
     @Inject(method = "calculateFallDamage", at = @At("HEAD"), cancellable = true)
     public void calculateFallDamage(float pFallDistance, float pDamageMultiplier, CallbackInfoReturnable<Integer> info) {
     	LivingEntity entity = (LivingEntity) (Object) this;
-    	if(entity instanceof ServerPlayer) 
-    	{System.out.println("Is in rocket: " + RocketHandler.isInRocket(entity));}
+
     	if(!NorthstarPlanets.hasNormalGrav(entity.level.dimension())) {
     	      MobEffectInstance mobeffectinstance = entity.getEffect(MobEffects.JUMP);
     	      double mult = getGravMultiplier(entity.level.dimension());
@@ -199,7 +198,6 @@ public class GravityStuffMixin {
 	            
 	            return newentity;
 	            });    	  
-	    	  	System.out.println("Errrrmmmm, did that just happen??   " + transportedEntity);
 	            
 	            entity.setRemoved(Entity.RemovalReason.CHANGED_DIMENSION);
 	            entity.level.getProfiler().pop();

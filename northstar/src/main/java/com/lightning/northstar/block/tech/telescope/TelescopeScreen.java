@@ -352,7 +352,8 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
         	if(SelectedPlanet != null) {
 			NorthstarPackets.getChannel()
 				.sendToServer(TelescopePrintPacket.print(menu.blockEntity.getBlockPos(), SelectedPlanet));
-			System.out.println("WE'VE BEEN CLICKED, SCATTER!!!!!");}
+//			System.out.println("WE'VE BEEN CLICKED, SCATTER!!!!!");
+			}
 		});
         printButton.setToolTip(Component.translatable("container.northstar.paper_check"));
 		printButton.render(pPoseStack, mouseX, mouseY, delta);
@@ -615,8 +616,6 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
             SelectedPlanet = "eris";}       
          }
         if (pButton == 1) {
-        	System.out.println(mouseX + "      " + mouseY);
-        	System.out.println(SelectedPlanet);
         }
 
         return super.mouseClicked(mouseX, mouseY, pButton);

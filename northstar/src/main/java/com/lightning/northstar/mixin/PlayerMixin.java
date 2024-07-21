@@ -38,7 +38,7 @@ public class PlayerMixin {
         	int j = EnchantmentHelper.getEnchantmentLevel(NorthstarEnchantments.FROSTBITE.get(), (Player)(Object) this);
             if (pTarget instanceof LivingEntity) {
                if (j > 0) {
-            	   System.out.println("frezzing");
+            	   //frezzing
                   pTarget.setTicksFrozen((j * 80) + 150);;
                   frost(pTarget);
                }

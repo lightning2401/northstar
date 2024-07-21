@@ -57,7 +57,6 @@ public class GlowstoneTorchBlock extends Block implements SimpleWaterloggedBlock
 	@SuppressWarnings("deprecation")
 	public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
 		if (OxygenStuff.hasOxygen(pCurrentPos, ((Level)pLevel).dimension())) {
-			System.out.println("Burh");
 		}
 	return pFacing == Direction.DOWN && !this.canSurvive(pState, pLevel, pCurrentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(pState, 	pFacing,pFacingState,      pLevel, pCurrentPos, pFacingPos);
 	}

@@ -46,12 +46,10 @@ public abstract class BucketItemMixin extends Item{
 //	at = @At(value = "HEAD", target = "Lnet/minecraft/world/item/BucketItem;emptyContents(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/BlockHitResult;)Z"),
 //	cancellable = true)
 	protected void emptyContentsReal(@Nullable Player pPlayer, Level pLevel, BlockPos pPos, @Nullable BlockHitResult blockHitResult, CallbackInfoReturnable<Boolean> info) {
-		System.out.println("YOooo buckets are real");
 		BlockState blockstate = pLevel.getBlockState(pPos);
 		if (!(this.content instanceof FlowingFluid)) {
 			info.setReturnValue(false);
 		} else if (pLevel.dimensionType().ultraWarm() && this.content.is(FluidTags.WATER) && TemperatureStuff.getTemp(pPos, pLevel) < 212) {
-			System.out.println("real");
 			if (!pLevel.setBlock(pPos, this.content.defaultFluidState().createLegacyBlock(), 11) && !blockstate.getFluidState().isSource()) {
 				info.setReturnValue(false);
 			} else {
@@ -76,14 +74,10 @@ public abstract class BucketItemMixin extends Item{
 			return;
 		int boilingpoint = TemperatureStuff.getBoilingPoint(item.getFluid().defaultFluidState());
 		int freezingpoint = TemperatureStuff.getFreezingPoint(item.getFluid().defaultFluidState());
-		System.out.println("Temp: " + temp);
-		System.out.println("Boiling Point: " + boilingpoint);
-		System.out.println("Freezing Point: " + freezingpoint);
 		Block block = pLevel.getBlockState(pPos).getBlock();
 		if (!(item.getFluid() instanceof FlowingFluid)) {
 			return;
 		} else if (pLevel.dimensionType().ultraWarm() && temp < boilingpoint && temp > freezingpoint) {
-			System.out.println("real");
 			if(pLevel.getBlockState(pPos).is(Blocks.AIR) || pLevel.getBlockState(pPos).canBeReplaced(content)) {
 				if (!pLevel.setBlock(pPos, item.getFluid().defaultFluidState().createLegacyBlock(), 11) && !blockstate.getFluidState().isSource()) {
 					return;

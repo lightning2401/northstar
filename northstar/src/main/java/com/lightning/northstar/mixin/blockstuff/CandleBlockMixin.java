@@ -33,8 +33,6 @@ public class CandleBlockMixin {
 		    		}
 		    		pLevel.playSound(null, pCurrentPos, SoundEvents.CANDLE_EXTINGUISH, SoundSource.BLOCKS, 1, 0);
 		    		info.setReturnValue(Blocks.CANDLE.defaultBlockState().setValue(CandleBlock.CANDLES, pState.getValue(CandleBlock.CANDLES)).setValue(CandleBlock.WATERLOGGED, 				pState.getValue(CandleBlock.WATERLOGGED)).setValue(CandleBlock.LIT, false));
-		    		System.out.println("hasoxy: " + OxygenStuff.hasOxygen(pCurrentPos,((Level)pLevel).dimension()));
-		    		System.out.println("idk why this isnt working + clientside: " + pLevel.isClientSide());
 		    	}
 	    	}
 		} catch (Exception e) {

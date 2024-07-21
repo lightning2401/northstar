@@ -34,6 +34,11 @@ public class RemainingOxygenOverlay implements IGuiOverlay {
 		poseStack.pushPose();
 		
 		ItemStack oxytank = OxygenStuff.getOxy(player);
+		
+		if(oxytank.isEmpty()) {
+			return;
+		}
+		
 		int timeLeft = oxytank.getOrCreateTag().getInt("Oxygen");
 		
 		poseStack.translate(width / 2 + 90, height - 53 + (oxytank.getItem()

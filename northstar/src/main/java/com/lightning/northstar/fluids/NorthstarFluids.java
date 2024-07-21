@@ -21,6 +21,7 @@ import com.tterrag.registrate.util.entry.FluidEntry;
 
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.FogRenderer.FogMode;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -48,10 +49,6 @@ public class NorthstarFluids {
 			.lang("Hydrogen")
 			.tag(AllTags.forgeFluidTag("hydrogen"))
 			.register();
-	public static final FluidEntry<VirtualFluid> LIQUID_HYDROGEN = REGISTRATE.virtualFluid("liquid_hydrogen")
-			.lang("Liquid Hydrogen")
-			.tag(AllTags.forgeFluidTag("liquid_hydrogen"))
-			.register();
 	public static final FluidEntry<VirtualFluid> CHOCOLATE_ICE_CREAM = REGISTRATE.virtualFluid("chocolate_ice_cream")
 			.lang("Chocolate Ice Cream")
 			.tag(AllTags.forgeFluidTag("chocolate_ice_cream"))
@@ -64,6 +61,22 @@ public class NorthstarFluids {
 			.lang("Strawberry Ice Cream")
 			.tag(AllTags.forgeFluidTag("strawberry_ice_cream"))
 			.register();
+	
+	public static final FluidEntry<ForgeFlowingFluid.Flowing> LIQUID_HYDROGEN =
+			REGISTRATE.standardFluid("liquid_hydrogen",
+					SolidRenderedPlaceableFluidType.create(0xa59999,
+						() -> 1f / 8f * 0.8f))
+				.lang("Liquid Hydrogen")
+				.properties(b -> b.viscosity(2000)
+					.density(1400))
+				.fluidProperties(p -> p.levelDecreasePerBlock(1)
+					.tickRate(5)
+					.slopeFindDistance(3)
+					.explosionResistance(100f))
+				.source(ForgeFlowingFluid.Source::new)
+				.bucket()
+				.build()
+				.register();
 	public static final FluidEntry<ForgeFlowingFluid.Flowing> LIQUID_OXYGEN =
 			REGISTRATE.standardFluid("liquid_oxygen",
 					SolidRenderedPlaceableFluidType.create(0x96AFAF,

@@ -81,12 +81,10 @@ public class IceBlockMixin {
 	}
     
     protected void melt(BlockState pState, Level pLevel, BlockPos pPos) {
-		System.out.println("MELTING!!!!!!");
 	    pLevel.setBlockAndUpdate(pPos, Fluids.WATER.getFluidType().getBlockForFluidState(pLevel, pPos, Fluids.WATER.defaultFluidState()));
 	    pLevel.neighborChanged(pPos, Fluids.WATER.getFluidType().getBlockForFluidState(pLevel, pPos, Fluids.WATER.defaultFluidState()).getBlock(), pPos);
 	}
 	protected void evaporate(BlockState pState, Level pLevel, BlockPos pPos) {
-		System.out.println("EVAPORATING!!!!!!");
 	    pLevel.setBlockAndUpdate(pPos, Blocks.AIR.defaultBlockState());
 	    pLevel.neighborChanged(pPos, Blocks.AIR, pPos);
         int i = pPos.getX();

@@ -53,7 +53,6 @@ public class RoofBloomTrunkPlacer extends TrunkPlacer {
 		   }
 		   public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedReader pLevel, BiConsumer<BlockPos, BlockState> pBlockSetter, RandomSource pRandom, int pFreeTreeHeight, BlockPos pPos, TreeConfiguration pConfig) {
 			      List<FoliagePlacer.FoliageAttachment> list = Lists.newArrayList();
-			      System.out.println(pPos + "BLOOM FUNGUS!!!!!");
 			      BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 			      trunkDir = Direction.getRandom(pRandom);
 			      for(Direction dir = Direction.getRandom(pRandom); trunkDir == Direction.UP || trunkDir == Direction.DOWN;) {

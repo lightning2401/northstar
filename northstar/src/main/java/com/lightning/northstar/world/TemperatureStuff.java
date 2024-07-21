@@ -53,7 +53,6 @@ public class TemperatureStuff {
     }
     
 	public static void markTemp(BlockPos pos, Level level, HashMap<BlockPos, Integer> map, int temp, int sizeX, int sizeY, int sizeZ, int offsetX, int offsetY, int offsetZ) {
-		System.out.println("markin temp");
 		if(level.getBlockState(pos).getBlock() != NorthstarTechBlocks.TEMPERATURE_REGULATOR.get()) {
 			map.clear();
 			return;
@@ -69,7 +68,7 @@ public class TemperatureStuff {
 						{return;}
 					map.put(newpos, temp);
 					if(level.getBlockState(newpos).is(NorthstarTechBlocks.TEMPERATURE_REGULATOR.get())) 
-					{System.out.println("huh"); continue;}
+					{continue;}
 					if(!level.getFluidState(newpos).isEmpty()) 
 					{level.getBlockState(newpos).tick((ServerLevel) level, newpos, level.random);
 					level.getFluidState(newpos).tick(level, newpos);}
@@ -173,8 +172,10 @@ public class TemperatureStuff {
 		if(state.is(NorthstarFluids.LIQUID_OXYGEN.get()) || state.is(NorthstarFluids.LIQUID_OXYGEN.getSource().getSource())) {
 			return -180;
 		}
+		if(state.is(NorthstarFluids.LIQUID_HYDROGEN.get()) || state.is(NorthstarFluids.LIQUID_HYDROGEN.getSource().getSource())) {
+			return -253;
+		}
 		if(state.is(NorthstarFluids.SULFURIC_ACID.get()) || state.is(NorthstarFluids.SULFURIC_ACID.getSource().getSource())) {
-			System.out.println("AY");
 			return 1200;
 		}
 		return 100;
@@ -198,6 +199,9 @@ public class TemperatureStuff {
 		if(state.is(NorthstarFluids.HYDROCARBON.get()) || state.is(NorthstarFluids.HYDROCARBON.getSource().getSource())) {
 			return -60;
 		}
+		if(state.is(NorthstarFluids.LIQUID_HYDROGEN.get()) || state.is(NorthstarFluids.LIQUID_HYDROGEN.getSource().getSource())) {
+			return -259;
+		}
 		if(state.is(NorthstarFluids.SULFURIC_ACID.get()) || state.is(NorthstarFluids.SULFURIC_ACID.getSource().getSource())) {
 			return -200;
 		}
@@ -207,7 +211,8 @@ public class TemperatureStuff {
 		return (entity.getItemBySlot(EquipmentSlot.HEAD).is(NorthstarTags.NorthstarItemTags.INSULATING.tag) &&
 				entity.getItemBySlot(EquipmentSlot.CHEST).is(NorthstarTags.NorthstarItemTags.INSULATING.tag) &&
 				entity.getItemBySlot(EquipmentSlot.LEGS).is(NorthstarTags.NorthstarItemTags.INSULATING.tag) && 
-				entity.getItemBySlot(EquipmentSlot.FEET).is(NorthstarTags.NorthstarItemTags.INSULATING.tag));
+				entity.getItemBySlot(EquipmentSlot.FEET).is(NorthstarTags.NorthstarItemTags.INSULATING.tag)) 
+				|| NorthstarTags.NorthstarEntityTags.CAN_SURVIVE_COLD.matches(entity);
 		
 	}
 	public static boolean hasHeatProtection(LivingEntity entity) {
@@ -228,7 +233,6 @@ public class TemperatureStuff {
 	
     public static double getHeatRating(ResourceKey<Level> level) {
     	// I love spaghetti (2)
-    	System.out.println("THIS IS COMING FROM HEAT RATING: " + level);
     	if(level == NorthstarDimensions.MOON_DIM_KEY) {return 0;}
     	if(level == NorthstarDimensions.MARS_DIM_KEY) {return 0.05;}
     	if(level == NorthstarDimensions.MERCURY_DIM_KEY) {return 0;}
@@ -238,7 +242,6 @@ public class TemperatureStuff {
     }
     public static double getHeatConstant(ResourceKey<Level> level) {
     	// I love spaghetti (2)
-    	System.out.println("THIS IS COMING FROM HEAT RATING: " + level);
     	if(level == NorthstarDimensions.MOON_DIM_KEY) {return 0;}
     	if(level == NorthstarDimensions.MARS_DIM_KEY) {return 50;}
     	if(level == NorthstarDimensions.MERCURY_DIM_KEY) {return 0;}

@@ -569,7 +569,6 @@ public class LevelRendererMixin {
 	private BufferBuilder.RenderedBuffer drawStars3(BufferBuilder pBuilder) {
 		RandomSource randomsource = RandomSource.create(64094L);
 		pBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
-		System.out.println("big bingus");
 		for(int i = 0; i < 1800; ++i) {
 			double d0 = (double)(randomsource.nextFloat() * 2.0F - 1.0F);
 			double d1 = (double)(randomsource.nextFloat() * 2.0F - 1.0F);

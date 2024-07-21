@@ -26,7 +26,7 @@ public class MercuryCactusFeature extends Feature<NoneFeatureConfiguration> {
 		{return false;}
 		BlockPos caveCeilingPos = scan(Direction.UP, pos, level, 24);
 		if(caveCeilingPos == pos) 
-		{System.out.println("UH OH RETURNING FALSE :("); return false;}
+		{return false;}
 		int caveHeight = caveCeilingPos.getY() / 2;
 		RandomSource rando = pContext.random();
 		int height = caveHeight;
@@ -71,7 +71,6 @@ public class MercuryCactusFeature extends Feature<NoneFeatureConfiguration> {
 		for(int i = 0; i < scanDist; i++) {
 			newblockpos = newblockpos.relative(Direction.UP);
 			if(level.getBlockState(newblockpos).isAir() && !level.getBlockState(newblockpos.above()).isAir()) {
-				System.out.println("WAAAAAAAAAAGGGGGGGGGHHHHHHH");
 				return newblockpos;
 			}
 		}		

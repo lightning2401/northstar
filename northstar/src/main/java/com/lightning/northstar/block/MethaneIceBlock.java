@@ -35,7 +35,6 @@ public class MethaneIceBlock extends HalfTransparentBlock {
 	@SuppressWarnings("deprecation")
 	public void playerDestroy(Level pLevel, Player pPlayer, BlockPos pPos, BlockState pState, @Nullable BlockEntity pTe, ItemStack pStack) {
 		super.playerDestroy(pLevel, pPlayer, pPos, pState, pTe, pStack);
-		System.out.println("BREAKING!!!!!!");
 		if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, pStack) == 0) {
 			if(TemperatureStuff.getBoilingPoint(NorthstarFluids.METHANE.getSource().defaultFluidState()) < TemperatureStuff.getTemp(pPos, pLevel)){
 				this.evaporate(pState, pLevel, pPos);
@@ -77,12 +76,10 @@ public class MethaneIceBlock extends HalfTransparentBlock {
 	}
 
 	protected void melt(BlockState pState, Level pLevel, BlockPos pPos) {
-		System.out.println("MELTING!!!!!!");
 	    pLevel.setBlockAndUpdate(pPos, NorthstarFluids.METHANE.getSource().getFluidType().getBlockForFluidState(pLevel, pPos, NorthstarFluids.METHANE.getSource().defaultFluidState()));
 	    pLevel.neighborChanged(pPos, NorthstarFluids.METHANE.getSource().getFluidType().getBlockForFluidState(pLevel, pPos, NorthstarFluids.METHANE.getSource().defaultFluidState()).getBlock(), pPos);
 	}
 	protected void evaporate(BlockState pState, Level pLevel, BlockPos pPos) {
-		System.out.println("EVAPORATING!!!!!!");
 	    pLevel.setBlockAndUpdate(pPos, Blocks.AIR.defaultBlockState());
 	    pLevel.neighborChanged(pPos, Blocks.AIR, pPos);
         int i = pPos.getX();

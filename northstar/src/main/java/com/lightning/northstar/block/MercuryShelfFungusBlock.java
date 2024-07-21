@@ -82,7 +82,6 @@ public class MercuryShelfFungusBlock extends Block implements SimpleWaterloggedB
 		BlockState clickedState = pContext.getLevel().getBlockState(pContext.getClickedPos());
 		System.out.println(clickedState.getBlock());
 		if (clickedState.is(blockstate.getBlock())) {
-			System.out.println("idk if this is working");
 			return clickedState.setValue(SHELVES, Integer.valueOf(Math.min(MAX_SHELVES, clickedState.getValue(SHELVES) + 1)));
 		}
 		FluidState fluidstate = pContext.getLevel().getFluidState(pContext.getClickedPos());

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "#G#",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "item": "northstar:martian_steel_sheet"
+    },
+    "G": {
+      "item": "minecraft:sea_lantern"
+    }
+  },
+  "result": {
+    "item": "northstar:martian_steel_blue_lamp",
+    "count": 4
+  }
+}

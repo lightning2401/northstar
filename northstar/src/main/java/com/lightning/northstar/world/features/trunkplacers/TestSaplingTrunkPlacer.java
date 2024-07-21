@@ -91,8 +91,6 @@ public class TestSaplingTrunkPlacer extends TrunkPlacer {
 					   float newBias = pRandom.nextFloat();
 					   while(0.49 > Math.abs(bias - newBias))
 					   {newBias = pRandom.nextFloat();}
-					   System.out.println("bias: " + bias + "     newBias: " + newBias);
-					   System.out.println(Math.abs(bias - newBias));
 					   this.placeSecondBranch(pLevel, pBlockSetter, pRandom, pFreeTreeHeight - 1, mutable, treeconfiguration, pRandom.nextInt(1,4), newBias, dir, pRandom.nextBoolean() ? dir.getClockWise() : dir.getCounterClockWise());
 				   }
 				   yPos = mutable.getY();

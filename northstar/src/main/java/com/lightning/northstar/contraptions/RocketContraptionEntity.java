@@ -140,7 +140,6 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 		}
 		
 		if(this.tickCount % 40 == 0 && !this.level.isClientSide) {
-			System.out.println("syncing i guess!!!");
 			NorthstarPackets.getChannel().send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
 					new RocketContraptionSyncPacket(this.position(), lift_vel, this.getId()));
 		}
@@ -176,7 +175,6 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 		printed = true;}
 		if(destination == null) {
 			//bruh :(
-			System.out.println("well that didnt work bruh");
 			destination = Level.OVERWORLD;
 		}
 		if(((RocketContraption)this.contraption).fuelAmount() < ((RocketContraption)this.contraption).fuelCost && fuelBurned == false){
@@ -231,7 +229,6 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 			this.landing = true;
 			this.final_lift_vel = 0;
 			this.lift_vel = 0;
-			System.out.println("bruger");
 		}
 
 		double prevAxisMotion = axisMotion;
@@ -247,7 +244,6 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 			level.playLocalSound(getX(), getY(), getZ(), AllSoundEvents.STEAM.getMainEvent(), SoundSource.BLOCKS, 3, 0, true);
 			flyingSound.stopSound();
 			if (!level.isClientSide && (Math.abs(final_lift_vel) < 3 || hasExploded)) {
-				System.out.println("isUsingTicket: " + isUsingTicket);
 				if(this.landing && !isUsingTicket) {
 					ItemStack returnTicket = this.createReturnTicket(this);
 					if(owner != null) {
@@ -256,7 +252,6 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 				}
 				disassemble();
 				if(this.landing && isUsingTicket) {
-					System.out.println("attempting to delete ticket");
 					RocketHandler.deleteTicket(level, this.blockPosition());
 				}
 			}

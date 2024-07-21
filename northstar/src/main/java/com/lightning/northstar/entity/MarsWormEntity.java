@@ -219,7 +219,6 @@ public class MarsWormEntity extends Monster implements IAnimatable, IAnimationTi
 	         if(this.notTarget != null) {
 	        	 if(this.distanceTo(notTarget) < 2) {
 	        		 aggro = true;
-	        		 System.out.println("bruh");
 	        	 }
 		         if(this.notTarget.getHealth() <= 0) {
 		        	 this.notTarget = null;

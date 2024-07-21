@@ -27,7 +27,6 @@ public class EngravingRecipe extends ProcessingRecipe<RecipeWrapper> implements 
 
 	public EngravingRecipe(ProcessingRecipeParams params) {
 		super(NorthstarRecipeTypes.ENGRAVING, params);
-		System.out.println("BIG GAMING!!!!!!!!!!!");
 	}
 
 	@Override

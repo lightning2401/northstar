@@ -118,7 +118,6 @@ public class MercuryRaptorEntity extends Monster implements IAnimatable, IAnimat
 	public void tick() {		
 		if(this.getTarget() != null) {
 			timeSpentAttacking++;
-			System.out.println("timespentattacking: " + timeSpentAttacking);
 		}
 		if(disruptTimer > 0) {
 			disruptTimer = Mth.clamp(disruptTimer, 0, disruptTimer - 1);

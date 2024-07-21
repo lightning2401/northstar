@@ -79,7 +79,6 @@ public class WormNestFeature extends Feature<StructureFeatureConfig>  {
 		for(int i = 0; i < scanDist; i++) {
 			mutable.move(Direction.UP);
 			if(level.getBlockState(mutable).getMaterial().isReplaceable() && !level.getBlockState(mutable.below()).getMaterial().isReplaceable()) {
-				System.out.println("WAAAAAAAAAAGGGGGGGGGHHHHHHH");
 				BlockPos newblockpos = new BlockPos(mutable.getX(),mutable.getY(),mutable.getZ());
 				return newblockpos;
 			}

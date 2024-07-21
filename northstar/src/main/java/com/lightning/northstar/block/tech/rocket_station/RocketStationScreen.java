@@ -74,7 +74,6 @@ public class RocketStationScreen extends AbstractContainerScreen<RocketStationMe
 		   assemble.withCallback(() -> {
 				NorthstarPackets.getChannel()
 					.sendToServer(RocketStationEditPacket.tryAssemble(menu.blockEntity.getBlockPos()));
-				System.out.println("WE'VE BEEN CLICKED, SCATTER!!!!!");
 			});
 		   assemble.render(pPoseStack, mouseX, mouseY, delta);
 		   assemble.renderButton(pPoseStack, mouseX, mouseY, delta);

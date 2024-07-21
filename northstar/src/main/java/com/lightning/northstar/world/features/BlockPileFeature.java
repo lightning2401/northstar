@@ -57,7 +57,7 @@ public class BlockPileFeature extends Feature<BlockPileConfig> {
 //	      System.out.println("origin: " + origin);
 //	      System.out.println("dist: " + dist);
 	      if(radius / 2 == 0){
-		    System.out.println("What the scallop???");
+//		    System.out.println("What the scallop???");
 	    	return false;  
 	      }
 	      if(iteration == 1) {
