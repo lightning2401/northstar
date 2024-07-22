@@ -51,7 +51,7 @@ public class OxygenStuff {
 		if(!oxygenSources.containsValue(level)) {return false;}
     	for(Entry<Set<BlockPos>, ResourceKey<Level>> blocks:	oxygenSources.entrySet()) {
     		if(blocks.getValue() == level) {
-    			if(blocks.getKey().contains(pos)) {
+    			if(blocks.getKey().contains(pos) && blocks.getKey().size() < maximumOxy) {
     				return true;
     			}
     		}
