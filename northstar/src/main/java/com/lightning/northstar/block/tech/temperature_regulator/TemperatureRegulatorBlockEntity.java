@@ -1,23 +1,29 @@
 package com.lightning.northstar.block.tech.temperature_regulator;
 
 import java.util.HashMap;
+import java.util.List;
 
 import com.lightning.northstar.particle.SnowflakeParticleData;
 import com.lightning.northstar.world.TemperatureStuff;
 import com.lightning.northstar.world.dimension.NorthstarPlanets;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.content.equipment.goggles.IHaveHoveringInformation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
+import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.LangBuilder;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implements IHaveGoggleInformation{
+public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implements IHaveGoggleInformation, IHaveHoveringInformation{
 	private HashMap<BlockPos, Integer> TEMP_ZONES = new HashMap<BlockPos, Integer>();
 	public int temp = 20;
 	public int tempChange = 0;
@@ -41,8 +47,8 @@ public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implemen
 		if(this.level.getGameTime() % 40 == 0) {
 			if(Math.abs(this.speed) > 0 && !this.overStressed) 
 			{addParticles(this.temp > NorthstarPlanets.getPlanetTemp(this.level.dimension()) && level.isClientSide, this.speed / 64);}
-			if(this.level.isClientSide)
-				return;
+//			if(this.level.isClientSide)
+//				return;
 //			System.out.println(entity.temp);
 //			System.out.println("size X: " + entity.sizeX);
 //			System.out.println("size Y: " + entity.sizeY);
@@ -127,6 +133,23 @@ public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implemen
 			    random.nextFloat() * 0.05 * (random.nextBoolean() ? -1 : 1) * spinMod);
 			}
 		}
+	}
+	
+	@Override
+	public boolean addToTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+		Lang.translate("gui.goggles.temperature_regulator")
+			.forGoggles(tooltip);
+		Lang.translate("gui.goggles.blocks_filled")
+		.style(ChatFormatting.GRAY)
+		.forGoggles(tooltip);
+		Lang.builder()
+		.add(Lang.number(TEMP_ZONES.size())
+			.style(ChatFormatting.AQUA))
+		.text(ChatFormatting.GRAY, " / ")
+		.add(Lang.number(2000)
+			.style(ChatFormatting.DARK_GRAY))
+		.forGoggles(tooltip, 1);
+		return true;
 	}
 	
 	@Override

@@ -84,7 +84,7 @@ public class GravityStuffMixin {
         {PLANET_GRAV = OUTER_MOON_GRAV;}else
         {PLANET_GRAV = EARTH_GRAV;}
         
-        if(entity.isFallFlying()){
+        if(entity.isFallFlying() || entity.isInFluidType()){
         	PLANET_GRAV = EARTH_GRAV;
         }
         if (!entity.isNoGravity() && !entity.isInWater() && !entity.isInLava() && !entity.hasEffect(MobEffects.SLOW_FALLING)) {

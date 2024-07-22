@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import com.lightning.northstar.Northstar;
 import com.lightning.northstar.block.NorthstarBlocks;
-import com.lightning.northstar.util.NorthstarTags;
 import com.lightning.northstar.world.features.configuration.AlienTreeConfig;
 import com.lightning.northstar.world.features.configuration.GlowstoneBranchConfig;
 import com.lightning.northstar.world.features.configuration.StoneColumnConfiguration;

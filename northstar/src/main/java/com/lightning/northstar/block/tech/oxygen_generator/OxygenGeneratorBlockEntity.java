@@ -23,9 +23,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -50,7 +48,6 @@ public class OxygenGeneratorBlockEntity extends KineticBlockEntity implements IH
 	@Override
 	public void tick() {
 //	  System.out.println("big fart" + pBlockEntity.tickCount);
-		addToGoggleTooltip(new ArrayList<Component>(), false);
 		boolean hasOxy = (this.tank.getPrimaryHandler().getFluid().getFluid().isSame(NorthstarFluids.OXYGEN.get()) || 
 				this.tank.getPrimaryHandler().getFluid().getFluid().is(NorthstarTags.NorthstarFluidTags.IS_OXY.tag))
 				&& this.tank.getPrimaryHandler().getFluid().getAmount() >= minOxy;
@@ -65,13 +62,11 @@ public class OxygenGeneratorBlockEntity extends KineticBlockEntity implements IH
 			audioTick++;
 			if(level.isClientSide) {
 				if(audioTick % 13 == 0) {
-					level.playLocalSound(pos.getX(),pos.getY(),pos.getZ(), NorthstarSounds.AIRFLOW.get(), SoundSource.BLOCKS, 0.5f, 0, false);
+					level.playLocalSound(pos.getX(),pos.getY(),pos.getZ(), NorthstarSounds.AIRFLOW.get(), SoundSource.BLOCKS, 0.1f, 0, false);
 				}		
 			}
 		}
 		if (i % 40L == 0L && Math.abs(this.speed) > 0 && !isOverStressed() && hasOxy) {
-			if(level.isClientSide)
-				return;
 	      
 		  //this is called every 40 ticks to check if any of the blocks have changed and changes the shape of the oxygen's influence accordingly
 		  //its also really laggy and makes me want to cry
@@ -114,15 +109,11 @@ public class OxygenGeneratorBlockEntity extends KineticBlockEntity implements IH
 	}
 	
 	@Override
-	public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-		Lang.translate("gui.goggles.kinetic_stats")
-		.forGoggles(tooltip);
-		addStressImpactStats(tooltip, calculateStressApplied());
-	
+	public boolean addToTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
 		LangBuilder mb = Lang.translate("generic.unit.millibuckets");
 		Lang.translate("gui.goggles.oxygen_sealer")
 			.forGoggles(tooltip);
-		FluidStack fluidStack = tank.getPrimaryHandler().getFluidInTank(0);
+		FluidStack fluidStack = this.tank.getPrimaryHandler().getFluidInTank(0);
 		if(!fluidStack.getFluid().getFluidType().isAir()) {
 		Lang.fluidName(fluidStack)
 			.style(ChatFormatting.GRAY)
@@ -137,21 +128,29 @@ public class OxygenGeneratorBlockEntity extends KineticBlockEntity implements IH
 			.add(mb)
 			.style(ChatFormatting.GOLD))
 		.text(ChatFormatting.GRAY, " / ")
-		.add(Lang.number(tank.getPrimaryHandler().getTankCapacity(0))
+		.add(Lang.number(this.tank.getPrimaryHandler().getTankCapacity(0))
 			.add(mb)
 			.style(ChatFormatting.DARK_GRAY))
 		.forGoggles(tooltip, 1);
 		Lang.translate("gui.goggles.blocks_filled")
 		.style(ChatFormatting.GRAY)
 		.forGoggles(tooltip);
-		Lang.number(OXYGEN_BLOBS.size())
+		Lang.number(this.OXYGEN_BLOBS.size())
 		.style(ChatFormatting.AQUA)
 		.text(ChatFormatting.GRAY, " / ")
-		.add(Lang.number(maxOxy)
+		.add(Lang.number(this.maxOxy)
 				.style(ChatFormatting.DARK_GRAY))
 		.forGoggles(tooltip, 1);
+		
+		if(this.OXYGEN_BLOBS.size() >= this.maxOxy && this.maxOxy != 0) {
+			Lang.translate("gui.goggles.leak_detected")
+			.style(ChatFormatting.DARK_RED)
+			.forGoggles(tooltip);
+		}
+		
 		return true;
 	}
+
 
 	@Override
 	public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
