@@ -285,6 +285,16 @@ public class NorthstarPlanets {
 		if (level == Level.OVERWORLD) {return "earth";}
 		return "earth";
     }
+    public static boolean planetHasSky(ResourceKey<Level> level) {
+		if (level == NorthstarDimensions.EARTH_ORBIT_DIM_KEY) {return true;}
+		if (level == NorthstarDimensions.MARS_DIM_KEY) {return true;}
+		if (level == NorthstarDimensions.MOON_DIM_KEY) {return true;}
+		if (level == NorthstarDimensions.VENUS_DIM_KEY) {return true;}
+		if (level == NorthstarDimensions.MERCURY_DIM_KEY) {return true;}
+		if (level == Level.OVERWORLD) {return true;}
+		return false;
+    }
+    
     public static int getPlanetTemp(ResourceKey<Level> level) {
 		if (level == NorthstarDimensions.MARS_DIM_KEY) {return -100;}
 		if (level == NorthstarDimensions.MOON_DIM_KEY) {return -183;}

@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.lightning.northstar.Northstar;
 import com.lightning.northstar.NorthstarTags;
+import com.lightning.northstar.NorthstarTags.NorthstarItemTags;
 import com.lightning.northstar.particle.GlowstoneParticleData;
 import com.lightning.northstar.world.dimension.NorthstarPlanets;
 import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorBlock;
@@ -45,6 +46,8 @@ public class OxygenStuff {
 	public static int maximumOxy = 2000;
 
 	public static boolean hasOxygen(BlockPos pos, ResourceKey<Level> level) {
+		if(NorthstarPlanets.getPlanetOxy(level))
+			return true;
 		if(!oxygenSources.containsValue(level)) {return false;}
     	for(Entry<Set<BlockPos>, ResourceKey<Level>> blocks:	oxygenSources.entrySet()) {
     		if(blocks.getValue() == level) {
@@ -197,16 +200,23 @@ public class OxygenStuff {
 			
 			else{
 //				System.out.println("clover would like to cry but they have no eyes");
+				boolean oxyflag = false;
+				int sealedArmorCount = 0;
 				for(ItemStack armor : entity.getArmorSlots()) {
+					if(armor.is(NorthstarItemTags.OXYGEN_SEALING.tag))
+						sealedArmorCount++;
 					if(armor.getTag() == null)
 						continue;
-					if(armor.getTag().contains("Oxygen") && (armor.is(NorthstarTags.NorthstarItemTags.OXYGEN_SOURCES.tag)) && armor.getTag().getInt("Oxygen") > 0) {
+					if(armor.getTag().contains("Oxygen") && (armor.is(NorthstarTags.NorthstarItemTags.OXYGEN_SOURCES.tag)) && armor.getTag().getInt("Oxygen") > 0 && !OxygenStuff.checkForAir(entity)) {
 						depleteOxy(armor);
-						if(!oxygenatedEntities.contains(entity)) {
-							oxygenatedEntities.add(entity);
-						}
-						return;
+						oxyflag = true;
 					}
+				}
+				if(oxyflag && sealedArmorCount >= 4) {
+					if(!oxygenatedEntities.contains(entity)) {
+						oxygenatedEntities.add(entity);
+					}
+					return;
 				}
 			}
 			if(oxygenatedEntities.contains(entity)) {

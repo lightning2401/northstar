@@ -18,6 +18,7 @@ import com.lightning.northstar.block.tech.jet_engine.JetEngineBlock;
 import com.lightning.northstar.block.tech.jet_engine.JetEngineItem;
 import com.lightning.northstar.block.tech.jet_engine.JetEngineMovementBehaviour;
 import com.lightning.northstar.block.tech.oxygen_concentrator.OxygenConcentratorBlock;
+import com.lightning.northstar.block.tech.oxygen_detector.OxygenDetectorBlock;
 import com.lightning.northstar.block.tech.oxygen_filler.OxygenFillerBlock;
 import com.lightning.northstar.block.tech.oxygen_generator.OxygenGeneratorBlock;
 import com.lightning.northstar.block.tech.rocket_controls.RocketControlsBlock;
@@ -224,6 +225,13 @@ public class NorthstarTechBlocks {
     		.transform(pickaxeOnly())
     		.simpleItem()
     		.lang("Computer Rack")
+    		.register();
+    public static final BlockEntry<OxygenDetectorBlock> OXYGEN_DETECTOR = REGISTRATE.block("oxygen_detector", OxygenDetectorBlock::new)
+    		.initialProperties(SharedProperties::softMetal)
+			.properties(p -> p.sound(SoundType.NETHERITE_BLOCK).color(MaterialColor.COLOR_GRAY).noOcclusion())
+    		.transform(pickaxeOnly())
+    		.simpleItem()
+    		.lang("Oxygen Detector")
     		.register();
     
     public static final BlockEntry<SpaceDoorBlock> IRON_SPACE_DOOR =

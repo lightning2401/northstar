@@ -17,7 +17,6 @@
   			"northstar:mars_deep_quartz_ore",
   			
   			"northstar:iron_cogwheel",
-  			"northstar:iron_large_cogwheel",
   			
   			"northstar:mars_stone_bricks",
   			"northstar:mars_stone_brick_slab",
@@ -189,6 +188,7 @@
   			"northstar:oxygen_bubble_generator",
   			"northstar:oxygen_generator",
   			"northstar:oxygen_filler",
+			"northstar:oxygen_detector",
   			"northstar:temperature_regulator",
   			"northstar:rocket_station",
   			"northstar:rocket_controls",

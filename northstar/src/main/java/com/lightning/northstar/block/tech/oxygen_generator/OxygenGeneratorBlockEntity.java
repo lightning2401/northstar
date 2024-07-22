@@ -1,5 +1,6 @@
 package com.lightning.northstar.block.tech.oxygen_generator;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -7,8 +8,10 @@ import java.util.Set;
 import com.lightning.northstar.NorthstarTags;
 import com.lightning.northstar.fluids.NorthstarFluids;
 import com.lightning.northstar.particle.OxyFlowParticleData;
+import com.lightning.northstar.sound.NorthstarSounds;
 import com.lightning.northstar.world.OxygenStuff;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.content.equipment.goggles.IHaveHoveringInformation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
@@ -32,11 +35,12 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 @SuppressWarnings("removal")
-public class OxygenGeneratorBlockEntity extends KineticBlockEntity implements IHaveGoggleInformation{
+public class OxygenGeneratorBlockEntity extends KineticBlockEntity implements IHaveGoggleInformation, IHaveHoveringInformation{
 	public int maxOxy;
 	public int minOxy;
 	public Set<BlockPos> OXYGEN_BLOBS = new HashSet<BlockPos>();
 	SmartFluidTankBehaviour tank;
+	private int audioTick = 0;
 
 	public OxygenGeneratorBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
 		super(typeIn, pos, state);
@@ -46,7 +50,7 @@ public class OxygenGeneratorBlockEntity extends KineticBlockEntity implements IH
 	@Override
 	public void tick() {
 //	  System.out.println("big fart" + pBlockEntity.tickCount);
-
+		addToGoggleTooltip(new ArrayList<Component>(), false);
 		boolean hasOxy = (this.tank.getPrimaryHandler().getFluid().getFluid().isSame(NorthstarFluids.OXYGEN.get()) || 
 				this.tank.getPrimaryHandler().getFluid().getFluid().is(NorthstarTags.NorthstarFluidTags.IS_OXY.tag))
 				&& this.tank.getPrimaryHandler().getFluid().getAmount() >= minOxy;
@@ -58,9 +62,14 @@ public class OxygenGeneratorBlockEntity extends KineticBlockEntity implements IH
 			BlockPos pos = getBlockPos();
 			if (level.random.nextFloat() < AllConfigs.client().fanParticleDensity.get())
 				level.addParticle(new OxyFlowParticleData(getBlockPos().offset(0, 1, 0)), pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 0, 0, 0);
+			audioTick++;
+			if(level.isClientSide) {
+				if(audioTick % 13 == 0) {
+					level.playLocalSound(pos.getX(),pos.getY(),pos.getZ(), NorthstarSounds.AIRFLOW.get(), SoundSource.BLOCKS, 0.5f, 0, false);
+				}		
+			}
 		}
 		if (i % 40L == 0L && Math.abs(this.speed) > 0 && !isOverStressed() && hasOxy) {
-			level.playSound((Player)null, getBlockPos(), SoundEvents.CONDUIT_AMBIENT, SoundSource.BLOCKS, 1.0F, 1.0F);
 			if(level.isClientSide)
 				return;
 	      
@@ -68,13 +77,14 @@ public class OxygenGeneratorBlockEntity extends KineticBlockEntity implements IH
 		  //its also really laggy and makes me want to cry
 		  Set<BlockPos> newList = new HashSet<BlockPos>();
 //		  System.out.println("SPREAD THE DISEASE SPREAD THE DISEASE");
-		  if(!newList.contains(getBlockPos().above()) && level.getBlockState(getBlockPos().above()).is(NorthstarTags.NorthstarBlockTags.AIR_PASSES_THROUGH.tag))
+		  if(level.getBlockState(getBlockPos().above()).is(NorthstarTags.NorthstarBlockTags.AIR_PASSES_THROUGH.tag))
 			  newList.add(getBlockPos().above());
 		  if(newList.size() < maxOxy) {		 
 			  OxygenStuff.spreadOxy(level, newList, maxOxy);	  
 		  }
 		  this.drain(6);
-		  System.out.println("Oxy amount: " + this.tank.getPrimaryHandler().getFluidAmount());
+		  
+//		  System.out.println("Oxy amount: " + this.tank.getPrimaryHandler().getFluidAmount());
 		  
 		  
 		  
@@ -130,6 +140,15 @@ public class OxygenGeneratorBlockEntity extends KineticBlockEntity implements IH
 		.add(Lang.number(tank.getPrimaryHandler().getTankCapacity(0))
 			.add(mb)
 			.style(ChatFormatting.DARK_GRAY))
+		.forGoggles(tooltip, 1);
+		Lang.translate("gui.goggles.blocks_filled")
+		.style(ChatFormatting.GRAY)
+		.forGoggles(tooltip);
+		Lang.number(OXYGEN_BLOBS.size())
+		.style(ChatFormatting.AQUA)
+		.text(ChatFormatting.GRAY, " / ")
+		.add(Lang.number(maxOxy)
+				.style(ChatFormatting.DARK_GRAY))
 		.forGoggles(tooltip, 1);
 		return true;
 	}

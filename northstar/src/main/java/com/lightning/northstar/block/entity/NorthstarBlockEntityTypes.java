@@ -24,6 +24,7 @@ import com.lightning.northstar.block.tech.jet_engine.JetEngineRenderer;
 import com.lightning.northstar.block.tech.oxygen_concentrator.OxygenConcentratorBlockEntity;
 import com.lightning.northstar.block.tech.oxygen_concentrator.OxygenConcentratorInstance;
 import com.lightning.northstar.block.tech.oxygen_concentrator.OxygenConcentratorRenderer;
+import com.lightning.northstar.block.tech.oxygen_detector.OxygenDetectorBlockEntity;
 import com.lightning.northstar.block.tech.oxygen_filler.OxygenFillerBlockEntity;
 import com.lightning.northstar.block.tech.oxygen_filler.OxygenFillerRenderer;
 import com.lightning.northstar.block.tech.oxygen_generator.OxygenGeneratorBlockEntity;
@@ -122,6 +123,11 @@ public class NorthstarBlockEntityTypes {
  			.instance(() -> ElectrolysisMachineInstance::new, false)
 			.validBlocks(NorthstarTechBlocks.ELECTROLYSIS_MACHINE)
 			.renderer(() -> ElectrolysisMachineRenderer::new)
+			.register();
+   
+   public static final BlockEntityEntry<OxygenDetectorBlockEntity> OXYGEN_DETECTOR = REGISTRATE
+			.blockEntity("oxygen_detector", OxygenDetectorBlockEntity::new)
+			.validBlocks(NorthstarTechBlocks.OXYGEN_DETECTOR)
 			.register();
    
 	public static final BlockEntityEntry<TargetingComputerRackBlockEntity> COMPUTER_RACK = REGISTRATE
