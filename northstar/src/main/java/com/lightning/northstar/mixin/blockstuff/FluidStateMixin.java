@@ -22,7 +22,7 @@ public class FluidStateMixin {
 	
     @Inject(method = "tick", at = @At("TAIL"))
 	public void tick$fluid(Level pLevel, BlockPos pPos, CallbackInfo info) {
-		if(pLevel.isClientSide)
+		if(pLevel.isClientSide || TemperatureStuff.loadBuffer >= 70)
 			return;
 		FluidState state = pLevel.getFluidState(pPos);
 		BlockState block = pLevel.getBlockState(pPos);

@@ -33,11 +33,15 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 public class TemperatureStuff {
 	public static HashMap<HashMap<BlockPos, Integer>,ResourceKey<Level>> temperatureSources = new HashMap<HashMap<BlockPos, Integer>, ResourceKey<Level>>();
 	public static int maxSize = 24;
+	public static int loadBuffer = 0;
+	public static boolean debugMode = false;
 	
-//	@SubscribeEvent
+	@SubscribeEvent
 	public static void onWorldTick(TickEvent.LevelTickEvent event){
     	long t = event.level.getGameTime();
-    	if(t % 40 == 0 && event.level.isClientSide) {
+    	if(loadBuffer <= 70)
+    		loadBuffer++;
+    	if(t % 40 == 0 && event.level.isClientSide && debugMode) {
     		for(Entry<HashMap<BlockPos, Integer>, ResourceKey<Level>> blocks:	temperatureSources.entrySet()) {
     			if(blocks == null)
     				continue;

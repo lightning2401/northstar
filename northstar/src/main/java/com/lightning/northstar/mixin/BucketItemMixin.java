@@ -65,11 +65,11 @@ public abstract class BucketItemMixin extends Item{
     private void emptyContentsReal(@Nullable Player pPlayer, Level pLevel, BlockPos pPos, @Nullable BlockHitResult blockHitResult, ItemStack container, CallbackInfoReturnable<Boolean> info) {
 //		System.out.println("YOooo buckets are real");
     	BucketItem item = (BucketItem) (Object) this;
-    	System.out.println(item.getFluid());
+ //   	System.out.println(item.getFluid());
 		int temp = TemperatureStuff.getTemp(pPos, pLevel);
 //		System.out.println(temp);
 		BlockState blockstate = pLevel.getBlockState(pPos);
-		System.out.println(item.getFluid());
+//		System.out.println(item.getFluid());
 		if(item.getFluid() == null)
 			return;
 		int boilingpoint = TemperatureStuff.getBoilingPoint(item.getFluid().defaultFluidState());
