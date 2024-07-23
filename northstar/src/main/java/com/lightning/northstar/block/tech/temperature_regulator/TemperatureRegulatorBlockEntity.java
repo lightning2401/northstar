@@ -27,7 +27,8 @@ public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implemen
 	private HashMap<BlockPos, Integer> TEMP_ZONES = new HashMap<BlockPos, Integer>();
 	public int temp = 20;
 	public int tempChange = 0;
-	public boolean envFill = false;
+	public int maxSize = 0;
+	public boolean envFill = true;
 	public int sizeX = 16;
 	public int sizeY = 16;
 	public int sizeZ = 16;
@@ -45,6 +46,7 @@ public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implemen
 	@Override
 	public void tick() {
 		if(this.level.getGameTime() % 40 == 0) {
+			maxSize = (int) (Math.abs(this.speed) * 20);
 			if(Math.abs(this.speed) > 0 && !this.overStressed) 
 			{addParticles(this.temp > NorthstarPlanets.getPlanetTemp(this.level.dimension()) && level.isClientSide, this.speed / 64);}
 //			if(this.level.isClientSide)
@@ -67,7 +69,7 @@ public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implemen
 				if(this.envFill)
 				{HashMap<BlockPos, Integer> newList = new HashMap<BlockPos, Integer>();
 					 newList.put(getBlockPos().above(),temp);
-				 TemperatureStuff.spreadTemp(this.level, newList, 2000, this.temp);
+				 TemperatureStuff.spreadTemp(this.level, newList, maxSize, this.temp);
 				  if(!newList.equals(TEMP_ZONES)) {
 					  TemperatureStuff.removeSource(worldPosition, level, TEMP_ZONES);
 					  TemperatureStuff.temperatureSources.put(newList, level.dimension());
@@ -146,7 +148,7 @@ public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implemen
 		.add(Lang.number(TEMP_ZONES.size())
 			.style(ChatFormatting.AQUA))
 		.text(ChatFormatting.GRAY, " / ")
-		.add(Lang.number(2000)
+		.add(Lang.number(maxSize)
 			.style(ChatFormatting.DARK_GRAY))
 		.forGoggles(tooltip, 1);
 		return true;

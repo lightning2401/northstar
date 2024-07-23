@@ -16,7 +16,10 @@ import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.tterrag.registrate.util.entry.ItemEntry;
 
 import net.minecraft.core.Holder;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
@@ -51,7 +54,6 @@ public class NorthstarItems {
 	public static final RegistryObject<Item> MARTIAN_STEEL_SHEET = ITEMS.register("martian_steel_sheet", () -> new Item(new Item.Properties().tab(NorthstarCreativeModeTab.NORTHSTAR_TAB)));
 	public static final RegistryObject<Item> TUNGSTEN_INGOT = ITEMS.register("tungsten_ingot", () -> new Item(new Item.Properties().tab(NorthstarCreativeModeTab.NORTHSTAR_TAB)));
 	public static final RegistryObject<Item> TUNGSTEN_SHEET = ITEMS.register("tungsten_sheet", () -> new Item(new Item.Properties().tab(NorthstarCreativeModeTab.NORTHSTAR_TAB)));
-	
 	
 	public static final RegistryObject<StandingAndWallBlockItem> EXTINGUISHED_TORCH = ITEMS.register("extinguished_torch", () -> new StandingAndWallBlockItem(NorthstarTechBlocks.EXTINGUISHED_TORCH.get(), NorthstarTechBlocks.EXTINGUISHED_TORCH_WALL.get(), new Item.Properties().tab(NorthstarCreativeModeTab.NORTHSTAR_TAB)));
 	public static final RegistryObject<StandingAndWallBlockItem> GLOWSTONE_TORCH = ITEMS.register("glowstone_torch", () -> new StandingAndWallBlockItem(NorthstarTechBlocks.GLOWSTONE_TORCH.get(), NorthstarTechBlocks.GLOWSTONE_TORCH_WALL.get(), new Item.Properties().tab(NorthstarCreativeModeTab.NORTHSTAR_TAB)));
@@ -133,9 +135,15 @@ public class NorthstarItems {
     public static final RegistryObject<MartianFlowerItem> MARS_SPROUT_FLOWER = ITEMS.register("mars_sprout_flower",() -> new MartianFlowerItem(NorthstarBlocks.MARS_SPROUT.get(), new Item.Properties().tab(NorthstarCreativeModeTab.NORTHSTAR_TAB)));
     
     //ice cream  :]
-	public static final RegistryObject<Item> VANILLA_ICE_CREAM = ITEMS.register("vanilla_ice_cream", () -> new Item(new Item.Properties().tab(NorthstarCreativeModeTab.NORTHSTAR_TAB).food(Foods.COOKED_CHICKEN)));
-	public static final RegistryObject<Item> CHOCOLATE_ICE_CREAM = ITEMS.register("chocolate_ice_cream", () -> new Item(new Item.Properties().tab(NorthstarCreativeModeTab.NORTHSTAR_TAB).food(Foods.COOKED_CHICKEN)));
-	public static final RegistryObject<Item> STRAWBERRY_ICE_CREAM = ITEMS.register("strawberry_ice_cream", () -> new Item(new Item.Properties().tab(NorthstarCreativeModeTab.NORTHSTAR_TAB).food(Foods.COOKED_CHICKEN)));
+	@SuppressWarnings("deprecation")
+	public static final RegistryObject<Item> VANILLA_ICE_CREAM = ITEMS.register("vanilla_ice_cream", () -> new Item(new Item.Properties().tab(NorthstarCreativeModeTab.NORTHSTAR_TAB)
+			.food((new FoodProperties.Builder()).nutrition(6).saturationMod(0.7F).build())));
+	@SuppressWarnings("deprecation")
+	public static final RegistryObject<Item> CHOCOLATE_ICE_CREAM = ITEMS.register("chocolate_ice_cream", () -> new Item(new Item.Properties().tab(NorthstarCreativeModeTab.NORTHSTAR_TAB)
+			.food((new FoodProperties.Builder()).nutrition(7).saturationMod(0.8F).effect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 280, 0, false, false, true), 1.0F).build())));
+	@SuppressWarnings("deprecation")
+	public static final RegistryObject<Item> STRAWBERRY_ICE_CREAM = ITEMS.register("strawberry_ice_cream", () -> new Item(new Item.Properties().tab(NorthstarCreativeModeTab.NORTHSTAR_TAB)
+			.food((new FoodProperties.Builder()).nutrition(7).saturationMod(0.7F).effect(new MobEffectInstance(MobEffects.REGENERATION, 280, 0, false, false, true), 1.0F).build())));
 
 	public static final RegistryObject<Item> FLATTENED_DOUGH = ITEMS.register("flattened_dough", () -> new Item(new Item.Properties().tab(NorthstarCreativeModeTab.NORTHSTAR_TAB)));
 	

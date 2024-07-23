@@ -23,7 +23,7 @@ public class NorthstarCommonListener {
 				Monster.createMobAttributes().add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.MAX_HEALTH, 40.0D).add(Attributes.ATTACK_DAMAGE, 4).add(Attributes.MOVEMENT_SPEED, 0.2f).build());
 		
 		event.put(NorthstarEntityTypes.MARS_WORM.get(),
-				Monster.createMobAttributes().add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.MAX_HEALTH, 40.0D).add(Attributes.ATTACK_DAMAGE, 8).add(Attributes.MOVEMENT_SPEED, 0.2f).build());
+				Monster.createMobAttributes().add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.MAX_HEALTH, 40.0D).add(Attributes.ATTACK_DAMAGE, 5).add(Attributes.MOVEMENT_SPEED, 0.2f).build());
 		event.put(NorthstarEntityTypes.MARS_TOAD.get(),
 				Monster.createMobAttributes().add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.MAX_HEALTH, 16.0D).add(Attributes.ATTACK_DAMAGE, 3).add(Attributes.MOVEMENT_SPEED, 0.25f).build());
 		event.put(NorthstarEntityTypes.MARS_COBRA.get(),
@@ -39,7 +39,7 @@ public class NorthstarCommonListener {
 				Monster.createMobAttributes().add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.MAX_HEALTH, 4.0D).add(Attributes.ATTACK_DAMAGE, 0.25).add(Attributes.MOVEMENT_SPEED, 0.2f).build());
 		
 		event.put(NorthstarEntityTypes.MERCURY_RAPTOR.get(),
-				Monster.createMobAttributes().add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.MAX_HEALTH, 36.0D).add(Attributes.ATTACK_DAMAGE, 8).add(Attributes.MOVEMENT_SPEED, 0.25f).build());
+				Monster.createMobAttributes().add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.MAX_HEALTH, 36.0D).add(Attributes.ATTACK_DAMAGE, 6).add(Attributes.MOVEMENT_SPEED, 0.25f).build());
 		event.put(NorthstarEntityTypes.MERCURY_ROACH.get(),
 				Monster.createMobAttributes().add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.MAX_HEALTH, 8.0D).add(Attributes.ATTACK_DAMAGE, 2).add(Attributes.ARMOR, 20).add(Attributes.MOVEMENT_SPEED, 0.2f).build());
 		event.put(NorthstarEntityTypes.MERCURY_TORTOISE.get(),

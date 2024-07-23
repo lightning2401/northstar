@@ -24,6 +24,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -89,7 +90,10 @@ public class OxygenGeneratorBlockEntity extends KineticBlockEntity implements IH
 		  
 		  //nevermind I fixed it :]
 		  // I mean it still causes some strain but thats inevitable
-		  if(!newList.equals(OXYGEN_BLOBS)) {
+		  if(newList.size() >= maxOxy) {
+			  OxygenStuff.removeSource(source, level, OXYGEN_BLOBS, newList);
+			  OXYGEN_BLOBS.clear();
+		  }else if(!newList.equals(OXYGEN_BLOBS)) {
 			  OxygenStuff.removeSource(source, level, OXYGEN_BLOBS, newList);
 			  OxygenStuff.oxygenSources.put(newList, level.dimension());
 			  OXYGEN_BLOBS.clear();
@@ -141,8 +145,11 @@ public class OxygenGeneratorBlockEntity extends KineticBlockEntity implements IH
 		.add(Lang.number(this.maxOxy)
 				.style(ChatFormatting.DARK_GRAY))
 		.forGoggles(tooltip, 1);
-		
-		if(this.OXYGEN_BLOBS.size() >= this.maxOxy && this.maxOxy != 0) {
+		if(this.OXYGEN_BLOBS.isEmpty() && Mth.abs(speed) > 0 && this.tank.getPrimaryHandler().getFluidAmount() > 0) {
+			Lang.translate("gui.goggles.leak_detected")
+			.style(ChatFormatting.DARK_RED)
+			.forGoggles(tooltip);
+		}else if(this.OXYGEN_BLOBS.size() >= this.maxOxy && this.maxOxy != 0) {
 			Lang.translate("gui.goggles.leak_detected")
 			.style(ChatFormatting.DARK_RED)
 			.forGoggles(tooltip);
