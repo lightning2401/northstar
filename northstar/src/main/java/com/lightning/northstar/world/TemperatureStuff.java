@@ -12,6 +12,7 @@ import com.lightning.northstar.fluids.NorthstarFluids;
 import com.lightning.northstar.world.dimension.NorthstarDimensions;
 import com.lightning.northstar.world.dimension.NorthstarPlanets;
 import com.simibubi.create.AllFluids;
+import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorBlock;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -139,7 +140,11 @@ public class TemperatureStuff {
 	}
 	
     public static boolean canSpread(BlockState state) {
-        return state.is(NorthstarTags.NorthstarBlockTags.AIR_PASSES_THROUGH.tag) || !state.getFluidState().isEmpty();
+    	boolean slideFlag = false;
+    	if(state.getBlock() instanceof SlidingDoorBlock) {
+    		slideFlag = state.getValue(SlidingDoorBlock.OPEN);
+    	}
+        return state.is(NorthstarTags.NorthstarBlockTags.AIR_PASSES_THROUGH.tag) || !state.getFluidState().isEmpty() || slideFlag;
      }
     
 	public static boolean combustable(FluidState state) {
