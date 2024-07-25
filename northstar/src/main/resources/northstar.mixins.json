@@ -11,6 +11,7 @@
 	"BucketItemMixin",
 	"CompassMixin",
 	"ServerLevelMixin",
+	"WindmillBearingBlockEntityMixin",
 	"MinecraftServerMixin",
 	"MobMixin",
 	"PlayerMixin",
@@ -30,6 +31,7 @@
 	"blockstuff.WallTorchMixin",
 	"blockstuff.TorchItemMixin",
 	"blockstuff.CandleBlockMixin",
+	"blockstuff.CampfireBlockMixin",
 	"blockstuff.LanternBlockMixin"
 	],
 	"minVersion": "0.8.5",

@@ -11,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
@@ -24,7 +25,7 @@ public class CandleBlockMixin {
 	public void updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, 
 	LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pNeighborPos, CallbackInfoReturnable<BlockState> info) {
     	try {
-	    	if(pState.getBlock() == Blocks.CANDLE) {
+	    	if(pState.is(BlockTags.CANDLES)) {
 	            System.out.println(OxygenStuff.hasOxygen(pCurrentPos,((Level)pLevel).dimension()));
 		    	if(!OxygenStuff.hasOxygen(pCurrentPos,((Level)pLevel).dimension()) && pState.getValue(CandleBlock.LIT)) {
 		    		if(!pState.canSurvive(pLevel, pCurrentPos)) {

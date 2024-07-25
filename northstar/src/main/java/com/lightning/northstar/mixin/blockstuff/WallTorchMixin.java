@@ -40,7 +40,8 @@ public class WallTorchMixin {
 	public void updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, 
 	LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pNeighborPos, CallbackInfoReturnable<BlockState> info) {
     	try {
-	    	if(!OxygenStuff.hasOxygen(pCurrentPos,((Level)pLevel).dimension())) {
+    		if(pState.is(Blocks.WALL_TORCH)) {
+	    	if(!OxygenStuff.hasOxygen(pCurrentPos,((Level)pLevel).dimension()) ) {
 	    		if(!pState.canSurvive(pLevel, pCurrentPos)) {
 	    			info.setReturnValue(Blocks.AIR.defaultBlockState());
 	    			return;
@@ -48,6 +49,7 @@ public class WallTorchMixin {
 	    		pLevel.playSound(null, pCurrentPos, SoundEvents.CANDLE_EXTINGUISH, SoundSource.BLOCKS, 1, 0);
 	    		info.setReturnValue(NorthstarTechBlocks.EXTINGUISHED_TORCH_WALL.get().defaultBlockState().setValue(WallTorchBlock.FACING, pState.getValue(WallTorchBlock.FACING)));
 	    	}
+    		}
 		} catch (Exception e) {
 			//oops
 		}

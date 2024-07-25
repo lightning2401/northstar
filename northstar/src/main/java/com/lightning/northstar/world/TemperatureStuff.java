@@ -5,20 +5,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.lwjgl.glfw.GLFW;
+
 import com.lightning.northstar.Northstar;
 import com.lightning.northstar.NorthstarTags;
 import com.lightning.northstar.block.NorthstarTechBlocks;
 import com.lightning.northstar.fluids.NorthstarFluids;
 import com.lightning.northstar.world.dimension.NorthstarDimensions;
 import com.lightning.northstar.world.dimension.NorthstarPlanets;
+import com.mojang.blaze3d.platform.InputConstants;
 import com.simibubi.create.AllFluids;
 import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorBlock;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -39,9 +44,17 @@ public class TemperatureStuff {
 	
 	@SubscribeEvent
 	public static void onWorldTick(TickEvent.LevelTickEvent event){
+		if(!event.level.isClientSide)
+			return;
     	long t = event.level.getGameTime();
     	if(loadBuffer <= 70)
     		loadBuffer++;
+    	
+    	if(InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_O)){
+				debugMode = true;
+		}else {
+			debugMode = false;
+		}
     	if(t % 40 == 0 && event.level.isClientSide && debugMode) {
     		for(Entry<HashMap<BlockPos, Integer>, ResourceKey<Level>> blocks:	temperatureSources.entrySet()) {
     			if(blocks == null)
@@ -73,18 +86,16 @@ public class TemperatureStuff {
 					if(level.isClientSide)
 						{return;}
 					map.put(newpos, temp);
-					if(level.getBlockState(newpos).is(NorthstarTechBlocks.TEMPERATURE_REGULATOR.get())) 
-					{continue;}
-					if(!level.getFluidState(newpos).isEmpty()) 
-					{level.getBlockState(newpos).tick((ServerLevel) level, newpos, level.random);
-					level.getFluidState(newpos).tick(level, newpos);}
 				}
 			}
 		}
     }
-	public static void removeSource(BlockPos pos, Level level, HashMap<BlockPos, Integer> map) {
+	public static void removeSource(BlockPos pos, Level level, HashMap<BlockPos, Integer> map, HashMap<BlockPos, Integer> truemap) {
 		HashMap<BlockPos, Integer> tempmap = map;
-		temperatureSources.remove(map);
+		if(map == null) {
+			tempmap = truemap;
+		}
+		temperatureSources.remove(truemap);
 		for(BlockPos newpos : tempmap.keySet()) {
 			if(level.isClientSide)
 			{return;}
@@ -137,6 +148,27 @@ public class TemperatureStuff {
 		
 		return NorthstarPlanets.getPlanetTemp(level.dimension());
 		
+	}
+	public static int getTempForEntity(Entity entity) {
+		ResourceKey<Level> level = entity.level.dimension();
+		BlockPos pos = entity.blockPosition();
+		if(!temperatureSources.containsValue(level) && level != NorthstarDimensions.MERCURY_DIM_KEY)
+		{return NorthstarPlanets.getPlanetTemp(level);}
+		for(Entry<HashMap<BlockPos, Integer>, ResourceKey<Level>> blocks:	temperatureSources.entrySet()) {
+			if(blocks.getValue() == level) {
+				if (blocks.getKey().keySet().contains(pos)) {
+					return blocks.getKey().get(pos);
+				}else if(blocks.getKey().keySet().contains(pos.above())) {
+					return blocks.getKey().get(pos.above());
+				}
+			}
+		}
+		if(level == NorthstarDimensions.MERCURY_DIM_KEY) {
+			if(entity.level.canSeeSky(pos) && !entity.level.isNight()) {
+				return 434;}
+			else {return -200;}
+		}
+		return NorthstarPlanets.getPlanetTemp(level);
 	}
 	
     public static boolean canSpread(BlockState state) {

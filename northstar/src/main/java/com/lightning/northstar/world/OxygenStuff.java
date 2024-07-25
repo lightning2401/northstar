@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+
+import org.lwjgl.glfw.GLFW;
+
 import java.util.Set;
 
 import com.lightning.northstar.Northstar;
@@ -11,9 +14,11 @@ import com.lightning.northstar.NorthstarTags;
 import com.lightning.northstar.NorthstarTags.NorthstarItemTags;
 import com.lightning.northstar.particle.GlowstoneParticleData;
 import com.lightning.northstar.world.dimension.NorthstarPlanets;
+import com.mojang.blaze3d.platform.InputConstants;
 import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorBlock;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -44,6 +49,7 @@ public class OxygenStuff {
 	public static List<LivingEntity> oxygenatedEntities = new ArrayList<LivingEntity>();
 	public static int power = 2000;
 	public static int maximumOxy = 2000;
+	public static boolean debugMode = false;
 
 	public static boolean hasOxygen(BlockPos pos, ResourceKey<Level> level) {
 		if(NorthstarPlanets.getPlanetOxy(level))
@@ -51,17 +57,24 @@ public class OxygenStuff {
 		if(!oxygenSources.containsValue(level)) {return false;}
     	for(Entry<Set<BlockPos>, ResourceKey<Level>> blocks:	oxygenSources.entrySet()) {
     		if(blocks.getValue() == level) {
-    			if(blocks.getKey().contains(pos) && blocks.getKey().size() < maximumOxy) {
+    			if(blocks.getKey().contains(pos)) {
     				return true;
     			}
     		}
     	}
     	return false;
 	}
-//	@SubscribeEvent
+	@SubscribeEvent
     public static void onWorldTick(TickEvent.LevelTickEvent event){
+		if(!event.level.isClientSide)
+			return;
     	long t = event.level.getGameTime();
-    	if(t % 40 == 0) {
+    	if(InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_O)){
+				debugMode = true;
+		}else {
+			debugMode = false;
+		}
+    	if(t % 40 == 0 && debugMode) {
     		for(Entry<Set<BlockPos>, ResourceKey<Level>> blocks:	oxygenSources.entrySet()) {
     			if(blocks.getValue() == event.level.dimension()) {
     				for(BlockPos pos : blocks.getKey()) {
@@ -230,7 +243,7 @@ public class OxygenStuff {
     		return false;
     		for(Entry<Set<BlockPos>, ResourceKey<Level>> blocks:	oxygenSources.entrySet()) {
     			if(blocks.getValue() == entity.level.dimension()) {
-    				if(blocks.getKey().contains(entity.blockPosition()) && blocks.getKey().size() < maximumOxy) {
+    				if((blocks.getKey().contains(entity.blockPosition()) || blocks.getKey().contains(entity.blockPosition().above()))) {
     					return true;
     				}
 				}

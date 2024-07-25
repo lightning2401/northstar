@@ -381,6 +381,23 @@ public class NorthstarPlanets {
 		return 1;
     }
     
+    public static float getWindMultiplier(Level level) {
+    	// I love spaghetti
+    	ResourceKey<Level> dim = level.dimension();
+    	if(dim == NorthstarDimensions.MOON_DIM_KEY) {return 0;}
+    	if(dim == NorthstarDimensions.MARS_DIM_KEY) {
+    		if(level.isRaining())
+    			return 1;
+    		return 0;}
+    	if(dim == NorthstarDimensions.MERCURY_DIM_KEY) {return 0;}
+    	if(dim == NorthstarDimensions.VENUS_DIM_KEY) {
+    		if(level.isRaining())
+    			return 0.7f;
+    		return 0.5f;}
+    	if(dim == NorthstarDimensions.EARTH_ORBIT_DIM_KEY) {return 0;}
+		return 1;
+    }
+    
     public static boolean isCustomDimension(ResourceLocation resourceLocation) {
     	if(resourceLocation == NorthstarDimensions.MARS_DIM_KEY.location()) {return true;}
     	if(resourceLocation == NorthstarDimensions.MERCURY_DIM_KEY.location()) {return true;}

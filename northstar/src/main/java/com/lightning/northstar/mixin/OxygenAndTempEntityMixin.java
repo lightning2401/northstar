@@ -154,7 +154,7 @@ public class OxygenAndTempEntityMixin {
    
     
     private static int checkTemp(LivingEntity entity) {
-    	return TemperatureStuff.getTemp(entity.blockPosition(), entity.level);    	
+    	return TemperatureStuff.getTempForEntity(entity);    	
     }
     
     

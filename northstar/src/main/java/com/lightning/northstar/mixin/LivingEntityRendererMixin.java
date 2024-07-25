@@ -52,7 +52,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
 	@SuppressWarnings("resource")
 	@Inject(method = "render", at = @At("HEAD"), cancellable = true)
 	private void render(T pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack, MultiBufferSource pBuffer, int pPackedLight, CallbackInfo info) {		
-		if(!NorthstarPlanets.hasNormalGrav(pEntity.level.dimension()) && !pEntity.isVisuallySwimming() && !pEntity.isFallFlying()) {
+		if(!NorthstarPlanets.hasNormalGrav(pEntity.level.dimension()) && !pEntity.isVisuallySwimming() && !pEntity.isFallFlying() && pEntity instanceof Player) {
 			if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderLivingEvent.Pre<T, M>(pEntity, (LivingEntityRenderer)(Object) this, pPartialTicks, pMatrixStack, pBuffer, pPackedLight))) return;
 			pMatrixStack.pushPose();
 			this.model.attackTime = this.getAttackAnim2(pEntity, pPartialTicks);

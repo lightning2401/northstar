@@ -1,5 +1,6 @@
 package com.lightning.northstar.block.tech.temperature_regulator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,7 +11,6 @@ import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.equipment.goggles.IHaveHoveringInformation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.LangBuilder;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -71,7 +71,11 @@ public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implemen
 					 newList.put(getBlockPos().above(),temp);
 				 TemperatureStuff.spreadTemp(this.level, newList, maxSize, this.temp);
 				  if(!newList.equals(TEMP_ZONES)) {
-					  TemperatureStuff.removeSource(worldPosition, level, TEMP_ZONES);
+					  HashMap<BlockPos, Integer> temptemp_zones = TEMP_ZONES;
+					  if(temptemp_zones.get(worldPosition.above()) == newList.get(worldPosition.above())) {
+						  temptemp_zones.keySet().removeAll(newList.keySet());
+					  }
+					  TemperatureStuff.removeSource(worldPosition, level, temptemp_zones, TEMP_ZONES);
 					  TemperatureStuff.temperatureSources.put(newList, level.dimension());
 					  TEMP_ZONES.clear();
 					  TEMP_ZONES = newList;
@@ -88,14 +92,14 @@ public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implemen
     }
 	
 	public void removeTemp(TemperatureRegulatorBlockEntity entity) {
-		TemperatureStuff.removeSource(worldPosition, level, TEMP_ZONES);
+		TemperatureStuff.removeSource(worldPosition, level, null, TEMP_ZONES);
 		entity.TEMP_ZONES.clear();
 	}
 	
 	public void changeTemp(int i) {
 		this.temp = i;
 		this.temp = Mth.clamp(temp, -273, 1000);
-		this.removeTemp(this);
+//		this.removeTemp(this);
 		this.tick();
 //		System.out.println(this.temp);
 	}
@@ -144,13 +148,25 @@ public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implemen
 		Lang.translate("gui.goggles.blocks_filled")
 		.style(ChatFormatting.GRAY)
 		.forGoggles(tooltip);
-		Lang.builder()
+		if(envFill) 
+		{Lang.builder()
 		.add(Lang.number(TEMP_ZONES.size())
 			.style(ChatFormatting.AQUA))
 		.text(ChatFormatting.GRAY, " / ")
 		.add(Lang.number(maxSize)
 			.style(ChatFormatting.DARK_GRAY))
-		.forGoggles(tooltip, 1);
+		.forGoggles(tooltip, 1);}
+		else
+		{Lang.builder()
+		.add(Lang.number(sizeX)
+		.style(ChatFormatting.AQUA))
+		.text(ChatFormatting.DARK_GRAY, " x ")
+		.add(Lang.number(sizeY)
+		.style(ChatFormatting.AQUA))
+		.text(ChatFormatting.DARK_GRAY, " x ")
+		.add(Lang.number(sizeZ)
+		.style(ChatFormatting.AQUA))
+		.forGoggles(tooltip, 1);}
 		return true;
 	}
 	

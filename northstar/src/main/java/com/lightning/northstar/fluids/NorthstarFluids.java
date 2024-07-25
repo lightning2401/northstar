@@ -25,6 +25,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.FogRenderer.FogMode;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
@@ -74,7 +75,7 @@ public class NorthstarFluids {
 					.slopeFindDistance(3)
 					.explosionResistance(100f))
 				.source(ForgeFlowingFluid.Source::new)
-				.bucket()
+				.bucket().properties(t -> t.craftRemainder(Items.BUCKET))
 				.build()
 				.register();
 	public static final FluidEntry<ForgeFlowingFluid.Flowing> LIQUID_OXYGEN =
@@ -89,7 +90,7 @@ public class NorthstarFluids {
 					.slopeFindDistance(3)
 					.explosionResistance(100f))
 				.source(ForgeFlowingFluid.Source::new)
-				.bucket()
+				.bucket().properties(t -> t.craftRemainder(Items.BUCKET))
 				.build()
 				.register();
 	

@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+	"northstar:hydrocarbon_bucket",
+	"northstar:methane_bucket"
+  ]
+}

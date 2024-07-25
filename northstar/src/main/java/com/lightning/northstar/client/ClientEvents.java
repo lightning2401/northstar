@@ -17,7 +17,7 @@ public class ClientEvents {
 	@SubscribeEvent
 	public static void onTick(ClientTickEvent event) {
 		if (!isGameActive())
-			return;
+			return;		
 		SpaceSuitFirstPersonRenderer.clientTick();
 	}
 	@SuppressWarnings("resource")

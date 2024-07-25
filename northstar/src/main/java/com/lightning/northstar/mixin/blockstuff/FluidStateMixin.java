@@ -22,8 +22,8 @@ public class FluidStateMixin {
 	
     @Inject(method = "tick", at = @At("TAIL"))
 	public void tick$fluid(Level pLevel, BlockPos pPos, CallbackInfo info) {
-    	System.out.println("loadBuffer: " + TemperatureStuff.loadBuffer);
-    	System.out.println("TemperatureStuff.loadBuffer <= 70: " +  String.valueOf( TemperatureStuff.loadBuffer <= 70));
+ //   	System.out.println("loadBuffer: " + TemperatureStuff.loadBuffer);
+ //   	System.out.println("TemperatureStuff.loadBuffer <= 70: " +  String.valueOf( TemperatureStuff.loadBuffer <= 70));
 		if(pLevel.isClientSide || TemperatureStuff.loadBuffer <= 70)
 			return;
 		FluidState state = pLevel.getFluidState(pPos);
@@ -49,7 +49,7 @@ public class FluidStateMixin {
     public void removeFluid(Level level, BlockPos pos, FluidState fluid) {
     	for(Direction dir : Direction.values()) {
     		BlockPos newpos = pos.mutable().move(dir);
-    		if(level.getFluidState(newpos).is(fluid.getType()) && level.getBlockState(newpos).canBeReplaced(fluid.getType())){level.setBlock(newpos, Blocks.AIR.defaultBlockState(), 3);}
+    		if(level.getFluidState(newpos).is(fluid.getType()) && level.getBlockState(newpos).canBeReplaced(fluid.getType()) && !level.getBlockState(newpos).hasProperty(BlockStateProperties.WATERLOGGED)){level.setBlock(newpos, Blocks.AIR.defaultBlockState(), 3);}
     		else if(level.getBlockState(newpos).hasProperty(BlockStateProperties.WATERLOGGED) && fluid.is(Fluids.WATER)) 
     		{level.setBlockAndUpdate(newpos, level.getBlockState(newpos).setValue(BlockStateProperties.WATERLOGGED, false));}
     	}
