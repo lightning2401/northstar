@@ -39,11 +39,29 @@
 				}
 		},
 		{
-			"weight": 50,
+			"weight": 16,
 			"element":{
 				"element_type": "minecraft:single_pool_element",
 				"projection": "rigid",
-				"location": "northstar:martian_base/collapsed_hall",
+				"location": "northstar:martian_base/collapsed_hall_1",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 16,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:martian_base/collapsed_hall_2",
+				"processors":"minecraft:empty"
+				}
+		},
+		{
+			"weight": 16,
+			"element":{
+				"element_type": "minecraft:single_pool_element",
+				"projection": "rigid",
+				"location": "northstar:martian_base/collapsed_hall_3",
 				"processors":"minecraft:empty"
 				}
 		}
