@@ -1,13 +1,17 @@
 package com.lightning.northstar.block.tech.rocket_station;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
 import com.lightning.northstar.Northstar;
 import com.lightning.northstar.NorthstarPackets;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.simibubi.create.content.trains.station.WideIconButton;
-import com.simibubi.create.foundation.gui.AllGuiTextures;
+import com.simibubi.create.foundation.gui.AllIcons;
+import com.simibubi.create.foundation.gui.widget.IconButton;
 import com.simibubi.create.foundation.utility.Lang;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -46,10 +50,10 @@ public class RocketStationScreen extends AbstractContainerScreen<RocketStationMe
 	      this.renderBackground(pPoseStack);
 	      super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
 	      RenderSystem.disableBlend();
-	      this.renderFg(pPoseStack, pMouseX, pMouseY, pPartialTick);
-	      this.renderTooltip(pPoseStack, pMouseX, pMouseY);
+	      this.renderFg(pPoseStack, pMouseX, pMouseY, pPartialTick);;
 	      this.renderButtons(pPoseStack, pMouseX, pMouseY, pPartialTick);
 	      this.renderCost(pPoseStack, pPartialTick);
+	      this.renderTooltip(pPoseStack, pMouseX, pMouseY);
 	   }
 	   
 	   protected void renderCost(PoseStack pPoseStack, float delta) {
@@ -60,24 +64,33 @@ public class RocketStationScreen extends AbstractContainerScreen<RocketStationMe
 			   System.out.println("Ruh roh");
 		   }
 		   if(this.menu.target != null)
-		   this.font.draw(pPoseStack, Component.literal("Fuel Cost: " + this.menu.fuelCost + " gJ"), x + imageWidth - 50, y + imageWidth - 100, 0);
+		   this.font.draw(pPoseStack, Component.literal("Estimated Fuel Cost: " + this.menu.fuelCost + " gJ"), x + imageWidth - 110, y + imageWidth - 100, 0x313a54);
 		   if(this.menu.target == null)
-		this.font.draw(pPoseStack, Component.literal("Invalid Target"), x + imageWidth - 40, y + imageWidth - 100, 0);
+		this.font.draw(pPoseStack, Component.literal("Invalid Target"), x + imageWidth - 40, y + imageWidth - 100, 0x313a54);
 	   }
 	   
 	   protected void renderButtons(PoseStack pPoseStack, int mouseX, int mouseY, float delta) {
 	        int x = ((width - (imageWidth + (imageWidth / 2))) / 2);
 	        int y = (height - (imageHeight + (imageHeight / 2))) / 2;
 		   
-		   WideIconButton assemble = new WideIconButton(x + imageWidth - 20, y + imageHeight - 75, AllGuiTextures.I_ASSEMBLE_TRAIN);
+	       IconButton assemble = new IconButton(x + imageWidth - 10, y + imageHeight - 79, AllIcons.I_ADD);
 		   assemble.setToolTip(Lang.translateDirect("station.assemble_train"));
 		   assemble.withCallback(() -> {
 				NorthstarPackets.getChannel()
 					.sendToServer(RocketStationEditPacket.tryAssemble(menu.blockEntity.getBlockPos()));
+				removed(); onClose();
 			});
 		   assemble.render(pPoseStack, mouseX, mouseY, delta);
 		   assemble.renderButton(pPoseStack, mouseX, mouseY, delta);
 		   addRenderableWidget(assemble);
+		   
+		   if ((Math.abs(x + imageWidth - mouseX) < 9 && Math.abs(y + imageHeight - 79 + 9 - mouseY) < 9)) {
+	            List<Component> list = Lists.newArrayList();
+	            RenderSystem.colorMask(true, true, true, true);
+	            list.add((Lang.translateDirect("northstar.gui.rocket_station.assemble").withStyle(ChatFormatting.WHITE)));
+	               
+	            this.renderComponentTooltip(pPoseStack, list, mouseX, mouseY);
+	        }
 		   
 	   }
 	   protected void assemble() {

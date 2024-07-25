@@ -152,16 +152,21 @@ public class TemperatureStuff {
 	public static int getTempForEntity(Entity entity) {
 		ResourceKey<Level> level = entity.level.dimension();
 		BlockPos pos = entity.blockPosition();
-		if(!temperatureSources.containsValue(level) && level != NorthstarDimensions.MERCURY_DIM_KEY)
-		{return NorthstarPlanets.getPlanetTemp(level);}
-		for(Entry<HashMap<BlockPos, Integer>, ResourceKey<Level>> blocks:	temperatureSources.entrySet()) {
-			if(blocks.getValue() == level) {
-				if (blocks.getKey().keySet().contains(pos)) {
-					return blocks.getKey().get(pos);
-				}else if(blocks.getKey().keySet().contains(pos.above())) {
-					return blocks.getKey().get(pos.above());
+		try {
+			if(!temperatureSources.containsValue(level) && level != NorthstarDimensions.MERCURY_DIM_KEY)
+			{return NorthstarPlanets.getPlanetTemp(level);}
+			for(Entry<HashMap<BlockPos, Integer>, ResourceKey<Level>> blocks:	temperatureSources.entrySet()) {
+				if(blocks.getValue() == level) {
+					if (blocks.getKey().keySet().contains(pos)) {
+						return blocks.getKey().get(pos);
+					}else if(blocks.getKey().keySet().contains(pos.above())) {
+						return blocks.getKey().get(pos.above());
+					}
 				}
 			}
+		}
+		catch(Exception e) {
+			//idk this tends to break for some reason
 		}
 		if(level == NorthstarDimensions.MERCURY_DIM_KEY) {
 			if(entity.level.canSeeSky(pos) && !entity.level.isNight()) {

@@ -224,8 +224,8 @@
 "block.northstar.iron_large_cogwheel":"Large Iron Cogwheel",
 "block.northstar.jet_engine":"Jet Engine",
 "block.northstar.solar_panel":"Solar Panel",
-"block.northstar.laser_lense":"Laser Lense",
-"block.northstar.laser":"Laser",
+"block.northstar.laser_lense":"Laser Lense (WIP)",
+"block.northstar.laser":"Laser (WIP)",
 "block.northstar.circuit_engraver":"Circuit Engraver",
 "block.northstar.telescope":"Telescope",
 "block.northstar.astronomy_table":"Astronomy Table",
@@ -271,7 +271,7 @@
 "item.northstar.mars_palm_flower":"Mars Palm Flower",
 "item.northstar.mars_sprout_flower":"Mars Sprout Flower",
 "item.northstar.mars_worm_spawn_egg": "Mars Echo Worm Spawn Egg",
-"item.northstar.mars_toad_spawn_egg": "Mars Toad Spawn Egg",
+"item.northstar.mars_toad_spawn_egg": "Mars Root Toad Spawn Egg",
 "item.northstar.mars_cobra_spawn_egg": "Mars Cobra Spawn Egg",
 "item.northstar.mars_moth_spawn_egg": "Mars Devil Moth Spawn Egg",
 "item.northstar.venus_vulture_spawn_egg": "Venus Vulture Spawn Egg",
@@ -376,7 +376,7 @@
 "item.northstar.dormant_martian_seed_sequenced": "Dormant Martian Seed",
 
 "entity.northstar.mars_worm": "Mars Echo Worm",
-"entity.northstar.mars_toad": "Mars Toad",
+"entity.northstar.mars_toad": "Mars Root Toad",
 "entity.northstar.mars_cobra": "Mars Cobra",
 "entity.northstar.mars_moth": "Mars Devil Moth",
 
@@ -408,9 +408,9 @@
 "northstar.subtitle.mars_worm_death":"Mars Echo Worm dies",
 "northstar.subtitle.mars_worm_attack":"Mars Echo Worm attacks",
 
-"northstar.subtitle.mars_toad_idle":"Mars Toad squeaks",
-"northstar.subtitle.mars_toad_hurt":"Mars Toad hurts",
-"northstar.subtitle.mars_toad_death":"Mars Toad dies",
+"northstar.subtitle.mars_toad_idle":"Mars Root Toad squeaks",
+"northstar.subtitle.mars_toad_hurt":"Mars Root Toad hurts",
+"northstar.subtitle.mars_toad_death":"Mars Root Toad dies",
 
 "northstar.subtitle.mars_cobra_idle":"Mars Cobra calmly hisses",
 "northstar.subtitle.mars_cobra_hurt":"Mars Cobra hurts",
@@ -505,6 +505,7 @@
 "create.contraption.controls.landing_warning": "Hold Space to slow down!",
 
 "create.northstar.gui.telescope_fail": "Telescope must be able to see stars",
+"create.northstar.gui.rocket_station.assemble": "Assemble Rocket",
 
 "create.recipe.engraving": "Engraving",
 "create.recipe.freezing": "Freezing",
