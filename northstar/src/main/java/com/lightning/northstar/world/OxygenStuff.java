@@ -75,13 +75,17 @@ public class OxygenStuff {
 			debugMode = false;
 		}
     	if(t % 40 == 0 && debugMode) {
-    		for(Entry<Set<BlockPos>, ResourceKey<Level>> blocks:	oxygenSources.entrySet()) {
-    			if(blocks.getValue() == event.level.dimension()) {
-    				for(BlockPos pos : blocks.getKey()) {
-    					event.level.addParticle(new GlowstoneParticleData(), pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, 0,0,0);
-    				}
-    			}
-    			
+    		try {
+	    		for(Entry<Set<BlockPos>, ResourceKey<Level>> blocks:	oxygenSources.entrySet()) {
+	    			if(blocks.getValue() == event.level.dimension()) {
+	    				for(BlockPos pos : blocks.getKey()) {
+	    					event.level.addParticle(new GlowstoneParticleData(), pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, 0,0,0);
+	    				}
+	    			}
+	    			
+	    		}
+    		}catch(Exception e) {
+    			//huh
     		}
     	}
     	
@@ -241,13 +245,17 @@ public class OxygenStuff {
     public static boolean checkForAir(LivingEntity entity) {
     	if(entity.level.isClientSide)
     		return false;
-    		for(Entry<Set<BlockPos>, ResourceKey<Level>> blocks:	oxygenSources.entrySet()) {
-    			if(blocks.getValue() == entity.level.dimension()) {
-    				if((blocks.getKey().contains(entity.blockPosition()) || blocks.getKey().contains(entity.blockPosition().above()))) {
-    					return true;
-    				}
-				}
-    		}		
+	    	try {
+	    		for(Entry<Set<BlockPos>, ResourceKey<Level>> blocks:	oxygenSources.entrySet()) {
+	    			if(blocks.getValue() == entity.level.dimension()) {
+	    				if((blocks.getKey().contains(entity.blockPosition()) || blocks.getKey().contains(entity.blockPosition().above()))) {
+	    					return true;
+	    				}
+					}
+	    		}		
+	    	}catch(Exception e) {
+	    		//bruh
+	    	}
     		
     	
 		return false;

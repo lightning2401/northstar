@@ -56,16 +56,20 @@ public class TemperatureStuff {
 			debugMode = false;
 		}
     	if(t % 40 == 0 && event.level.isClientSide && debugMode) {
-    		for(Entry<HashMap<BlockPos, Integer>, ResourceKey<Level>> blocks:	temperatureSources.entrySet()) {
-    			if(blocks == null)
-    				continue;
-    			if(blocks.getValue() == event.level.dimension()) {
-    				for(BlockPos pos : blocks.getKey().keySet()) {
-    					if(pos == null)
-    						continue;
-        				event.level.addParticle(ParticleTypes.FLAME, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, 0,0,0);
-    				}
-    			}
+    		try {
+	    		for(Entry<HashMap<BlockPos, Integer>, ResourceKey<Level>> blocks:	temperatureSources.entrySet()) {
+	    			if(blocks == null)
+	    				continue;
+	    			if(blocks.getValue() == event.level.dimension()) {
+	    				for(BlockPos pos : blocks.getKey().keySet()) {
+	    					if(pos == null)
+	    						continue;
+	        				event.level.addParticle(ParticleTypes.FLAME, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, 0,0,0);
+	    				}
+	    			}
+	    			
+	    		}
+    		}catch(Exception e) {
     			
     		}
     	}
@@ -131,13 +135,19 @@ public class TemperatureStuff {
 	public static int getTemp(BlockPos pos, Level level) {
 		if(!temperatureSources.containsValue(level.dimension()) && level.dimension() != NorthstarDimensions.MERCURY_DIM_KEY)
 		{return NorthstarPlanets.getPlanetTemp(level.dimension());}
-		for(Entry<HashMap<BlockPos, Integer>, ResourceKey<Level>> blocks:	temperatureSources.entrySet()) {
-			if(blocks.getValue() == level.dimension()) {
-				if (blocks.getKey().keySet().contains(pos)) {
-					return blocks.getKey().get(pos);
+
+		try {
+			for(Entry<HashMap<BlockPos, Integer>, ResourceKey<Level>> blocks:	temperatureSources.entrySet()) {
+				if(blocks.getValue() == level.dimension()) {
+					if (blocks.getKey().keySet().contains(pos)) {
+						return blocks.getKey().get(pos);
+					}
 				}
+				
 			}
-			
+		}
+		catch(Exception e) {
+			//oops
 		}
 			
 		if(level.dimension() == NorthstarDimensions.MERCURY_DIM_KEY) {
