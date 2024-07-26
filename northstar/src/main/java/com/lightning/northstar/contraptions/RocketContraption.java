@@ -117,7 +117,6 @@ public class RocketContraption extends TranslatingContraption{
 		IFluidHandler rocketFuels = storage.getFluids();
 		fuelCost = (int) ((int) weightCost + ((fuelCost - (fuelCost * computingPower))));
 		if(owner != null)
-		owner.displayClientMessage(Component.literal("fuel cost: " + fuelCost).withStyle(ChatFormatting.YELLOW), false);
 		for (int slot = 0; slot < rocketFuels.getTanks(); slot++) {
 			if(NorthstarTags.NorthstarFluidTags.TIER_1_ROCKET_FUEL.matches(rocketFuels.getFluidInTank(slot).getFluid()) && rocketFuels.getFluidInTank(slot).getAmount() > fuelCost) 
 			{rocketFuels.drain(fuelCost, FluidAction.EXECUTE);

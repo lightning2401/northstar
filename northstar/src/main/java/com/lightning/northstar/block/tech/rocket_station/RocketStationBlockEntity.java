@@ -262,7 +262,7 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 			("Oxygen Size: " + oxyCheck.size()).withStyle(ChatFormatting.AQUA), false);
 			if(!oxygenSealed) {
 				contraption.owner.displayClientMessage(Component.literal
-				("Cockpit is not sealed, or too large!").withStyle(ChatFormatting.AQUA), false);
+				("Cockpit is not sealed, or too large!").withStyle(ChatFormatting.DARK_RED), false);
 			}
 			if(contraption.fuelAmount() < contraption.fuelCost) {
 				contraption.owner.displayClientMessage(Component.literal
