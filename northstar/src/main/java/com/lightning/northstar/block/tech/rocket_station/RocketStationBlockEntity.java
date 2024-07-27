@@ -231,7 +231,7 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 			("Interplanetary travel requires a Interplanetary Navigator!").withStyle(ChatFormatting.RED), false);
 		}
 		
-		if (engines >= requiredJets && hasStation && hasFuel && fuelAmount > (fuelCost + contraption.weightCost) && heatShielding >= heatCost && oxygenSealed && !interplanetaryFlag) {
+		if (engines >= requiredJets && hasStation && hasFuel && fuelAmount > (fuelCost + contraption.weightCost) && heatShielding >= heatCost && oxygenSealed && !interplanetaryFlag && contraption.hasControls) {
 		System.out.println(engines);
 		contraption.removeBlocksFromWorld(level, BlockPos.ZERO);
 		RocketContraptionEntity movedContraption =
@@ -275,6 +275,10 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 			if(contraption.hasJetEngine() < requiredJets) {
 				contraption.owner.displayClientMessage(Component.literal
 				("Not enough Jet Engines!").withStyle(ChatFormatting.DARK_RED), false);
+			}
+			if(!contraption.hasControls) {
+				contraption.owner.displayClientMessage(Component.literal
+				("No controls present!").withStyle(ChatFormatting.DARK_RED), false);
 			}
 			contraption.owner.displayClientMessage(Component.literal
 			("Rocket failed to assemble!").withStyle(ChatFormatting.RED), false);
