@@ -44,7 +44,15 @@ authors="lightning2401" #optional
 description='''
 Inspired by Micdoodle's Galacticraft, Northstar seeks to return players to the stars with the power of the Create mod. 
 '''
-# A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
+
+[modproperties.northstar]
+    # Catalogue assets - see https://legacy.curseforge.com/minecraft/mc-mods/catalogue/pages/how-to-specify-a-custom-icon
+    catalogueImageIcon="catalogue_icon.png"
+    catalogueBackground="catalogue_background.png"
+    # Configured config background - see https://www.curseforge.com/minecraft/mc-mods/configured
+    configuredBackground="northstar:textures/block/moon_sand.png"
+    
+# A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional. 
 [[dependencies.northstar]] #optional
     # the modid of the dependency
     modId="forge" #mandatory
@@ -71,3 +79,5 @@ Inspired by Micdoodle's Galacticraft, Northstar seeks to return players to the s
     versionRange="[1.19.2,1.20)"
     ordering="NONE"
     side="BOTH"
+
+    
