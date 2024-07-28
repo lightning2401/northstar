@@ -1,5 +1,7 @@
 package com.lightning.northstar.world.dimension;
 
+import javax.annotation.Nullable;
+
 import com.lightning.northstar.Northstar;
 
 import net.minecraft.resources.ResourceKey;
@@ -321,7 +323,7 @@ public class NorthstarPlanets {
 		if (level == NorthstarDimensions.MERCURY_DIM_KEY) {return 800;}
 		return 0;
     }
-    
+    @Nullable
     public static ResourceKey<Level> getPlanetDimension(String name) {
     	switch (name) {
 		case "mercury": {return NorthstarDimensions.MERCURY_DIM_KEY;}
@@ -330,7 +332,7 @@ public class NorthstarPlanets {
 		case "earth": {return Level.OVERWORLD;}
 		case "earth_moon": {return NorthstarDimensions.MOON_DIM_KEY;}
 		case "moon": {return NorthstarDimensions.MOON_DIM_KEY;}
-		default:return Level.OVERWORLD;}
+		default:return null;}
     }
     public static boolean getPlanetOxy(ResourceKey<Level> level) {
     	if(level == NorthstarDimensions.MARS_DIM_KEY) {return false;}

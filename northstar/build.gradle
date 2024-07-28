@@ -26,7 +26,7 @@ mixin {
     debug.export = true
 }
 
-version = '0.1a'
+version = '0.1b'
 group = 'com.lightning.northstar' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'northstar'
 
@@ -219,7 +219,7 @@ jar {
         attributes([
                 "Specification-Title"     : "northstar",
                 "Specification-Vendor"    : "lightning",
-                "Specification-Version"   : "0.1a", // We are version 1 of ourselves
+                "Specification-Version"   : "0.1b", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "lightning",

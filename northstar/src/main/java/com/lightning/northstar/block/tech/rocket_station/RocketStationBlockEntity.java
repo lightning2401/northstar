@@ -143,10 +143,7 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 		}
 		fuelCost = fuelCalc();
 		fuelReturnCost = fuelReturnCalc();
-		
 
-		if (level.isClientSide)
-			return;
 
 		if (assembleNextTick == true) {
 			tryAssemble();
@@ -188,6 +185,7 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 			contraption.owner = owner;
 			contraption.fuelCost = fuelCost;
 			contraption.fuelReturnCost = fuelReturnCost;
+			contraption.dest = target;
 			System.out.println(this.container);
 			heatCost = (TemperatureStuff.getHeatRating(target) * (contraption.blockCount)) + TemperatureStuff.getHeatConstant(target);
 			heatCostHome = (TemperatureStuff.getHeatRating(level.dimension()) * (contraption.blockCount)) + TemperatureStuff.getHeatConstant(level.dimension());
@@ -229,7 +227,7 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 			("Interplanetary travel requires a Interplanetary Navigator!").withStyle(ChatFormatting.RED), false);
 		}
 		
-		if (engines >= requiredJets && hasStation && hasFuel && fuelAmount > (fuelCost + contraption.weightCost) && heatShielding >= heatCost && oxygenSealed && !interplanetaryFlag && contraption.hasControls) {
+		if (engines >= requiredJets && hasStation && hasFuel && fuelAmount > (fuelCost + contraption.weightCost) && heatShielding >= heatCost && oxygenSealed && !interplanetaryFlag && contraption.hasControls && contraption.dest != null) {
 		System.out.println(engines);
 		contraption.removeBlocksFromWorld(level, BlockPos.ZERO);
 		RocketContraptionEntity movedContraption =
@@ -277,6 +275,10 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 			if(!contraption.hasControls) {
 				contraption.owner.displayClientMessage(Component.literal
 				("No controls present!").withStyle(ChatFormatting.DARK_RED), false);
+			}
+			if(contraption.dest == null) {
+				contraption.owner.displayClientMessage(Component.literal
+				("Invalid Target!").withStyle(ChatFormatting.DARK_RED), false);
 			}
 			contraption.owner.displayClientMessage(Component.literal
 			("Rocket failed to assemble!").withStyle(ChatFormatting.RED), false);

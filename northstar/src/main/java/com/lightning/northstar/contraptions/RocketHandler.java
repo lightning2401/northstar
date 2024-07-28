@@ -58,7 +58,7 @@ public class RocketHandler {
 		eventTickNumber = event.level.getGameTime();
 		
 		
-		
+		// this is pretty much only clientside
 		if(!CONTROL_QUEUE.isEmpty() && eventTickNumber > eventTickNumberCheck) {
 			HashMap<Pair<UUID, BlockPos>, Integer> destroy = new HashMap<Pair<UUID,BlockPos>, Integer>();
 			for(Entry<Pair<UUID, BlockPos>, Integer> entries : CONTROL_QUEUE.entrySet()) {
