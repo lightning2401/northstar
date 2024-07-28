@@ -20,8 +20,7 @@ public class RocketControlsInteractionBehaviour extends MovingInteractionBehavio
 		AbstractContraptionEntity contraptionEntity) {
 		if(!(contraptionEntity instanceof RocketContraptionEntity rce))
 			return false;
-		if (AllItems.WRENCH.isIn(player.getItemInHand(activeHand)))
-			return false;
+
 //		System.out.println("Huhh????");
 
 		UUID currentlyControlling = rce.getControllingPlayer()

@@ -89,7 +89,7 @@ public class NorthstarEntityTypes {
 	
 	public static final EntityEntry<RocketContraptionEntity> ROCKET_CONTRAPTION =
 			contraption("rocket_contraption", RocketContraptionEntity::new, () -> RocketContraptionEntityRenderer::new,
-				10, 40, false).register();
+				20, 40, false).register();
 
 	
 //	public static final EntityEntry<RocketEntity> ROCKET =

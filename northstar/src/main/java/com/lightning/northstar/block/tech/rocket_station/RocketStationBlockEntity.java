@@ -157,8 +157,6 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 	
 	
 	private void tryAssemble() {
-		if (level.isClientSide)
-			return;
 		BlockState blockState = getBlockState();
 		if (!(blockState.getBlock() instanceof RocketStationBlock))
 			{return;}

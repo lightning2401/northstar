@@ -57,8 +57,6 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class RocketContraption extends TranslatingContraption{
 
-	public Map<BlockPos, Couple<Boolean>> conductorSeats;
-	public ArrivalSoundQueue soundQueue;
 	public int fuelCost = 0;
 	public int fuelReturnCost = 0;
 	public int weightCost = 0;
@@ -77,12 +75,10 @@ public class RocketContraption extends TranslatingContraption{
 	public int fuelTicks;
 	public String name = "Rocket";
 	public Player owner;
+	public BlockPos localControlsPos;
 
 	protected MountedStorageManager storageProxy;
 
-	// render
-	public int portalCutoffMin;
-	public int portalCutoffMax;
 	public ResourceKey<Level> dest = null;
 
 	static final IItemHandlerModifiable fallbackItems = new ItemStackHandler();
@@ -94,11 +90,7 @@ public class RocketContraption extends TranslatingContraption{
 	public float targetYaw;	
 	
 	public RocketContraption() {
-		conductorSeats = new HashMap<>();
 		assembledJets = new ArrayList<>();
-		soundQueue = new ArrivalSoundQueue();
-		portalCutoffMin = Integer.MIN_VALUE;
-		portalCutoffMax = Integer.MAX_VALUE;
 		storage = new TrainCargoManager();
 	}
 
@@ -111,9 +103,7 @@ public class RocketContraption extends TranslatingContraption{
 		
 		return true;
 	}
-	public void burnFuel() {
-
-		
+	public void burnFuel() {		
 		IFluidHandler rocketFuels = storage.getFluids();
 		fuelCost = (int) ((int) weightCost + ((fuelCost - (fuelCost * computingPower))));
 		if(owner != null)
@@ -153,7 +143,6 @@ public class RocketContraption extends TranslatingContraption{
 				}
 			}
 		}
-
 		if (blockState.is(NorthstarBlocks.INTERPLANETARY_NAVIGATOR.get())) {
 			this.hasInterplanetaryNavigation = true;
 		}
@@ -171,6 +160,9 @@ public class RocketContraption extends TranslatingContraption{
 		
 		if (NorthstarTechBlocks.ROCKET_CONTROLS.has(blockState)) {
 			hasControls = true;
+			if(this.localControlsPos == null) {
+				this.localControlsPos = this.toLocalPos(pos);
+			}
 		}
 		if (NorthstarTechBlocks.JET_ENGINE.has(blockState)) {
 			jet_engines += 1;
@@ -237,17 +229,6 @@ public class RocketContraption extends TranslatingContraption{
 		entity.changeDimension(target);
 		entity.getContraption().getContraptionWorld();
 		entity.level.getProfiler().pop();
-	}
-	
-	
-	public boolean inControl(BlockPos pos, Direction direction) {
-		BlockPos controlsPos = pos.relative(direction);
-		if (!blocks.containsKey(controlsPos))
-			return false;
-		StructureBlockInfo info = blocks.get(controlsPos);
-		if (!AllBlocks.TRAIN_CONTROLS.has(info.state))
-			return false;
-		return info.state.getValue(ControlsBlock.FACING) == direction.getOpposite();
 	}
 	
 

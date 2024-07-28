@@ -94,6 +94,7 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 	@SuppressWarnings("unused")
 	private Vec3 serverPrevPos;
 	public List<Entity> entitiesInContraption = new ArrayList<Entity>();
+	public BlockPos localControlsPos;
 
 	public RocketContraptionEntity(EntityType<?> entityTypeIn, Level worldIn) {
 		super(entityTypeIn, worldIn);
@@ -121,6 +122,10 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 		if (!(contraption instanceof RocketContraption))
 			return;
 		if(launchtime > 0 && activeLaunch) {launchtime--;}
+		if (level.isClientSide) {
+			clientOffsetDiff *= .75f;
+			updateClientMotion();
+		}
 		if(launchtime == 0 && activeLaunch)
 		{blasting = true;}
 		if(visualEngineCount == 0) {
@@ -130,6 +135,7 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 		if(this.owner == null && ((RocketContraption)this.contraption).owner != null) {
 			this.owner = ((RocketContraption)this.contraption).owner;
 		}
+		System.out.println("I EXIST!");
 		
 		if(this.owner == null && this.ownerID != null) {
 			this.owner = level.getPlayerByUUID(ownerID);
@@ -137,6 +143,9 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 		
 		if(((RocketContraption)this.contraption).isUsingTicket) {
 			this.isUsingTicket = true;
+		}
+		if(((RocketContraption)this.contraption).localControlsPos != null) {
+			this.localControlsPos = ((RocketContraption)this.contraption).localControlsPos;
 		}
 		
 		if(this.tickCount % 40 == 0 && !this.level.isClientSide) {
@@ -240,7 +249,7 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 		tickActors();
 		Vec3 movementVec = getDeltaMovement();
 		Direction dir = landing ? Direction.DOWN : Direction.UP;
-		if (customCollision(dir)) {
+		if (customCollision(dir) && !level.isClientSide) {
 			level.playLocalSound(getX(), getY(), getZ(), AllSoundEvents.STEAM.getMainEvent(), SoundSource.BLOCKS, 3, 0, true);
 			flyingSound.stopSound();
 			if (!level.isClientSide && (Math.abs(final_lift_vel) < 3 || hasExploded)) {
@@ -269,8 +278,6 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 		}
 		if (Math.signum(prevAxisMotion) != Math.signum(axisMotion) && prevAxisMotion != 0)
 			contraption.stop(level);
-		if (!level.isClientSide && (prevAxisMotion != axisMotion || tickCount % 3 == 0))
-			sendPacket();
 		slowing = false;
 	}
 	
@@ -606,11 +613,6 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 		return localPos;
 	}
 	
-	public void sendPacket() {
-		AllPackets.getChannel()
-		.send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
-			new GantryContraptionUpdatePacket(getId(), getY(), axisMotion, sequencedOffsetLimit));
-	}
 	
 	public double getAxisCoord() {
 		Vec3 anchorVec = getAnchorVec();

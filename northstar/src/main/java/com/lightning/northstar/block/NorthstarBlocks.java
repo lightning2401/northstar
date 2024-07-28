@@ -267,13 +267,13 @@ public class NorthstarBlocks {
     
     public static final RegistryObject<Block> MARS_TULIP = registerBlock("mars_tulip",
             () -> new MarsTulipBlock(BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS).color(MaterialColor.COLOR_ORANGE)
-                    .randomTicks() .instabreak() .noCollission().offsetType(BlockBehaviour.OffsetType.XZ)), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
+                    .randomTicks() .instabreak() .noCollission().offsetType(BlockBehaviour.OffsetType.XZ)), null);
     public static final RegistryObject<Block> MARS_PALM = registerBlock("mars_palm",
             () -> new MarsPalmBlock(BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS).color(MaterialColor.COLOR_BLUE)
-                    .randomTicks() .instabreak() .noCollission().offsetType(BlockBehaviour.OffsetType.XZ)), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
+                    .randomTicks() .instabreak() .noCollission().offsetType(BlockBehaviour.OffsetType.XZ)), null);
     public static final RegistryObject<Block> MARS_SPROUT = registerBlock("mars_sprout",
             () -> new MarsSproutBlock(BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS).color(MaterialColor.COLOR_PINK)
-                    .randomTicks() .instabreak() .noCollission().offsetType(BlockBehaviour.OffsetType.XZ).lightLevel((l) -> {return 7;})), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
+                    .randomTicks() .instabreak() .noCollission().offsetType(BlockBehaviour.OffsetType.XZ).lightLevel((l) -> {return 7;})), null);
     public static final RegistryObject<Block> MARS_SPROUT_BIG = registerBlock("mars_sprout_big",
             () -> new MartianTallFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).sound(SoundType.GRASS)
                     .randomTicks() .instabreak() .noCollission().lightLevel((l) -> {return 14;})), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
