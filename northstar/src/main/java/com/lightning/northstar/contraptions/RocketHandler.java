@@ -292,7 +292,7 @@ public class RocketHandler {
 	}
 	
 	public static void register() {
-		System.out.println("Handling rockets for" + Northstar.MOD_ID);
+		System.out.println("Handling rockets for " + Northstar.MOD_ID);
 	}
 
 }

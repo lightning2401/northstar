@@ -5,6 +5,8 @@ import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -13,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.lightning.northstar.world.dimension.NorthstarDimensions;
 
-
+@OnlyIn(Dist.CLIENT)
 @Mixin(DimensionSpecialEffects.class)
 public class DimensionSpecialEffectsMixin {
 	private final float[] sunCol = new float[4];

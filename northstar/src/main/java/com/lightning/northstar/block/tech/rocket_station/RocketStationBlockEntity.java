@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
+import com.lightning.northstar.block.NorthstarTechBlocks;
 import com.lightning.northstar.contraptions.RocketContraption;
 import com.lightning.northstar.contraptions.RocketContraptionEntity;
 import com.lightning.northstar.contraptions.RocketHandler;
@@ -27,6 +28,7 @@ import com.simibubi.create.content.trains.station.GlobalStation;
 import com.simibubi.create.content.trains.station.StationBlock;
 import com.simibubi.create.content.trains.track.ITrackBlock;
 import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
+import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollOptionBehaviour;
@@ -62,7 +64,7 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 public class RocketStationBlockEntity extends SmartBlockEntity implements IDisplayAssemblyExceptions, IControlContraption, MenuProvider {
 	
-	public boolean assembleNextTick;
+	boolean assembleNextTick;
 	public Player owner;
 	protected AssemblyException lastException;
 	public TrackTargetingBehaviour<GlobalStation> edgePoint;
@@ -109,7 +111,9 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 	}
 	
 	@Override
-	public void addBehaviours(List<BlockEntityBehaviour> behaviours) {}
+	public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
+		registerAwardables(behaviours, AllAdvancements.CONTRAPTION_ACTORS);
+	}
 	
 	@Override
 	public void initialize() {
@@ -135,17 +139,19 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 	public void tick() {
 		super.tick();
 		i++;
-		if (i % 20 == 0 && !level.isClientSide) {}
 		ItemStack item = container.getItem(0);
 		if (item.getItem() == NorthstarItems.STAR_MAP.get() || item.getItem() == NorthstarItems.RETURN_TICKET.get()) {
 			if(item.getTagElement("Planet") != null)
 			target = NorthstarPlanets.getPlanetDimension(NorthstarPlanets.targetGetter(item.getTagElement("Planet").toString()));
 		}
+		if(getBlockState().getValue(RocketStationBlock.ASSEMBLING)){
+			assembleNextTick = true;
+		}
 		fuelCost = fuelCalc();
-		fuelReturnCost = fuelReturnCalc();
-
-
+		fuelReturnCost = fuelReturnCalc();		
+		
 		if (assembleNextTick == true) {
+			level.setBlock(worldPosition, getBlockState().setValue(RocketStationBlock.ASSEMBLING, false), assemblyLength);
 			tryAssemble();
 			assembleNextTick = false;
 		}
@@ -237,8 +243,9 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 		AllSoundEvents.CONTRAPTION_ASSEMBLE.playOnServer(level, worldPosition);
 		movedContraption.destination = target;
 		movedContraption.home = this.level.dimension();
-		level.addFreshEntity(movedContraption);
-		RocketHandler.ROCKETS.add(movedContraption);}else
+		RocketHandler.ROCKETS.add(movedContraption);
+		System.out.println(level);
+		level.addFreshEntity(movedContraption);}else
 		{
 			contraption.owner.displayClientMessage(Component.literal
 			("Full Fuel Cost: " + (contraption.weightCost + contraption.fuelCost)).withStyle(ChatFormatting.GOLD), false);

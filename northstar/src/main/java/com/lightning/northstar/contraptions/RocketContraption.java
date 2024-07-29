@@ -1,10 +1,8 @@
 package com.lightning.northstar.contraptions;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -23,19 +21,13 @@ import com.simibubi.create.content.contraptions.AssemblyException;
 import com.simibubi.create.content.contraptions.ContraptionType;
 import com.simibubi.create.content.contraptions.MountedStorageManager;
 import com.simibubi.create.content.contraptions.TranslatingContraption;
-import com.simibubi.create.content.contraptions.actors.trainControls.ControlsBlock;
 import com.simibubi.create.content.contraptions.minecart.TrainCargoManager;
 import com.simibubi.create.content.contraptions.render.ContraptionLighter;
 import com.simibubi.create.content.contraptions.render.NonStationaryLighter;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
-import com.simibubi.create.content.trains.entity.ArrivalSoundQueue;
-import com.simibubi.create.foundation.utility.Couple;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -242,12 +234,6 @@ public class RocketContraption extends TranslatingContraption{
 		return NorthstarContraptionTypes.ROCKET;
 	}
 	
-	@Override
-	public CompoundTag writeNBT(boolean spawnPacket) {
-		CompoundTag tag = super.writeNBT(spawnPacket);
-		return tag;
-	}
-	
 	public boolean hasRocketStation() {
 		return rocket_station;
 	}
@@ -268,10 +254,6 @@ public class RocketContraption extends TranslatingContraption{
 		return heatShielding;
 	}
 
-	@Override
-	public void readNBT(Level world, CompoundTag tag, boolean spawnData) {
-		super.readNBT(world, tag, spawnData);
-	}
 	
 	@Override
 	protected boolean isAnchoringBlockAt(BlockPos pos) {

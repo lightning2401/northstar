@@ -34,7 +34,7 @@ public class RocketStationBlock extends HorizontalDirectionalBlock implements IB
 
 	public RocketStationBlock(Properties properties) {
 		super(properties);
-		registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
+		registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(ASSEMBLING, false));
 	}
 	
 	@Override
@@ -98,7 +98,7 @@ public class RocketStationBlock extends HorizontalDirectionalBlock implements IB
 
 	@Override
 	protected void createBlockStateDefinition(Builder<Block, BlockState> pBuilder) {
-		super.createBlockStateDefinition(pBuilder.add(FACING));
+		super.createBlockStateDefinition(pBuilder.add(FACING, ASSEMBLING));
 	}
 
 

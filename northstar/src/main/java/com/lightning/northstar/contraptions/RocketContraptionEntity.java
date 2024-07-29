@@ -25,7 +25,6 @@ import com.simibubi.create.content.contraptions.StructureTransform;
 import com.simibubi.create.content.contraptions.actors.harvester.HarvesterMovementBehaviour;
 import com.simibubi.create.content.contraptions.behaviour.MovementBehaviour;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
-import com.simibubi.create.content.contraptions.gantry.GantryContraptionUpdatePacket;
 import com.simibubi.create.content.kinetics.base.BlockBreakingMovementBehaviour;
 import com.simibubi.create.foundation.utility.ServerSpeedProvider;
 import com.simibubi.create.foundation.utility.VecHelper;
@@ -36,8 +35,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -57,10 +58,12 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PacketDistributor;
 
-public class RocketContraptionEntity extends AbstractContraptionEntity {
+public class RocketContraptionEntity extends AbstractContraptionEntity implements IEntityAdditionalSpawnData  {
 	
 	double clientOffsetDiff;
 	double axisMotion;
@@ -118,6 +121,19 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 	static RocketAirSound flyingSound = new RocketAirSound(SoundEvents.ELYTRA_FLYING, 0);
 	
 	@Override
+	public Packet<?> getAddEntityPacket() {
+		return NetworkHooks.getEntitySpawningPacket(this);
+	}
+	@Override
+	public void readSpawnData(FriendlyByteBuf additionalData) {
+		CompoundTag nbt = additionalData.readAnySizeNbt();
+		if (nbt != null) {
+			readAdditional(nbt, true);
+		}
+	}
+
+	
+	@Override
 	protected void tickContraption() {
 		if (!(contraption instanceof RocketContraption))
 			return;
@@ -126,6 +142,7 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 			clientOffsetDiff *= .75f;
 			updateClientMotion();
 		}
+		tickActors();
 		if(launchtime == 0 && activeLaunch)
 		{blasting = true;}
 		if(visualEngineCount == 0) {
@@ -135,7 +152,7 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 		if(this.owner == null && ((RocketContraption)this.contraption).owner != null) {
 			this.owner = ((RocketContraption)this.contraption).owner;
 		}
-		System.out.println("I EXIST!");
+//		System.out.println("I EXIST!");
 		
 		if(this.owner == null && this.ownerID != null) {
 			this.owner = level.getPlayerByUUID(ownerID);
@@ -153,9 +170,15 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 					new RocketContraptionSyncPacket(this.position(), lift_vel, this.getId()));
 		}
 		
+
 		
 		
 		RocketContraption contrap = ((RocketContraption)this.contraption);
+		if(contrap.owner != null) {
+//			contrap.owner.displayClientMessage(Component.literal
+//				("test" + tickCount).withStyle(ChatFormatting.AQUA), false);
+		}
+		
 		if(contrap.owner != null && printed == false)
 		{
 			
@@ -298,10 +321,11 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 	@OnlyIn(Dist.CLIENT)
 	public static void handleSyncPacket(RocketContraptionSyncPacket packet) {
 //		System.out.println("ALERTA!!! ALERTA!!! HANDLING!!!!");
-		if (Minecraft.getInstance().level.getEntity(packet.contraptionEntityId) instanceof RocketContraptionEntity rce) {
+		Entity entity = Minecraft.getInstance().level.getEntity(packet.contraptionEntityId);
+		if (!(entity instanceof RocketContraptionEntity rce))
+			return;
 			rce.lift_vel = packet.lift_vel;
 			rce.setPos(packet.pos.x, packet.pos.y, packet.pos.z);
-		}
 	}
 	
 	public ItemStack createReturnTicket(RocketContraptionEntity entity) {
@@ -541,6 +565,7 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 	
 	@Override
 	protected void writeAdditional(CompoundTag compound, boolean spawnPacket) {
+		super.writeAdditional(compound, spawnPacket);
 		if (sequencedOffsetLimit >= 0)
 			compound.putDouble("SequencedOffsetLimit", sequencedOffsetLimit);
 		
@@ -562,12 +587,11 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 		compound.putInt("visualEngineCount", this.visualEngineCount);
 		
 		compound.putFloat("lift_vel", lift_vel);
-		compound.putFloat("final_lift_vel", final_lift_vel);
-		
-		super.writeAdditional(compound, spawnPacket);
+		compound.putFloat("final_lift_vel", final_lift_vel);		
 	}
 
 	protected void readAdditional(CompoundTag compound, boolean spawnData) {
+		super.readAdditional(compound, spawnData);
 		sequencedOffsetLimit =
 			compound.contains("SequencedOffsetLimit") ? compound.getDouble("SequencedOffsetLimit") : -1;
 		
@@ -589,8 +613,9 @@ public class RocketContraptionEntity extends AbstractContraptionEntity {
 		if(compound.contains("visualEngineCount")){this.visualEngineCount = compound.getInt("visualEngineCount");}
 		if(compound.contains("lift_vel")){this.lift_vel = compound.getFloat("lift_vel");}
 		if(compound.contains("final_lift_vel")){this.final_lift_vel = compound.getFloat("final_lift_vel");}
-		
-		super.readAdditional(compound, spawnData);
+		if(spawnData) {
+			System.out.println("reading spawn data");
+		}
 	}
 	
 	
