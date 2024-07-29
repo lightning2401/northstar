@@ -173,12 +173,7 @@ public class RocketContraptionEntity extends AbstractContraptionEntity implement
 
 		
 		
-		RocketContraption contrap = ((RocketContraption)this.contraption);
-		if(contrap.owner != null) {
-//			contrap.owner.displayClientMessage(Component.literal
-//				("test" + tickCount).withStyle(ChatFormatting.AQUA), false);
-		}
-		
+		RocketContraption contrap = ((RocketContraption)this.contraption);		
 		if(contrap.owner != null && printed == false)
 		{
 			
