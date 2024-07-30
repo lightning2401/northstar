@@ -193,7 +193,7 @@ public class NorthstarTechBlocks {
 	public static final BlockEntry<ElectrolysisMachineBlock> ELECTROLYSIS_MACHINE = REGISTRATE.block("electrolysis_machine", ElectrolysisMachineBlock::new)
 			.initialProperties(SharedProperties::stone)
 			.properties(p -> p.color(MaterialColor.COLOR_GRAY).isViewBlocking(NorthstarTechBlocks::never))
-			.properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+			.properties(p -> p.sound(SoundType.NETHERITE_BLOCK).noOcclusion())
 			.transform(pickaxeOnly())
 			.addLayer(() -> RenderType::cutoutMipped)
 			.item()

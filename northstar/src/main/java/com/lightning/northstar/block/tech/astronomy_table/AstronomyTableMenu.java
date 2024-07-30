@@ -171,6 +171,13 @@ public class AstronomyTableMenu extends AbstractContainerMenu  {
 		}
 		return newthing;
 	}
+	@Override
+	public void removed(Player pPlayer) {
+		super.removed(pPlayer);
+		this.resultSlots.removeItemNoUpdate(3);
+		System.out.println("AAAAAAGGGGHHHH");
+		this.clearContainer(pPlayer, this.inputSlots);
+	}
 	private int valueGetter(String thing) {
 		String newthing = "";
 		for(int i = 0;i < thing.length(); i++) {
