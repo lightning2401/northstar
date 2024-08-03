@@ -45,6 +45,7 @@ public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implemen
 	
 	@Override
 	public void tick() {
+		super.tick();
 		if(this.level.getGameTime() % 40 == 0) {
 			maxSize = (int) (Math.abs(this.speed) * 20);
 			if(Math.abs(this.speed) > 0 && !this.overStressed) 

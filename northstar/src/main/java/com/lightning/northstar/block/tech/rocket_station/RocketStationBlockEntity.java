@@ -208,7 +208,15 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 		}
 		if (ContraptionCollider.isCollidingWithWorld(level, contraption, worldPosition.relative(movementDirection),
 			movementDirection))
-			{return;}else {System.out.println("Obamna");}
+			{
+
+			if(!this.level.getBlockState(worldPosition.above()).isAir())
+			{contraption.owner.displayClientMessage(Component.literal
+			("Rocket Stations require at least 1 block of space above them").withStyle(ChatFormatting.RED), false);}else {
+				contraption.owner.displayClientMessage(Component.literal
+						("Something's blocking your rocket! Make sure everything is glued together!").withStyle(ChatFormatting.RED), false);
+			}
+			return;}else {System.out.println("Obamna");}
 		
 		Set<BlockPos> oxyCheck = new HashSet<BlockPos>();
 		boolean oxygenSealed = true;
@@ -216,7 +224,7 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 			oxyCheck.add(this.getBlockPos().above());
 		if(oxyCheck.size() < OxygenStuff.maximumOxy) {		  
 			OxygenStuff.spreadOxy(this.level, oxyCheck, OxygenStuff.maximumOxy);
-			System.out.println(oxyCheck.size());
+//			System.out.println(oxyCheck.size());
 		}
 		if(oxyCheck.size() >= OxygenStuff.maximumOxy) {
 			oxygenSealed = false;
@@ -233,7 +241,7 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 			("Interplanetary travel requires a Interplanetary Navigator!").withStyle(ChatFormatting.RED), false);
 		}
 		
-		if (engines >= requiredJets && hasStation && hasFuel && fuelAmount > (fuelCost + contraption.weightCost) && heatShielding >= heatCost && oxygenSealed && !interplanetaryFlag && contraption.hasControls && contraption.dest != null) {
+		if (engines >= requiredJets && hasStation && hasFuel && fuelAmount > (fuelCost + contraption.weightCost) && heatShielding >= heatCost && oxygenSealed && !interplanetaryFlag && contraption.hasControls && contraption.dest != null && contraption.dest != this.level.dimension()) {
 		System.out.println(engines);
 		contraption.removeBlocksFromWorld(level, BlockPos.ZERO);
 		RocketContraptionEntity movedContraption =
@@ -283,13 +291,16 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 				contraption.owner.displayClientMessage(Component.literal
 				("No controls present!").withStyle(ChatFormatting.DARK_RED), false);
 			}
-			if(contraption.dest == null) {
+			if(container.getItem(0).isEmpty()) {
+				contraption.owner.displayClientMessage(Component.literal
+				("No star map or ticket present!").withStyle(ChatFormatting.DARK_RED), false);
+			}else if(contraption.dest == null || contraption.dest == this.level.dimension()) {
 				contraption.owner.displayClientMessage(Component.literal
 				("Invalid Target!").withStyle(ChatFormatting.DARK_RED), false);
 			}
 			contraption.owner.displayClientMessage(Component.literal
 			("Rocket failed to assemble!").withStyle(ChatFormatting.RED), false);
-			System.out.println("No station or jet engine, Bruh!");
+//			System.out.println("No station or jet engine, Bruh!");
 //			System.out.println("Heat Cost: " + heatCost + "     Heat Shielding: " + heatShielding);
 //			System.out.println("Weight Cost: " + contraption.weightCost + "      Fuel Cost: " + fuelCost);
 			exception(new AssemblyException(Lang.translateDirect("train_assembly.no_controls")), -1);

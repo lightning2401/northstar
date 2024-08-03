@@ -42,27 +42,6 @@ public class StarMapItem extends Item {
 	        CompoundTag venusTag = venus.getOrCreateTagElement("Planet");
 	        venusTag.putString("name", "venus");
 	        pItems.add(venus);
-	        
-			ItemStack jupiter = new ItemStack(NorthstarItems.STAR_MAP.get());
-			jupiter.setHoverName(Component.translatable("item.northstar.star_map" + "_" + "jupiter").setStyle(Style.EMPTY.withColor(ChatFormatting.AQUA).withItalic(false)));
-	        CompoundTag jupiterTag = jupiter.getOrCreateTagElement("Planet");
-	        jupiterTag.putString("name", "jupiter");
-	        pItems.add(jupiter);
-			ItemStack saturn = new ItemStack(NorthstarItems.STAR_MAP.get());
-			saturn.setHoverName(Component.translatable("item.northstar.star_map" + "_" + "saturn").setStyle(Style.EMPTY.withColor(ChatFormatting.AQUA).withItalic(false)));
-	        CompoundTag saturnTag = saturn.getOrCreateTagElement("Planet");
-	        saturnTag.putString("name", "saturn");
-	        pItems.add(saturn);
-			ItemStack uranus = new ItemStack(NorthstarItems.STAR_MAP.get());
-			uranus.setHoverName(Component.translatable("item.northstar.star_map" + "_" + "uranus").setStyle(Style.EMPTY.withColor(ChatFormatting.AQUA).withItalic(false)));
-	        CompoundTag uranusTag = uranus.getOrCreateTagElement("Planet");
-	        uranusTag.putString("name", "uranus");
-	        pItems.add(uranus);
-			ItemStack neptune = new ItemStack(NorthstarItems.STAR_MAP.get());
-			neptune.setHoverName(Component.translatable("item.northstar.star_map" + "_" + "neptune").setStyle(Style.EMPTY.withColor(ChatFormatting.AQUA).withItalic(false)));
-	        CompoundTag neptuneTag = neptune.getOrCreateTagElement("Planet");
-	        neptuneTag.putString("name", "neptune");
-	        pItems.add(neptune);
 		}
     }
 }

@@ -222,7 +222,7 @@ public class RocketContraptionEntity extends AbstractContraptionEntity implement
 		int final_vol = volume < 1 ? 1 : volume;
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
 		() -> () -> tickAirSound(final_vol));}
-		else if(Math.abs(final_lift_vel) < 0.5f && flyingSound != null)
+		else if(Math.abs(final_lift_vel) < 0.5f && flyingSound != null && level.isClientSide)
 		{flyingSound.stopSound();}
 		
 		if (slowing && landing) 
@@ -269,7 +269,6 @@ public class RocketContraptionEntity extends AbstractContraptionEntity implement
 		Direction dir = landing ? Direction.DOWN : Direction.UP;
 		if (customCollision(dir) && !level.isClientSide) {
 			level.playLocalSound(getX(), getY(), getZ(), AllSoundEvents.STEAM.getMainEvent(), SoundSource.BLOCKS, 3, 0, true);
-			flyingSound.stopSound();
 			if (!level.isClientSide && (Math.abs(final_lift_vel) < 3 || hasExploded)) {
 				if(this.landing && !isUsingTicket) {
 					ItemStack returnTicket = this.createReturnTicket(this);
@@ -301,16 +300,18 @@ public class RocketContraptionEntity extends AbstractContraptionEntity implement
 	
 	@OnlyIn(Dist.CLIENT)
 	private void tickAirSound(float maxVolume) {
-		float pitch = (float) Mth.clamp(getDeltaMovement()
-			.length(), .2f, 3f);
-		if (flyingSound == null || flyingSound.isStopped()) {
-			flyingSound = new RocketAirSound(SoundEvents.ELYTRA_FLYING, pitch);
-			Minecraft.getInstance()
-				.getSoundManager()
-				.play(flyingSound);
+		if(level.isClientSide) {
+			float pitch = (float) Mth.clamp(getDeltaMovement()
+				.length(), .2f, 3f);
+			if (flyingSound == null || flyingSound.isStopped()) {
+				flyingSound = new RocketAirSound(SoundEvents.ELYTRA_FLYING, pitch);
+				Minecraft.getInstance()
+					.getSoundManager()
+					.play(flyingSound);
+			}
+			flyingSound.setPitch(pitch);
+			flyingSound.fadeIn(maxVolume);
 		}
-		flyingSound.setPitch(pitch);
-		flyingSound.fadeIn(maxVolume);
 	}
 	@SuppressWarnings("resource")
 	@OnlyIn(Dist.CLIENT)

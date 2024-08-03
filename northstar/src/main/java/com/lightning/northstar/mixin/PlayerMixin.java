@@ -6,10 +6,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.lightning.northstar.item.NorthstarEnchantments;
-import com.lightning.northstar.particle.SnowflakeParticleData;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
@@ -39,18 +36,11 @@ public class PlayerMixin {
             if (pTarget instanceof LivingEntity) {
                if (j > 0) {
             	   //frezzing
-                  pTarget.setTicksFrozen((j * 80) + 150);;
-                  frost(pTarget);
+                  pTarget.setTicksFrozen((j * 80) + 150);
                }
             }           
         	
         }
 	}
-    
-    @SuppressWarnings("resource")
-	public void frost(Entity pEntityHit) {
-    	if(((Object)this) instanceof LocalPlayer)
-    	{Minecraft.getInstance().particleEngine.createTrackingEmitter(pEntityHit, new SnowflakeParticleData());}
-    }
 	
 }

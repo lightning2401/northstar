@@ -12,6 +12,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.gui.widget.IconButton;
+import com.simibubi.create.foundation.utility.Lang;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -326,7 +327,6 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
         renderButton(pPoseStack, mouseX, mouseY, delta);
         RenderSystem.setShaderColor(1, 1, 1, 1);
         
-    	pPoseStack.scale(0.5f, 0.5f, 0.5f);
     }
     
     public boolean paperCheck() {
@@ -344,7 +344,7 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
     
     
     public void renderButton(PoseStack pPoseStack, int mouseX, int mouseY, float delta) {
-    	pPoseStack.scale(20F, 20F, 20F);
+    	pPoseStack.scale(10, 10, 10);
         int x = ((width - (imageWidth + (imageWidth / 2))) / 2);
         int y = (height - (imageHeight + (imageHeight / 2))) / 2;
         IconButton printButton = new IconButton(x + imageWidth - 204, y + imageHeight - 1, AllIcons.I_ADD);
@@ -355,6 +355,7 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
 //			System.out.println("WE'VE BEEN CLICKED, SCATTER!!!!!");
 			}
 		});
+
         printButton.setToolTip(Component.translatable("container.northstar.paper_check"));
 		printButton.render(pPoseStack, mouseX, mouseY, delta);
 		printButton.renderToolTip(pPoseStack, mouseX, mouseY);
@@ -363,6 +364,13 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
 		printButton.renderButton(pPoseStack, mouseX, mouseY, delta);
 		if(printButton.isMouseOver(mouseX, mouseY)) {printButton.renderToolTip(pPoseStack, mouseX, mouseY);}
 		addRenderableWidget(printButton);
+		if ((Math.abs(x + imageWidth - 196 - mouseX) < 9 && Math.abs(y + imageHeight - 1 + 8 - mouseY) < 9)) {
+			List<Component> list = Lists.newArrayList();
+			RenderSystem.colorMask(true, true, true, true);
+			list.add((Lang.translateDirect("northstar.gui.telescope.button_tooltip").withStyle(ChatFormatting.WHITE)));
+
+		    this.renderComponentTooltip(pPoseStack, list, mouseX, mouseY);
+		}
     }
     
     public void renderSelectedPlanet(PoseStack pPoseStack) {
@@ -382,6 +390,8 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
     
     @SuppressWarnings("resource")
 	public void renderPlanetTooltips(PoseStack pPoseStack, int mouseX, int mouseY) {
+        int x = ((width - (imageWidth + (imageWidth / 2))) / 2);
+        int y = (height - (imageHeight + (imageHeight / 2))) / 2;
     	
     	ResourceKey<Level> player_dim = Minecraft.getInstance().player.getLevel().dimension();
         if ((Math.abs(NorthstarPlanets.mars_x + scrollX + 8 - mouseX) < 8 && Math.abs(NorthstarPlanets.mars_y + scrollY + 8 - mouseY) < 8) && player_dim != NorthstarDimensions.MARS_DIM_KEY) {
@@ -410,7 +420,7 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
                
             this.renderComponentTooltip(pPoseStack, list, mouseX, mouseY);
         }else        	
-        if ((Math.abs(NorthstarPlanets.moon_x + scrollX + 8 - mouseX) < 8 && Math.abs(NorthstarPlanets.moon_y + scrollY + 8 - mouseY) < 8) && player_dim != ClientLevel.OVERWORLD) {
+        if ((Math.abs(NorthstarPlanets.moon_x + scrollX + 8 - mouseX) < 8 && Math.abs(NorthstarPlanets.moon_y + scrollY + 8 - mouseY) < 8) && player_dim != ClientLevel.OVERWORLD && player_dim != NorthstarDimensions.MOON_DIM_KEY ) {
             List<Component> list = Lists.newArrayList();
             RenderSystem.colorMask(true, true, true, true);
             list.add((Component.translatable("planets.moon.name").withStyle(ChatFormatting.AQUA)));
@@ -462,7 +472,7 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
             
             this.renderComponentTooltip(pPoseStack, list, mouseX, mouseY);
         }else
-        if ((Math.abs(NorthstarPlanets.earth_moon_x + scrollX - mouseX) < 24 && Math.abs(NorthstarPlanets.earth_moon_y + scrollY - mouseY) < 24) && player_dim == ClientLevel.OVERWORLD     ) {
+        if ((Math.abs(NorthstarPlanets.earth_moon_x + scrollX - mouseX) < 24 && Math.abs(NorthstarPlanets.earth_moon_y + scrollY - mouseY) < 24) && player_dim == ClientLevel.OVERWORLD  && player_dim != NorthstarDimensions.MOON_DIM_KEY) {
             List<Component> list = Lists.newArrayList();
             RenderSystem.colorMask(true, true, true, true);
             list.add((Component.translatable("planets.moon.name").withStyle(ChatFormatting.AQUA)));
@@ -588,17 +598,17 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
     
     public boolean mouseClicked(double mouseX, double mouseY, int pButton) {
         if (pButton == 0 || pButton == 1) {
-            if (Math.abs(NorthstarPlanets.mercury_x + scrollX + 7 - mouseX) < 8 && Math.abs(NorthstarPlanets.mercury_y + scrollY + 7 - mouseY) < 8) {
+            if (Math.abs(NorthstarPlanets.mercury_x + scrollX + 7 - mouseX) < 8 && Math.abs(NorthstarPlanets.mercury_y + scrollY + 7 - mouseY) < 8 && Minecraft.getInstance().level.dimension() != NorthstarDimensions.MERCURY_DIM_KEY) {
             SelectedPlanet = "mercury";}      
-            if (Math.abs((NorthstarPlanets.venus_x) + scrollX + 8 - mouseX) < 8 && Math.abs((NorthstarPlanets.venus_y) + scrollY + 8 - mouseY)< 8) {
+            if (Math.abs((NorthstarPlanets.venus_x) + scrollX + 8 - mouseX) < 8 && Math.abs((NorthstarPlanets.venus_y) + scrollY + 8 - mouseY)< 8 && Minecraft.getInstance().level.dimension() != NorthstarDimensions.VENUS_DIM_KEY) {
             SelectedPlanet = "venus";}          
             if (Math.abs(NorthstarPlanets.earth_x + scrollX + 8 - mouseX) < 8 && Math.abs(NorthstarPlanets.earth_y + scrollY + 8 - mouseY) < 8 && Minecraft.getInstance().level.dimension() != Level.OVERWORLD) {
             SelectedPlanet = "earth";}
-            if ((Math.abs(NorthstarPlanets.earth_moon_x + scrollX - mouseX) < 18 && Math.abs(NorthstarPlanets.earth_moon_y + scrollY - mouseY) < 18) && Minecraft.getInstance().level.dimension() == Level.OVERWORLD) {
+            if ((Math.abs(NorthstarPlanets.earth_moon_x + scrollX - mouseX) < 18 && Math.abs(NorthstarPlanets.earth_moon_y + scrollY - mouseY) < 18) && Minecraft.getInstance().level.dimension() == Level.OVERWORLD  && Minecraft.getInstance().level.dimension() != NorthstarDimensions.MOON_DIM_KEY ) {
             SelectedPlanet = "earth_moon";}
-            if (Math.abs(NorthstarPlanets.moon_x + scrollX + 8 - mouseX) < 8 && Math.abs(NorthstarPlanets.moon_y + scrollY + 8 - mouseY) < 8 && Minecraft.getInstance().level.dimension() != Level.OVERWORLD) {
+            if (Math.abs(NorthstarPlanets.moon_x + scrollX + 8 - mouseX) < 8 && Math.abs(NorthstarPlanets.moon_y + scrollY + 8 - mouseY) < 8 && Minecraft.getInstance().level.dimension() != Level.OVERWORLD && Minecraft.getInstance().level.dimension() != NorthstarDimensions.MOON_DIM_KEY  ) {
             SelectedPlanet = "moon";}
-            if (Math.abs(NorthstarPlanets.mars_x + scrollX + 8 - mouseX) < 8 && Math.abs(NorthstarPlanets.mars_y + scrollY + 8 - mouseY) < 8) {
+            if (Math.abs(NorthstarPlanets.mars_x + scrollX + 8 - mouseX) < 8 && Math.abs(NorthstarPlanets.mars_y + scrollY + 8 - mouseY) < 8 && Minecraft.getInstance().level.dimension() != NorthstarDimensions.MARS_DIM_KEY) {
             SelectedPlanet = "mars";}
             if (Math.abs(NorthstarPlanets.ceres_x + scrollX + 8 - mouseX) < 8 && Math.abs(NorthstarPlanets.ceres_y + scrollY + 8 - mouseY) < 8) {
             SelectedPlanet = "ceres";}

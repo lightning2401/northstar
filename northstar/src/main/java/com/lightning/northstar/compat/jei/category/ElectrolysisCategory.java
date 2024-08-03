@@ -35,7 +35,7 @@ public class ElectrolysisCategory extends CreateRecipeCategory<ElectrolysisRecip
 	public static final List<ElectrolysisRecipe> RECIPES = new ArrayList<>();
 	
 	static {
-		RECIPES.add(ElectrolysisRecipe.create(FluidIngredient.fromFluid(Fluids.WATER, 10), new FluidStack(NorthstarFluids.OXYGEN.get(), 7), new FluidStack(NorthstarFluids.HYDROGEN.get(), 2), "water_electrolysis"));
+		RECIPES.add(ElectrolysisRecipe.create(FluidIngredient.fromFluid(Fluids.WATER, 10), new FluidStack(NorthstarFluids.OXYGEN.get().getSource(), 7), new FluidStack(NorthstarFluids.HYDROGEN.get().getSource(), 2), "water_electrolysis"));
 	}
 
 	public ElectrolysisCategory(Info<ElectrolysisRecipe> info) {

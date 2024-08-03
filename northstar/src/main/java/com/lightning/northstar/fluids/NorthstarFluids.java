@@ -65,7 +65,7 @@ public class NorthstarFluids {
 	
 	public static final FluidEntry<ForgeFlowingFluid.Flowing> LIQUID_HYDROGEN =
 			REGISTRATE.standardFluid("liquid_hydrogen",
-					SolidRenderedPlaceableFluidType.create(0xa59999,
+					SolidRenderedPlaceableFluidType.create(0xa59999,0xdeffffff,
 						() -> 1f / 8f * 0.8f))
 				.lang("Liquid Hydrogen")
 				.properties(b -> b.viscosity(2000)
@@ -80,7 +80,7 @@ public class NorthstarFluids {
 				.register();
 	public static final FluidEntry<ForgeFlowingFluid.Flowing> LIQUID_OXYGEN =
 			REGISTRATE.standardFluid("liquid_oxygen",
-					SolidRenderedPlaceableFluidType.create(0x96AFAF,
+					SolidRenderedPlaceableFluidType.create(0x96AFAF,0xdeffffff,
 						() -> 1f / 8f * 0.8f))
 				.lang("Liquid Oxygen")
 				.properties(b -> b.viscosity(2000)
@@ -96,7 +96,7 @@ public class NorthstarFluids {
 	
 	public static final FluidEntry<ForgeFlowingFluid.Flowing> METHANE =
 			REGISTRATE.standardFluid("methane",
-					SolidRenderedPlaceableFluidType.create(0x41E08E,
+					SolidRenderedPlaceableFluidType.create(0x41E08E,0xf8ffffff,
 						() -> 1f / 8f * 0.8f))
 				.lang("Methane")
 				.properties(b -> b.viscosity(2000)
@@ -112,7 +112,7 @@ public class NorthstarFluids {
 				.register();
 	public static final FluidEntry<ForgeFlowingFluid.Flowing> SULFURIC_ACID =
 			REGISTRATE.standardFluid("sulfuric_acid",
-					SolidRenderedPlaceableFluidType.create(0xA5EC00,
+					SolidRenderedPlaceableFluidType.create(0xA5EC00,0xffffffff,
 						() -> 1f / 8f * 0.8f))
 				.lang("Sulfuric Acid")
 				.properties(b -> b.viscosity(2000)
@@ -127,7 +127,7 @@ public class NorthstarFluids {
 				.register();
 	public static final FluidEntry<ForgeFlowingFluid.Flowing> HYDROCARBON =
 			REGISTRATE.standardFluid("hydrocarbon",
-					SolidRenderedPlaceableFluidType.create(0x070505,
+					SolidRenderedPlaceableFluidType.create(0x070505,0xffffffff,
 						() -> 1f / 8f * 0.25f))
 				.lang("Hydrocarbon")
 				.properties(b -> b.viscosity(1000)
@@ -222,12 +222,14 @@ public class NorthstarFluids {
 	private static class SolidRenderedPlaceableFluidType extends TintedFluidType {
 
 		private Vector3f fogColor;
+		private int tintColor;
 		private Supplier<Float> fogDistance;
 
-		public static FluidTypeFactory create(int fogColor, Supplier<Float> fogDistance) {
+		public static FluidTypeFactory create(int fogColor,int tintColor, Supplier<Float> fogDistance) {
 			return (p, s, f) -> {
 				SolidRenderedPlaceableFluidType fluidType = new SolidRenderedPlaceableFluidType(p, s, f);
 				fluidType.fogColor = new Color(fogColor, false).asVectorF();
+				fluidType.tintColor = tintColor;
 				fluidType.fogDistance = fogDistance;
 				return fluidType;
 			};
@@ -250,7 +252,7 @@ public class NorthstarFluids {
 		 */
 		@Override
 		public int getTintColor(FluidState state, BlockAndTintGetter world, BlockPos pos) {
-			return 0x00ffffff;
+			return tintColor;
 		}
 		
 		@Override
