@@ -56,10 +56,10 @@ public class RunToGroupGoal<T extends LivingEntity> extends Goal {
 	}
 
 	public boolean canUse() {
-		this.toAvoid = this.mob.level.getNearestEntity(this.mob.level.getEntitiesOfClass(this.avoidClass, this.mob.getBoundingBox().inflate((double)this.maxDist, 3.0D, (double)this.maxDist), (p_148078_) -> {
+		this.toAvoid = this.mob.level().getNearestEntity(this.mob.level().getEntitiesOfClass(this.avoidClass, this.mob.getBoundingBox().inflate((double)this.maxDist, 3.0D, (double)this.maxDist), (p_148078_) -> {
 			return true;
 		}), this.avoidEntityTargeting, this.mob, this.mob.getX(), this.mob.getY(), this.mob.getZ());
-		if (this.toAvoid == null || this.mob.level.getEntitiesOfClass(this.mob.getClass(), this.mob.getBoundingBox().inflate(this.maxDist)).size() > 3) {
+		if (this.toAvoid == null || this.mob.level().getEntitiesOfClass(this.mob.getClass(), this.mob.getBoundingBox().inflate(this.maxDist)).size() > 3) {
 			this.toAvoid = null;
 			return false;
 		} else {
@@ -100,7 +100,7 @@ public class RunToGroupGoal<T extends LivingEntity> extends Goal {
 	    * Keep ticking a continuous task that has already been started
 	    */
 	public void tick() {
-		if (this.mob.distanceToSqr(this.toAvoid) < 72.0D && this.mob.level.getEntitiesOfClass(this.mob.getClass(), this.mob.getBoundingBox().inflate(this.maxDist)).size() < 3) {
+		if (this.mob.distanceToSqr(this.toAvoid) < 72.0D && this.mob.level().getEntitiesOfClass(this.mob.getClass(), this.mob.getBoundingBox().inflate(this.maxDist)).size() < 3) {
 			this.mob.getNavigation().setSpeedModifier(this.sprintSpeedModifier);
 		} else {
 			this.mob.getNavigation().setSpeedModifier(this.walkSpeedModifier);

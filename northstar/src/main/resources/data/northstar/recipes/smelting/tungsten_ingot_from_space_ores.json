@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    	"tag": "northstar:tungsten_ores"
+  },
+  "result": "northstar:tungsten_ingot",
+  "experience": 0.7,
+  "cookingtime": 100
+}

@@ -4,12 +4,12 @@ import com.lightning.northstar.Northstar;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerListener;
 import net.minecraft.world.item.ItemStack;
@@ -17,15 +17,13 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class AstronomyTableScreen<T extends AstronomyTableMenu> extends AbstractContainerScreen<T> implements ContainerListener {
+public class AstronomyTableScreen extends AbstractContainerScreen<AstronomyTableMenu> implements ContainerListener {
 	   private static final ResourceLocation TABLE_LOCATION =  Northstar.asResource("textures/gui/astronomy_table.png");
 	   private static final Component DIFFERENT_PLANETS_TEXT = Component.translatable("container.northstar.different_planets");
 	   private static final Component CLOSE_DATA_TEXT = Component.translatable("container.northstar.close_data");
-	   private final Player player;
 
-	public AstronomyTableScreen(T pMenu, Inventory pPlayerInventory, Component pTitle) {
+	public AstronomyTableScreen(AstronomyTableMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
 		super(pMenu, pPlayerInventory, pTitle);
-		this.player = pPlayerInventory.player;
 	}
 
 	   protected void subInit() {
@@ -42,7 +40,7 @@ public class AstronomyTableScreen<T extends AstronomyTableMenu> extends Abstract
 	      this.menu.removeSlotListener(this);
 	   }
 
-	   public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+	   public void render(GuiGraphics pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
 	      this.renderBackground(pPoseStack);
 	      super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
 	      RenderSystem.disableBlend();
@@ -50,11 +48,11 @@ public class AstronomyTableScreen<T extends AstronomyTableMenu> extends Abstract
 	      this.renderTooltip(pPoseStack, pMouseX, pMouseY);
 	   }
 
-	   protected void renderFg(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+	   protected void renderFg(GuiGraphics pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
 
 	   }
 	   
-	   protected void renderLabels(PoseStack pPoseStack, int pX, int pY) {
+	   protected void renderLabels(GuiGraphics pPoseStack, int pX, int pY) {
 		      RenderSystem.disableBlend();
 		      super.renderLabels(pPoseStack, pX, pY);
 		         int j = 8453920;
@@ -65,22 +63,24 @@ public class AstronomyTableScreen<T extends AstronomyTableMenu> extends Abstract
 		         if (this.menu.differentPlanets) {component = DIFFERENT_PLANETS_TEXT;}
 		         if (component != null) {
 		            int k = this.imageWidth - 8 - this.font.width(component) - 2;
-		            fill(pPoseStack, k - 2, 67, this.imageWidth - 8, 79, 1325400064);
-		            this.font.drawShadow(pPoseStack, component, (float)k, 69.0F, j);
+		            pPoseStack.fill(k - 2, 67, this.imageWidth - 8, 79, 1325400064);
+		            pPoseStack.drawString(font, component, k, 69, j);
 		         }
 		      
 	   }
 
-	   protected void renderBg(PoseStack pPoseStack, float pPartialTick, int pX, int pY) {
+	   @SuppressWarnings("static-access")
+	   @Override
+	protected void renderBg(GuiGraphics pPoseStack, float pPartialTick, int pX, int pY) {
 	      RenderSystem.setShader(GameRenderer::getPositionTexShader);
 	      RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 	      RenderSystem.setShaderTexture(0, this.TABLE_LOCATION);
 	      int i = (this.width - this.imageWidth) / 2;
 	      int j = (this.height - this.imageHeight) / 2;
-	      this.blit(pPoseStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
-	      this.blit(pPoseStack, i + 59, j + 20, 0, this.imageHeight + (this.menu.getSlot(0).hasItem() ? 0 : 16), 110, 16);
+	      pPoseStack.blit(TABLE_LOCATION, i, j, 0, 0, this.imageWidth, this.imageHeight);
+	      pPoseStack.blit(TABLE_LOCATION, i + 59, j + 20, 0, this.imageHeight + (this.menu.getSlot(0).hasItem() ? 0 : 16), 110, 16);
 	      if ((this.menu.getSlot(0).hasItem() || this.menu.getSlot(1).hasItem() || this.menu.getSlot(2).hasItem()) && !this.menu.getSlot(3).hasItem()) {
-	         this.blit(pPoseStack, i + 99, j + 45, this.imageWidth, 0, 28, 21);
+	    	  pPoseStack.blit(TABLE_LOCATION, i + 99, j + 45, this.imageWidth, 0, 28, 21);
 	      }
 
 	   }

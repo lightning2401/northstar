@@ -1,0 +1,94 @@
+{
+  "variants": {
+    "facing=east,shelves=6": {
+      "model": "northstar:block/mercury_shelf_fungus_6",
+      "y": 270
+    },
+    "facing=north,shelves=6": {
+      "model": "northstar:block/mercury_shelf_fungus_6",
+      "y": 180
+    },
+    "facing=south,shelves=6": {
+      "model": "northstar:block/mercury_shelf_fungus_6"
+    },
+    "facing=west,shelves=6": {
+      "model": "northstar:block/mercury_shelf_fungus_6",
+      "y": 90
+    },
+    "facing=east,shelves=5": {
+      "model": "northstar:block/mercury_shelf_fungus_5",
+      "y": 270
+    },
+    "facing=north,shelves=5": {
+      "model": "northstar:block/mercury_shelf_fungus_5",
+      "y": 180
+    },
+    "facing=south,shelves=5": {
+      "model": "northstar:block/mercury_shelf_fungus_5"
+    },
+    "facing=west,shelves=5": {
+      "model": "northstar:block/mercury_shelf_fungus_5",
+      "y": 90
+    },
+    "facing=east,shelves=4": {
+      "model": "northstar:block/mercury_shelf_fungus_4",
+      "y": 270
+    },
+    "facing=north,shelves=4": {
+      "model": "northstar:block/mercury_shelf_fungus_4",
+      "y": 180
+    },
+    "facing=south,shelves=4": {
+      "model": "northstar:block/mercury_shelf_fungus_4"
+    },
+    "facing=west,shelves=4": {
+      "model": "northstar:block/mercury_shelf_fungus_4",
+      "y": 90
+    },
+    "facing=east,shelves=3": {
+      "model": "northstar:block/mercury_shelf_fungus_3",
+      "y": 270
+    },
+    "facing=north,shelves=3": {
+      "model": "northstar:block/mercury_shelf_fungus_3",
+      "y": 180
+    },
+    "facing=south,shelves=3": {
+      "model": "northstar:block/mercury_shelf_fungus_3"
+    },
+    "facing=west,shelves=3": {
+      "model": "northstar:block/mercury_shelf_fungus_3",
+      "y": 90
+    },
+    "facing=east,shelves=2": {
+      "model": "northstar:block/mercury_shelf_fungus_2",
+      "y": 270
+    },
+    "facing=north,shelves=2": {
+      "model": "northstar:block/mercury_shelf_fungus_2",
+      "y": 180
+    },
+    "facing=south,shelves=2": {
+      "model": "northstar:block/mercury_shelf_fungus_2"
+    },
+    "facing=west,shelves=2": {
+      "model": "northstar:block/mercury_shelf_fungus_2",
+      "y": 90
+    },
+    "facing=east,shelves=1": {
+      "model": "northstar:block/mercury_shelf_fungus_1",
+      "y": 270
+    },
+    "facing=north,shelves=1": {
+      "model": "northstar:block/mercury_shelf_fungus_1",
+      "y": 180
+    },
+    "facing=south,shelves=1": {
+      "model": "northstar:block/mercury_shelf_fungus_1"
+    },
+    "facing=west,shelves=1": {
+      "model": "northstar:block/mercury_shelf_fungus_1",
+      "y": 90
+    }
+  }
+}

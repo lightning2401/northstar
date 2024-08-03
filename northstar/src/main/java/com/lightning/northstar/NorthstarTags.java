@@ -7,6 +7,7 @@ import com.simibubi.create.foundation.utility.Lang;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
@@ -25,6 +26,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 
+@SuppressWarnings("unused")
 public class NorthstarTags {
 	public static <T> TagKey<T> optionalTag(IForgeRegistry<T> registry,
 			ResourceLocation id) {
@@ -264,7 +266,7 @@ public class NorthstarTags {
 				if (optional) {
 					tag = optionalTag(ForgeRegistries.ENTITY_TYPES, id);
 				} else {
-					tag = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, id);
+					tag = TagKey.create(Registries.ENTITY_TYPE, id);
 				}
 				this.alwaysDatagen = alwaysDatagen;
 			}
@@ -306,7 +308,7 @@ public class NorthstarTags {
 				if (optional) {
 					tag = optionalTag(ForgeRegistries.BIOMES, id);
 				} else {
-					tag = TagKey.create(Registry.BIOME_REGISTRY, id);
+					tag = TagKey.create(Registries.BIOME, id);
 				}
 				this.alwaysDatagen = alwaysDatagen;
 			}

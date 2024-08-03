@@ -10,7 +10,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Ravager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -31,6 +30,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+@SuppressWarnings("deprecation")
 public class MartianStrawberryBushBlock extends BushBlock implements BonemealableBlock {
 	   public static final int MAX_AGE = 5;
 	   public static final IntegerProperty AGE = BlockStateProperties.AGE_7;
@@ -41,7 +41,7 @@ public class MartianStrawberryBushBlock extends BushBlock implements Bonemealabl
 	      this.registerDefaultState(this.stateDefinition.any().setValue(this.getAgeProperty(), Integer.valueOf(0)));
 	   }
 
-	   public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+	public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
 		   if (pState.getValue(AGE) == 0) {
 			   return SAPLING_SHAPE;
 		   } else {
@@ -192,7 +192,7 @@ public class MartianStrawberryBushBlock extends BushBlock implements Bonemealabl
 	   /**
 	    * @return whether bonemeal can be used on this block
 	    */
-	   public boolean isValidBonemealTarget(BlockGetter pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
+	   public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
 	      return !this.isMaxAge(pState);
 	   }
 
@@ -207,4 +207,4 @@ public class MartianStrawberryBushBlock extends BushBlock implements Bonemealabl
 	   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
 	      pBuilder.add(AGE);
 	   }
-	}
+}

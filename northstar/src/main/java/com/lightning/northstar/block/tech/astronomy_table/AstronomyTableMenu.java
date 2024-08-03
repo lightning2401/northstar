@@ -203,7 +203,13 @@ public class AstronomyTableMenu extends AbstractContainerMenu  {
 		return false;}
 	
 	
-	
+	@Override
+	public void removed(Player pPlayer) {
+		super.removed(pPlayer);
+		this.resultSlots.removeItemNoUpdate(3);
+		System.out.println("AAAAAAGGGGHHHH");
+		this.clearContainer(pPlayer, this.inputSlots);
+	}
 	
 	protected boolean shouldQuickMoveToAdditionalSlot(ItemStack pStack) {
 		return false;

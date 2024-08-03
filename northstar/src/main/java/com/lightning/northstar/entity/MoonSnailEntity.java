@@ -6,6 +6,7 @@ import com.lightning.northstar.sound.NorthstarSounds;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -25,24 +26,22 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.IAnimationTickable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.util.ClientUtils;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class MoonSnailEntity extends Monster implements IAnimatable, IAnimationTickable{
-	AnimationFactory factory = GeckoLibUtil.createFactory(this);
+public class MoonSnailEntity extends Monster implements GeoEntity{
+	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 	int slimeTimer = this.random.nextInt(6000) + 6000;
 
 	protected MoonSnailEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
 		super(pEntityType, pLevel);
-		this.maxUpStep = 1;
+		this.setMaxUpStep(1f);
 	}
 
 	protected void registerGoals() {
@@ -53,12 +52,12 @@ public class MoonSnailEntity extends Monster implements IAnimatable, IAnimationT
 	@Override
 	public void tick() {
 		super.tick();
-		if(this.isOnGround() && this.tickCount % 4 == 0) {
-			this.level.addParticle(new SnailSlimeParticleData(), this.getX(), this.getY() + 0.1, this.getZ(), 0.0D, 0.0D, 0.0D);
+		if(this.onGround() && this.tickCount % 4 == 0) {
+			this.level().addParticle(new SnailSlimeParticleData(), this.getX(), this.getY() + 0.1, this.getZ(), 0.0D, 0.0D, 0.0D);
 		}		
 		if(slimeTimer > 0) {
 			slimeTimer = Mth.clamp(slimeTimer, 0, slimeTimer - 1);
-		}else if (!this.level.isClientSide && !this.isDeadOrDying() && slimeTimer <= 0) {
+		}else if (!this.level().isClientSide && !this.isDeadOrDying() && slimeTimer <= 0) {
 			playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
 			spawnAtLocation(Items.SLIME_BALL);
 			gameEvent(GameEvent.ENTITY_PLACE);
@@ -81,11 +80,6 @@ public class MoonSnailEntity extends Monster implements IAnimatable, IAnimationT
 		return NorthstarSounds.MOON_SNAIL_DIE.get();
 	}
 	
-	@Override
-	public int tickTimer() {
-		return tickCount;
-	}
-	
 	public static boolean snailSpawnRules(EntityType<MoonSnailEntity> snail, LevelAccessor level, MobSpawnType spawntype, BlockPos pos, RandomSource rando) {
 		int surfaceY = level.getHeight(Heightmap.Types.MOTION_BLOCKING,(int) pos.getX(),(int) pos.getZ());
 		BlockState state = level.getBlockState(pos.below());
@@ -103,18 +97,26 @@ public class MoonSnailEntity extends Monster implements IAnimatable, IAnimationT
 	}
 
 	@Override
-	public void registerControllers(AnimationData data) {
-		data.addAnimationController(new AnimationController<MoonSnailEntity>(this, "controller", 2, this::predicate));
-	}
-	
-	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-		if (!(event.getLimbSwingAmount() > -0.05F && event.getLimbSwingAmount() < 0.05F)) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", EDefaultLoopTypes.LOOP));
-		} else {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", EDefaultLoopTypes.LOOP));
-		}
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		RawAnimation idle = RawAnimation.begin().thenLoop("idle");
+		RawAnimation walk = RawAnimation.begin().thenLoop("walk");
 
-		return PlayState.CONTINUE;
+		
+		controllers.add(
+				// Add our flying animation controller
+				new AnimationController<>(this, 10, state -> state.setAndContinue(state.isMoving() ? walk : idle))
+						// Handle the custom instruction keyframe that is part of our animation json
+						.setCustomInstructionKeyframeHandler(state -> {
+							Player player = ClientUtils.getClientPlayer();
+
+							if (player != null)
+								player.displayClientMessage(Component.literal("KeyFraming"), true);
+						})
+		);
+	}
+	@Override
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return cache;
 	}
 	
 	public void readAdditionalSaveData(CompoundTag pCompound) {
@@ -127,10 +129,5 @@ public class MoonSnailEntity extends Monster implements IAnimatable, IAnimationT
 	public void addAdditionalSaveData(CompoundTag pCompound) {
 		super.addAdditionalSaveData(pCompound);
 		pCompound.putInt("slimeTimer", this.slimeTimer);
-	}
-
-	@Override
-	public AnimationFactory getFactory() {
-		return factory;
 	}
 }

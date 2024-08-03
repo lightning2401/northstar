@@ -1,0 +1,15 @@
+{
+  "values": [
+    "northstar:mars_copper_ore",
+    "northstar:mars_deep_copper_ore",
+    
+    "northstar:moon_copper_ore",
+    "northstar:moon_deep_copper_ore",
+    
+    "northstar:venus_copper_ore",
+    "northstar:venus_deep_copper_ore",
+    
+    "northstar:mercury_copper_ore",
+    "northstar:mercury_deep_copper_ore"
+  ]
+}

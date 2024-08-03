@@ -50,6 +50,7 @@ public class NorthstarRenderers {
 		event.registerEntityRenderer(NorthstarEntityTypes.LUNARGRADE_SPIT.get(), LunargradeSpitRenderer::new);
 		event.registerEntityRenderer(NorthstarEntityTypes.VENUS_SCORPION_SPIT.get(), VenusScorpionSpitRenderer::new);
 		
+
 		event.registerEntityRenderer(NorthstarEntityTypes.FROZEN_ZOMBIE.get(), FrozenZombieRenderer::new);
 	}
 	

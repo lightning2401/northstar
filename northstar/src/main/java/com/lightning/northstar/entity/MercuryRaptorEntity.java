@@ -8,8 +8,8 @@ import com.lightning.northstar.sound.NorthstarSounds;
 import com.lightning.northstar.world.dimension.NorthstarDimensions;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -34,20 +34,17 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.phys.AABB;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.IAnimationTickable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.util.ClientUtils;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class MercuryRaptorEntity extends Monster implements IAnimatable, IAnimationTickable {
-	AnimationFactory factory = GeckoLibUtil.createFactory(this);
+public class MercuryRaptorEntity extends Monster implements GeoEntity {
+	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 	private static final UUID SPEED_MODIFIER_ATTACKING_UUID = UUID.fromString("49455A49-7EC5-45BA-B886-3B90B23A1718");
 	private static final AttributeModifier SPEED_MODIFIER_ATTACKING = new AttributeModifier(SPEED_MODIFIER_ATTACKING_UUID, "Attacking speed boost", 0.1D, AttributeModifier.Operation.ADDITION);
 	private int attackTick;
@@ -57,7 +54,7 @@ public class MercuryRaptorEntity extends Monster implements IAnimatable, IAnimat
 	@SuppressWarnings("deprecation")
 	public MercuryRaptorEntity(EntityType<? extends MercuryRaptorEntity> pEntityType, Level pLevel) {
 		super(pEntityType, pLevel);
-		this.maxUpStep = 1f;
+		this.setMaxUpStep(1f);
 	}
 	
 	public static AttributeSupplier.Builder createAttributes() {
@@ -74,26 +71,37 @@ public class MercuryRaptorEntity extends Monster implements IAnimatable, IAnimat
 		}
 	}
 	
-	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-		
-		if(this.attackTick > 0) {
-			this.attackTick--;
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("bite", EDefaultLoopTypes.PLAY_ONCE));
-		}else if (!(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F) ) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", EDefaultLoopTypes.LOOP));
-			event.getController().animationSpeed = event.getLimbSwingAmount() * 2;
-		} else {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", EDefaultLoopTypes.LOOP));
-			event.getController().animationSpeed = 1;
-		}
-
-		return PlayState.CONTINUE;
-	}
-	
 	@Override
-	public void registerControllers(AnimationData data) {
-		data.addAnimationController(new AnimationController<MercuryRaptorEntity>(this, "controller", 2, this::predicate));
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		RawAnimation idle = RawAnimation.begin().thenLoop("idle");
+		RawAnimation walk = RawAnimation.begin().thenLoop("walk");
+		RawAnimation bite = RawAnimation.begin().thenPlay("bite");
 		
+		
+		RawAnimation trueanim = RawAnimation.begin();
+		if(this.attackTick > 0) {
+			trueanim = bite;
+		}else{
+		}
+		
+		controllers.add(
+				// Add our flying animation controller
+				new AnimationController<>(this, state -> {
+					if(attackTick > 0) {return state.setAndContinue(bite);}
+					else if (state.isMoving()) {return state.setAndContinue(walk);}
+					else return state.setAndContinue(idle);})
+						// Handle the custom instruction keyframe that is part of our animation json
+						.setCustomInstructionKeyframeHandler(state -> {
+							Player player = ClientUtils.getClientPlayer();
+
+							if (player != null)
+								player.displayClientMessage(Component.literal("KeyFraming"), true);
+						})
+		);
+	}
+	@Override
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return cache;
 	}
 	
 	//this handles client side stuff, and creates parity between server and client
@@ -109,7 +117,7 @@ public class MercuryRaptorEntity extends Monster implements IAnimatable, IAnimat
 	public void aiStep() {
 		super.aiStep();
 		boolean flag = this.isSunBurnTick();
-		if (flag && (level.dimension() == NorthstarDimensions.MERCURY_DIM_KEY || level.dimension() == Level.OVERWORLD)) {
+		if (flag && (level().dimension() == NorthstarDimensions.MERCURY_DIM_KEY || level().dimension() == Level.OVERWORLD)) {
 			this.setSecondsOnFire(8);
 		}
 	}
@@ -118,7 +126,6 @@ public class MercuryRaptorEntity extends Monster implements IAnimatable, IAnimat
 	public void tick() {		
 		if(this.getTarget() != null) {
 			timeSpentAttacking++;
-			System.out.println("timespentattacking: " + timeSpentAttacking);
 		}
 		if(disruptTimer > 0) {
 			disruptTimer = Mth.clamp(disruptTimer, 0, disruptTimer - 1);
@@ -168,19 +175,10 @@ public class MercuryRaptorEntity extends Monster implements IAnimatable, IAnimat
 	}
 	@Override
 	public boolean doHurtTarget(Entity pEntity) {
-		this.level.broadcastEntityEvent(this, (byte)4);
+		this.level().broadcastEntityEvent(this, (byte)4);
 		this.playSound(NorthstarSounds.MERCURY_RAPTOR_ATTACK.get(), 1.0F, 1.0F);
 		return super.doHurtTarget(pEntity);
 	}
 
 
-	@Override
-	public AnimationFactory getFactory() {
-		return factory;
-	}
-
-	@Override
-	public int tickTimer() {
-		return tickCount;
-	}
 }

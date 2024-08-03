@@ -10,8 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
 
@@ -24,7 +22,7 @@ public class EatRootsGoal extends Goal {
 
 	   public EatRootsGoal(Mob pMob) {
 	      this.mob = pMob;
-	      this.level = pMob.level;
+	      this.level = pMob.level();
 	      this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
 	   }
 

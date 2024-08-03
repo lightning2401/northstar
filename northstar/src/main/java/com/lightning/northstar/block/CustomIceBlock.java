@@ -21,7 +21,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.PushReaction;
 
 public class CustomIceBlock extends HalfTransparentBlock {
@@ -30,6 +29,7 @@ public class CustomIceBlock extends HalfTransparentBlock {
 	public CustomIceBlock(BlockBehaviour.Properties pProperties) {
 		super(pProperties);
 	}
+	@SuppressWarnings("deprecation")
 	public void playerDestroy(Level pLevel, Player pPlayer, BlockPos pPos, BlockState pState, @Nullable BlockEntity pTe, ItemStack pStack) {
 		super.playerDestroy(pLevel, pPlayer, pPos, pState, pTe, pStack);
 		if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, pStack) == 0) {
@@ -38,8 +38,7 @@ public class CustomIceBlock extends HalfTransparentBlock {
 		            return;
 		    }
 		if(TemperatureStuff.getFreezingPoint(fluid.defaultFluidState()) > TemperatureStuff.getTemp(pPos, pLevel)){
-		    Material material = pLevel.getBlockState(pPos.below()).getMaterial();
-		   	if (material.blocksMotion() || material.isLiquid()) {
+		   	if (pLevel.getBlockState(pPos.below()).blocksMotion() || !pLevel.getBlockState(pPos.below()).getBlock().getFluidState(pState).isEmpty()) {
 		   		pLevel.setBlockAndUpdate(pPos, fluid.getFluidType().getBlockForFluidState(pLevel, pPos, fluid.defaultFluidState()));
 		       }
 		    }

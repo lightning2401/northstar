@@ -20,9 +20,9 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 @SuppressWarnings("removal")
@@ -177,13 +177,13 @@ public class ElectrolysisMachineBlockEntity extends KineticBlockEntity implement
 	
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY && side == Direction.UP)
+		if (cap == ForgeCapabilities.FLUID_HANDLER && side == Direction.UP)
 			return inputTank.getCapability()
 				.cast();
-		if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY && side == getBlockState().getValue(ElectrolysisMachineBlock.HORIZONTAL_FACING).getClockWise())
+		if (cap == ForgeCapabilities.FLUID_HANDLER && side == getBlockState().getValue(ElectrolysisMachineBlock.HORIZONTAL_FACING).getClockWise())
 			return outputTankL.getCapability()
 				.cast();
-		if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY && side == getBlockState().getValue(ElectrolysisMachineBlock.HORIZONTAL_FACING).getCounterClockWise())
+		if (cap == ForgeCapabilities.FLUID_HANDLER && side == getBlockState().getValue(ElectrolysisMachineBlock.HORIZONTAL_FACING).getCounterClockWise())
 			return outputTankR.getCapability()
 				.cast();
 		inputTank.getCapability().cast();

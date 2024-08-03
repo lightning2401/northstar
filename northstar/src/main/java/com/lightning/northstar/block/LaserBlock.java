@@ -10,6 +10,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
@@ -108,7 +110,7 @@ public class LaserBlock extends Block implements SimpleWaterloggedBlock {
 			}
 		}
 
-		pEntity.hurt(DamageSource.IN_FIRE, 4);
+		pEntity.hurt(pEntity.damageSources().inFire(), 4);
 		super.entityInside(pState, pLevel, pPos, pEntity);
 	}
 	

@@ -10,6 +10,7 @@ import com.lightning.northstar.NorthstarTags.NorthstarBlockTags;
 import com.lightning.northstar.sound.NorthstarSounds;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -30,7 +31,6 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.ambient.Bat;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -40,19 +40,18 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.IAnimationTickable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import net.minecraftforge.common.ForgeMod;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.util.ClientUtils;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class MarsCobraEntity extends Monster implements IAnimatable, IAnimationTickable {
-	AnimationFactory factory = GeckoLibUtil.createFactory(this);
+public class MarsCobraEntity extends Monster implements GeoEntity {
+	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 	private static final UUID SPEED_MODIFIER_ATTACKING_UUID = UUID.fromString("49455A49-7EC5-45BA-B886-3B90B23A1718");
 	private static final AttributeModifier SPEED_MODIFIER_ATTACKING = new AttributeModifier(SPEED_MODIFIER_ATTACKING_UUID, "Attacking speed boost", 0.1D, AttributeModifier.Operation.ADDITION);
 	private int attackTick;
@@ -60,34 +59,35 @@ public class MarsCobraEntity extends Monster implements IAnimatable, IAnimationT
 	
 	public MarsCobraEntity(EntityType<? extends MarsCobraEntity> pEntityType, Level pLevel) {
 		super(pEntityType, pLevel);
-		this.maxUpStep = 1f;
+		this.setMaxUpStep(1f);
 	}
 	
 	public static AttributeSupplier.Builder createAttributes() {
-		return Monster.createMonsterAttributes().add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.MAX_HEALTH, 20.0D).add(Attributes.ATTACK_DAMAGE, 5).add(Attributes.MOVEMENT_SPEED, 0.2f);
+		return Monster.createMonsterAttributes().add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.MAX_HEALTH, 20.0D).add(Attributes.ATTACK_DAMAGE, 5).add(Attributes.MOVEMENT_SPEED, 0.2f).add(ForgeMod.STEP_HEIGHT_ADDITION.get(), 1);
 	}
-	
-	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-		
-		if(this.attackTick > 0) {
-			this.attackTick--;
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("bite", EDefaultLoopTypes.PLAY_ONCE));
-		}else if (!(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F) ) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", EDefaultLoopTypes.LOOP));
-			event.getController().animationSpeed = event.getLimbSwingAmount();
-		} else {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", EDefaultLoopTypes.LOOP));
-			event.getController().animationSpeed = 1;
-		}
-
-		return PlayState.CONTINUE;
-	}
-	
 	@Override
-	public void registerControllers(AnimationData data) {
-		data.addAnimationController(new AnimationController<MarsCobraEntity>(this, "controller", 2, this::predicate));
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		RawAnimation idle = RawAnimation.begin().thenLoop("idle");
+		RawAnimation walk = RawAnimation.begin().thenLoop("walk");
+		RawAnimation bite = RawAnimation.begin().thenPlay("bite");
 		
-	}	
+		controllers.add(
+				// Add our flying animation controller
+				new AnimationController<>(this, state -> {
+					if(attackTick > 0) {return state.setAndContinue(bite);}
+					else if (state.isMoving()) {return state.setAndContinue(walk);}
+					else return state.setAndContinue(idle);})
+						// Handle the custom instruction keyframe that is part of our animation json
+						.setCustomInstructionKeyframeHandler(state -> {
+							Player player = ClientUtils.getClientPlayer();
+
+							if (player != null)
+								player.displayClientMessage(Component.literal("KeyFraming"), true);
+						})
+		);
+	}
+	
+
 	@Override
 	protected SoundEvent getAmbientSound() {
 		super.getAmbientSound();
@@ -156,18 +156,11 @@ public class MarsCobraEntity extends Monster implements IAnimatable, IAnimationT
 	}
 	@Override
 	public boolean doHurtTarget(Entity pEntity) {
-		this.level.broadcastEntityEvent(this, (byte)4);
+		this.level().broadcastEntityEvent(this, (byte)4);
 		this.playSound(SoundEvents.RAVAGER_ATTACK, 1.0F, 1.0F);
 		return super.doHurtTarget(pEntity);
 	}
 
-
-	@Override
-	public AnimationFactory getFactory() {
-		return factory;
-	}
-
-	@Override
 	public int tickTimer() {
 		return tickCount;
 	}
@@ -245,7 +238,7 @@ public class MarsCobraEntity extends Monster implements IAnimatable, IAnimationT
 		}
 
 		public boolean canUse() {
-			this.pendingTarget = this.cobra.level.getNearestPlayer(this.startAggroTargetConditions, this.cobra);
+			this.pendingTarget = this.cobra.level().getNearestPlayer(this.startAggroTargetConditions, this.cobra);
 			return this.pendingTarget != null;
 		}
 
@@ -298,5 +291,11 @@ public class MarsCobraEntity extends Monster implements IAnimatable, IAnimationT
 			super.tick();
 
 		}
+	}
+
+
+	@Override
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return this.cache;
 	}
 }

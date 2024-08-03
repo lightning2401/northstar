@@ -40,7 +40,6 @@ public class TorchMixin {
 	LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pNeighborPos, CallbackInfoReturnable<BlockState> info) {
     	try {
 	    	if(pState.getBlock() == Blocks.TORCH) {
-	            System.out.println(OxygenStuff.hasOxygen(pCurrentPos,((Level)pLevel).dimension()));
 	    	if(!OxygenStuff.hasOxygen(pCurrentPos,((Level)pLevel).dimension())) {
 	    		if(!pState.canSurvive(pLevel, pCurrentPos)) {
 	    			info.setReturnValue(Blocks.AIR.defaultBlockState());
@@ -48,8 +47,6 @@ public class TorchMixin {
 	    		}
 	    		pLevel.playSound(null, pCurrentPos, SoundEvents.CANDLE_EXTINGUISH, SoundSource.BLOCKS, 1, 0);
 	    		info.setReturnValue(NorthstarTechBlocks.EXTINGUISHED_TORCH.get().defaultBlockState());
-	    		System.out.println("hasoxy: " + OxygenStuff.hasOxygen(pCurrentPos,((Level)pLevel).dimension()));
-	    		System.out.println("idk why this isnt working + clientside: " + pLevel.isClientSide());
 	    	}
 	    	}
 		} catch (Exception e) {

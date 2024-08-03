@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "CTC",
+    "AWA"
+  ],
+  "key": {
+    "A": {
+      "item": "northstar:martian_steel_sheet"
+    },
+    "T": {
+      "item": "minecraft:observer"
+    },
+    "C": {
+      "item": "northstar:advanced_circuit"
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "result": {
+    "item": "northstar:oxygen_detector",
+    "count": 1
+  }
+}

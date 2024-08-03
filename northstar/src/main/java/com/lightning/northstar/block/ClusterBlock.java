@@ -72,7 +72,8 @@ public class ClusterBlock extends AmethystBlock implements SimpleWaterloggedBloc
 	      return pLevel.getBlockState(blockpos).isFaceSturdy(pLevel, blockpos, direction);
 	   }
 
-	   public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pNeighborPos) {
+	   @SuppressWarnings("deprecation")
+	public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pNeighborPos) {
 	      if (pState.getValue(WATERLOGGED)) {
 	         pLevel.scheduleTick(pCurrentPos, Fluids.WATER, Fluids.WATER.getTickDelay(pLevel));
 	      }
@@ -91,11 +92,13 @@ public class ClusterBlock extends AmethystBlock implements SimpleWaterloggedBloc
 	      return pState.setValue(FACING, pRotation.rotate(pState.getValue(FACING)));
 	   }
 
-	   public BlockState mirror(BlockState pState, Mirror pMirror) {
+	   @SuppressWarnings("deprecation")
+	public BlockState mirror(BlockState pState, Mirror pMirror) {
 	      return pState.rotate(pMirror.getRotation(pState.getValue(FACING)));
 	   }
 
-	   public FluidState getFluidState(BlockState pState) {
+	   @SuppressWarnings("deprecation")
+	public FluidState getFluidState(BlockState pState) {
 	      return pState.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(pState);
 	   }
 

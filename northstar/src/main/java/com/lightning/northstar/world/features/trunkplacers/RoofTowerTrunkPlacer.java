@@ -14,6 +14,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryCodecs;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
@@ -31,7 +32,7 @@ public class RoofTowerTrunkPlacer extends TrunkPlacer {
 	   public static final Codec<RoofTowerTrunkPlacer> CODEC = RecordCodecBuilder.create((p_226236_) -> {
 		      return trunkPlacerParts(p_226236_).and(p_226236_.group(IntProvider.POSITIVE_CODEC.fieldOf("extra_branch_steps").forGetter((p_226242_) -> {
 		         return p_226242_.extraBranchSteps;
-		      }), RegistryCodecs.homogeneousList(Registry.BLOCK_REGISTRY).fieldOf("can_grow_through").forGetter((p_226234_) -> {
+		      }), RegistryCodecs.homogeneousList(Registries.BLOCK).fieldOf("can_grow_through").forGetter((p_226234_) -> {
 		         return p_226234_.canGrowThrough;
 		      }), BlockStateProvider.CODEC.fieldOf("cap_provider").forGetter((p_161248_) -> {
 		          return p_161248_.capProvider;

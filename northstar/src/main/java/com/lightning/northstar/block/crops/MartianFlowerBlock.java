@@ -13,6 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
@@ -98,11 +99,6 @@ public class MartianFlowerBlock extends BushBlock implements BonemealableBlock {
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(BlockGetter pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
-		return !this.isMaxAge(pState);
-	}
-
-	@Override
 	public boolean isBonemealSuccess(Level pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {
 		return true;
 	}
@@ -112,6 +108,12 @@ public class MartianFlowerBlock extends BushBlock implements BonemealableBlock {
 		if(!this.isMaxAge(pState)) {
 			pLevel.setBlock(pPos, this.getStateForAge(this.getAge(pState) + 1), 2);
 		}
+	}
+
+	@Override
+	public boolean isValidBonemealTarget(LevelReader p_256559_, BlockPos p_50898_, BlockState pState,
+			boolean p_50900_) {
+		return !this.isMaxAge(pState);
 	}
 
 }

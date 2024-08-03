@@ -26,6 +26,8 @@ public class CraterFeature extends Feature<CraterConfig> {
 	      boolean flag = false;
 	      int i = blockpos.getY();
 	      int j = i + config.half_height.sample(randomsource);
+	      if(j == 0)
+	    	  return false;
 	      int k = i - config.half_height.sample(randomsource) - 1;
 	      int l = config.radius.sample(randomsource);
 	      BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
@@ -52,7 +54,10 @@ public class CraterFeature extends Feature<CraterConfig> {
 	 protected boolean placeColumn(CraterConfig pConfig, WorldGenLevel pLevel, RandomSource pRandom, int pMaxY, int pMinY, BlockPos.MutableBlockPos pPos) {
 	      boolean flag = false;
 	      BlockState blockstate = pConfig.air_provider.getState(pRandom, pPos);
-	      pLevel.setBlock(pPos, blockstate, 2);
+
+	      if(pLevel.getBlockState(pPos).is(pConfig.canDelete)) {
+		      pLevel.setBlock(pPos, blockstate, 2);
+	      }
 	      this.markAboveForPostProcessing(pLevel, pPos);
 	      flag = true;
 
@@ -61,8 +66,10 @@ public class CraterFeature extends Feature<CraterConfig> {
 	 protected boolean clearAir(CraterConfig pConfig, WorldGenLevel pLevel, RandomSource pRandom, int pMaxY, int pMinY, BlockPos.MutableBlockPos pPos) {
 	      boolean flag = false;
 	      BlockState blockstate = pConfig.air_provider.getState(pRandom, pPos);
-	      for(int i = 0; i < 12; i++) {
-	      pLevel.setBlock(pPos.atY(pPos.getY() + i), blockstate, 2);
+	      for(int i = 0; i < 24; i++) {
+	      if(pLevel.getBlockState(pPos.atY(pPos.getY() + i)).is(pConfig.canDelete)) {
+	    		  pLevel.setBlock(pPos.atY(pPos.getY() + i), blockstate, 2);
+	      }
 	      flag = true;}
 
 
@@ -76,7 +83,9 @@ public class CraterFeature extends Feature<CraterConfig> {
 	      if (pLevel.getBlockState(pPos) == Blocks.AIR.defaultBlockState()) {
 	    	  return false;
 	      }
-	      pLevel.setBlock(pPos, blockstate, 2);
+	      if(pLevel.getBlockState(pPos).is(pConfig.canDelete)) {
+		      pLevel.setBlock(pPos, blockstate, 2);
+	      }
 	      this.markAboveForPostProcessing(pLevel, pPos);
 	      flag = true;
 

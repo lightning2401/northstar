@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
+import com.lightning.northstar.block.NorthstarTechBlocks;
 import com.lightning.northstar.contraptions.RocketContraption;
 import com.lightning.northstar.contraptions.RocketContraptionEntity;
 import com.lightning.northstar.contraptions.RocketHandler;
@@ -27,6 +28,7 @@ import com.simibubi.create.content.trains.station.GlobalStation;
 import com.simibubi.create.content.trains.station.StationBlock;
 import com.simibubi.create.content.trains.track.ITrackBlock;
 import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
+import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollOptionBehaviour;
@@ -41,6 +43,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -55,15 +58,18 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 public class RocketStationBlockEntity extends SmartBlockEntity implements IDisplayAssemblyExceptions, IControlContraption, MenuProvider {
 	
-	public boolean assembleNextTick;
+	boolean assembleNextTick;
 	public Player owner;
 	protected AssemblyException lastException;
 	public TrackTargetingBehaviour<GlobalStation> edgePoint;
 	protected ItemStackHandler inventory;
+	protected LazyOptional<IItemHandlerModifiable> itemCapability;
 	public String name = "Bing Bong's Big Bonanza";
 	
 	protected int failedCarriageIndex;
@@ -76,6 +82,7 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 	
 	public float offset;
 	public int fuelCost;
+	public int fuelReturnCost;
 	public boolean running;
 	public boolean needsContraption;
 	public AbstractContraptionEntity movedContraption;
@@ -91,30 +98,22 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 	protected float clientOffsetDiff;
 	public ResourceKey<Level> target;
 	
-	public final SimpleContainer container = new SimpleContainer(1) {
-		public boolean canPlaceItem(int p_39066_, ItemStack itemstack) {
-			return itemstack.is(NorthstarItems.STAR_MAP.get());
-		}
-		public int getMaxStackSize() {
-			return 1;
-		}
-	};
 	
-	
-	public ItemStack item = ItemStack.EMPTY;
-	
+	public final Container container = new SimpleContainer(1) {};
 	
 	
 	public static WorldAttached<Map<BlockPos, BoundingBox>> assemblyAreas = new WorldAttached<>(w -> new HashMap<>());
 
 	public RocketStationBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
 		super(typeIn, pos, state);
+		inventory = new ItemStackHandler();
+		itemCapability = LazyOptional.of(() -> new CombinedInvWrapper(inventory));
 	}
-	public boolean hasItem() {
-		return this.item.is(NorthstarItems.STAR_MAP.get());
-	}
+	
 	@Override
-	public void addBehaviours(List<BlockEntityBehaviour> behaviours) {}
+	public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
+		registerAwardables(behaviours, AllAdvancements.CONTRAPTION_ACTORS);
+	}
 	
 	@Override
 	public void initialize() {
@@ -122,11 +121,7 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 		if (!getBlockState().canSurvive(level, worldPosition))
 			level.destroyBlock(worldPosition, true);
 	}
-	
-	public ItemStack getItem() {
-		return this.item;
-	}
-	
+
 	public void queueAssembly(Player player) {
 		owner = player;
 		assembleNextTick = true;
@@ -144,20 +139,19 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 	public void tick() {
 		super.tick();
 		i++;
-		if (i % 20 == 0 && !level.isClientSide) {}
-		item = container.getItem(0);
-		if (item.getItem() == NorthstarItems.STAR_MAP.get()) {
+		ItemStack item = container.getItem(0);
+		if (item.getItem() == NorthstarItems.STAR_MAP.get() || item.getItem() == NorthstarItems.RETURN_TICKET.get()) {
 			if(item.getTagElement("Planet") != null)
 			target = NorthstarPlanets.getPlanetDimension(NorthstarPlanets.targetGetter(item.getTagElement("Planet").toString()));
 		}
+		if(getBlockState().getValue(RocketStationBlock.ASSEMBLING)){
+			assembleNextTick = true;
+		}
 		fuelCost = fuelCalc();
+		fuelReturnCost = fuelReturnCalc();		
 		
-
-		if (level.isClientSide)
-			return;
-
 		if (assembleNextTick == true) {
-			System.out.println("BAINZGEA 2!!!!!!");
+			level.setBlock(worldPosition, getBlockState().setValue(RocketStationBlock.ASSEMBLING, false), assemblyLength);
 			tryAssemble();
 			assembleNextTick = false;
 		}
@@ -166,19 +160,15 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 	
 	
 	private void tryAssemble() {
-		System.out.println("HUH");
-		if (level.isClientSide)
-			return;
 		BlockState blockState = getBlockState();
-		System.out.println("im tryin over here man :(");
 		if (!(blockState.getBlock() instanceof RocketStationBlock))
-			{System.out.println("what"); return;}
+			{return;}
 
 		RocketContraption contraption = new RocketContraption();
 
 		BlockEntity blockEntity = level.getBlockEntity(worldPosition);
 		if (!(blockEntity instanceof RocketStationBlockEntity))
-			{System.out.println("ruh roh raggy"); return; }
+			{return; }
 		Direction movementDirection = Direction.UP;
 		
 		int engines = 0;
@@ -192,7 +182,7 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 		try {
 			lastException = null;
 			if (!contraption.assemble(level, worldPosition))
-				{System.out.println("IT DOESNT WORK AHHHHHH");return;} 
+				{return;} 
 			engines = contraption.hasJetEngine();
 			hasFuel = contraption.hasFuel();
 			fuelAmount = contraption.fuelAmount();
@@ -200,13 +190,15 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 			hasStation |= contraption.hasRocketStation();
 			contraption.owner = owner;
 			contraption.fuelCost = fuelCost;
+			contraption.fuelReturnCost = fuelReturnCost;
+			contraption.dest = target;
 			System.out.println(this.container);
 			heatCost = (TemperatureStuff.getHeatRating(target) * (contraption.blockCount)) + TemperatureStuff.getHeatConstant(target);
 			heatCostHome = (TemperatureStuff.getHeatRating(level.dimension()) * (contraption.blockCount)) + TemperatureStuff.getHeatConstant(level.dimension());
 			if(heatCostHome > heatCost) {
 				heatCost = heatCostHome;
 			}
-			requiredJets = fuelCost / 800;
+			requiredJets = engineCalc();
 
 			sendData();
 		} catch (AssemblyException e) {
@@ -216,11 +208,15 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 		}
 		if (ContraptionCollider.isCollidingWithWorld(level, contraption, worldPosition.relative(movementDirection),
 			movementDirection))
-			{System.out.println("Many such cases! Sad!"); return;}else {System.out.println("Obamna");}
+			{if(!this.level.getBlockState(worldPosition.above()).isAir())
+			{contraption.owner.displayClientMessage(Component.literal
+			("Rocket Stations require at least 1 block of space above them").withStyle(ChatFormatting.RED), false);}else {
+				contraption.owner.displayClientMessage(Component.literal
+						("Something's blocking your rocket! Make sure everything is glued together!").withStyle(ChatFormatting.RED), false);
+			}return;}else {System.out.println("Obamna");}
 		
 		Set<BlockPos> oxyCheck = new HashSet<BlockPos>();
 		boolean oxygenSealed = true;
-		System.out.println("SPREAD THE DISEASE SPREAD THE DISEASE");
 		if(!oxyCheck.contains(this.getBlockPos().above()))
 			oxyCheck.add(this.getBlockPos().above());
 		if(oxyCheck.size() < OxygenStuff.maximumOxy) {		  
@@ -230,8 +226,19 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 		if(oxyCheck.size() >= OxygenStuff.maximumOxy) {
 			oxygenSealed = false;
 		}
+		boolean interplanetaryFlag = NorthstarPlanets.isInterplanetary(level.dimension(), target);
+		if(interplanetaryFlag) {
+			if(contraption.hasInterplanetaryNavigation) {
+				interplanetaryFlag = false;
+			}
+		}
 		
-		if (engines >= requiredJets && hasStation && hasFuel && fuelAmount > (fuelCost + contraption.weightCost) && heatShielding >= heatCost && oxygenSealed) {
+		if(interplanetaryFlag) {
+			contraption.owner.displayClientMessage(Component.literal
+			("Interplanetary travel requires a Interplanetary Navigator!").withStyle(ChatFormatting.RED), false);
+		}
+		
+		if (engines >= requiredJets && hasStation && hasFuel && fuelAmount > (fuelCost + contraption.weightCost) && heatShielding >= heatCost && oxygenSealed && !interplanetaryFlag && contraption.hasControls && contraption.dest != null) {
 		System.out.println(engines);
 		contraption.removeBlocksFromWorld(level, BlockPos.ZERO);
 		RocketContraptionEntity movedContraption =
@@ -240,15 +247,17 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 		movedContraption.setPos(anchor.getX(), anchor.getY(), anchor.getZ());
 		AllSoundEvents.CONTRAPTION_ASSEMBLE.playOnServer(level, worldPosition);
 		movedContraption.destination = target;
-		level.addFreshEntity(movedContraption);
+		movedContraption.home = this.level.dimension();
 		RocketHandler.ROCKETS.add(movedContraption);
-		System.out.println("Heat Cost: " + heatCost + "     Heat Shielding: " + heatShielding);
-		System.out.println("Weight Cost: " + contraption.weightCost + "      Fuel Cost: " + fuelCost);}else
+		System.out.println(level);
+		level.addFreshEntity(movedContraption);}else
 		{
 			contraption.owner.displayClientMessage(Component.literal
 			("Full Fuel Cost: " + (contraption.weightCost + contraption.fuelCost)).withStyle(ChatFormatting.GOLD), false);
 			contraption.owner.displayClientMessage(Component.literal
 			("Current Fuel Supply: " + contraption.fuelAmount()).withStyle(ChatFormatting.GOLD), false);
+			contraption.owner.displayClientMessage(Component.literal
+			("Estimated Return Cost: " + (contraption.weightCost + fuelReturnCost)).withStyle(ChatFormatting.GOLD), false);
 			contraption.owner.displayClientMessage(Component.literal
 			("Required Heat Shielding: " + heatCost).withStyle(ChatFormatting.YELLOW), false);
 			contraption.owner.displayClientMessage(Component.literal
@@ -261,13 +270,33 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 			("Oxygen Size: " + oxyCheck.size()).withStyle(ChatFormatting.AQUA), false);
 			if(!oxygenSealed) {
 				contraption.owner.displayClientMessage(Component.literal
-				("Cockpit is not sealed, or too large!").withStyle(ChatFormatting.AQUA), false);
+				("Cockpit is not sealed, or too large!").withStyle(ChatFormatting.DARK_RED), false);
+			}
+			if(contraption.fuelAmount() < contraption.fuelCost) {
+				contraption.owner.displayClientMessage(Component.literal
+				("Insufficient fuel!").withStyle(ChatFormatting.DARK_RED), false);
+			}
+			if(contraption.heatShielding() < heatCost) {
+				contraption.owner.displayClientMessage(Component.literal
+				("Insufficient heat shielding!").withStyle(ChatFormatting.DARK_RED), false);
+			}
+			if(contraption.hasJetEngine() < requiredJets) {
+				contraption.owner.displayClientMessage(Component.literal
+				("Not enough Jet Engines!").withStyle(ChatFormatting.DARK_RED), false);
+			}
+			if(!contraption.hasControls) {
+				contraption.owner.displayClientMessage(Component.literal
+				("No controls present!").withStyle(ChatFormatting.DARK_RED), false);
+			}
+			if(contraption.dest == null) {
+				contraption.owner.displayClientMessage(Component.literal
+				("Invalid Target!").withStyle(ChatFormatting.DARK_RED), false);
 			}
 			contraption.owner.displayClientMessage(Component.literal
 			("Rocket failed to assemble!").withStyle(ChatFormatting.RED), false);
 			System.out.println("No station or jet engine, Bruh!");
-			System.out.println("Heat Cost: " + heatCost + "     Heat Shielding: " + heatShielding);
-			System.out.println("Weight Cost: " + contraption.weightCost + "      Fuel Cost: " + fuelCost);
+//			System.out.println("Heat Cost: " + heatCost + "     Heat Shielding: " + heatShielding);
+//			System.out.println("Weight Cost: " + contraption.weightCost + "      Fuel Cost: " + fuelCost);
 			exception(new AssemblyException(Lang.translateDirect("train_assembly.no_controls")), -1);
 		}
 	}
@@ -295,44 +324,69 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 		int dif = (int) (Math.pow(home_x - targ_x, 2) + Math.pow(home_y - targ_y, 2));
 		dif = Mth.roundToward(dif, 100) / 20;
 		int cost = dif + NorthstarPlanets.getPlanetAtmosphereCost(this.level.dimension()) + 1000;
+		
+		if (dif != 0) {
+	//		System.out.println(dif);
+		}
+		return cost * 8;
+	}
+
+	public int fuelReturnCalc() {
+		String home = NorthstarPlanets.getPlanetName(this.level.dimension());
+		String targ = NorthstarPlanets.getPlanetName(target);
+		
+		int home_x = (int) NorthstarPlanets.getPlanetX(home);
+		int home_y = (int) NorthstarPlanets.getPlanetY(home);
+		
+		int targ_x = (int) NorthstarPlanets.getPlanetX(targ);
+		int targ_y = (int) NorthstarPlanets.getPlanetY(targ);
+		
+		int dif = (int) (Math.pow(home_x - targ_x, 2) + Math.pow(home_y - targ_y, 2));
+		dif = Mth.roundToward(dif, 100) / 20;
+		int cost = dif + NorthstarPlanets.getPlanetAtmosphereCost(target) + 1000;
+		
 		if (dif != 0) {
 	//		System.out.println(dif);
 		}
 		return cost * 8;
 	}
 	
-	@Override
-	protected void write(CompoundTag compound, boolean clientPacket) {
-		compound.put("map", this.container.getItem(0).save(new CompoundTag()));
-		compound.put("item", this.item.save(new CompoundTag()));
-		super.write(compound, clientPacket);
+	public int engineCalc() {
+		int homeAtmos = NorthstarPlanets.getPlanetAtmosphereCost(level.dimension()) / 100;
+		int targetAtmos = NorthstarPlanets.getPlanetAtmosphereCost(target) / 100;
+		
+		double grav = NorthstarPlanets.getGravMultiplier(target);
+		double homeGrav = NorthstarPlanets.getGravMultiplier(level.dimension());
+		if(grav < homeGrav) {
+			grav = homeGrav;
+		}
+		double constant = NorthstarPlanets.getEngineConstant(target);
+		double homeConstant = NorthstarPlanets.getEngineConstant(level.dimension());
+		if(constant < homeConstant) {
+			constant = homeConstant;
+		}
+		
+		return (int) (Mth.clamp(((targetAtmos + homeAtmos) * grav), 6, 64)  + constant);
 	}
 	
+	// this is extremely buggy for some reason, this NEEDS to be fixed before release
+	//not sure what's making it so buggy but it saves really inconsistently despite sharing the code of the oxygen filler which works fine
+	@Override
+	protected void write(CompoundTag compound, boolean clientPacket) {
+		super.write(compound, clientPacket);
+		compound.put("item", container.getItem(0).serializeNBT());
+	}
 	@Override
 	public void writeSafe(CompoundTag compound) {
 		super.writeSafe(compound);
-		compound.put("map", this.container.getItem(0).save(new CompoundTag()));
-		compound.put("item", this.item.save(new CompoundTag()));
+		compound.put("item", container.getItem(0).serializeNBT());
 	}
-
 	@Override
 	protected void read(CompoundTag compound, boolean clientPacket) {
-		this.container.setItem(0, ItemStack.of(compound.getCompound("map")));
-		this.item = ItemStack.of(compound.getCompound("item"));
 		super.read(compound, clientPacket);
+	    if (compound.contains("item", 10)) {
+		container.setItem(0, ItemStack.of(compound.getCompound("item")));}
 	}
-	
-	
-	public ItemStackHandler getInventoryOfBlock() {
-		return inventory;
-	}
-
-	public void applyInventoryToBlock(ItemStackHandler handler) {
-		for (int i = 0; i < inventory.getSlots(); i++)
-			inventory.setStackInSlot(i, i < handler.getSlots() ? handler.getStackInSlot(i) : ItemStack.EMPTY);
-	}
-	
-	public boolean hasInventory() { return true; }
 	
 	private void exception(AssemblyException exception, int carriage) {
 		failedCarriageIndex = carriage;

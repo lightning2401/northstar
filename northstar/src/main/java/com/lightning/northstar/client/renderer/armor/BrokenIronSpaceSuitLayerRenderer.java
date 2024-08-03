@@ -2,7 +2,6 @@ package com.lightning.northstar.client.renderer.armor;
 
 import com.lightning.northstar.block.tech.NorthstarPartialModels;
 import com.lightning.northstar.item.armor.BrokenIronSpaceSuitArmorItem;
-import com.lightning.northstar.item.armor.IronSpaceSuitArmorItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;

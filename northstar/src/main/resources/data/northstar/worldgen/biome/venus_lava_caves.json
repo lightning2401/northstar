@@ -1,11 +1,10 @@
 {
   "temperature": 0.8,
   "downfall": 0.4,
-  "precipitation": "none",
-  "temperature_modifier": "frozen",
+  "has_precipitation": false,
   "effects": {
-    "sky_color": 14331548,
-    "fog_color": 15264214,
+    "sky_color": 15857065,
+    "fog_color": 14538752,
     "water_color": 4159204,
     "water_fog_color": 329011,
     "particle": {

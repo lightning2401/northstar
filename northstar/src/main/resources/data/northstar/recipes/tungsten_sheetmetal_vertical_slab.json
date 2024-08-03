@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#",
+    "#",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "northstar:tungsten_sheetmetal"
+    }
+  },
+  "result": {
+    "item": "northstar:tungsten_sheetmetal_vertical_slab",
+    "count": 6
+  }
+}

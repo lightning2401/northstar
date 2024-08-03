@@ -6,13 +6,11 @@ import com.lightning.northstar.entity.VenusScorpionEntity;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.util.Mth;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.phys.BlockHitResult;
@@ -39,14 +37,14 @@ public class VenusScorpionSpit extends Projectile {
 	public void tick() {
 		super.tick();
 		Vec3 vec3 = this.getDeltaMovement();
-		HitResult hitresult = ProjectileUtil.getHitResult(this, this::canHitEntity);
+		HitResult hitresult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
 		if (hitresult.getType() != HitResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, hitresult))
 			this.onHit(hitresult);
 		double newX = this.getX() + vec3.x;
 		double newY = this.getY() + vec3.y;
 		double newZ = this.getZ() + vec3.z;
 		this.updateRotation();
-		if (this.level.getBlockStates(this.getBoundingBox()).noneMatch(BlockBehaviour.BlockStateBase::isAir)) {
+		if (this.level().getBlockStates(this.getBoundingBox()).noneMatch(BlockBehaviour.BlockStateBase::isAir)) {
 			this.discard();
 		} else if (this.isInWaterOrBubble()) {
 			this.discard();
@@ -67,14 +65,14 @@ public class VenusScorpionSpit extends Projectile {
 		super.onHitEntity(pResult);
 		Entity entity = this.getOwner();
 		if (entity instanceof LivingEntity) {
-			pResult.getEntity().hurt(DamageSource.indirectMobAttack(this, (LivingEntity)entity).setProjectile(), 12.0F);
+			pResult.getEntity().hurt(pResult.getEntity().damageSources().mobProjectile(pResult.getEntity(), (LivingEntity) entity), 12);
 		}
 
 	}
 
 	protected void onHitBlock(BlockHitResult pResult) {
 		super.onHitBlock(pResult);
-		if (!this.level.isClientSide) {
+		if (!this.level().isClientSide) {
 			this.discard();
 		}
 		
@@ -91,7 +89,7 @@ public class VenusScorpionSpit extends Projectile {
 
 		for(int i = 0; i < 7; ++i) {
 			double d3 = 0.4D + 0.1D * (double)i;
-			this.level.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY(), this.getZ(), d0 * d3, d1, d2 * d3);
+			this.level().addParticle(ParticleTypes.SMOKE, this.getX(), this.getY(), this.getZ(), d0 * d3, d1, d2 * d3);
 		}
 
 		this.setDeltaMovement(d0, d1, d2);

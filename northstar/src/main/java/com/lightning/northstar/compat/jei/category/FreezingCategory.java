@@ -9,7 +9,6 @@ import org.apache.commons.lang3.mutable.MutableInt;
 
 import com.lightning.northstar.block.tech.ice_box.FreezingRecipe;
 import com.lightning.northstar.compat.jei.animations.AnimatedIceBox;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
@@ -24,6 +23,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.fluids.FluidStack;
@@ -97,7 +97,7 @@ public class FreezingCategory extends CreateRecipeCategory<FreezingRecipe>  {
 	}
 
 	@Override
-	public void draw(FreezingRecipe recipe, IRecipeSlotsView iRecipeSlotsView, PoseStack matrixStack,  double mouseX, double mouseY) {
+	public void draw(FreezingRecipe recipe, IRecipeSlotsView iRecipeSlotsView, GuiGraphics matrixStack,  double mouseX, double mouseY) {
 		AllGuiTextures.JEI_SHADOW.render(matrixStack, 61, 41);
 		AllGuiTextures.JEI_LONG_ARROW.render(matrixStack, 52, 54);
 		
@@ -110,7 +110,7 @@ public class FreezingCategory extends CreateRecipeCategory<FreezingRecipe>  {
 		Minecraft minecraft = Minecraft.getInstance();
 		Font fontRenderer = minecraft.font;
 		int stringCenter = fontRenderer.width(text) / 2;
-		fontRenderer.drawShadow(matrixStack, text, (getBackground().getWidth() / 2) + 2 - stringCenter, 62, 0xFFFFFF);
+		matrixStack.drawString(fontRenderer, text, (getBackground().getWidth() / 2) + 2 - stringCenter, 62, 0xFFFFFF);
 		
 		if (vRows <= 2)
 			AllGuiTextures.JEI_DOWN_ARROW.render(matrixStack, 136, -19 * (vRows - 1) + 32);

@@ -14,13 +14,6 @@ public class RocketContraptionEntityRenderer extends ContraptionEntityRenderer<R
 	@Override
 	public boolean shouldRender(RocketContraptionEntity entity, Frustum clippingHelper, double cameraX, double cameraY,
 		double cameraZ) {
-		if (entity.getContraption() == null)
-			return false;
-		if (!entity.isAliveOrStale())
-			return false;
-		if (!entity.isReadyForRender())
-			return false;
-
-		return super.shouldRender(entity, clippingHelper, cameraX, cameraY, cameraZ);
+		return true;
 	}
 }

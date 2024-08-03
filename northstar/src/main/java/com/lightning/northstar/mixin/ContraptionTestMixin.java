@@ -13,8 +13,8 @@ public class ContraptionTestMixin {
     @Inject(method = "tick", at = @At("TAIL"))
 	public void test$tick(CallbackInfo info) {
     	CarriageContraptionEntity entity = (CarriageContraptionEntity) (Object) this;
-    	if(entity.level.isClientSide)
-    	if(entity.level.getGameTime() % 40 == 0) {
+    	if(entity.level().isClientSide)
+    	if(entity.level().getGameTime() % 40 == 0) {
 //    		System.out.println(entity.level.dimension());
     	}
     	

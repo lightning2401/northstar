@@ -11,8 +11,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryCodecs;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.LevelSimulatedReader;
@@ -34,9 +34,9 @@ public class WilterTrunkPlacer extends TrunkPlacer {
 		         return p_226240_.placeBranchPerLogProbability;
 		      }), IntProvider.NON_NEGATIVE_CODEC.fieldOf("extra_branch_length").forGetter((p_226238_) -> {
 		         return p_226238_.extraBranchLength;
-		      }), RegistryCodecs.homogeneousList(Registry.BLOCK_REGISTRY).fieldOf("can_grow_through").forGetter((p_226234_) -> {
-		         return p_226234_.canGrowThrough;
-		      }), IntProvider.NON_NEGATIVE_CODEC.fieldOf("extra_branch_length").forGetter((p_226238_) -> {
+		      }), RegistryCodecs.homogeneousList(Registries.BLOCK).fieldOf("can_grow_through").forGetter((p_226234_) -> {
+			         return p_226234_.canGrowThrough;
+			  }), IntProvider.NON_NEGATIVE_CODEC.fieldOf("extra_branch_length").forGetter((p_226238_) -> {
 			         return p_226238_.spinFactor;
 		      }))).apply(p_226236_, WilterTrunkPlacer::new);
 		   });
@@ -189,9 +189,6 @@ public class WilterTrunkPlacer extends TrunkPlacer {
 			      List<FoliagePlacer.FoliageAttachment> list = Lists.newArrayList();   
 			      BlockPos.MutableBlockPos blockpos$mutableblockpos3 = new BlockPos.MutableBlockPos();
 				  this.placeShroomLight(pLevel, pBlockSetter, pRandom, blockpos$mutableblockpos3.set(pPos.getX(), pPos.getY()+12, pPos.getZ()), pConfig);
-				  System.out.println(this.placeShroomLight(pLevel, pBlockSetter, pRandom, blockpos$mutableblockpos3.set(pPos.getX(), pPos.getY()+12, pPos.getZ()), pConfig));
-				  System.out.println("YOOOOOOOOOOOOOOOO, BIOLUMINESCENCE");
-				  System.out.println(pPos.getX() + "X    " + (pPos.getY()+12) + "Y    " + pPos.getZ() + "Z" );
 
 			      return list;
 		   }  
@@ -224,7 +221,7 @@ public class WilterTrunkPlacer extends TrunkPlacer {
 		   @Override
 		   protected boolean validTreePos(LevelSimulatedReader pLevel, BlockPos pPos) {
 		      return super.validTreePos(pLevel, pPos) || pLevel.isStateAtPosition(pPos, (p_226232_) -> {
-		         return p_226232_.is(this.canGrowThrough);
+		         return p_226232_.canBeReplaced();
 		      });
 		   }
 		}

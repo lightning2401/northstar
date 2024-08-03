@@ -9,7 +9,6 @@ import com.simibubi.create.content.kinetics.base.flwdata.RotatingData;
 import com.simibubi.create.foundation.render.AllMaterialSpecs;
 
 import net.minecraft.core.Direction;
-import net.minecraft.core.Direction.Axis;
 
 public class OxygenGeneratorInstance extends SingleRotatingInstance<OxygenGeneratorBlockEntity> implements DynamicInstance{
 

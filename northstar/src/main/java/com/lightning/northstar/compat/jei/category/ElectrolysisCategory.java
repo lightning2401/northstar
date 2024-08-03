@@ -10,7 +10,6 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import com.lightning.northstar.block.tech.electrolysis_machine.ElectrolysisRecipe;
 import com.lightning.northstar.compat.jei.animations.AnimatedElectrolysisMachine;
 import com.lightning.northstar.fluids.NorthstarFluids;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
@@ -23,6 +22,7 @@ import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.material.Fluids;
@@ -35,7 +35,7 @@ public class ElectrolysisCategory extends CreateRecipeCategory<ElectrolysisRecip
 	public static final List<ElectrolysisRecipe> RECIPES = new ArrayList<>();
 	
 	static {
-		RECIPES.add(ElectrolysisRecipe.create(FluidIngredient.fromFluid(Fluids.WATER, 10), new FluidStack(NorthstarFluids.OXYGEN.get(), 7), new FluidStack(NorthstarFluids.HYDROGEN.get(), 2), "water_electrolysis"));
+		RECIPES.add(ElectrolysisRecipe.create(FluidIngredient.fromFluid(Fluids.WATER, 10), new FluidStack(NorthstarFluids.OXYGEN.get().getSource(), 7), new FluidStack(NorthstarFluids.HYDROGEN.get().getSource(), 2), "water_electrolysis"));
 	}
 
 	public ElectrolysisCategory(Info<ElectrolysisRecipe> info) {
@@ -102,7 +102,7 @@ public class ElectrolysisCategory extends CreateRecipeCategory<ElectrolysisRecip
 	}
 
 	@Override
-	public void draw(ElectrolysisRecipe recipe, IRecipeSlotsView iRecipeSlotsView, PoseStack matrixStack,  double mouseX, double mouseY) {
+	public void draw(ElectrolysisRecipe recipe, IRecipeSlotsView iRecipeSlotsView, GuiGraphics matrixStack,  double mouseX, double mouseY) {
 		AllGuiTextures.JEI_SHADOW.render(matrixStack, 61, 41);
 		AllGuiTextures.JEI_LONG_ARROW.render(matrixStack, 52, 54);
 

@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "northstar:mars_quartz_ore",
+    "northstar:mars_deep_quartz_ore",
+    
+    "northstar:venus_quartz_ore",
+    "northstar:venus_deep_quartz_ore"
+  ]
+}

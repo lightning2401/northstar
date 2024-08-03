@@ -1,8 +1,5 @@
 package com.lightning.northstar.entity.goals;
 
-import com.lightning.northstar.block.MarsWormNestBlock;
-import com.lightning.northstar.block.NorthstarBlocks;
-import com.lightning.northstar.entity.MarsWormEntity;
 import com.lightning.northstar.entity.MercuryRaptorEntity;
 import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorBlock;
 
@@ -15,12 +12,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ButtonBlock;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.LeverBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -46,7 +41,7 @@ public class PushRedstoneComponentsGoal extends MoveToBlockGoal {
 	    */
 	   @Override
 	   public boolean canUse() {
-	      if (!net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.disruptor.level, this.disruptor)) {
+	      if (!net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.disruptor.level(), this.disruptor)) {
 	         return false;
 	      } else if (disruptor.disruptTimer > 0 && disruptor.timeSpentAttacking < 300) {
 	    	  return false;
@@ -63,7 +58,7 @@ public class PushRedstoneComponentsGoal extends MoveToBlockGoal {
 	   }
 
 	   private boolean tryFindBlock() {
-	      return this.blockPos != null && this.isValidTarget(this.mob.level, this.blockPos) ? true : this.findNearestBlock();
+	      return this.blockPos != null && this.isValidTarget(this.mob.level(), this.blockPos) ? true : this.findNearestBlock();
 	   }
 
 	   /**
@@ -96,7 +91,7 @@ public class PushRedstoneComponentsGoal extends MoveToBlockGoal {
 	   @Override
 	   public void tick() {
 	      super.tick();
-	      Level level = this.disruptor.level;
+	      Level level = this.disruptor.level();
 	      BlockState state = level.getBlockState(pos);
 	      if(this.disruptor.disruptTimer != 0) {
 	    	  this.stop();
@@ -104,7 +99,6 @@ public class PushRedstoneComponentsGoal extends MoveToBlockGoal {
 	      
 	      if (this.isReachedTarget() && this.disruptor.disruptTimer == 0) {
 	    	  BlockState newstate = level.getBlockState(pos);
-	    	  System.out.println("at the thingy!!!");
 	    	  disruptor.disruptTimer = 600;
 	    	  ++this.ticksSinceReachedGoal;
 	    	  if(newstate.getBlock() instanceof SlidingDoorBlock sliding) 
@@ -115,21 +109,18 @@ public class PushRedstoneComponentsGoal extends MoveToBlockGoal {
 	    	  if(newstate.getBlock() instanceof DoorBlock door) 
 	    	  {
 	    	      disruptor.timeSpentAttacking = 0;
-		    	  System.out.println("trying to open the thingy!!");
 		    	  door.setOpen(disruptor, level, newstate, pos, !newstate.getValue(DoorBlock.OPEN));
 	    		  return;
 	    	  }
 	    	  if(newstate.getBlock() instanceof ButtonBlock button) 
 	    	  {
 	    	      disruptor.timeSpentAttacking = 0;
-		    	  System.out.println("trying to open the thingy!!");
 		    	  button.press(newstate, level, pos);
 	    		  return;
 	    	  }
 	    	  if(newstate.getBlock() instanceof LeverBlock lever) 
 	    	  {
 	    	      disruptor.timeSpentAttacking = 0;
-		    	  System.out.println("trying to open the thingy!!");
 		    	  BlockState pulledState = lever.pull(state, level, pos);
 	    		  level.setBlockAndUpdate(pos, pulledState);
 	    		  float f = pulledState.getValue(LeverBlock.POWERED) ? 0.6F : 0.5F;

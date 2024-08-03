@@ -28,6 +28,19 @@
       ]
     },
     {
+      "type": "northstar:engraving",
+      "ingredients": [
+        {
+          "item": "northstar:unfinished_targeting_computer"
+        }
+      ],
+      "results": [
+        {
+          "item": "northstar:unfinished_targeting_computer"
+        }
+      ]
+    },
+    {
       "type": "create:deploying",
       "ingredients": [
         {
@@ -35,6 +48,19 @@
         },
         {
           "item": "create:precision_mechanism"
+        }
+      ],
+      "results": [
+        {
+          "item": "northstar:unfinished_targeting_computer"
+        }
+      ]
+    },
+    {
+      "type": "northstar:engraving",
+      "ingredients": [
+        {
+          "item": "northstar:unfinished_targeting_computer"
         }
       ],
       "results": [

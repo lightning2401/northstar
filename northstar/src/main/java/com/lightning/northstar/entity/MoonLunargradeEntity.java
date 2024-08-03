@@ -5,6 +5,7 @@ import com.lightning.northstar.entity.projectiles.LunargradeSpit;
 import com.lightning.northstar.sound.NorthstarSounds;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -26,26 +27,24 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.IAnimationTickable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.util.ClientUtils;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class MoonLunargradeEntity extends Monster implements IAnimatable, IAnimationTickable, RangedAttackMob{
-	AnimationFactory factory = GeckoLibUtil.createFactory(this);
+public class MoonLunargradeEntity extends Monster implements GeoEntity, RangedAttackMob{
+	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
 	boolean didSpit;
 	int spitTimer = 0;
 
 	protected MoonLunargradeEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
 		super(pEntityType, pLevel);
-		this.maxUpStep = 1;
+		this.setMaxUpStep(1f);
 	}
 
 	protected void registerGoals() {
@@ -91,20 +90,20 @@ public class MoonLunargradeEntity extends Monster implements IAnimatable, IAnima
 	}
 	
 	private void spit(LivingEntity pTarget) {
-		LunargradeSpit lunargradespit = new LunargradeSpit(this.level, this);
+		LunargradeSpit lunargradespit = new LunargradeSpit(this.level(), this);
 		double d0 = pTarget.getX() - this.getX();
 		double d1 = pTarget.getY(0.3333333333333333D) - lunargradespit.getY();
 		double d2 = pTarget.getZ() - this.getZ();
 		double d3 = Math.sqrt(d0 * d0 + d2 * d2) * (double)0.2F;
 		lunargradespit.shoot(d0, d1 + d3, d2, 1.5F, 10.0F);
 		if (!this.isSilent()) {
-			this.level.playSound((Player)null, this.getX(), this.getY(), this.getZ(), SoundEvents.LLAMA_SPIT, this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+			this.level().playSound((Player)null, this.getX(), this.getY(), this.getZ(), SoundEvents.LLAMA_SPIT, this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
 		}
 
-		this.level.addFreshEntity(lunargradespit);
+		this.level().addFreshEntity(lunargradespit);
 		this.didSpit = true;
 		this.spitTimer = 10;
-		this.level.broadcastEntityEvent(this, (byte)4);
+		this.level().broadcastEntityEvent(this, (byte)4);
 	}
 	
 	@Override
@@ -132,11 +131,6 @@ public class MoonLunargradeEntity extends Monster implements IAnimatable, IAnima
 			return super.canContinueToUse();
 		}
 	}
-
-	@Override
-	public int tickTimer() {
-		return tickCount;
-	}
 	
 	@Override
 	public void tick() {
@@ -144,11 +138,6 @@ public class MoonLunargradeEntity extends Monster implements IAnimatable, IAnima
 		if(spitTimer > 0) {
 			spitTimer = Mth.clamp(spitTimer, 0, spitTimer - 1);
 		}
-	}
-
-	@Override
-	public void registerControllers(AnimationData data) {
-		data.addAnimationController(new AnimationController<MoonLunargradeEntity>(this, "controller", 2, this::predicate));
 	}
 	
 	@Override
@@ -159,24 +148,29 @@ public class MoonLunargradeEntity extends Monster implements IAnimatable, IAnima
 		super.handleEntityEvent(pId);
 	}
 	
-	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-		if (!(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F) && spitTimer == 0 ) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", EDefaultLoopTypes.LOOP));
-			event.getController().animationSpeed = event.getLimbSwingAmount();
-		} else if (spitTimer > 0) {
-			System.out.println("AAAAAAAAA!!!!!!! SPIT TIMER !!!!! " + spitTimer);
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("spit", EDefaultLoopTypes.PLAY_ONCE));
-			event.getController().animationSpeed = 1;
-		} else {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", EDefaultLoopTypes.LOOP));
-			event.getController().animationSpeed = 1;
-		}
-
-		return PlayState.CONTINUE;
-	}
-
 	@Override
-	public AnimationFactory getFactory() {
-		return factory;
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		RawAnimation idle = RawAnimation.begin().thenLoop("idle");
+		RawAnimation walk = RawAnimation.begin().thenLoop("walk");
+		RawAnimation spit = RawAnimation.begin().thenLoop("spit");
+		
+		controllers.add(
+				// Add our flying animation controller
+				new AnimationController<>(this, state -> {
+					if(spitTimer > 0) {return state.setAndContinue(spit);}
+					else if (state.isMoving()) {return state.setAndContinue(walk);}
+					else return state.setAndContinue(idle);})
+						// Handle the custom instruction keyframe that is part of our animation json
+						.setCustomInstructionKeyframeHandler(state -> {
+							Player player = ClientUtils.getClientPlayer();
+
+							if (player != null)
+								player.displayClientMessage(Component.literal("KeyFraming"), true);
+						})
+		);
+	}
+	@Override
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return cache;
 	}
 }

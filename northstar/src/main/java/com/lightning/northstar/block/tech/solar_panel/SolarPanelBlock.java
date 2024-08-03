@@ -8,15 +8,20 @@ import com.simibubi.create.foundation.utility.Couple;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
-import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class SolarPanelBlock extends HorizontalKineticBlock implements IBE<SolarPanelBlockEntity> {
+	protected static final VoxelShape SHAPE_EAST_WEST = Block.box(1.0D, 0.0D, 0.0D, 15.0D, 12.0D, 16.0D);
+	protected static final VoxelShape SHAPE_NORTH_SOUTH = Block.box(0.0D, 0.0D, 1.0D, 16.0D, 12.0D, 15.0D);
 
 	public SolarPanelBlock(Properties properties) {
 		super(properties);
@@ -31,9 +36,8 @@ public class SolarPanelBlock extends HorizontalKineticBlock implements IBE<Solar
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		BlockState state = super.getStateForPlacement(context);
-		state.setValue(HORIZONTAL_FACING, Direction.get(AxisDirection.POSITIVE, state.getValue(HORIZONTAL_FACING).getClockWise()
-			.getAxis()));
-		return state;
+
+		return state.setValue(HORIZONTAL_FACING, context.getHorizontalDirection().getCounterClockWise());
 	}
 
 	@Override
@@ -41,6 +45,10 @@ public class SolarPanelBlock extends HorizontalKineticBlock implements IBE<Solar
 		withBlockEntityDo(pLevel, pPos, SolarPanelBlockEntity::determineAndApplySunlightScore);
 	}
 
+	public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+		return (pState.getValue(HORIZONTAL_FACING) == Direction.EAST) || (pState.getValue(HORIZONTAL_FACING) == Direction.WEST) ? SHAPE_EAST_WEST : SHAPE_NORTH_SOUTH;
+	}
+	
 
 	@Override
 	public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {

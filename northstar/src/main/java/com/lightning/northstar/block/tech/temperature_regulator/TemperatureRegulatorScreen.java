@@ -8,7 +8,6 @@ import com.lightning.northstar.Northstar;
 import com.lightning.northstar.NorthstarPackets;
 import com.lightning.northstar.world.TemperatureStuff;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.foundation.gui.AbstractSimiScreen;
 import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.gui.widget.IconButton;
@@ -18,6 +17,7 @@ import com.simibubi.create.foundation.gui.widget.SelectionScrollInput;
 import com.simibubi.create.foundation.utility.Components;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -49,7 +49,7 @@ public class TemperatureRegulatorScreen extends AbstractSimiScreen {
 	offsetZ = block.offsetZ;
 	temp = block.temp;}
 
-    public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+    public void render(GuiGraphics pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
     	super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
     	temp = Mth.clamp(temp, -273, 1000);
     	RenderSystem.disableBlend();
@@ -73,16 +73,16 @@ public class TemperatureRegulatorScreen extends AbstractSimiScreen {
     	envOptions.add(Component.translatable("northstar.gui.temperature_regulator.env_fill"));
     	this.initScrollStuff();
 	}
-    protected void renderButtons(PoseStack pPoseStack, int mouseX, int mouseY, float delta) {
+    protected void renderButtons(GuiGraphics pPoseStack, int mouseX, int mouseY, float delta) {
     }
     
-    protected void renderVariables(PoseStack pPoseStack, int mouseX, int mouseY, float delta) {
+    protected void renderVariables(GuiGraphics pPoseStack, int mouseX, int mouseY, float delta) {
         int x = (width - (imageWidth + (imageWidth / 2))) / 2;
         int y = (height - (imageHeight + (imageHeight / 2))) / 2;
 //    	this.font.draw(pPoseStack, Component.literal("Temperature: " + blockEntity.temp).withStyle(ChatFormatting.AQUA), x, y, 6944);
   //  	this.font.draw(pPoseStack, Component.literal("Offset: " + blockEntity.offsetX + ", " + blockEntity.offsetY + ", " + blockEntity.offsetZ).withStyle(ChatFormatting.AQUA), x, y + 20, 6944);
    //  	this.font.draw(pPoseStack, Component.literal("Size: " + blockEntity.sizeX + ", " + blockEntity.sizeY + ", " + blockEntity.sizeZ).withStyle(ChatFormatting.AQUA), x, y + 40, 6944);   	
-    	this.font.draw(pPoseStack, Component.literal("C°").withStyle(ChatFormatting.WHITE), x + 213, y + 110, 6944);
+    	pPoseStack.drawString(this.font, Component.literal("C°").withStyle(ChatFormatting.WHITE), x + 213, y + 110, 6944);
 //    	this.font.draw(pPoseStack, Component.literal("Fill Mode").withStyle(ChatFormatting.GRAY), x + 180, y + 85, 6944);
     }
     
@@ -112,7 +112,7 @@ public class TemperatureRegulatorScreen extends AbstractSimiScreen {
 			    	while(blockEntity.offsetX > blockEntity.sizeX / 2) {blockEntity.offsetX--;}
 			    	while(blockEntity.offsetY > blockEntity.sizeY / 2) {blockEntity.offsetY--;}
 			    	while(blockEntity.offsetZ > blockEntity.sizeZ / 2) {blockEntity.offsetZ--;}
-					labelX.x = x + 65 + 20 - font.width(labelX.text) / 2;});
+					labelX.setX(x + 65 + 20 - font.width(labelX.text) / 2);});
 			inputX.setState(blockEntity.sizeX);
 			inputX.onChanged();
 			inputs.add(inputX);
@@ -129,7 +129,7 @@ public class TemperatureRegulatorScreen extends AbstractSimiScreen {
 			    	while(blockEntity.offsetX > blockEntity.sizeX / 2) {blockEntity.offsetX--;}
 			    	while(blockEntity.offsetY > blockEntity.sizeY / 2) {blockEntity.offsetY--;}
 			    	while(blockEntity.offsetZ > blockEntity.sizeZ / 2) {blockEntity.offsetZ--;}
-					labelY.x = x + 65 + 43 - font.width(labelY.text) / 2;});
+					labelY.setX(x + 65 + 43 - font.width(labelY.text) / 2);});
 			inputY.setState(blockEntity.sizeY);
 			inputY.onChanged();
 			inputs.add(inputY);
@@ -146,7 +146,7 @@ public class TemperatureRegulatorScreen extends AbstractSimiScreen {
 			    	while(blockEntity.offsetX > blockEntity.sizeX / 2) {blockEntity.offsetX--;}
 			    	while(blockEntity.offsetY > blockEntity.sizeY / 2) {blockEntity.offsetY--;}
 			    	while(blockEntity.offsetZ > blockEntity.sizeZ / 2) {blockEntity.offsetZ--;}
-					labelZ.x = x + 65 + 67 - font.width(labelZ.text) / 2;});
+					labelZ.setX(x + 65 + 67 - font.width(labelZ.text) / 2);});
 			inputZ.setState(blockEntity.sizeZ);
 			inputZ.onChanged();
 			inputs.add(inputZ);
@@ -169,7 +169,7 @@ public class TemperatureRegulatorScreen extends AbstractSimiScreen {
 		    	while(blockEntity.offsetX > blockEntity.sizeX / 2) {blockEntity.offsetX--;}
 		    	while(blockEntity.offsetY > blockEntity.sizeY / 2) {blockEntity.offsetY--;}
 		    	while(blockEntity.offsetZ > blockEntity.sizeZ / 2) {blockEntity.offsetZ--;}
-				offsetlabelX.x = x + 65 + 20 - font.width(offsetlabelX.text) / 2;});
+				offsetlabelX.setX(x + 65 + 20 - font.width(offsetlabelX.text) / 2);});
 		offsetinputX.setState(blockEntity.offsetX);
 		offsetinputX.onChanged();
 		offsetlabels.add(offsetlabelX);
@@ -186,7 +186,7 @@ public class TemperatureRegulatorScreen extends AbstractSimiScreen {
 		    	while(blockEntity.offsetX > blockEntity.sizeX / 2) {blockEntity.offsetX--;}
 		    	while(blockEntity.offsetY > blockEntity.sizeY / 2) {blockEntity.offsetY--;}
 		    	while(blockEntity.offsetZ > blockEntity.sizeZ / 2) {blockEntity.offsetZ--;}
-				offsetlabelY.x = x + 65 + 44 - font.width(offsetlabelY.text) / 2;});
+				offsetlabelY.setX(x + 65 + 44 - font.width(offsetlabelY.text) / 2);});
 		offsetinputY.setState(blockEntity.offsetY);
 		offsetinputY.onChanged();
 		offsetlabels.add(offsetlabelY);
@@ -203,7 +203,7 @@ public class TemperatureRegulatorScreen extends AbstractSimiScreen {
 		    	while(blockEntity.offsetX > blockEntity.sizeX / 2) {blockEntity.offsetX--;}
 		    	while(blockEntity.offsetY > blockEntity.sizeY / 2) {blockEntity.offsetY--;}
 		    	while(blockEntity.offsetZ > blockEntity.sizeZ / 2) {blockEntity.offsetZ--;}
-				offsetlabelZ.x = x + 65 + 68 - font.width(offsetlabelZ.text) / 2;});
+				offsetlabelZ.setX(x + 65 + 68 - font.width(offsetlabelZ.text) / 2);});
 		offsetinputZ.setState(blockEntity.offsetZ);
 		offsetinputZ.onChanged();
 		offsetlabels.add(offsetlabelZ);
@@ -217,7 +217,7 @@ public class TemperatureRegulatorScreen extends AbstractSimiScreen {
 			.calling(state -> {
 				blockEntity.temp = state;
 				temp = state;
-				templabel.x = x + 200  - font.width(templabel.text) / 2;});
+				templabel.setX(x + 200  - font.width(templabel.text) / 2);});
 		tempinput.setState(blockEntity.temp);
 		tempinput.onChanged();
 		offsetlabels.add(templabel);
@@ -229,11 +229,9 @@ public class TemperatureRegulatorScreen extends AbstractSimiScreen {
 			.writingTo(envLabel)
 			.titled(Component.literal("Fill Mode"))
 			.calling(state -> {
-				System.out.println("State: " + state);
-				System.out.println("envFill: " + blockEntity.envFill);
 				blockEntity.envFill = state == 1;
 				envFill = state == 1;
-				envLabel.x = x + 200  - font.width(envLabel.text) / 2;});
+				envLabel.setX(x + 200  - font.width(envLabel.text) / 2);});
 		envInput.setState(blockEntity.envFill ? 1 : 0);
 		envInput.onChanged();
 		offsetlabels.add(envLabel);
@@ -259,13 +257,13 @@ public class TemperatureRegulatorScreen extends AbstractSimiScreen {
 	}
 
 	@Override
-	protected void renderWindow(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
+	protected void renderWindow(GuiGraphics ms, int mouseX, int mouseY, float partialTicks) {
     	RenderSystem.setShader(GameRenderer::getPositionTexShader);
     	RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     	RenderSystem.setShaderTexture(0, this.TEMPERATURE_REGULATOR);
     	int i = (this.width - this.imageWidth) / 2;
     	int j = (this.height - this.imageHeight) / 2;
-    	this.blit(ms, i, j, 0, 0, this.imageWidth, this.imageHeight);
+    	ms.blit(this.TEMPERATURE_REGULATOR, i, j, 0, 0, this.imageWidth, this.imageHeight);
 	}
     
     

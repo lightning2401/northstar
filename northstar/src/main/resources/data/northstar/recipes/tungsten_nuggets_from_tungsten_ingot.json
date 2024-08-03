@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "northstar:tungsten_ingot",
+  "ingredients": [
+    {
+      "item": "northstar:tungsten_ingot"
+    }
+  ],
+  "result": {
+    "item": "northstar:tungsten_nugget",
+    "count": 9
+  }
+}

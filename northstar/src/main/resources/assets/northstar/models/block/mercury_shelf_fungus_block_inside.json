@@ -1,0 +1,7 @@
+{
+    "parent": "block/template_single_face",
+    "ambientocclusion": false,
+    "textures": {
+        "texture": "northstar:block/mercury_shelf_fungus_block_inside"
+    }
+}

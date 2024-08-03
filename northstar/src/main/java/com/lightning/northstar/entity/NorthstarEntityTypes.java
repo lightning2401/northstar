@@ -2,11 +2,11 @@ package com.lightning.northstar.entity;
 
 import com.lightning.northstar.Northstar;
 import com.lightning.northstar.contraptions.RocketContraptionEntity;
-import com.lightning.northstar.contraptions.RocketContraptionEntityRenderer;
 import com.lightning.northstar.entity.projectiles.LunargradeSpit;
 import com.lightning.northstar.entity.projectiles.VenusScorpionSpit;
 import com.lightning.northstar.entity.variants.FrozenZombieEntity;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
+import com.simibubi.create.content.contraptions.render.ContraptionEntityRenderer;
 import com.simibubi.create.foundation.data.CreateEntityBuilder;
 import com.simibubi.create.foundation.utility.Lang;
 import com.tterrag.registrate.util.entry.EntityEntry;
@@ -88,8 +88,8 @@ public class NorthstarEntityTypes {
 	// contraptions
 	
 	public static final EntityEntry<RocketContraptionEntity> ROCKET_CONTRAPTION =
-			contraption("rocket_contraption", RocketContraptionEntity::new, () -> RocketContraptionEntityRenderer::new,
-				10, 40, false).register();
+			contraption("rocket_contraption", RocketContraptionEntity::new, () -> ContraptionEntityRenderer::new,
+				200, 40, false).register();
 
 	
 //	public static final EntityEntry<RocketEntity> ROCKET =

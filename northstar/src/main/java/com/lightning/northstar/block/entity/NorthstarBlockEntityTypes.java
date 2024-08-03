@@ -24,6 +24,7 @@ import com.lightning.northstar.block.tech.jet_engine.JetEngineRenderer;
 import com.lightning.northstar.block.tech.oxygen_concentrator.OxygenConcentratorBlockEntity;
 import com.lightning.northstar.block.tech.oxygen_concentrator.OxygenConcentratorInstance;
 import com.lightning.northstar.block.tech.oxygen_concentrator.OxygenConcentratorRenderer;
+import com.lightning.northstar.block.tech.oxygen_detector.OxygenDetectorBlockEntity;
 import com.lightning.northstar.block.tech.oxygen_filler.OxygenFillerBlockEntity;
 import com.lightning.northstar.block.tech.oxygen_filler.OxygenFillerRenderer;
 import com.lightning.northstar.block.tech.oxygen_generator.OxygenGeneratorBlockEntity;
@@ -38,10 +39,12 @@ import com.lightning.northstar.block.tech.telescope.TelescopeBlockEntity;
 import com.lightning.northstar.block.tech.temperature_regulator.TemperatureRegulatorBlockEntity;
 import com.lightning.northstar.block.tech.temperature_regulator.TemperatureRegulatorInstance;
 import com.lightning.northstar.block.tech.temperature_regulator.TemperatureRegulatorRenderer;
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorBlockEntity;
 import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorRenderer;
 import com.simibubi.create.content.kinetics.base.ShaftInstance;
+import com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockEntity;
+import com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockEntityInstance;
+import com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockEntityRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -125,6 +128,11 @@ public class NorthstarBlockEntityTypes {
 			.renderer(() -> ElectrolysisMachineRenderer::new)
 			.register();
    
+   public static final BlockEntityEntry<OxygenDetectorBlockEntity> OXYGEN_DETECTOR = REGISTRATE
+			.blockEntity("oxygen_detector", OxygenDetectorBlockEntity::new)
+			.validBlocks(NorthstarTechBlocks.OXYGEN_DETECTOR)
+			.register();
+   
 	public static final BlockEntityEntry<TargetingComputerRackBlockEntity> COMPUTER_RACK = REGISTRATE
 			.blockEntity("computer_rack", TargetingComputerRackBlockEntity::new)
 //			.instance(() -> RocketControlsInstance::new, false)
@@ -160,6 +168,13 @@ public class NorthstarBlockEntityTypes {
 	public static final BlockEntityEntry<RocketStationBlockEntity> ROCKET_STATION = REGISTRATE
 			.blockEntity("rocket_station", RocketStationBlockEntity::new)
 			.validBlocks(NorthstarTechBlocks.ROCKET_STATION)
+			.register();
+	
+	public static final BlockEntityEntry<BracketedKineticBlockEntity> BRACKETED_KINETIC = REGISTRATE
+			.blockEntity("simple_kinetic", BracketedKineticBlockEntity::new)
+			.instance(() -> BracketedKineticBlockEntityInstance::new, false)
+			.validBlocks(NorthstarTechBlocks.IRON_COGWHEEL)
+			.renderer(() -> BracketedKineticBlockEntityRenderer::new)
 			.register();
 
 //   public static final RegistryObject<BlockEntityType<JetEngineBlockEntity>> JET_ENGINE = BLOCK_ENTITIES.register("jet_engine",

@@ -1,0 +1,24 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"1": "northstar:block/oxygen_detector_back_powered",
+		"3": "northstar:block/oxygen_detector_side",
+		"4": "northstar:block/oxygen_detector_top",
+		"5": "northstar:block/oxygen_detector_front_powered",
+		"particle": "northstar:block/oxygen_detector_side"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#5"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#3"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#1"},
+				"west": {"uv": [16, 0, 0, 16], "texture": "#3"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#4"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#4"}
+			}
+		}
+	]
+}

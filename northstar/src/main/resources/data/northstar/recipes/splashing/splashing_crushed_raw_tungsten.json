@@ -1,0 +1,18 @@
+{
+  "type": "create:splashing",
+  "ingredients": [
+    {
+      "item": "northstar:crushed_raw_tungsten"
+    }
+  ],
+  "results": [
+    {
+      "count": 9,
+      "item": "northstar:tungsten_nugget"
+    },
+    {
+      "chance": 0.75,
+      "item": "minecraft:quartz"
+    }
+  ]
+}

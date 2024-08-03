@@ -1,0 +1,22 @@
+{
+  "type": "create:crushing",
+  "ingredients": [
+    {
+    	"tag": "northstar:zinc_ores"
+    }
+  ],
+  "processingTime": 250,
+  "results": [
+    {
+      "item": "create:crushed_raw_zinc"
+    },
+    {
+      "chance": 0.75,
+      "item": "create:crushed_raw_zinc"
+    },
+    {
+      "chance": 0.75,
+      "item": "create:experience_nugget"
+    }
+  ]
+}

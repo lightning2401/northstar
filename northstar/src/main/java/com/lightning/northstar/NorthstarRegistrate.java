@@ -27,8 +27,10 @@ import com.tterrag.registrate.util.nullness.NonNullSupplier;
 
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
@@ -44,6 +46,8 @@ public class NorthstarRegistrate extends AbstractRegistrate<NorthstarRegistrate>
 	
 	@Nullable
 	protected Function<Item, TooltipModifier> currentTooltipModifierFactory;
+	@Nullable
+	protected RegistryObject<CreativeModeTab> currentTab;
 
 	protected NorthstarRegistrate(String modid) {
 		super(modid);
@@ -74,7 +78,7 @@ public class NorthstarRegistrate extends AbstractRegistrate<NorthstarRegistrate>
 		Builder<R, T, ?, ?> builder, NonNullSupplier<? extends T> creator,
 		NonNullFunction<RegistryObject<T>, ? extends RegistryEntry<T>> entryFactory) {
 		RegistryEntry<T> entry = super.accept(name, type, builder, creator, entryFactory);
-		if (type.equals(Registry.ITEM_REGISTRY)) {
+		if (type.equals(Registries.ITEM)) {
 			if (currentTooltipModifierFactory != null) {
 				TooltipModifier.REGISTRY.registerDeferred(entry.getId(), currentTooltipModifierFactory);
 			}
@@ -115,6 +119,12 @@ public class NorthstarRegistrate extends AbstractRegistrate<NorthstarRegistrate>
 		return fluid(name, Create.asResource("fluid/" + name + "_still"), Create.asResource("fluid/" + name + "_flow"));
 	}
 
+	@Nullable
+	public NorthstarRegistrate setCreativeTab(RegistryObject<CreativeModeTab> tab) {
+		currentTab = tab;
+		return self();
+	}
+	
 	public FluidBuilder<ForgeFlowingFluid.Flowing, NorthstarRegistrate> standardFluid(String name,
 		FluidBuilder.FluidTypeFactory typeFactory) {
 		return fluid(name, Create.asResource("fluid/" + name + "_still"), Create.asResource("fluid/" + name + "_flow"),

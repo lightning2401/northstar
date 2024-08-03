@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "WPW",
+    "WWW"
+  ],
+  "key": {
+    "S": {
+      "tag": "forge:plates/iron"
+    },
+    "W": {
+      "item": "minecraft:tinted_glass"
+    },
+    "P": {
+      "item": "minecraft:iron_helmet"
+    }
+  },
+  "result": {
+    "item": "northstar:iron_space_suit_helmet",
+    "count": 1
+  }
+}

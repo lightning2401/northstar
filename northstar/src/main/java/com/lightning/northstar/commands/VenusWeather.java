@@ -31,19 +31,19 @@ public class VenusWeather {
 	
 	private static int setClear(CommandSourceStack pSource, int pTime) {
 		pSource.getLevel().getServer().getLevel(NorthstarDimensions.VENUS_DIM_KEY).setWeatherParameters(0, pTime, false, false);
-	    pSource.sendSuccess(Component.translatable("commands.weather.set.clear"), true);
+	    pSource.sendSuccess(() -> Component.translatable("commands.weather.set.clear"), true);
 	    return pTime;
 	}
 
 	private static int setRain(CommandSourceStack pSource, int pTime) {
 		pSource.getLevel().getServer().getLevel(NorthstarDimensions.VENUS_DIM_KEY).setWeatherParameters(0, pTime, true, false);
-	    pSource.sendSuccess(Component.translatable("commands.weather.set.rain"), true);
+	    pSource.sendSuccess(() -> Component.translatable("commands.weather.set.rain"), true);
 	    return pTime;
 	}
 
 	private static int setThunder(CommandSourceStack pSource, int pTime) {
 		pSource.getLevel().getServer().getLevel(NorthstarDimensions.VENUS_DIM_KEY).setWeatherParameters(0, pTime, true, true);
-	    pSource.sendSuccess(Component.translatable("commands.weather.set.thunder"), true);
+	    pSource.sendSuccess(() -> Component.translatable("commands.weather.set.thunder"), true);
 	    return pTime;
 	}
 }

@@ -1,7 +1,7 @@
 {
   "temperature": 0.8,
   "downfall": 0.4,
-  "precipitation": "none",
+  "has_precipitation": false,
   "temperature_modifier": "frozen",
   "effects": {
     "sky_color": 14331548,
@@ -67,6 +67,7 @@
      "northstar:mars_ore_quartz",
      "northstar:mars_ore_redstone",
      "northstar:mars_crater_soil",
+     "northstar:big_dumb_rock",
      "northstar:mars_worm_nest",
      "northstar:mars_roots"
   ]

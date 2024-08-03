@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:blasting",
+  "group": "copper_ingot",
+  "ingredient": {
+    	"tag": "northstar:copper_ores"
+  },
+  "result": "minecraft:copper_ingot",
+  "experience": 0.7,
+  "cookingtime": 100
+}

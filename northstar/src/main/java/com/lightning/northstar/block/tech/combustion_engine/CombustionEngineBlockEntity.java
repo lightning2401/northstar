@@ -20,11 +20,12 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
+@SuppressWarnings("removal")
 public class CombustionEngineBlockEntity extends GeneratingKineticBlockEntity implements IHaveGoggleInformation  {
 	
 	SmartFluidTankBehaviour tank;
@@ -77,10 +78,9 @@ public class CombustionEngineBlockEntity extends GeneratingKineticBlockEntity im
 		behaviours.add(tank);
 	}
 	
-	@SuppressWarnings("removal")
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY && side == getBlockState().getValue(OxygenConcentratorBlock.HORIZONTAL_FACING))
+		if (cap == ForgeCapabilities.FLUID_HANDLER && side == getBlockState().getValue(OxygenConcentratorBlock.HORIZONTAL_FACING))
 			return tank.getCapability()
 				.cast();
 		tank.getCapability().cast();

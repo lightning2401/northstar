@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S",
+    "Z",
+    "Z"
+  ],
+  "key": {
+    "S": {
+      "item": "northstar:martian_steel"
+    },
+    "Z": {
+      "item": "create:zinc_ingot"
+    }
+  },
+  "result": {
+    "item": "northstar:martian_shovel",
+    "count": 1
+  }
+}

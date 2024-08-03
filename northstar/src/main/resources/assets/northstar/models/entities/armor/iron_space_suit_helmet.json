@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "northstar:armor/iron_space_suit_texture",
+		"0": "northstar:item/armor/iron_space_suit",
 		"particle": "northstar:armor/iron_space_suit_texture"
 	},
 	"elements": [

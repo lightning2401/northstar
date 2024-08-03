@@ -35,9 +35,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
@@ -87,13 +87,11 @@ public class OxygenFillerBlockEntity extends SmartBlockEntity implements IHaveGo
 				 CompoundTag thing = item.getTag();
 				 ListTag lore = new ListTag();
 				 int currentOxy = thing.getInt("Oxygen");
-				 System.out.println(currentOxy);
 				 if(currentOxy < OxygenStuff.maximumOxy) {
 					 int oxytarget = OxygenStuff.maximumOxy - currentOxy;
 					 int newoxy = currentOxy;
 					 if(this.tank.getPrimaryHandler().getFluidAmount() > oxytarget) {
 						 newoxy += oxytarget;
-						 System.out.println("oxytarget " + oxytarget);
 						 thing.putInt("Oxygen", newoxy);
 						 lore.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal( "Oxygen: " + newoxy + "mb").setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY).withItalic(false))).toString())); 
 						 item.getOrCreateTagElement("display").put("Lore", lore);
@@ -105,12 +103,10 @@ public class OxygenFillerBlockEntity extends SmartBlockEntity implements IHaveGo
 					 }else
 					 {
 						 newoxy += this.tank.getPrimaryHandler().getFluidAmount();
-						 System.out.println("oxytarget " + oxytarget);
 						 thing.putInt("Oxygen", newoxy);
 						 lore.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal( "Oxygen: " + newoxy + "mb").setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY).withItalic(false))).toString())); 
 						 item.getOrCreateTagElement("display").put("Lore", lore);
 						 item.setTag(thing);
-						 System.out.println(thing);
 						 this.tank.getPrimaryHandler().drain(
 						 new FluidStack(NorthstarFluids.OXYGEN.get(), this.tank.getPrimaryHandler().getFluidAmount()), FluidAction.EXECUTE);
 						 return;
@@ -128,7 +124,7 @@ public class OxygenFillerBlockEntity extends SmartBlockEntity implements IHaveGo
 		Fluid tankFluid = tank.getPrimaryHandler().getFluid().getFluid();
 		int increment = 2;
 		 if (item.is(NorthstarItemTags.OXYGEN_SOURCES.tag) && (tankFluid.is(NorthstarTags.NorthstarFluidTags.IS_OXY.tag) || tankFluid.isSame(NorthstarFluids.OXYGEN.get()))) {
-			 System.out.println("I DONT KNOW IF THSI IS WORKING!!!");
+
 			 CompoundTag thing = item.getTag();
 			 if (thing == null)
 				 return;
@@ -141,15 +137,13 @@ public class OxygenFillerBlockEntity extends SmartBlockEntity implements IHaveGo
 			 if(increment == 0 && !hasStopped) 
 			 {	
 				 AllSoundEvents.CONFIRM.playAt(level, worldPosition, 0.4f, 0, true);
-				 System.out.println("Big Bazongos!!!!! Balls"); hasStopped = true;
+				 hasStopped = true;
 			 }
 			 else if(increment != 0) {
 				hasStopped = false;
 			 	audioTick++;
-			 	System.out.println("audioTick: " +  audioTick);
 				 if(level.isClientSide) {
 					 if(audioTick % 13 == 0) {
-						 System.out.println("Big Bazinga is now REal");
 						 BlockPos pos = this.getBlockPos();
 						 level.playLocalSound(pos.getX(),pos.getY(),pos.getZ(), NorthstarSounds.AIRFLOW.get(), SoundSource.BLOCKS, 0.5f, 0, false);
 					 }					 
@@ -246,7 +240,7 @@ public class OxygenFillerBlockEntity extends SmartBlockEntity implements IHaveGo
 	
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY && side == getBlockState().getValue(OxygenFillerBlock.HORIZONTAL_FACING).getOpposite())
+		if (cap == ForgeCapabilities.FLUID_HANDLER && side == getBlockState().getValue(OxygenFillerBlock.HORIZONTAL_FACING).getOpposite())
 			return tank.getCapability()
 				.cast();
 		tank.getCapability().cast();

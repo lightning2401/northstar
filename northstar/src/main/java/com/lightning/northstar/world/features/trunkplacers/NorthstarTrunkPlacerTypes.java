@@ -2,7 +2,7 @@ package com.lightning.northstar.world.features.trunkplacers;
 
 import com.lightning.northstar.Northstar;
 
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -11,7 +11,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class NorthstarTrunkPlacerTypes<P extends TrunkPlacer> {
     public static final DeferredRegister<TrunkPlacerType<?>> TRUNK_PLACER_TYPES =
-            DeferredRegister.create(Registry.TRUNK_PLACER_TYPE_REGISTRY, Northstar.MOD_ID);
+            DeferredRegister.create(Registries.TRUNK_PLACER_TYPE, Northstar.MOD_ID);
     
 	@SuppressWarnings({"unchecked", "rawtypes" })
 	public static final RegistryObject<TrunkPlacerType<?>> ARGYRE_TRUNK_PLACER = TRUNK_PLACER_TYPES.register("argyre_trunk_placer", () -> new TrunkPlacerType(ArgyreTrunkPlacer.CODEC));

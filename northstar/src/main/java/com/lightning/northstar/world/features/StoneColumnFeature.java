@@ -219,7 +219,7 @@ public class StoneColumnFeature extends Feature<StoneColumnConfiguration> {
 		         } else {
 		            int i = this.originY - pPos.getY();
 		            Vec3 vec3 = this.windSpeed.scale((double)i);
-		            return pPos.offset(vec3.x, 0.0D, vec3.z);
+		            return pPos.offset((int)vec3.x, 0, (int)vec3.z);
 		         }
 		      }
 		   }

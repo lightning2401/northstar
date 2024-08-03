@@ -2,13 +2,17 @@ package com.lightning.northstar.block.tech.telescope;
 
 import javax.annotation.Nullable;
 
+import org.joml.Vector3f;
+
 import com.lightning.northstar.block.entity.NorthstarBlockEntityTypes;
+import com.lightning.northstar.world.dimension.NorthstarPlanets;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.utility.Lang;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -59,17 +63,19 @@ public class TelescopeBlock extends BaseEntityBlock implements IBE<TelescopeBloc
 	}
 
 	
-	 @Override
+	 @SuppressWarnings("resource")
+	@Override
 	  public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos,Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
 	        if (!pLevel.isClientSide()) {
 	            BlockEntity entity = pLevel.getBlockEntity(pPos);
-	            if(entity instanceof TelescopeBlockEntity) {
+	            if(entity instanceof TelescopeBlockEntity && canSeeSky(pPos.above(), pLevel, pState.getValue(FACING)) && 
+	            		(pLevel.isNight() || NorthstarPlanets.canSeeSkyAtDay(pLevel.dimension())) && (!pLevel.isRaining() || !NorthstarPlanets.hasWeather(pLevel.dimension()) )
+	            		&& NorthstarPlanets.planetHasSky(pLevel.dimension())) {
 	                NetworkHooks.openScreen(((ServerPlayer)pPlayer), (TelescopeBlockEntity)entity, pPos);
 
 	            } else {
 	        		Minecraft.getInstance().player.displayClientMessage(
 	        				Lang.translateDirect("northstar.gui.telescope_fail"), true);
-	                throw new IllegalStateException("Our Container provider is missing!");
 	            }
 	        }
 
@@ -80,6 +86,22 @@ public class TelescopeBlock extends BaseEntityBlock implements IBE<TelescopeBloc
 			return new TelescopeBlockEntity(pPos, pState);
 		}
 		
+	private boolean canSeeSky(BlockPos pos, Level level, Direction dir) {
+		boolean flag = false;
+		int clearSpots = 0;
+		for(int x = 0; x <= 3; x++) {
+			Vector3f vec = dir.step();
+			vec.mul(x);
+			if(level.canSeeSky(pos.offset(new Vec3i((int)vec.x(), (int)vec.y(), (int)vec.z())))) {
+				clearSpots++;
+				if(clearSpots >= 2)
+				{flag = true;}
+			}
+		}
+		
+		
+		return flag;
+	}
 		
 	@Nullable
 	@Override

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:blasting",
+  "group": "gold_ingot",
+  "ingredient": {
+    	"tag": "northstar:gold_ores"
+  },
+  "result": "minecraft:gold_ingot",
+  "experience": 0.7,
+  "cookingtime": 100
+}

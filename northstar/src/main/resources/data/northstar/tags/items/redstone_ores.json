@@ -1,0 +1,15 @@
+{
+  "values": [
+    "northstar:mars_redstone_ore",
+    "northstar:mars_deep_redstone_ore",
+    
+    "northstar:moon_redstone_ore",
+    "northstar:moon_deep_redstone_ore",
+    
+    "northstar:venus_redstone_ore",
+    "northstar:venus_deep_redstone_ore",
+    
+    "northstar:mercury_redstone_ore",
+    "northstar:mercury_deep_redstone_ore"
+  ]
+}

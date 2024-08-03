@@ -1,5 +1,6 @@
 package com.lightning.northstar.block;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
@@ -7,6 +8,8 @@ import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
@@ -28,11 +31,11 @@ public class VenusMushroomBlock extends BushBlock implements BonemealableBlock {
 	protected static final BooleanProperty IS_ON_CEILING = BooleanProperty.create("is_on_ceiling");
 	protected static final VoxelShape CEILING_SHAPE = Block.box(5.0D, 10.0D, 5.0D, 11.0D, 16.0D, 11.0D);
 	protected static final VoxelShape SHAPE = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 6.0D, 11.0D);
-	private final Supplier<Holder<? extends ConfiguredFeature<?, ?>>> upsideDownSupplier;
-	private final Supplier<Holder<? extends ConfiguredFeature<?, ?>>> featureSupplier;
+	private final ResourceKey<ConfiguredFeature<?, ?>> upsideDownSupplier;
+	private final ResourceKey<ConfiguredFeature<?, ?>> featureSupplier;
 
 	public VenusMushroomBlock(Properties pProperties,
-			Supplier<Holder<? extends ConfiguredFeature<?, ?>>> upRightFeature, @Nullable Supplier<Holder<? extends ConfiguredFeature<?, ?>>> upsideDownFeature) {
+			ResourceKey<ConfiguredFeature<?, ?>> upRightFeature, @Nullable ResourceKey<ConfiguredFeature<?, ?>> upsideDownFeature) {
 		super(pProperties);
 		this.featureSupplier = upRightFeature;	
 		this.upsideDownSupplier = upsideDownFeature;	
@@ -83,21 +86,31 @@ public class VenusMushroomBlock extends BushBlock implements BonemealableBlock {
 		this.growMushroom(pLevel, pPos, pState, pRandom);
 	}
 	public boolean growMushroom(ServerLevel pLevel, BlockPos pPos, BlockState pState, RandomSource pRandom) {
-		net.minecraftforge.event.level.SaplingGrowTreeEvent event;
-		if(pState.getValue(IS_ON_CEILING))
-			{event = net.minecraftforge.event.ForgeEventFactory.blockGrowFeature(pLevel, pRandom, pPos, this.upsideDownSupplier.get());}
-		else
-			{event = net.minecraftforge.event.ForgeEventFactory.blockGrowFeature(pLevel, pRandom, pPos, this.featureSupplier.get());}
-		if (event.getResult().equals(net.minecraftforge.eventbus.api.Event.Result.DENY)) return false;
-		pLevel.removeBlock(pPos, false);
-		if (event.getFeature().value().place(pLevel, pLevel.getChunkSource().getGenerator(), pRandom, pPos)) {
-			return true;
-		} else {
-			pLevel.setBlock(pPos, pState, 3);
-			return false;
+		if(!pState.getValue(IS_ON_CEILING)) {
+			Optional<? extends Holder<ConfiguredFeature<?, ?>>> optional = pLevel.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolder(this.featureSupplier);
+	        var event = net.minecraftforge.event.ForgeEventFactory.blockGrowFeature(pLevel, pRandom, pPos, optional.get());
+			if (event.getResult().equals(net.minecraftforge.eventbus.api.Event.Result.DENY)) return false;
+			pLevel.removeBlock(pPos, false);
+			if (event.getFeature().value().place(pLevel, pLevel.getChunkSource().getGenerator(), pRandom, pPos)) {
+				return true;
+			} else {
+				pLevel.setBlock(pPos, pState, 3);
+				return false;
+			}  
+		}else {
+			Optional<? extends Holder<ConfiguredFeature<?, ?>>> optional = pLevel.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolder(this.upsideDownSupplier);
+	        var event = net.minecraftforge.event.ForgeEventFactory.blockGrowFeature(pLevel, pRandom, pPos, optional.get());
+			if (event.getResult().equals(net.minecraftforge.eventbus.api.Event.Result.DENY)) return false;
+			pLevel.removeBlock(pPos, false);
+			if (event.getFeature().value().place(pLevel, pLevel.getChunkSource().getGenerator(), pRandom, pPos)) {
+				return true;
+			} else {
+				pLevel.setBlock(pPos, pState, 3);
+				return false;
+			}  
 		}
 	}
-	public boolean isValidBonemealTarget(BlockGetter pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
+	public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
 		return pState.getValue(IS_ON_CEILING) ? ((VenusMushroomBlock)(pState.getBlock())).upsideDownSupplier != null : ((VenusMushroomBlock)(pState.getBlock())).featureSupplier != null;
 	}
 
@@ -105,4 +118,5 @@ public class VenusMushroomBlock extends BushBlock implements BonemealableBlock {
 		return pState.getValue(IS_ON_CEILING) ? ((VenusMushroomBlock)(pState.getBlock())).upsideDownSupplier != null : ((VenusMushroomBlock)(pState.getBlock())).featureSupplier != null;
 //		return (double)pRandom.nextFloat() < 0.4D;
 	}
+
 }

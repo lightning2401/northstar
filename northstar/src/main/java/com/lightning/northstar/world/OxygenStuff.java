@@ -2,22 +2,25 @@ package com.lightning.northstar.world;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map.Entry;
+
+import org.lwjgl.glfw.GLFW;
+
 import java.util.Set;
 
 import com.lightning.northstar.Northstar;
 import com.lightning.northstar.NorthstarTags;
+import com.lightning.northstar.NorthstarTags.NorthstarItemTags;
 import com.lightning.northstar.particle.GlowstoneParticleData;
-import com.lightning.northstar.particle.NorthstarParticles;
 import com.lightning.northstar.world.dimension.NorthstarPlanets;
+import com.mojang.blaze3d.platform.InputConstants;
+import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorBlock;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -46,8 +49,11 @@ public class OxygenStuff {
 	public static List<LivingEntity> oxygenatedEntities = new ArrayList<LivingEntity>();
 	public static int power = 2000;
 	public static int maximumOxy = 2000;
+	public static boolean debugMode = false;
 
 	public static boolean hasOxygen(BlockPos pos, ResourceKey<Level> level) {
+		if(NorthstarPlanets.getPlanetOxy(level))
+			return true;
 		if(!oxygenSources.containsValue(level)) {return false;}
     	for(Entry<Set<BlockPos>, ResourceKey<Level>> blocks:	oxygenSources.entrySet()) {
     		if(blocks.getValue() == level) {
@@ -60,15 +66,26 @@ public class OxygenStuff {
 	}
 	@SubscribeEvent
     public static void onWorldTick(TickEvent.LevelTickEvent event){
+		if(!event.level.isClientSide)
+			return;
     	long t = event.level.getGameTime();
-    	if(t % 40 == 0) {
-    		for(Entry<Set<BlockPos>, ResourceKey<Level>> blocks:	oxygenSources.entrySet()) {
-    			if(blocks.getValue() == event.level.dimension()) {
-    				for(BlockPos pos : blocks.getKey()) {
-    					event.level.addParticle(new GlowstoneParticleData(), pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, 0,0,0);
-    				}
-    			}
-    			
+    	if(InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_O)){
+				debugMode = true;
+		}else {
+			debugMode = false;
+		}
+    	if(t % 40 == 0 && debugMode) {
+    		try {
+	    		for(Entry<Set<BlockPos>, ResourceKey<Level>> blocks:	oxygenSources.entrySet()) {
+	    			if(blocks.getValue() == event.level.dimension()) {
+	    				for(BlockPos pos : blocks.getKey()) {
+	    					event.level.addParticle(new GlowstoneParticleData(), pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, 0,0,0);
+	    				}
+	    			}
+	    			
+	    		}
+    		}catch(Exception e) {
+    			//huh
     		}
     	}
     	
@@ -157,7 +174,11 @@ public class OxygenStuff {
     }
 	
     public static boolean getIsAir(BlockState state) {
-        return state.is(NorthstarTags.NorthstarBlockTags.AIR_PASSES_THROUGH.tag) || !state.getFluidState().isEmpty();
+    	boolean slideFlag = false;
+    	if(state.getBlock() instanceof SlidingDoorBlock) {
+    		slideFlag = state.getValue(SlidingDoorBlock.OPEN);
+    	}
+        return state.is(NorthstarTags.NorthstarBlockTags.AIR_PASSES_THROUGH.tag) || !state.getFluidState().isEmpty() || slideFlag;
      }
     
     
@@ -181,7 +202,7 @@ public class OxygenStuff {
 	@SubscribeEvent
 	public static void onUpdateLivingEntity(LivingTickEvent event) {
 		LivingEntity entity = event.getEntity();
-		Level world = entity.level;
+		Level world = entity.level();
 		boolean tick = world.getGameTime() % 20 == 0;
 		if (world == null)
 			return;
@@ -196,16 +217,23 @@ public class OxygenStuff {
 			
 			else{
 //				System.out.println("clover would like to cry but they have no eyes");
+				boolean oxyflag = false;
+				int sealedArmorCount = 0;
 				for(ItemStack armor : entity.getArmorSlots()) {
+					if(armor.is(NorthstarItemTags.OXYGEN_SEALING.tag))
+						sealedArmorCount++;
 					if(armor.getTag() == null)
 						continue;
-					if(armor.getTag().contains("Oxygen") && (armor.is(NorthstarTags.NorthstarItemTags.OXYGEN_SOURCES.tag)) && armor.getTag().getInt("Oxygen") > 0) {
+					if(armor.getTag().contains("Oxygen") && (armor.is(NorthstarTags.NorthstarItemTags.OXYGEN_SOURCES.tag)) && armor.getTag().getInt("Oxygen") > 0 && !OxygenStuff.checkForAir(entity)) {
 						depleteOxy(armor);
-						if(!oxygenatedEntities.contains(entity)) {
-							oxygenatedEntities.add(entity);
-						}
-						return;
+						oxyflag = true;
 					}
+				}
+				if(oxyflag && sealedArmorCount >= 4) {
+					if(!oxygenatedEntities.contains(entity)) {
+						oxygenatedEntities.add(entity);
+					}
+					return;
 				}
 			}
 			if(oxygenatedEntities.contains(entity)) {
@@ -215,15 +243,19 @@ public class OxygenStuff {
 		
 	}
     public static boolean checkForAir(LivingEntity entity) {
-    	if(entity.level.isClientSide)
+    	if(entity.level().isClientSide)
     		return false;
-    		for(Entry<Set<BlockPos>, ResourceKey<Level>> blocks:	oxygenSources.entrySet()) {
-    			if(blocks.getValue() == entity.level.dimension()) {
-    				if(blocks.getKey().contains(entity.blockPosition()) && blocks.getKey().size() < maximumOxy) {
-    					return true;
-    				}
-				}
-    		}		
+	    	try {
+	    		for(Entry<Set<BlockPos>, ResourceKey<Level>> blocks:	oxygenSources.entrySet()) {
+	    			if(blocks.getValue() == entity.level().dimension()) {
+	    				if((blocks.getKey().contains(entity.blockPosition()) || blocks.getKey().contains(entity.blockPosition().above()))) {
+	    					return true;
+	    				}
+					}
+	    		}		
+	    	}catch(Exception e) {
+	    		//bruh
+	    	}
     		
     	
 		return false;

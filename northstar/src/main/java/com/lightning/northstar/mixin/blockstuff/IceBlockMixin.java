@@ -26,7 +26,7 @@ import net.minecraft.world.level.material.Fluids;
 @Mixin(IceBlock.class)
 public class IceBlockMixin {
 
-    @Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "randomTick", at = @At("TAIL"), cancellable = true)
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom, CallbackInfo info) {
     	//just in case other mods use the iceblock class for some reason
     	if(!pState.is(Blocks.ICE)){
@@ -34,7 +34,7 @@ public class IceBlockMixin {
     	}
     	
     	int highestTemp = checkTemp(pState, pLevel, pPos, pRandom);
-    	if(pRandom.nextFloat() > 0.7) {
+    	if(pRandom.nextFloat() > 0.4) {
     		if(100 < highestTemp){
     			this.evaporate(pState, pLevel, pPos);
     		}
@@ -43,7 +43,7 @@ public class IceBlockMixin {
     	    }
     	}
     	else if(32 < highestTemp){
-    		animateTick(pState, pLevel, pPos, pRandom);
+    		coldAirParticles(pState, pLevel, pPos, pRandom);
     	}
 
 
@@ -62,15 +62,12 @@ public class IceBlockMixin {
     }
 
  //   @Inject(method = "animateTick", at = @At("HEAD"), cancellable = true)
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-	      if(random.nextInt(5) != 0 && TemperatureStuff.getTemp(pos, level) < 32) {
-	    	  return;
-	      }
+    public void coldAirParticles(BlockState state, Level level, BlockPos pos, RandomSource random) {
 	      int x = pos.getX();
 	      int y = pos.getY();
 	      int z = pos.getZ();
 	      for(Direction dir : Direction.values()) {
-	    	  if(level.getBlockState(pos.relative(dir)).is(NorthstarTags.NorthstarBlockTags.AIR_PASSES_THROUGH.tag) && random.nextInt(20) == 0) {
+	    	  if(level.getBlockState(pos.relative(dir)).isAir() && random.nextInt(20) == 0) {
 	    	      double d0 = (double)x + (dir.getStepX() / 2) + random.nextDouble();
 	    	      double d1 = (double)y + 0.7D;
 	    	      double d2 = (double)z + (dir.getStepZ() / 2) + random.nextDouble();
@@ -81,12 +78,10 @@ public class IceBlockMixin {
 	}
     
     protected void melt(BlockState pState, Level pLevel, BlockPos pPos) {
-		System.out.println("MELTING!!!!!!");
 	    pLevel.setBlockAndUpdate(pPos, Fluids.WATER.getFluidType().getBlockForFluidState(pLevel, pPos, Fluids.WATER.defaultFluidState()));
 	    pLevel.neighborChanged(pPos, Fluids.WATER.getFluidType().getBlockForFluidState(pLevel, pPos, Fluids.WATER.defaultFluidState()).getBlock(), pPos);
 	}
 	protected void evaporate(BlockState pState, Level pLevel, BlockPos pPos) {
-		System.out.println("EVAPORATING!!!!!!");
 	    pLevel.setBlockAndUpdate(pPos, Blocks.AIR.defaultBlockState());
 	    pLevel.neighborChanged(pPos, Blocks.AIR, pPos);
         int i = pPos.getX();

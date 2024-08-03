@@ -16,6 +16,8 @@
   			"northstar:mars_deep_redstone_ore",
   			"northstar:mars_deep_quartz_ore",
   			
+  			"northstar:iron_cogwheel",
+  			
   			"northstar:mars_stone_bricks",
   			"northstar:mars_stone_brick_slab",
   			"northstar:mars_stone_brick_slab_vertical",
@@ -31,6 +33,7 @@
 			"northstar:martian_steel_sheetmetal_slab",
 			"northstar:martian_steel_sheetmetal_vertical_slab",
 			"northstar:martian_steel_plating",
+			"northstar:martian_steel_plating_stairs",
 			"northstar:martian_steel_plating_slab",
 			"northstar:martian_steel_plating_vertical_slab",
 			"northstar:martian_steel_large_plating",
@@ -108,6 +111,7 @@
   			"northstar:moon_deep_iron_ore",
   			"northstar:moon_deep_gold_ore",
   			"northstar:moon_deep_lapis_ore",
+  			"northstar:moon_deep_glowstone_ore",
   			"northstar:moon_deep_diamond_ore",
   			"northstar:moon_deep_redstone_ore",
   			"northstar:moon_deep_zinc_ore",
@@ -148,6 +152,10 @@
   			"northstar:calorian_slab",
   			"northstar:calorian_stairs",
   			
+  			"northstar:mercury_cactus",
+  			"northstar:mercury_shelf_fungus",
+  			"northstar:mercury_shelf_fungus_block",
+  			
   			"northstar:mercury_stone_bricks",
   			"northstar:mercury_stone_brick_slab",
   			"northstar:mercury_stone_brick_slab_vertical",
@@ -174,12 +182,14 @@
   			
   			"northstar:telescope",
   			"northstar:electrolysis_machine",
+  			"northstar:interplanetary_navigator",
   			"northstar:iron_space_door",
   			"northstar:computer_rack",
   			"northstar:combustion_engine",
   			"northstar:oxygen_bubble_generator",
   			"northstar:oxygen_generator",
   			"northstar:oxygen_filler",
+			"northstar:oxygen_detector",
   			"northstar:temperature_regulator",
   			"northstar:rocket_station",
   			"northstar:rocket_controls",

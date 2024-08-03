@@ -2,11 +2,11 @@ package com.lightning.northstar.advancements;
 
 import static com.lightning.northstar.advancements.NorthstarAdvancement.TaskType.SILENT;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 
@@ -16,12 +16,12 @@ import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
 import com.lightning.northstar.block.NorthstarBlocks;
 import com.mojang.logging.LogUtils;
-import com.simibubi.create.AllBlocks;
 
 import net.minecraft.advancements.Advancement;
 import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.PackOutput.PathProvider;
 import net.minecraft.resources.ResourceLocation;
 
 public class NorthstarAdvancements implements DataProvider {
@@ -56,33 +56,32 @@ public class NorthstarAdvancements implements DataProvider {
 
 	// Datagen
 
+	private final PackOutput output;
 	private static final Logger LOGGER = LogUtils.getLogger();
-	private final DataGenerator generator;
 
-	public NorthstarAdvancements(DataGenerator generatorIn) {
-		this.generator = generatorIn;
+	public NorthstarAdvancements(PackOutput output) {
+		this.output = output;
 	}
 
 	@Override
-	public void run(CachedOutput cache) throws IOException {
-		Path path = this.generator.getOutputFolder();
+	public CompletableFuture<?> run(CachedOutput cache) {
+		PathProvider pathProvider = output.createPathProvider(PackOutput.Target.DATA_PACK, "advancements");
+		List<CompletableFuture<?>> futures = new ArrayList<>();
+
 		Set<ResourceLocation> set = Sets.newHashSet();
-		Consumer<Advancement> consumer = (p_204017_3_) -> {
-			if (!set.add(p_204017_3_.getId()))
-				throw new IllegalStateException("Duplicate advancement " + p_204017_3_.getId());
-
-			Path path1 = getPath(path, p_204017_3_);
-
-			try {
-				DataProvider.saveStable(cache, p_204017_3_.deconstruct()
-					.serializeToJson(), path1);
-			} catch (IOException ioexception) {
-				LOGGER.error("Couldn't save advancement {}", path1, ioexception);
-			}
+		Consumer<Advancement> consumer = (advancement) -> {
+			ResourceLocation id = advancement.getId();
+			if (!set.add(id))
+				throw new IllegalStateException("Duplicate advancement " + id);
+			Path path = pathProvider.json(id);
+			futures.add(DataProvider.saveStable(cache, advancement.deconstruct()
+				.serializeToJson(), path));
 		};
 
 		for (NorthstarAdvancement advancement : ENTRIES)
 			advancement.save(consumer);
+
+		return CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new));
 	}
 
 	private static Path getPath(Path pathIn, Advancement advancementIn) {

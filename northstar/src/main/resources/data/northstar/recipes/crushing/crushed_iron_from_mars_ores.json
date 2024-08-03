@@ -1,0 +1,27 @@
+{
+  "type": "create:crushing",
+  "ingredients": [
+    {
+      "tag": "northstar:iron_ores"
+    }
+  ],
+  "processingTime": 350,
+  "results": [
+    {
+      "count": 3,
+      "item": "create:crushed_raw_iron"
+    },
+    {
+      "chance": 0.75,
+      "item": "create:crushed_raw_iron"
+    },
+    {
+      "chance": 0.25,
+      "item": "create:crushed_raw_iron"
+    },
+    {
+      "chance": 0.75,
+      "item": "create:experience_nugget"
+    }
+  ]
+}

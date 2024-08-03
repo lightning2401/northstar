@@ -4,7 +4,7 @@ import com.lightning.northstar.Northstar;
 import com.lightning.northstar.entity.projectiles.VenusScorpionSpit;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 
 import net.minecraft.client.model.LlamaSpitModel;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -30,8 +30,8 @@ public class VenusScorpionSpitRenderer extends EntityRenderer<VenusScorpionSpit>
 	   public void render(VenusScorpionSpit pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack, MultiBufferSource pBuffer, int pPackedLight) {
 	      pMatrixStack.pushPose();
 	      pMatrixStack.translate(0.0D, (double)0.15F, 0.0D);
-	      pMatrixStack.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(pPartialTicks, pEntity.yRotO, pEntity.getYRot()) - 90.0F));
-	      pMatrixStack.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(pPartialTicks, pEntity.xRotO, pEntity.getXRot())));
+	      pMatrixStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(pPartialTicks, pEntity.yRotO, pEntity.getYRot()) - 90.0F));
+	      pMatrixStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(pPartialTicks, pEntity.xRotO, pEntity.getXRot())));
 	      this.model.setupAnim(pEntity, pPartialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
 	      VertexConsumer vertexconsumer = pBuffer.getBuffer(this.model.renderType(ACID_SPIT_LOCATION));
 	      this.model.renderToBuffer(pMatrixStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);

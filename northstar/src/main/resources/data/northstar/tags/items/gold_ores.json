@@ -1,0 +1,15 @@
+{
+  "values": [
+    "northstar:mars_gold_ore",
+    "northstar:mars_deep_gold_ore",
+    
+    "northstar:moon_gold_ore",
+    "northstar:moon_deep_gold_ore",
+    
+    "northstar:venus_gold_ore",
+    "northstar:venus_deep_gold_ore",
+    
+    "northstar:mercury_gold_ore",
+    "northstar:mercury_deep_gold_ore"
+  ]
+}

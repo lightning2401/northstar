@@ -11,8 +11,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryCodecs;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
@@ -30,7 +30,7 @@ public class TowerTrunkPlacer extends TrunkPlacer {
 	   public static final Codec<TowerTrunkPlacer> CODEC = RecordCodecBuilder.create((p_226236_) -> {
 		      return trunkPlacerParts(p_226236_).and(p_226236_.group(IntProvider.POSITIVE_CODEC.fieldOf("extra_branch_steps").forGetter((p_226242_) -> {
 		         return p_226242_.extraBranchSteps;
-		      }), RegistryCodecs.homogeneousList(Registry.BLOCK_REGISTRY).fieldOf("can_grow_through").forGetter((p_226234_) -> {
+		      }), RegistryCodecs.homogeneousList(Registries.BLOCK).fieldOf("can_grow_through").forGetter((p_226234_) -> {
 		         return p_226234_.canGrowThrough;
 		      }), BlockStateProvider.CODEC.fieldOf("cap_provider").forGetter((p_161248_) -> {
 		          return p_161248_.capProvider;
@@ -51,7 +51,6 @@ public class TowerTrunkPlacer extends TrunkPlacer {
 		   }
 		   public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedReader pLevel, BiConsumer<BlockPos, BlockState> pBlockSetter, RandomSource pRandom, int pFreeTreeHeight, BlockPos pPos, TreeConfiguration pConfig) {
 			      List<FoliagePlacer.FoliageAttachment> list = Lists.newArrayList();
-			      System.out.println(pPos + "BLOOM FUNGUS!!!!!");
 			      BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
 			      for(int i = 0; i < pFreeTreeHeight; ++i) {

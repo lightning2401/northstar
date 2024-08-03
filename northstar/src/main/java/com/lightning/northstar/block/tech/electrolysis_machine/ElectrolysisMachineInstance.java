@@ -9,6 +9,7 @@ import com.simibubi.create.content.kinetics.base.flwdata.RotatingData;
 
 public class ElectrolysisMachineInstance extends SingleRotatingInstance<ElectrolysisMachineBlockEntity> implements DynamicInstance{
 	
+	@SuppressWarnings("unused")
 	private final ElectrolysisMachineBlockEntity elecMac;
 
 	public ElectrolysisMachineInstance(MaterialManager materialManager, ElectrolysisMachineBlockEntity blockEntity) {

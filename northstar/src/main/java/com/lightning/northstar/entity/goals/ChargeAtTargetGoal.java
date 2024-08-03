@@ -6,7 +6,6 @@ import com.lightning.northstar.sound.NorthstarSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
 import net.minecraft.util.Mth;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
@@ -38,17 +37,16 @@ public class ChargeAtTargetGoal extends MoveToBlockGoal {
 		  if(chargingMob.chargeCooldown > 0 ) {
 			  return false;
 		  }else if (this.chargingMob.chargeTimer > 0) {
-	    	  System.out.println("eerrmm... pa lermpa????");
 	    	  return true;
 	      } else if (this.searchForTarget()) {
 	         this.nextStartTick = reducedTickDelay(20);
 	         this.chargingMob.charging = true;
-	         chargingMob.level.broadcastEntityEvent(chargingMob, (byte)63);
+	         chargingMob.level().broadcastEntityEvent(chargingMob, (byte)63);
 	         return true;
 	      } else {
 	         this.nextStartTick = this.nextStartTick(this.mob);
 	         chargingMob.moveDirection = null;
-	         chargingMob.level.broadcastEntityEvent(chargingMob, (byte)65);
+	         chargingMob.level().broadcastEntityEvent(chargingMob, (byte)65);
 	         this.chargingMob.charging = false;
 	         return false;
 	      }
@@ -103,13 +101,12 @@ public class ChargeAtTargetGoal extends MoveToBlockGoal {
 	   public void tick() {
 		  //im gonna scream i cant figure this out im so dumb 
 	      if(chargingMob.ticksSpentCharging > 60) {
-	    	  System.out.println("STOPPING!!!!!!");
 	    	  chargingMob.moveDirection = Vec3.ZERO;
 	    	  chargingMob.targetPos = null;
 	    	  chargingMob.chargeTimer = 0;
 	    	  chargingMob.stopChargeTimer = 0;
 	    	  chargingMob.charging = false;
-	    	  chargingMob.level.broadcastEntityEvent(chargingMob, (byte) 67);
+	    	  chargingMob.level().broadcastEntityEvent(chargingMob, (byte) 67);
 	    	  chargingMob.passedTarget = false;
 	    	  chargingMob.chargeCooldown = 200;
 	    	  chargingMob.ticksSpentCharging = 0;
@@ -133,10 +130,10 @@ public class ChargeAtTargetGoal extends MoveToBlockGoal {
 		      Vec3 subVec = targetVec.subtract(chargerVec);
 //		      System.out.println("SUBVEC: " + subVec);
 		      
-		      for(Entity colliders : this.chargingMob.level.getEntities(chargingMob, chargingMob.getBoundingBox())) {
+		      for(Entity colliders : this.chargingMob.level().getEntities(chargingMob, chargingMob.getBoundingBox())) {
 		    	  if(colliders instanceof LivingEntity lc) {
 		    		  Vec3 vec = lc.getDeltaMovement();		    		  
-		    		  lc.hurt(DamageSource.CRAMMING, 5);		
+		    		  lc.hurt(lc.damageSources().cramming(), 5);		
 		    		  this.chargingMob.playSound(NorthstarSounds.VENUS_STONE_BULL_ATTACK.get(), 1.0F, 1.0F);
 		    		  if(chargingMob.moveDirection != null)
 		    		  {lc.setDeltaMovement(vec.x + (chargingMob.moveDirection.x / 50), vec.y + 0.3, vec.z + (chargingMob.moveDirection.z / 50));}
@@ -151,10 +148,9 @@ public class ChargeAtTargetGoal extends MoveToBlockGoal {
 		      if(chargingMob.moveDirection.z < 0) {zFlag = subVec.z > 0;}
 			      
 		      if (xFlag && zFlag && !chargingMob.passedTarget) {
-		    	  System.out.println("THIS SHOULD BE STOPPING  AHHH!!!!");
 		    	  if(!chargingMob.passedTarget) {
 		    		  chargingMob.passedTarget = true;
-		    		  chargingMob.level.broadcastEntityEvent(chargingMob, (byte) 66);
+		    		  chargingMob.level().broadcastEntityEvent(chargingMob, (byte) 66);
 		    	  }
 		      }
 //		      System.out.println("distance: " +  blockPosToVec3(chargingMob.blockPosition()).distanceTo(blockPosToVec3(this.targetPos)));
@@ -165,7 +161,7 @@ public class ChargeAtTargetGoal extends MoveToBlockGoal {
 		    	  chargingMob.chargeTimer = 0;
 		    	  chargingMob.stopChargeTimer = 0;
 		    	  chargingMob.charging = false;
-		    	  chargingMob.level.broadcastEntityEvent(chargingMob, (byte) 67);
+		    	  chargingMob.level().broadcastEntityEvent(chargingMob, (byte) 67);
 		    	  chargingMob.passedTarget = false;
 		    	  chargingMob.chargeCooldown = 200;
 		    	  chargingMob.ticksSpentCharging = 0;

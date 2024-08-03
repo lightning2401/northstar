@@ -27,7 +27,6 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.BitSetDiscreteVoxelShape;
 import net.minecraft.world.phys.shapes.DiscreteVoxelShape;
 
@@ -52,13 +51,6 @@ public class ArgyreFeature extends Feature<AlienTreeConfig> {
 	   public static boolean isAirOrLeaves(LevelSimulatedReader pLevel, BlockPos pPos) {
 	      return pLevel.isStateAtPosition(pPos, (p_225295_) -> {
 	         return p_225295_.isAir() || p_225295_.is(BlockTags.LEAVES);
-	      });
-	   }
-
-	   private static boolean isReplaceablePlant(LevelSimulatedReader pLevel, BlockPos pPos) {
-	      return pLevel.isStateAtPosition(pPos, (p_225293_) -> {
-	         Material material = p_225293_.getMaterial();
-	         return material == Material.REPLACEABLE_PLANT || material == Material.REPLACEABLE_WATER_PLANT || material == Material.REPLACEABLE_FIREPROOF_PLANT;
 	      });
 	   }
 

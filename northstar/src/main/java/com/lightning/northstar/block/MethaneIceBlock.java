@@ -13,7 +13,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -25,7 +24,6 @@ import net.minecraft.world.level.block.HalfTransparentBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.PushReaction;
 
 public class MethaneIceBlock extends HalfTransparentBlock {	
@@ -34,9 +32,9 @@ public class MethaneIceBlock extends HalfTransparentBlock {
 	}
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	public void playerDestroy(Level pLevel, Player pPlayer, BlockPos pPos, BlockState pState, @Nullable BlockEntity pTe, ItemStack pStack) {
 		super.playerDestroy(pLevel, pPlayer, pPos, pState, pTe, pStack);
-		System.out.println("BREAKING!!!!!!");
 		if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, pStack) == 0) {
 			if(TemperatureStuff.getBoilingPoint(NorthstarFluids.METHANE.getSource().defaultFluidState()) < TemperatureStuff.getTemp(pPos, pLevel)){
 				this.evaporate(pState, pLevel, pPos);
@@ -78,12 +76,10 @@ public class MethaneIceBlock extends HalfTransparentBlock {
 	}
 
 	protected void melt(BlockState pState, Level pLevel, BlockPos pPos) {
-		System.out.println("MELTING!!!!!!");
 	    pLevel.setBlockAndUpdate(pPos, NorthstarFluids.METHANE.getSource().getFluidType().getBlockForFluidState(pLevel, pPos, NorthstarFluids.METHANE.getSource().defaultFluidState()));
 	    pLevel.neighborChanged(pPos, NorthstarFluids.METHANE.getSource().getFluidType().getBlockForFluidState(pLevel, pPos, NorthstarFluids.METHANE.getSource().defaultFluidState()).getBlock(), pPos);
 	}
 	protected void evaporate(BlockState pState, Level pLevel, BlockPos pPos) {
-		System.out.println("EVAPORATING!!!!!!");
 	    pLevel.setBlockAndUpdate(pPos, Blocks.AIR.defaultBlockState());
 	    pLevel.neighborChanged(pPos, Blocks.AIR, pPos);
         int i = pPos.getX();
@@ -95,12 +91,4 @@ public class MethaneIceBlock extends HalfTransparentBlock {
         }
 	}
 
-	/**
-	* @deprecated call via {@link
-	* net.minecraft.world.level.block.state.BlockBehaviour.BlockStateBase#getPistonPushReaction} whenever possible.
-	* Implementing/overriding is fine.
-	*/
-	public PushReaction getPistonPushReaction(BlockState pState) {
-		return PushReaction.NORMAL;
-	}
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -22,13 +21,8 @@ import com.lightning.northstar.compat.jei.category.ElectrolysisCategory;
 import com.lightning.northstar.compat.jei.category.EngravingCategory;
 import com.lightning.northstar.compat.jei.category.FreezingCategory;
 import com.lightning.northstar.item.NorthstarRecipeTypes;
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllFluids;
-import com.simibubi.create.AllItems;
-import com.simibubi.create.AllRecipeTypes;
-import com.simibubi.create.Create;
 import com.simibubi.create.compat.jei.BlueprintTransferHandler;
-import com.simibubi.create.compat.jei.ConversionRecipe;
 import com.simibubi.create.compat.jei.CreateJEI;
 import com.simibubi.create.compat.jei.DoubleItemIcon;
 import com.simibubi.create.compat.jei.EmptyBackground;
@@ -37,53 +31,15 @@ import com.simibubi.create.compat.jei.ItemIcon;
 import com.simibubi.create.compat.jei.PotionFluidSubtypeInterpreter;
 import com.simibubi.create.compat.jei.SlotMover;
 import com.simibubi.create.compat.jei.ToolboxColoringRecipeMaker;
-import com.simibubi.create.compat.jei.category.BlockCuttingCategory;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
-import com.simibubi.create.compat.jei.category.CrushingCategory;
-import com.simibubi.create.compat.jei.category.DeployingCategory;
-import com.simibubi.create.compat.jei.category.FanBlastingCategory;
-import com.simibubi.create.compat.jei.category.FanHauntingCategory;
-import com.simibubi.create.compat.jei.category.FanSmokingCategory;
-import com.simibubi.create.compat.jei.category.FanWashingCategory;
-import com.simibubi.create.compat.jei.category.ItemApplicationCategory;
-import com.simibubi.create.compat.jei.category.ItemDrainCategory;
-import com.simibubi.create.compat.jei.category.MechanicalCraftingCategory;
-import com.simibubi.create.compat.jei.category.MillingCategory;
-import com.simibubi.create.compat.jei.category.MixingCategory;
-import com.simibubi.create.compat.jei.category.MysteriousItemConversionCategory;
-import com.simibubi.create.compat.jei.category.PackingCategory;
-import com.simibubi.create.compat.jei.category.PolishingCategory;
-import com.simibubi.create.compat.jei.category.PressingCategory;
-import com.simibubi.create.compat.jei.category.ProcessingViaFanCategory;
-import com.simibubi.create.compat.jei.category.SawingCategory;
-import com.simibubi.create.compat.jei.category.SequencedAssemblyCategory;
-import com.simibubi.create.compat.jei.category.SpoutCategory;
-import com.simibubi.create.compat.jei.category.BlockCuttingCategory.CondensedBlockCuttingRecipe;
 import com.simibubi.create.content.equipment.blueprint.BlueprintScreen;
-import com.simibubi.create.content.equipment.sandPaper.SandPaperPolishingRecipe;
 import com.simibubi.create.content.fluids.potion.PotionFluid;
-import com.simibubi.create.content.fluids.potion.PotionMixingRecipes;
-import com.simibubi.create.content.fluids.transfer.EmptyingRecipe;
-import com.simibubi.create.content.fluids.transfer.FillingRecipe;
-import com.simibubi.create.content.kinetics.crafter.MechanicalCraftingRecipe;
-import com.simibubi.create.content.kinetics.crusher.AbstractCrushingRecipe;
-import com.simibubi.create.content.kinetics.deployer.DeployerApplicationRecipe;
-import com.simibubi.create.content.kinetics.deployer.ItemApplicationRecipe;
-import com.simibubi.create.content.kinetics.deployer.ManualApplicationRecipe;
-import com.simibubi.create.content.kinetics.fan.HauntingRecipe;
-import com.simibubi.create.content.kinetics.fan.SplashingRecipe;
-import com.simibubi.create.content.kinetics.press.MechanicalPressBlockEntity;
-import com.simibubi.create.content.kinetics.press.PressingRecipe;
-import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
-import com.simibubi.create.content.kinetics.saw.SawBlockEntity;
 import com.simibubi.create.content.logistics.filter.AbstractFilterScreen;
-import com.simibubi.create.content.processing.basin.BasinRecipe;
-import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipe;
 import com.simibubi.create.content.redstone.link.controller.LinkedControllerScreen;
 import com.simibubi.create.content.trains.schedule.ScheduleScreen;
 import com.simibubi.create.foundation.config.ConfigBase.ConfigBool;
-import com.simibubi.create.foundation.data.recipe.LogStrippingFakeRecipes;
 import com.simibubi.create.foundation.gui.menu.AbstractSimiContainerScreen;
+import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.infrastructure.config.AllConfigs;
@@ -104,23 +60,17 @@ import mezz.jei.api.registration.IRecipeTransferRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
 import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.AbstractCookingRecipe;
-import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.SmokingRecipe;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.crafting.IShapedRecipe;
-import net.minecraftforge.fml.ModList;
 
 @JeiPlugin
 @SuppressWarnings("unused")
 @ParametersAreNonnullByDefault
-public class NorthstarJEI implements IModPlugin {
+public class NorthstarJei implements IModPlugin {
 	
 	private static final ResourceLocation ID = Northstar.asResource("jei_plugin");
 
@@ -242,6 +192,7 @@ public class NorthstarJEI implements IModPlugin {
 			return addRecipeListConsumer(recipes -> recipes.addAll(collection.get()));
 		}
 
+		@SuppressWarnings("unchecked")
 		public CategoryBuilder<T> addAllRecipesIf(Predicate<Recipe<?>> pred) {
 			return addRecipeListConsumer(recipes -> consumeAllRecipes(recipe -> {
 				if (pred.test(recipe)) {
@@ -370,18 +321,10 @@ public class NorthstarJEI implements IModPlugin {
 			.forEach(consumer);
 	}
 
-	public static <T extends Recipe<?>> void consumeTypedRecipes(Consumer<T> consumer, RecipeType<?> type) {
-		Map<ResourceLocation, Recipe<?>> map = Minecraft.getInstance()
-			.getConnection()
-			.getRecipeManager().recipes.get(type);
-		if (map != null) {
-			map.values().forEach(recipe -> consumer.accept((T) recipe));
-		}
-	}
 
 	public static List<Recipe<?>> getTypedRecipes(RecipeType<?> type) {
 		List<Recipe<?>> recipes = new ArrayList<>();
-		consumeTypedRecipes(recipes::add, type);
+		CreateJEI.consumeTypedRecipes(recipes::add, type);
 		return recipes;
 	}
 
@@ -409,8 +352,10 @@ public class NorthstarJEI implements IModPlugin {
 				.test(matchingStacks[0]);
 	}
 
+	@SuppressWarnings("resource")
 	public static boolean doOutputsMatch(Recipe<?> recipe1, Recipe<?> recipe2) {
-		return ItemStack.isSame(recipe1.getResultItem(), recipe2.getResultItem());
+		RegistryAccess registryAccess = Minecraft.getInstance().level.registryAccess();
+		return ItemHelper.sameItem(recipe1.getResultItem(registryAccess), recipe2.getResultItem(registryAccess));
 	}
 
 }

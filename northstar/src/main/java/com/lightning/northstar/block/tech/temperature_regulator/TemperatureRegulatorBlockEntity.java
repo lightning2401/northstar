@@ -1,31 +1,33 @@
 package com.lightning.northstar.block.tech.temperature_regulator;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
-import com.lightning.northstar.NorthstarTags;
 import com.lightning.northstar.particle.SnowflakeParticleData;
-import com.lightning.northstar.world.OxygenStuff;
 import com.lightning.northstar.world.TemperatureStuff;
 import com.lightning.northstar.world.dimension.NorthstarPlanets;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.content.equipment.goggles.IHaveHoveringInformation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
+import com.simibubi.create.foundation.utility.Lang;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implements IHaveGoggleInformation{
+public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implements IHaveGoggleInformation, IHaveHoveringInformation{
 	private HashMap<BlockPos, Integer> TEMP_ZONES = new HashMap<BlockPos, Integer>();
 	public int temp = 20;
 	public int tempChange = 0;
-	public boolean envFill = false;
+	public int maxSize = 0;
+	public boolean envFill = true;
 	public int sizeX = 16;
 	public int sizeY = 16;
 	public int sizeZ = 16;
@@ -42,11 +44,13 @@ public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implemen
 	
 	@Override
 	public void tick() {
+		super.tick();
 		if(this.level.getGameTime() % 40 == 0) {
+			maxSize = (int) (Math.abs(this.speed) * 20);
 			if(Math.abs(this.speed) > 0 && !this.overStressed) 
 			{addParticles(this.temp > NorthstarPlanets.getPlanetTemp(this.level.dimension()) && level.isClientSide, this.speed / 64);}
-			if(this.level.isClientSide)
-				return;
+//			if(this.level.isClientSide)
+//				return;
 //			System.out.println(entity.temp);
 //			System.out.println("size X: " + entity.sizeX);
 //			System.out.println("size Y: " + entity.sizeY);
@@ -65,16 +69,19 @@ public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implemen
 				if(this.envFill)
 				{HashMap<BlockPos, Integer> newList = new HashMap<BlockPos, Integer>();
 					 newList.put(getBlockPos().above(),temp);
-				 TemperatureStuff.spreadTemp(this.level, newList, 2000, this.temp);
+				 TemperatureStuff.spreadTemp(this.level, newList, maxSize, this.temp);
 				  if(!newList.equals(TEMP_ZONES)) {
-					  TemperatureStuff.removeSource(worldPosition, level, TEMP_ZONES);
+					  HashMap<BlockPos, Integer> temptemp_zones = TEMP_ZONES;
+					  if(temptemp_zones.get(worldPosition.above()) == newList.get(worldPosition.above())) {
+						  temptemp_zones.keySet().removeAll(newList.keySet());
+					  }
+					  TemperatureStuff.removeSource(worldPosition, level, temptemp_zones, TEMP_ZONES);
 					  TemperatureStuff.temperatureSources.put(newList, level.dimension());
 					  TEMP_ZONES.clear();
 					  TEMP_ZONES = newList;
 				  }      
 				 }
-				else {TemperatureStuff.markTemp(this.getBlockPos(), this.level, this.TEMP_ZONES, this.temp, this.sizeX, this.sizeY, this.sizeZ, this.offsetX, this.offsetY, this.offsetZ);
-				  System.out.println("working maybe???");}
+				else {TemperatureStuff.markTemp(this.getBlockPos(), this.level, this.TEMP_ZONES, this.temp, this.sizeX, this.sizeY, this.sizeZ, this.offsetX, this.offsetY, this.offsetZ);}
 			}
 			else {
 				removeTemp(this);
@@ -85,14 +92,14 @@ public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implemen
     }
 	
 	public void removeTemp(TemperatureRegulatorBlockEntity entity) {
-		TemperatureStuff.removeSource(worldPosition, level, TEMP_ZONES);
+		TemperatureStuff.removeSource(worldPosition, level, null, TEMP_ZONES);
 		entity.TEMP_ZONES.clear();
 	}
 	
 	public void changeTemp(int i) {
 		this.temp = i;
 		this.temp = Mth.clamp(temp, -273, 1000);
-		this.removeTemp(this);
+//		this.removeTemp(this);
 		this.tick();
 //		System.out.println(this.temp);
 	}
@@ -135,6 +142,35 @@ public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implemen
 	}
 	
 	@Override
+	public boolean addToTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+		Lang.translate("gui.goggles.temperature_regulator")
+			.forGoggles(tooltip);
+		Lang.translate("gui.goggles.blocks_filled")
+		.style(ChatFormatting.GRAY)
+		.forGoggles(tooltip);
+		if(envFill) 
+		{Lang.builder()
+		.add(Lang.number(TEMP_ZONES.size())
+			.style(ChatFormatting.AQUA))
+		.text(ChatFormatting.GRAY, " / ")
+		.add(Lang.number(maxSize)
+			.style(ChatFormatting.DARK_GRAY))
+		.forGoggles(tooltip, 1);}
+		else
+		{Lang.builder()
+		.add(Lang.number(sizeX)
+		.style(ChatFormatting.AQUA))
+		.text(ChatFormatting.DARK_GRAY, " x ")
+		.add(Lang.number(sizeY)
+		.style(ChatFormatting.AQUA))
+		.text(ChatFormatting.DARK_GRAY, " x ")
+		.add(Lang.number(sizeZ)
+		.style(ChatFormatting.AQUA))
+		.forGoggles(tooltip, 1);}
+		return true;
+	}
+	
+	@Override
 	public void write(CompoundTag tag, boolean clientPacket) {
 		tag.putInt("sizeX", sizeX);
 		tag.putInt("sizeY", sizeY);
@@ -152,7 +188,6 @@ public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implemen
 	
 	@Override
 	protected void read(CompoundTag tag, boolean clientPacket) {		
-		System.out.println("sizeX read:" + tag.getInt("sizeX"));
 		sizeX = tag.getInt("sizeX");
 		sizeY = tag.getInt("sizeY");
 		sizeZ = tag.getInt("sizeZ");

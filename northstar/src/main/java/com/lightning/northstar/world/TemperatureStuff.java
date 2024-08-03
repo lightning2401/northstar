@@ -5,19 +5,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.lwjgl.glfw.GLFW;
+
 import com.lightning.northstar.Northstar;
 import com.lightning.northstar.NorthstarTags;
 import com.lightning.northstar.block.NorthstarTechBlocks;
 import com.lightning.northstar.fluids.NorthstarFluids;
 import com.lightning.northstar.world.dimension.NorthstarDimensions;
 import com.lightning.northstar.world.dimension.NorthstarPlanets;
+import com.mojang.blaze3d.platform.InputConstants;
 import com.simibubi.create.AllFluids;
+import com.simibubi.create.content.decoration.slidingDoor.SlidingDoorBlock;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -25,6 +31,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
@@ -32,28 +39,43 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 public class TemperatureStuff {
 	public static HashMap<HashMap<BlockPos, Integer>,ResourceKey<Level>> temperatureSources = new HashMap<HashMap<BlockPos, Integer>, ResourceKey<Level>>();
 	public static int maxSize = 24;
+	public static int loadBuffer = 0;
+	public static boolean debugMode = false;
 	
-//	@SubscribeEvent
+	@SubscribeEvent
 	public static void onWorldTick(TickEvent.LevelTickEvent event){
+		if(!event.level.isClientSide)
+			return;
     	long t = event.level.getGameTime();
-    	if(t % 40 == 0 && event.level.isClientSide) {
-    		for(Entry<HashMap<BlockPos, Integer>, ResourceKey<Level>> blocks:	temperatureSources.entrySet()) {
-    			if(blocks == null)
-    				continue;
-    			if(blocks.getValue() == event.level.dimension()) {
-    				for(BlockPos pos : blocks.getKey().keySet()) {
-    					if(pos == null)
-    						continue;
-        				event.level.addParticle(ParticleTypes.FLAME, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, 0,0,0);
-    				}
-    			}
+    	if(loadBuffer <= 70)
+    		loadBuffer++;
+    	
+    	if(InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_O)){
+				debugMode = true;
+		}else {
+			debugMode = false;
+		}
+    	if(t % 40 == 0 && event.level.isClientSide && debugMode) {
+    		try {
+	    		for(Entry<HashMap<BlockPos, Integer>, ResourceKey<Level>> blocks:	temperatureSources.entrySet()) {
+	    			if(blocks == null)
+	    				continue;
+	    			if(blocks.getValue() == event.level.dimension()) {
+	    				for(BlockPos pos : blocks.getKey().keySet()) {
+	    					if(pos == null)
+	    						continue;
+	        				event.level.addParticle(ParticleTypes.FLAME, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, 0,0,0);
+	    				}
+	    			}
+	    			
+	    		}
+    		}catch(Exception e) {
     			
     		}
     	}
     }
     
 	public static void markTemp(BlockPos pos, Level level, HashMap<BlockPos, Integer> map, int temp, int sizeX, int sizeY, int sizeZ, int offsetX, int offsetY, int offsetZ) {
-		System.out.println("markin temp");
 		if(level.getBlockState(pos).getBlock() != NorthstarTechBlocks.TEMPERATURE_REGULATOR.get()) {
 			map.clear();
 			return;
@@ -68,18 +90,16 @@ public class TemperatureStuff {
 					if(level.isClientSide)
 						{return;}
 					map.put(newpos, temp);
-					if(level.getBlockState(newpos).is(NorthstarTechBlocks.TEMPERATURE_REGULATOR.get())) 
-					{System.out.println("huh"); continue;}
-					if(!level.getFluidState(newpos).isEmpty()) 
-					{level.getBlockState(newpos).tick((ServerLevel) level, newpos, level.random);
-					level.getFluidState(newpos).tick(level, newpos);}
 				}
 			}
 		}
     }
-	public static void removeSource(BlockPos pos, Level level, HashMap<BlockPos, Integer> map) {
+	public static void removeSource(BlockPos pos, Level level, HashMap<BlockPos, Integer> map, HashMap<BlockPos, Integer> truemap) {
 		HashMap<BlockPos, Integer> tempmap = map;
-		temperatureSources.remove(map);
+		if(map == null) {
+			tempmap = truemap;
+		}
+		temperatureSources.remove(truemap);
 		for(BlockPos newpos : tempmap.keySet()) {
 			if(level.isClientSide)
 			{return;}
@@ -115,13 +135,19 @@ public class TemperatureStuff {
 	public static int getTemp(BlockPos pos, Level level) {
 		if(!temperatureSources.containsValue(level.dimension()) && level.dimension() != NorthstarDimensions.MERCURY_DIM_KEY)
 		{return NorthstarPlanets.getPlanetTemp(level.dimension());}
-		for(Entry<HashMap<BlockPos, Integer>, ResourceKey<Level>> blocks:	temperatureSources.entrySet()) {
-			if(blocks.getValue() == level.dimension()) {
-				if (blocks.getKey().keySet().contains(pos)) {
-					return blocks.getKey().get(pos);
+
+		try {
+			for(Entry<HashMap<BlockPos, Integer>, ResourceKey<Level>> blocks:	temperatureSources.entrySet()) {
+				if(blocks.getValue() == level.dimension()) {
+					if (blocks.getKey().keySet().contains(pos)) {
+						return blocks.getKey().get(pos);
+					}
 				}
+				
 			}
-			
+		}
+		catch(Exception e) {
+			//oops
 		}
 			
 		if(level.dimension() == NorthstarDimensions.MERCURY_DIM_KEY) {
@@ -133,9 +159,39 @@ public class TemperatureStuff {
 		return NorthstarPlanets.getPlanetTemp(level.dimension());
 		
 	}
+	public static int getTempForEntity(Entity entity) {
+		ResourceKey<Level> level = entity.level().dimension();
+		BlockPos pos = entity.blockPosition();
+		try {
+			if(!temperatureSources.containsValue(level) && level != NorthstarDimensions.MERCURY_DIM_KEY)
+			{return NorthstarPlanets.getPlanetTemp(level);}
+			for(Entry<HashMap<BlockPos, Integer>, ResourceKey<Level>> blocks:	temperatureSources.entrySet()) {
+				if(blocks.getValue() == level) {
+					if (blocks.getKey().keySet().contains(pos)) {
+						return blocks.getKey().get(pos);
+					}else if(blocks.getKey().keySet().contains(pos.above())) {
+						return blocks.getKey().get(pos.above());
+					}
+				}
+			}
+		}
+		catch(Exception e) {
+			//idk this tends to break for some reason
+		}
+		if(level == NorthstarDimensions.MERCURY_DIM_KEY) {
+			if(entity.level().canSeeSky(pos) && !entity.level().isNight()) {
+				return 434;}
+			else {return -200;}
+		}
+		return NorthstarPlanets.getPlanetTemp(level);
+	}
 	
     public static boolean canSpread(BlockState state) {
-        return state.is(NorthstarTags.NorthstarBlockTags.AIR_PASSES_THROUGH.tag) || !state.getFluidState().isEmpty();
+    	boolean slideFlag = false;
+    	if(state.getBlock() instanceof SlidingDoorBlock) {
+    		slideFlag = state.getValue(SlidingDoorBlock.OPEN);
+    	}
+        return state.is(NorthstarTags.NorthstarBlockTags.AIR_PASSES_THROUGH.tag) || !state.getFluidState().isEmpty() || slideFlag;
      }
     
 	public static boolean combustable(FluidState state) {
@@ -173,8 +229,10 @@ public class TemperatureStuff {
 		if(state.is(NorthstarFluids.LIQUID_OXYGEN.get()) || state.is(NorthstarFluids.LIQUID_OXYGEN.getSource().getSource())) {
 			return -180;
 		}
+		if(state.is(NorthstarFluids.LIQUID_HYDROGEN.get()) || state.is(NorthstarFluids.LIQUID_HYDROGEN.getSource().getSource())) {
+			return -253;
+		}
 		if(state.is(NorthstarFluids.SULFURIC_ACID.get()) || state.is(NorthstarFluids.SULFURIC_ACID.getSource().getSource())) {
-			System.out.println("AY");
 			return 1200;
 		}
 		return 100;
@@ -198,6 +256,9 @@ public class TemperatureStuff {
 		if(state.is(NorthstarFluids.HYDROCARBON.get()) || state.is(NorthstarFluids.HYDROCARBON.getSource().getSource())) {
 			return -60;
 		}
+		if(state.is(NorthstarFluids.LIQUID_HYDROGEN.get()) || state.is(NorthstarFluids.LIQUID_HYDROGEN.getSource().getSource())) {
+			return -259;
+		}
 		if(state.is(NorthstarFluids.SULFURIC_ACID.get()) || state.is(NorthstarFluids.SULFURIC_ACID.getSource().getSource())) {
 			return -200;
 		}
@@ -207,7 +268,8 @@ public class TemperatureStuff {
 		return (entity.getItemBySlot(EquipmentSlot.HEAD).is(NorthstarTags.NorthstarItemTags.INSULATING.tag) &&
 				entity.getItemBySlot(EquipmentSlot.CHEST).is(NorthstarTags.NorthstarItemTags.INSULATING.tag) &&
 				entity.getItemBySlot(EquipmentSlot.LEGS).is(NorthstarTags.NorthstarItemTags.INSULATING.tag) && 
-				entity.getItemBySlot(EquipmentSlot.FEET).is(NorthstarTags.NorthstarItemTags.INSULATING.tag));
+				entity.getItemBySlot(EquipmentSlot.FEET).is(NorthstarTags.NorthstarItemTags.INSULATING.tag)) 
+				|| NorthstarTags.NorthstarEntityTags.CAN_SURVIVE_COLD.matches(entity);
 		
 	}
 	public static boolean hasHeatProtection(LivingEntity entity) {
@@ -228,7 +290,6 @@ public class TemperatureStuff {
 	
     public static double getHeatRating(ResourceKey<Level> level) {
     	// I love spaghetti (2)
-    	System.out.println("THIS IS COMING FROM HEAT RATING: " + level);
     	if(level == NorthstarDimensions.MOON_DIM_KEY) {return 0;}
     	if(level == NorthstarDimensions.MARS_DIM_KEY) {return 0.05;}
     	if(level == NorthstarDimensions.MERCURY_DIM_KEY) {return 0;}
@@ -238,7 +299,6 @@ public class TemperatureStuff {
     }
     public static double getHeatConstant(ResourceKey<Level> level) {
     	// I love spaghetti (2)
-    	System.out.println("THIS IS COMING FROM HEAT RATING: " + level);
     	if(level == NorthstarDimensions.MOON_DIM_KEY) {return 0;}
     	if(level == NorthstarDimensions.MARS_DIM_KEY) {return 50;}
     	if(level == NorthstarDimensions.MERCURY_DIM_KEY) {return 0;}

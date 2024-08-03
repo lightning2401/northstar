@@ -9,15 +9,11 @@ import com.lightning.northstar.block.NorthstarTechBlocks;
 import com.lightning.northstar.block.entity.NorthstarBlockEntityTypes;
 import com.lightning.northstar.block.tech.NorthstarPartialModels;
 import com.lightning.northstar.block.tech.astronomy_table.AstronomyTableScreen;
-import com.lightning.northstar.block.tech.oxygen_concentrator.OxygenConcentratorScreen;
 import com.lightning.northstar.block.tech.rocket_station.RocketStationScreen;
 import com.lightning.northstar.block.tech.telescope.TelescopeScreen;
 import com.lightning.northstar.client.renderer.armor.BrokenIronSpaceSuitLayerRenderer;
-import com.lightning.northstar.client.renderer.armor.BrokenIronSpaceSuitModelRenderer;
 import com.lightning.northstar.client.renderer.armor.IronSpaceSuitLayerRenderer;
-import com.lightning.northstar.client.renderer.armor.IronSpaceSuitModelRenderer;
 import com.lightning.northstar.client.renderer.armor.MartianSteelSpaceSuitLayerRenderer;
-import com.lightning.northstar.client.renderer.armor.MartianSteelSpaceSuitModelRenderer;
 import com.lightning.northstar.contraptions.RocketHandler;
 import com.lightning.northstar.entity.MarsCobraEntity;
 import com.lightning.northstar.entity.MarsMothEntity;
@@ -35,13 +31,11 @@ import com.lightning.northstar.entity.VenusScorpionEntity;
 import com.lightning.northstar.entity.VenusStoneBullEntity;
 import com.lightning.northstar.entity.VenusVultureEntity;
 import com.lightning.northstar.fluids.NorthstarFluids;
+import com.lightning.northstar.item.NorthstarCreativeModeTab;
 import com.lightning.northstar.item.NorthstarEnchantments;
 import com.lightning.northstar.item.NorthstarItems;
 import com.lightning.northstar.item.NorthstarPotions;
 import com.lightning.northstar.item.NorthstarRecipeTypes;
-import com.lightning.northstar.item.armor.BrokenIronSpaceSuitArmorItem;
-import com.lightning.northstar.item.armor.IronSpaceSuitArmorItem;
-import com.lightning.northstar.item.armor.MartianSteelSpaceSuitArmorItem;
 import com.lightning.northstar.particle.NorthstarParticles;
 import com.lightning.northstar.sound.NorthstarSounds;
 import com.lightning.northstar.world.OxygenStuff;
@@ -80,8 +74,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
-import software.bernie.geckolib3.GeckoLib;
-import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
+import software.bernie.geckolib.GeckoLib;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Northstar.MOD_ID)
@@ -110,7 +103,6 @@ public class Northstar
 
     public Northstar()
     {
-    	System.out.println("big fart");
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         
 		IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
@@ -121,19 +113,19 @@ public class Northstar
         NorthstarPotions.register(modEventBus);
         NorthstarEnchantments.register();
         NorthstarTechBlocks.register();
-  //      NorthstarTechBlocks.register(modEventBus);
         NorthstarBlockEntityTypes.register(modEventBus);
-        NorthstarFeatures.register(modEventBus);
-        NorthstarConfiguredFeatures.register(modEventBus);
-        NorthstarRecipeTypes.register(modEventBus);
-        NorthstarParticles.register(modEventBus);
-        NorthstarSounds.register(modEventBus);
-        NorthstarMenuTypes.register(modEventBus);
-        NorthstarPlanets.register();
-        NorthstarDimensions.register();
-        NorthstarEntityTypes.register();
-        NorthstarEntityTypes.ENTITIES.register(modEventBus);
+        NorthstarFeatures.register(modEventBus); // safe
+        NorthstarConfiguredFeatures.register(modEventBus); // safe
+        NorthstarRecipeTypes.register(modEventBus); // safe
+        NorthstarParticles.register(modEventBus); // safe
+        NorthstarSounds.register(modEventBus); //safe
+        NorthstarMenuTypes.register(modEventBus); // surprisingly safe
+        NorthstarPlanets.register(); //safe
+        NorthstarDimensions.register(); //safe
+        NorthstarEntityTypes.register(); //safe
+        NorthstarEntityTypes.ENTITIES.register(modEventBus); //safe
         NorthstarFluids.register();
+        NorthstarCreativeModeTab.register(modEventBus);
 
         
         NorthstarTrunkPlacerTypes.register(modEventBus);
@@ -229,18 +221,8 @@ public class Northstar
             MenuScreens.register(NorthstarMenuTypes.TELESCOPE_MENU.get(), TelescopeScreen::new);
             MenuScreens.register(NorthstarMenuTypes.ASTRONOMY_TABLE_MENU.get(), AstronomyTableScreen::new);
             MenuScreens.register(NorthstarMenuTypes.ROCKET_STATION.get(), RocketStationScreen::new);
- //           MenuScreens.register(NorthstarMenuTypes.TEMPERATURE_REGULATOR.get(), TemperatureRegulatorScreen::new);
-            MenuScreens.register(NorthstarMenuTypes.OXYGEN_CONCENTRATOR.get(), OxygenConcentratorScreen::new);
         }
-    	@SubscribeEvent
-    	public static void registerRenderers(final EntityRenderersEvent.AddLayers event) {
-    		{
-    			GeoArmorRenderer.registerArmorRenderer(BrokenIronSpaceSuitArmorItem.class, () -> new BrokenIronSpaceSuitModelRenderer());
-    			GeoArmorRenderer.registerArmorRenderer(IronSpaceSuitArmorItem.class, () -> new IronSpaceSuitModelRenderer());
-    			GeoArmorRenderer.registerArmorRenderer(MartianSteelSpaceSuitArmorItem.class, () -> new MartianSteelSpaceSuitModelRenderer());
-    		}
-    	}
-		@SubscribeEvent
+		@SubscribeEvent	
 		public static void addEntityRendererLayers(EntityRenderersEvent.AddLayers event) {
 			EntityRenderDispatcher dispatcher = Minecraft.getInstance()
 					.getEntityRenderDispatcher();
@@ -248,7 +230,7 @@ public class Northstar
 				BrokenIronSpaceSuitLayerRenderer.registerOnAll(dispatcher);
 				MartianSteelSpaceSuitLayerRenderer.registerOnAll(dispatcher);
 		}
-    	@SuppressWarnings("removal")
+    	@SuppressWarnings({ "removal", "deprecation" })
     	@SubscribeEvent
     	public static void registerRenderers(final FMLClientSetupEvent event) {
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.LUNAR_SAPPHIRE_CLUSTER.get(), RenderType.cutout());
@@ -257,6 +239,7 @@ public class Northstar
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.MARS_ROOTS.get(), RenderType.cutout());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.POINTED_CRIMSITE.get(), RenderType.cutout());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.ICICLE.get(), RenderType.cutout());
+    		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.MERCURY_CACTUS.get(), RenderType.cutout());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.FROST.get(), RenderType.translucent());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.MARTIAN_TALL_GRASS.get(), RenderType.cutout());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.MARTIAN_STRAWBERRY_BUSH.get(), RenderType.cutout());
@@ -269,11 +252,25 @@ public class Northstar
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.MEDIUM_LUNAR_SAPPHIRE_BUD.get(), RenderType.cutout());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.LARGE_LUNAR_SAPPHIRE_BUD.get(), RenderType.cutout());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.MARS_WORM_NEST.get(), RenderType.cutout());
+    		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.MERCURY_SHELF_FUNGUS.get(), RenderType.cutout());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.METHANE_ICE.get(), RenderType.translucent());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.IRON_GRATE.get(), RenderType.cutout());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.MARTIAN_STEEL_GRATE.get(), RenderType.cutout());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.TUNGSTEN_GRATE.get(), RenderType.cutout());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.VENT_BLOCK.get(), RenderType.cutout());
+    		
+    		ItemBlockRenderTypes.setRenderLayer(NorthstarFluids.LIQUID_HYDROGEN.get(), RenderType.translucent());
+    		ItemBlockRenderTypes.setRenderLayer(NorthstarFluids.LIQUID_HYDROGEN.get().getSource(), RenderType.translucent());
+    		
+    		ItemBlockRenderTypes.setRenderLayer(NorthstarFluids.LIQUID_OXYGEN.get(), RenderType.translucent());
+    		ItemBlockRenderTypes.setRenderLayer(NorthstarFluids.LIQUID_OXYGEN.get().getSource(), RenderType.translucent());
+    		
+    		ItemBlockRenderTypes.setRenderLayer(NorthstarFluids.SULFURIC_ACID.get(), RenderType.translucent());
+    		ItemBlockRenderTypes.setRenderLayer(NorthstarFluids.SULFURIC_ACID.get().getSource(), RenderType.translucent());
+    		
+    		ItemBlockRenderTypes.setRenderLayer(NorthstarFluids.METHANE.get(), RenderType.translucent());
+    		ItemBlockRenderTypes.setRenderLayer(NorthstarFluids.METHANE.get().getSource(), RenderType.translucent());
+
     	}
     }
 	public static ResourceLocation asResource(String path) {

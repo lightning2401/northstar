@@ -8,7 +8,7 @@ import net.minecraft.world.entity.ai.behavior.BlockPosTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.schedule.Activity;
 
-public class MarsWormAI {
+public class MarsWormAi {
 
 	
 	public static void updateActivity(MarsWormEntity pWarden) {
@@ -16,7 +16,7 @@ public class MarsWormAI {
 	}
 	
 	public static void setDisturbanceLocation(MarsWormEntity worm, BlockPos pDisturbanceLocation) {
-		if (worm.level.getWorldBorder().isWithinBounds(pDisturbanceLocation)) {
+		if (worm.level().getWorldBorder().isWithinBounds(pDisturbanceLocation)) {
 		    	worm.getBrain().setMemoryWithExpiry(MemoryModuleType.SNIFF_COOLDOWN, Unit.INSTANCE, 100L);
 		    	worm.getBrain().setMemoryWithExpiry(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(pDisturbanceLocation), 100L);
 		    	worm.getBrain().setMemoryWithExpiry(MemoryModuleType.DISTURBANCE_LOCATION, pDisturbanceLocation, 100L);

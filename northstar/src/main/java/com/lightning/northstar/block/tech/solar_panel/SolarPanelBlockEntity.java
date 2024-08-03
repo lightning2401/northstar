@@ -2,6 +2,7 @@ package com.lightning.northstar.block.tech.solar_panel;
 
 import java.util.List;
 
+import com.lightning.northstar.world.dimension.NorthstarPlanets;
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 
@@ -22,6 +23,12 @@ public class SolarPanelBlockEntity extends GeneratingKineticBlockEntity {
 		updateGeneratedRotation();
 		setChanged();
 	}
+	
+	@Override
+	public void tick() {
+		super.tick();
+		determineAndApplySunlightScore();
+	}
 
 	@Override
 	public void lazyTick() {
@@ -37,7 +44,7 @@ public class SolarPanelBlockEntity extends GeneratingKineticBlockEntity {
 	public int getSunlightAtPosition(BlockPos pos) {
 		if(level.isNight()){return 0;}
 		if (level.getRawBrightness(pos.above(), -15) >= 16)
-		return level.getRawBrightness(pos.above(), -15);
+		return (int) (level.getRawBrightness(pos.above(), -15) * NorthstarPlanets.getSunMultiplier(level.dimension()));
 		else return 0;
 	}
 	@Override
@@ -46,8 +53,6 @@ public class SolarPanelBlockEntity extends GeneratingKineticBlockEntity {
 	}
 	
 	public void setSunlightScoreAndUpdate(int score) {
-		if (sunlightScore == score)
-			return;
 		sunlightScore = score;
 		updateGeneratedRotation();
 		setChanged();
@@ -55,7 +60,9 @@ public class SolarPanelBlockEntity extends GeneratingKineticBlockEntity {
 	
 	@Override
 	public float getGeneratedSpeed() {
+		if(level == null)
 		return Mth.clamp(sunlightScore, -1, 1) * 8 / getSize();
+		else return (float) ((Mth.clamp(sunlightScore, -1, 1) * 8 / getSize()) * NorthstarPlanets.getSunMultiplier(level.dimension()));
 	}
 	@Override
 	protected void read(CompoundTag compound, boolean clientPacket) {

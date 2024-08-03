@@ -11,6 +11,7 @@ import com.lightning.northstar.sound.NorthstarSounds;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -41,19 +42,16 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.IAnimationTickable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.util.ClientUtils;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class MarsMothEntity extends Monster implements IAnimatable, IAnimationTickable {
-	AnimationFactory factory = GeckoLibUtil.createFactory(this);
+public class MarsMothEntity extends Monster implements GeoEntity {
+	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 	private static final EntityDataAccessor<Byte> RESTING = SynchedEntityData.defineId(MarsMothEntity.class, EntityDataSerializers.BYTE);
 	private static final EntityDataAccessor<Byte> FLYING = SynchedEntityData.defineId(MarsMothEntity.class, EntityDataSerializers.BYTE);
 	private static final TargetingConditions BAT_RESTING_TARGETING = TargetingConditions.forNonCombat().range(4.0D);
@@ -70,30 +68,33 @@ public class MarsMothEntity extends Monster implements IAnimatable, IAnimationTi
 	   
 	public MarsMothEntity(EntityType<? extends MarsMothEntity> pEntityType, Level pLevel) {
 		super(pEntityType, pLevel);
+		this.setMaxUpStep(1f);
 	}
 	
 	public static AttributeSupplier.Builder createAttributes() {
 		return Monster.createMonsterAttributes().add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.MAX_HEALTH, 8.0D).add(Attributes.MOVEMENT_SPEED, 0.25f);
 	}
-	
-	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
+	@Override
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		RawAnimation idle = RawAnimation.begin().thenLoop("idle");
+		RawAnimation walk = RawAnimation.begin().thenLoop("walk");
+		RawAnimation sleep = RawAnimation.begin().thenLoop("sleep");
+		RawAnimation fly = RawAnimation.begin().thenPlay("fly");
+
 		boolean resting = this.isResting();
-		if (!resting && this.isFlying()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("fly", EDefaultLoopTypes.LOOP));
-			event.getController().animationSpeed = 2;
-		}else if (!(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", EDefaultLoopTypes.LOOP));
-			event.getController().animationSpeed = event.getLimbSwingAmount();
-		}else if (resting) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("sleep", EDefaultLoopTypes.LOOP));
-			event.getController().animationSpeed = 1;
-		}else {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", EDefaultLoopTypes.LOOP));
-			event.getController().animationSpeed = 1;
-		}
+		controllers.add(
+				new AnimationController<>(this, state -> {
+					if(this.isFlying() && !resting) {state.setControllerSpeed(2);  return state.setAndContinue(fly);}
+					else if (state.isMoving()) {state.setControllerSpeed(1); return state.setAndContinue(walk);}
+					else if (resting) {state.setControllerSpeed(1); return state.setAndContinue(sleep);}
+					else state.setControllerSpeed(1); return state.setAndContinue(idle);})
+						.setCustomInstructionKeyframeHandler(state -> {
+							Player player = ClientUtils.getClientPlayer();
 
-
-		return PlayState.CONTINUE;
+							if (player != null)
+								player.displayClientMessage(Component.literal("KeyFraming"), true);
+						})
+		);
 	}
 
 	@Override
@@ -120,12 +121,7 @@ public class MarsMothEntity extends Monster implements IAnimatable, IAnimationTi
 	protected SoundEvent getDeathSound() {
 		return NorthstarSounds.MARS_MOTH_DEATH.get();
 	}
-	
-	@Override
-	public void registerControllers(AnimationData data) {
-		data.addAnimationController(new AnimationController<MarsMothEntity>(this, "controller", 2, this::predicate));
-		
-	}
+
 	
 	//this handles client side stuff, and creates parity between server and client
 	@Override
@@ -165,7 +161,7 @@ public class MarsMothEntity extends Monster implements IAnimatable, IAnimationTi
 	protected void usePlayerItem(Player player, InteractionHand hand, ItemStack stack) {
 		if (this.isFood(stack)) {
 			this.playSound(SoundEvents.CAT_EAT, 1.0F, 1.0F);
-			this.targetPosition = new BlockPos(this.getX(),this.level.getHeight(Heightmap.Types.MOTION_BLOCKING,(int) this.getX(),(int) this.getZ()),this.getZ());
+			this.targetPosition = new BlockPos((int)this.getX(),this.level().getHeight(Heightmap.Types.MOTION_BLOCKING,(int) this.getX(),(int) this.getZ()), (int)this.getZ());
 			this.setFlying(true);
 		}
 
@@ -184,26 +180,26 @@ public class MarsMothEntity extends Monster implements IAnimatable, IAnimationTi
 		BlockPos blockpos1 = blockpos.above();
 		if (this.isResting()) {
 			boolean flag = this.isSilent();
-			if (this.level.getBlockState(blockpos1).isRedstoneConductor(this.level, blockpos)) {
+			if (this.level().getBlockState(blockpos1).isRedstoneConductor(this.level(), blockpos)) {
 				if (this.random.nextInt(200) == 0) {
 					this.yHeadRot = (float)this.random.nextInt(360);
 				}
 
-				if (this.level.getNearestPlayer(BAT_RESTING_TARGETING, this) != null) {
+				if (this.level().getNearestPlayer(BAT_RESTING_TARGETING, this) != null) {
 					this.setResting(false);
 					if (!flag) {
-						this.level.levelEvent(null, 1025, blockpos, 0);
+						this.level().levelEvent(null, 1025, blockpos, 0);
 					}
 				}
 			} else {
 				this.setResting(false);
 				if (!flag) {
-					this.level.levelEvent(null, 1025, blockpos, 0);
+					this.level().levelEvent(null, 1025, blockpos, 0);
 				}
 			}
 		} else if (this.isFlying()){
 			this.fallDistance = 0;
-			if (this.targetPosition != null && (!this.level.isEmptyBlock(this.targetPosition) || this.targetPosition.getY() <= this.level.getMinBuildHeight())) {
+			if (this.targetPosition != null && (!this.level().isEmptyBlock(this.targetPosition) || this.targetPosition.getY() <= this.level().getMinBuildHeight())) {
 				this.targetPosition = null;
 			}
 			
@@ -220,7 +216,7 @@ public class MarsMothEntity extends Monster implements IAnimatable, IAnimationTi
 			
 
 			if (this.targetPosition == null || this.random.nextInt(30) == 0 || (this.targetPosition.closerToCenterThan(this.position(), 2.0D) && !pollinating)) {
-				this.targetPosition = new BlockPos(this.getX() + (double)this.random.nextInt(16) - (double)this.random.nextInt(16), this.getY() + (double)this.random.nextInt(16) - (double)this.random.nextInt(16), this.getZ() + (double)this.random.nextInt(16) - (double)this.random.nextInt(16));
+				this.targetPosition = new BlockPos((int)this.getX() + (int)this.random.nextInt(16) - (int)this.random.nextInt(16), (int) this.getY() + (int)this.random.nextInt(16) - (int)this.random.nextInt(16), (int) this.getZ() + (int)this.random.nextInt(16) - (int)this.random.nextInt(16));
 			}
 			if(timeForPollination > 0) {
 				timeForPollination--;
@@ -229,20 +225,17 @@ public class MarsMothEntity extends Monster implements IAnimatable, IAnimationTi
 			}
 			
 			if(pollinating && this.targetPosition.closerToCenterThan(this.position(), 0.5D)) {
-				System.out.println("I AM POLLINATING A FLOWER!!!!!!!!!!!!!!!!!!!!!!");
 				this.pollinating = false;
 				this.pollinationTimer = 6000;
-				if(this.level.getBlockState(this.targetPosition).getBlock() instanceof MartianFlowerBlock) {
-					Item item = ((MartianFlowerBlock)this.level.getBlockState(this.targetPosition).getBlock()).getSeedItem();
-					ItemEntity spawnedItem = new ItemEntity(level, this.getX(), this.getY(), this.getZ(), new ItemStack(item, 1));
-					this.level.addFreshEntity(spawnedItem);
-					System.out.println("I AM POLLINATING A RANDOM FLOWER!!!!!");
+				if(this.level().getBlockState(this.targetPosition).getBlock() instanceof MartianFlowerBlock) {
+					Item item = ((MartianFlowerBlock)this.level().getBlockState(this.targetPosition).getBlock()).getSeedItem();
+					ItemEntity spawnedItem = new ItemEntity(level(), this.getX(), this.getY(), this.getZ(), new ItemStack(item, 1));
+					this.level().addFreshEntity(spawnedItem);
 				}
-				else if(this.level.getBlockState(this.targetPosition).getBlock() instanceof MartianTallFlowerBlock) {
+				else if(this.level().getBlockState(this.targetPosition).getBlock() instanceof MartianTallFlowerBlock) {
 					Item item = NorthstarItems.MARS_SPROUT_SEEDS.get();
-					ItemEntity spawnedItem = new ItemEntity(level, this.getX(), this.getY(), this.getZ(), new ItemStack(item, 1));
-					this.level.addFreshEntity(spawnedItem);
-					System.out.println("I AM POLLINATING A TALL SPROUT FLOWER!!!!!");
+					ItemEntity spawnedItem = new ItemEntity(level(), this.getX(), this.getY(), this.getZ(), new ItemStack(item, 1));
+					this.level().addFreshEntity(spawnedItem);
 				}
 				this.targetPosition = null;
 			}
@@ -257,9 +250,9 @@ public class MarsMothEntity extends Monster implements IAnimatable, IAnimationTi
 				float f1 = Mth.wrapDegrees(f - this.getYRot());
 				this.zza = 0.5F;
 				this.setYRot(this.getYRot() + f1);
-				if (this.random.nextInt(100) == 0 && this.level.getBlockState(blockpos1).isRedstoneConductor(this.level, blockpos1) && !this.pollinating) {
+				if (this.random.nextInt(100) == 0 && this.level().getBlockState(blockpos1).isRedstoneConductor(this.level(), blockpos1) && !this.pollinating) {
 					this.setResting(true);
-				} else if(this.random.nextInt(300) == 0 && this.level.getBlockState(blockpos.below()).isRedstoneConductor(level, blockpos.below()) && !this.pollinating) {
+				} else if(this.random.nextInt(300) == 0 && this.level().getBlockState(blockpos.below()).isRedstoneConductor(level(), blockpos.below()) && !this.pollinating) {
 					this.setFlying(false);
 				}
 			}
@@ -299,9 +292,9 @@ public class MarsMothEntity extends Monster implements IAnimatable, IAnimationTi
 		if (this.isInvulnerableTo(pSource)) {
 			return false;
 		} else {
-			if (!this.level.isClientSide && this.isResting()) {
+			if (!this.level().isClientSide && this.isResting()) {
 				this.setResting(false);
-			}else if(!this.level.isClientSide && !this.isFlying()) {
+			}else if(!this.level().isClientSide && !this.isFlying()) {
 				setFlying(true);
 			}
 			
@@ -349,18 +342,16 @@ public class MarsMothEntity extends Monster implements IAnimatable, IAnimationTi
 			for(int bY = -5; bY < 5; bY++) {
 				for(int bZ = -5; bZ < 5; bZ++) {
 					BlockPos blockpo = this.blockPosition().offset(bX, bY, bZ);
-					BlockState state = this.level.getBlockState(blockpo); {
-						if(state.getBlock() instanceof MartianFlowerBlock && this.level.random.nextInt(4) == 0){
+					BlockState state = this.level().getBlockState(blockpo); {
+						if(state.getBlock() instanceof MartianFlowerBlock && this.level().random.nextInt(4) == 0){
 							if(state.getValue(MartianFlowerBlock.AGE) == 2) 
 							{timeForPollination = 400;
 							pollinating = true;
-							System.out.println("I AM SEARCHING FOR A FLOWER");
 							return blockpo;};
 
-						}else if(state.getBlock() instanceof MartianTallFlowerBlock && this.level.random.nextInt(4) == 0) {
+						}else if(state.getBlock() instanceof MartianTallFlowerBlock && this.level().random.nextInt(4) == 0) {
 							timeForPollination = 400;
 							pollinating = true;
-							System.out.println("I AM SEARCHING FOR A FLOWER");
 							return blockpo;
 						}
 					}
@@ -371,24 +362,18 @@ public class MarsMothEntity extends Monster implements IAnimatable, IAnimationTi
 	}
 	
 	public boolean doHurtTarget(Entity pEntity) {
-		this.level.broadcastEntityEvent(this, (byte)4);
+		this.level().broadcastEntityEvent(this, (byte)4);
 		this.playSound(SoundEvents.RAVAGER_ATTACK, 1.0F, 1.0F);
 		return super.doHurtTarget(pEntity);
-	}
-
-
-	@Override
-	public AnimationFactory getFactory() {
-		return factory;
-	}
-
-	@Override
-	public int tickTimer() {
-		return tickCount;
 	}
 
 //	@Override
 	public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
 		return null;
+	}
+
+	@Override
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return this.cache;
 	}
 }

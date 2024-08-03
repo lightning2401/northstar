@@ -52,11 +52,9 @@ public class TemperatureRegulatorBlock extends HorizontalKineticBlock implements
 
 	@Override
 	public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
-		System.out.println("big cheese is real");
 		if (!pState.is(pNewState.getBlock())) {
 			BlockEntity blockentity = pLevel.getBlockEntity(pPos);
 			if (blockentity instanceof TemperatureRegulatorBlockEntity) {
-				System.out.println("REMOVING I THINK");
 				((TemperatureRegulatorBlockEntity)blockentity).removeTemp((TemperatureRegulatorBlockEntity) blockentity);
 			}
 

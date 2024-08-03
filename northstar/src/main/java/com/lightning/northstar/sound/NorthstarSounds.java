@@ -8,6 +8,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import software.bernie.geckolib.GeckoLib;
 
 public class NorthstarSounds {
 	public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Northstar.MOD_ID);
@@ -118,7 +119,7 @@ public class NorthstarSounds {
 	
 	public static RegistryObject<SoundEvent> registerSound(String name){
 		ResourceLocation sound_loc = new ResourceLocation(Northstar.MOD_ID, name);
-		return SOUNDS.register(name, () -> new SoundEvent(sound_loc));
+		return SOUNDS.register(name, () -> SoundEvent.createVariableRangeEvent(sound_loc));
 	}
 	
 	

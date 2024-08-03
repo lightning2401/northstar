@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import com.lightning.northstar.item.NorthstarRecipeTypes;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder.ProcessingRecipeParams;
@@ -24,12 +22,12 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
+@SuppressWarnings("removal")
 public class FreezingRecipe extends ProcessingRecipe<SmartInventory>  {
 	
 	//im gonna cry I just want this to work
@@ -38,7 +36,7 @@ public class FreezingRecipe extends ProcessingRecipe<SmartInventory>  {
 		if (filter == null)
 			return false;
 
-		boolean filterTest = filter.test(recipe.getResultItem());
+		boolean filterTest = filter.test(recipe.getResultItem(iceBox.getLevel().registryAccess()));
 		if (recipe instanceof FreezingRecipe) {
 			FreezingRecipe FreezingRecipe = (FreezingRecipe) recipe;
 			if (FreezingRecipe.getRollableResults()
@@ -61,9 +59,9 @@ public class FreezingRecipe extends ProcessingRecipe<SmartInventory>  {
 
 	private static boolean apply(IceBoxBlockEntity icebox, Recipe<?> recipe, boolean test) {
 		boolean isFreezingRecipe = recipe instanceof FreezingRecipe;
-		IItemHandler availableItems = icebox.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+		IItemHandler availableItems = icebox.getCapability(ForgeCapabilities.ITEM_HANDLER)
 			.orElse(null);
-		IFluidHandler availableFluids = icebox.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+		IFluidHandler availableFluids = icebox.getCapability(ForgeCapabilities.FLUID_HANDLER)
 			.orElse(null);
 
 		if (availableItems == null || availableFluids == null)
@@ -144,7 +142,7 @@ public class FreezingRecipe extends ProcessingRecipe<SmartInventory>  {
 					recipeOutputFluids.addAll(FreezingRecipe.getFluidResults());
 					recipeOutputItems.addAll(FreezingRecipe.getRemainingItems(icebox.getInputInventory()));
 				} else {
-					recipeOutputItems.add(recipe.getResultItem());
+					recipeOutputItems.add(recipe.getResultItem(icebox.getLevel().registryAccess()));
 
 					if (recipe instanceof CraftingRecipe craftingRecipe) {
 						recipeOutputItems.addAll(craftingRecipe.getRemainingItems(new DummyCraftingContainer(availableItems, extractedItemsFromSlot)));

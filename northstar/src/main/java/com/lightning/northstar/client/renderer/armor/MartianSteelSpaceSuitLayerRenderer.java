@@ -1,7 +1,7 @@
 package com.lightning.northstar.client.renderer.armor;
 
 import com.lightning.northstar.block.tech.NorthstarPartialModels;
-import com.lightning.northstar.item.armor.MartianSteelSpaceSuitArmorItem;
+import com.lightning.northstar.item.armor.BrokenIronSpaceSuitArmorItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
@@ -38,7 +38,7 @@ public class MartianSteelSpaceSuitLayerRenderer <T extends LivingEntity, M exten
 			return;
 
 		Item item = entity.getItemBySlot(EquipmentSlot.HEAD).getItem();
-		if (!(item instanceof MartianSteelSpaceSuitArmorItem))
+		if (!(item instanceof BrokenIronSpaceSuitArmorItem))
 			return;
 
 		M entityModel = getParentModel();
@@ -48,7 +48,7 @@ public class MartianSteelSpaceSuitLayerRenderer <T extends LivingEntity, M exten
 		HumanoidModel<?> model = (HumanoidModel<?>) entityModel;
 		BlockState air = Blocks.AIR.defaultBlockState();
 		RenderType renderType = Sheets.translucentCullBlockSheet();
-		SuperByteBuffer helmet = CachedBufferer.partial(NorthstarPartialModels.MARTIAN_STEEL_SPACE_SUIT_HELMET, air);
+		SuperByteBuffer helmet = CachedBufferer.partial(NorthstarPartialModels.BROKEN_IRON_SPACE_SUIT_HELMET, air);
 		
 		ms.pushPose();
 		
@@ -77,8 +77,7 @@ public class MartianSteelSpaceSuitLayerRenderer <T extends LivingEntity, M exten
 		LivingEntityRenderer<?, ?> livingRenderer = (LivingEntityRenderer<?, ?>) entityRenderer;
 		if (!(livingRenderer.getModel() instanceof HumanoidModel))
 			return;
-		MartianSteelSpaceSuitLayerRenderer<?, ?> layer = new MartianSteelSpaceSuitLayerRenderer<>(livingRenderer);
-		livingRenderer.addLayer((MartianSteelSpaceSuitLayerRenderer) layer);
+		BrokenIronSpaceSuitLayerRenderer<?, ?> layer = new BrokenIronSpaceSuitLayerRenderer<>(livingRenderer);
+		livingRenderer.addLayer((BrokenIronSpaceSuitLayerRenderer) layer);
 	}
-
 }

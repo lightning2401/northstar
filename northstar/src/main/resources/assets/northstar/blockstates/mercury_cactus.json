@@ -1,0 +1,132 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "north": "true"
+      },
+      "apply": {
+        "model": "northstar:block/mercury_petrified_cactus_side"
+      }
+    },
+    {
+      "when": {
+        "east": "true"
+      },
+      "apply": {
+        "model": "northstar:block/mercury_petrified_cactus_side",
+        "y": 90,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "south": "true"
+      },
+      "apply": {
+        "model": "northstar:block/mercury_petrified_cactus_side",
+        "y": 180,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "west": "true"
+      },
+      "apply": {
+        "model": "northstar:block/mercury_petrified_cactus_side",
+        "y": 270,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "up": "true"
+      },
+      "apply": {
+        "model": "northstar:block/mercury_petrified_cactus_side",
+        "x": 270,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "down": "true"
+      },
+      "apply": {
+        "model": "northstar:block/mercury_petrified_cactus_side",
+        "x": 90,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "north": "false"
+      },
+      "apply": [
+        {
+          "model": "northstar:block/mercury_petrified_cactus_noside"
+        }
+      ]
+    },
+    {
+      "when": {
+        "east": "false"
+      },
+      "apply": [
+        {
+          "model": "northstar:block/mercury_petrified_cactus_noside",
+          "y": 90,
+          "uvlock": true
+        }
+      ]
+    },
+    {
+      "when": {
+        "south": "false"
+      },
+      "apply": [
+        {
+          "model": "northstar:block/mercury_petrified_cactus_noside",
+          "y": 180,
+          "uvlock": true
+        }
+      ]
+    },
+    {
+      "when": {
+        "west": "false"
+      },
+      "apply": [
+        {
+          "model": "northstar:block/mercury_petrified_cactus_noside",
+          "y": 270,
+          "uvlock": true
+        }
+      ]
+    },
+    {
+      "when": {
+        "up": "false"
+      },
+      "apply": [
+        {
+          "model": "northstar:block/mercury_petrified_cactus_noside",
+          "x": 270,
+          "uvlock": true
+        }
+      ]
+    },
+    {
+      "when": {
+        "down": "false"
+      },
+      "apply": [
+        {
+          "model": "northstar:block/mercury_petrified_cactus_noside",
+          "x": 90,
+          "uvlock": true
+        }
+      ]
+    }
+  ]
+}

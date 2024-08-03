@@ -1,0 +1,37 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "northstar:block/mercury_shelf_fungus",
+		"particle": "northstar:block/mercury_shelf_fungus"
+	},
+	"elements": [
+		{
+			"name": "shelf_1",
+			"from": [5, 7, 0],
+			"to": [16, 7, 6],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [5, 7, 0]},
+			"faces": {
+				"north": {"uv": [0, 0, 11, 0], "texture": "#missing"},
+				"east": {"uv": [0, 0, 6, 0], "texture": "#missing"},
+				"south": {"uv": [0, 0, 11, 0], "texture": "#missing"},
+				"west": {"uv": [0, 0, 6, 0], "texture": "#missing"},
+				"up": {"uv": [5, 6, 16, 12], "texture": "#0"},
+				"down": {"uv": [5, 12, 16, 6], "texture": "#0"}
+			}
+		},
+		{
+			"name": "shelf_2",
+			"from": [0, 11, 0],
+			"to": [12, 11, 4],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [0, 11, 0]},
+			"faces": {
+				"north": {"uv": [0, 0, 12, 0], "texture": "#missing"},
+				"east": {"uv": [0, 0, 5, 0], "texture": "#missing"},
+				"south": {"uv": [0, 0, 12, 0], "texture": "#missing"},
+				"west": {"uv": [0, 0, 5, 0], "texture": "#missing"},
+				"up": {"uv": [4, 12, 16, 16], "texture": "#0"},
+				"down": {"uv": [4, 16, 16, 12], "texture": "#0"}
+			}
+		}
+	]
+}

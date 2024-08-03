@@ -19,7 +19,6 @@ public class RocketEntity extends Entity {
 		   int i = 0;
 		   i++;
 		   if(i % 10 == 0) {
-			   System.out.println("I AM A ROCKET AND I EXIST!!!!!!!!");
 		   }
 	   }
 	
@@ -32,11 +31,6 @@ public class RocketEntity extends Entity {
 
 	@Override
 	protected void addAdditionalSaveData(CompoundTag pCompound) {}
-
-	@Override
-	public Packet<?> getAddEntityPacket() {
-		return new ClientboundAddEntityPacket(this);
-	}
 	
 	public static EntityType.Builder<?> build(EntityType.Builder<?> builder) {
 		@SuppressWarnings("unchecked")

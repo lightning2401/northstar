@@ -30,6 +30,7 @@ public class BeltEngravingCallback {
 			return HOLD;
 		}
 
+		@SuppressWarnings({ "static-access", "deprecation" })
 		static ProcessingResult whenItemHeld(TransportedItemStack transported, TransportedItemStackHandlerBehaviour handler,
 				EngravingBehaviour behaviour) {
 

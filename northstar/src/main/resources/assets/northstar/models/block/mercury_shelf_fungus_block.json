@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_single_face",
+  "textures": {
+    "texture": "northstar:block/mercury_shelf_fungus_block"
+  }
+}

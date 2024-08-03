@@ -12,6 +12,7 @@ import com.lightning.northstar.block.tech.rocket_station.RocketStationEditPacket
 import com.lightning.northstar.block.tech.telescope.TelescopePrintPacket;
 import com.lightning.northstar.block.tech.temperature_regulator.TemperatureRegulatorEditPacket;
 import com.lightning.northstar.contraptions.RocketContraptionSyncPacket;
+import com.lightning.northstar.contraptions.RocketControlPacket;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 
 import net.minecraft.core.BlockPos;
@@ -32,7 +33,8 @@ public enum NorthstarPackets {
 	TELESCOPE_PRINT(TelescopePrintPacket.class, TelescopePrintPacket::new, PLAY_TO_SERVER),
 	ROCKET_CONTROLS_INPUT(RocketControlsInputPacket.class, RocketControlsInputPacket::new, PLAY_TO_SERVER),
 	//server to client
-	ROCKET_SYNC_PACKET(RocketContraptionSyncPacket.class, RocketContraptionSyncPacket::new, PLAY_TO_CLIENT);
+	ROCKET_SYNC_PACKET(RocketContraptionSyncPacket.class, RocketContraptionSyncPacket::new, PLAY_TO_CLIENT),
+	ROCKET_CONTROL_PACKET(RocketControlPacket.class, RocketControlPacket::new, PLAY_TO_CLIENT);
 
 	public static final ResourceLocation CHANNEL_NAME = Northstar.asResource("main");
 	public static final int NETWORK_VERSION = 3;

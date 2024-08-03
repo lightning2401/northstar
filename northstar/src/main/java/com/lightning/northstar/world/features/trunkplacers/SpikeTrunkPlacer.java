@@ -14,6 +14,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryCodecs;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.LevelSimulatedReader;
@@ -29,7 +30,7 @@ public class SpikeTrunkPlacer extends TrunkPlacer {
 	   public static final Codec<SpikeTrunkPlacer> CODEC = RecordCodecBuilder.create((p_226236_) -> {
 		      return trunkPlacerParts(p_226236_).and(p_226236_.group(IntProvider.POSITIVE_CODEC.fieldOf("extra_branch_steps").forGetter((p_226242_) -> {
 		         return p_226242_.extraBranchSteps;
-		      }), RegistryCodecs.homogeneousList(Registry.BLOCK_REGISTRY).fieldOf("can_grow_through").forGetter((p_226234_) -> {
+		      }), RegistryCodecs.homogeneousList(Registries.BLOCK).fieldOf("can_grow_through").forGetter((p_226234_) -> {
 		         return p_226234_.canGrowThrough;
 		      }))).apply(p_226236_, SpikeTrunkPlacer::new);
 		   });

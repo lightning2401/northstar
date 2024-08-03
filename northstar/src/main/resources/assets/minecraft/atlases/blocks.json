@@ -1,0 +1,84 @@
+{
+  "sources": [
+    {
+      "type": "single",
+      "resource": "northstar:fluid/vanilla_ice_cream_flow"
+    },
+    {
+      "type": "single",
+      "resource": "northstar:fluid/vanilla_ice_cream_still"
+    },
+    {
+      "type": "single",
+      "resource": "northstar:fluid/chocolate_ice_cream_flow"
+    },
+    {
+      "type": "single",
+      "resource": "northstar:fluid/chocolate_ice_cream_still"
+    },
+    {
+      "type": "single",
+      "resource": "northstar:fluid/strawberry_ice_cream_still"
+    },
+        {
+      "type": "single",
+      "resource": "northstar:fluid/strawberry_ice_cream_flow"
+    },
+    {
+      "type": "single",
+      "resource": "northstar:fluid/oxygen_still"
+    },
+    {
+      "type": "single",
+      "resource": "northstar:fluid/oxygen_flow"
+    },
+        {
+      "type": "single",
+      "resource": "northstar:fluid/hydrogen_still"
+    },
+    {
+      "type": "single",
+      "resource": "northstar:fluid/hydrogen_flow"
+    },
+        {
+      "type": "single",
+      "resource": "northstar:fluid/liquid_oxygen_still"
+    },
+    {
+      "type": "single",
+      "resource": "northstar:fluid/liquid_oxygen_flow"
+    },
+        {
+      "type": "single",
+      "resource": "northstar:fluid/liquid_hydrogen_still"
+    },
+    {
+      "type": "single",
+      "resource": "northstar:fluid/liquid_hydrogen_flow"
+    },
+    {
+      "type": "single",
+      "resource": "northstar:fluid/methane_still"
+    },
+    {
+      "type": "single",
+      "resource": "northstar:fluid/methane_flow"
+    },
+    {
+      "type": "single",
+      "resource": "northstar:fluid/sulfuric_acid_still"
+    },
+    {
+      "type": "single",
+      "resource": "northstar:fluid/sulfuric_acid_flow"
+    },
+    {
+      "type": "single",
+      "resource": "northstar:fluid/hydrocarbon_flow"
+    },
+    {
+      "type": "single",
+      "resource": "northstar:fluid/hydrocarbon_still"
+    }
+  ]
+}

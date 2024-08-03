@@ -194,7 +194,6 @@ public class StoneClusterFeature extends Feature<StoneClusterConfiguration> {
 			for(int i = 0; i < scanDist; i++) {
 				mutable.move(Direction.UP);
 				if(level.getBlockState(mutable).isAir() && level.getBlockState(mutable.relative(dir)).isSolidRender(level, pos)) {
-					System.out.println("WAAAAAAAAAAGGGGGGGGGHHHHHHH");
 					BlockPos newblockpos = new BlockPos(mutable.getX(),mutable.getY(),mutable.getZ());
 					return newblockpos;
 				}

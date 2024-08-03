@@ -16,7 +16,7 @@ import com.lightning.northstar.Northstar;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
-import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.level.ServerPlayer;
@@ -80,7 +80,7 @@ public abstract class CriterionTriggerBase2ElectricBoogaloo<T extends CriterionT
 
 	public abstract static class Instance extends AbstractCriterionTriggerInstance {
 
-		public Instance(ResourceLocation idIn, EntityPredicate.Composite p_i231464_2_) {
+		public Instance(ResourceLocation idIn, ContextAwarePredicate p_i231464_2_) {
 			super(idIn, p_i231464_2_);
 		}
 

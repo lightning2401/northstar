@@ -1,14 +1,14 @@
 package com.lightning.northstar.block.crops;
 
-import java.util.function.Supplier;
+import java.util.Optional;
 
 import javax.annotation.Nullable;
-
-import com.lightning.northstar.block.NorthstarBlocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,13 +29,13 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 
 public class TallFungusBlock extends TallFlowerBlock {
 	protected static final BooleanProperty IS_ON_CEILING = BooleanProperty.create("is_on_ceiling");
-	private final Supplier<Holder<? extends ConfiguredFeature<?, ?>>> featureSupplier;
-	private final Supplier<Holder<? extends ConfiguredFeature<?, ?>>> ceilingFeatureSupplier;
+	   private final ResourceKey<ConfiguredFeature<?, ?>> feature;
+	   private final ResourceKey<ConfiguredFeature<?, ?>> ceilingFeature;
 
-	public TallFungusBlock(Properties pProperties, Supplier<Holder<? extends ConfiguredFeature<?, ?>>> feature,Supplier<Holder<? extends ConfiguredFeature<?, ?>>> ceilingfeature) {
+	public TallFungusBlock(Properties pProperties, ResourceKey<ConfiguredFeature<?, ?>> feature2,ResourceKey<ConfiguredFeature<?, ?>> ceilingfeature) {
 		super(pProperties);
-		featureSupplier = feature;
-		ceilingFeatureSupplier = ceilingfeature;
+		feature = feature2;
+		ceilingFeature = ceilingfeature;
 	    this.registerDefaultState(this.defaultBlockState().setValue(IS_ON_CEILING, false).setValue(HALF, DoubleBlockHalf.LOWER));
 	}
 	
@@ -130,7 +130,7 @@ public class TallFungusBlock extends TallFlowerBlock {
 	}
 	
 	@Override
-	public boolean isValidBonemealTarget(BlockGetter pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
+	public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
 		return true;
 	}
 	@Override
@@ -151,18 +151,32 @@ public class TallFungusBlock extends TallFlowerBlock {
 		{placePos = new BlockPos(pPos.getX(), pPos.getY() - 1, pPos.getZ());}
 		pLevel.setBlock(pPos, Blocks.AIR.defaultBlockState(), 0);
 		pLevel.setBlock(placePos, Blocks.AIR.defaultBlockState(), 0);
-		
-		net.minecraftforge.event.level.SaplingGrowTreeEvent event;
-		event = net.minecraftforge.event.ForgeEventFactory.blockGrowFeature(pLevel, pRandom, placePos, this.featureSupplier.get());
-		if(pState.getValue(IS_ON_CEILING)) 
-		{event = net.minecraftforge.event.ForgeEventFactory.blockGrowFeature(pLevel, pRandom, placePos, this.ceilingFeatureSupplier.get());}
-		if (event.getResult().equals(net.minecraftforge.eventbus.api.Event.Result.DENY)) return false;
 
-		if (event.getFeature().value().place(pLevel, pLevel.getChunkSource().getGenerator(), pRandom, placePos)) {
-			return true;
-		} else {
-			pLevel.setBlock(pPos, pState, 3);
-			return false;
+		if(!pState.getValue(IS_ON_CEILING)) {
+			Optional<? extends Holder<ConfiguredFeature<?, ?>>> optional = pLevel.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolder(this.feature);
+	        var event = net.minecraftforge.event.ForgeEventFactory.blockGrowFeature(pLevel, pRandom, pPos, optional.get());
+			if (event.getResult().equals(net.minecraftforge.eventbus.api.Event.Result.DENY)) return false;
+			pLevel.removeBlock(pPos, false);
+			if (event.getFeature().value().place(pLevel, pLevel.getChunkSource().getGenerator(), pRandom, pPos)) {
+				return true;
+			} else {
+				pLevel.setBlock(pPos, pState, 3);
+				return false;
+			}  
+		}else {
+			Optional<? extends Holder<ConfiguredFeature<?, ?>>> optional = pLevel.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolder(this.ceilingFeature);
+	        var event = net.minecraftforge.event.ForgeEventFactory.blockGrowFeature(pLevel, pRandom, pPos, optional.get());
+			if (event.getResult().equals(net.minecraftforge.eventbus.api.Event.Result.DENY)) return false;
+			pLevel.removeBlock(pPos, false);
+			if (event.getFeature().value().place(pLevel, pLevel.getChunkSource().getGenerator(), pRandom, pPos)) {
+				return true;
+			} else {
+				pLevel.setBlock(pPos, pState, 3);
+				return false;
+			}  
 		}
+		
+		
+		
 	}
 }

@@ -1,38 +1,33 @@
 package com.lightning.northstar.contraptions;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.lightning.northstar.NorthstarTags;
+import com.lightning.northstar.block.NorthstarBlocks;
 import com.lightning.northstar.block.NorthstarTechBlocks;
 import com.lightning.northstar.block.tech.computer_rack.TargetingComputerRackBlockEntity;
+import com.lightning.northstar.block.tech.jet_engine.JetEngineBlock;
 import com.lightning.northstar.block.tech.oxygen_generator.OxygenGeneratorBlockEntity;
 import com.lightning.northstar.block.tech.rocket_station.RocketStationBlockEntity;
 import com.lightning.northstar.block.tech.temperature_regulator.TemperatureRegulatorBlockEntity;
 import com.lightning.northstar.item.NorthstarItems;
+import com.lightning.northstar.world.dimension.NorthstarPlanets;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.AssemblyException;
 import com.simibubi.create.content.contraptions.ContraptionType;
 import com.simibubi.create.content.contraptions.MountedStorageManager;
 import com.simibubi.create.content.contraptions.TranslatingContraption;
-import com.simibubi.create.content.contraptions.actors.trainControls.ControlsBlock;
 import com.simibubi.create.content.contraptions.minecart.TrainCargoManager;
 import com.simibubi.create.content.contraptions.render.ContraptionLighter;
 import com.simibubi.create.content.contraptions.render.NonStationaryLighter;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
-import com.simibubi.create.content.trains.entity.ArrivalSoundQueue;
-import com.simibubi.create.foundation.utility.Couple;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -53,32 +48,29 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class RocketContraption extends TranslatingContraption{
-	
-	private Direction assemblyDirection = Direction.UP;
 
-	public Map<BlockPos, Couple<Boolean>> conductorSeats;
-	public ArrivalSoundQueue soundQueue;
 	public int fuelCost = 0;
+	public int fuelReturnCost = 0;
 	public int weightCost = 0;
 	public int heatShielding = 0;
 	public int blockCount = 0;
-	private List<BlockPos> jetEngines;
 	private boolean rocket_station = false;
 	public boolean hasControls = false;
+	public boolean hasInterplanetaryNavigation = false;
 	private boolean has_fuel = false;
+	public boolean isUsingTicket;
 	private int fuelAmount = 0;
 	private int jet_engines = 0;
+	private int visual_jet_engines = 0;
 	public float computingPower = 0;
 	private List<BlockPos> assembledJets;
 	public int fuelTicks;
 	public String name = "Rocket";
 	public Player owner;
+	public BlockPos localControlsPos;
 
 	protected MountedStorageManager storageProxy;
 
-	// render
-	public int portalCutoffMin;
-	public int portalCutoffMax;
 	public ResourceKey<Level> dest = null;
 
 	static final IItemHandlerModifiable fallbackItems = new ItemStackHandler();
@@ -90,12 +82,7 @@ public class RocketContraption extends TranslatingContraption{
 	public float targetYaw;	
 	
 	public RocketContraption() {
-		conductorSeats = new HashMap<>();
-		jetEngines = new ArrayList<>();
 		assembledJets = new ArrayList<>();
-		soundQueue = new ArrivalSoundQueue();
-		portalCutoffMin = Integer.MIN_VALUE;
-		portalCutoffMax = Integer.MAX_VALUE;
 		storage = new TrainCargoManager();
 	}
 
@@ -108,11 +95,10 @@ public class RocketContraption extends TranslatingContraption{
 		
 		return true;
 	}
-	public void burnFuel() {
+	public void burnFuel() {		
 		IFluidHandler rocketFuels = storage.getFluids();
 		fuelCost = (int) ((int) weightCost + ((fuelCost - (fuelCost * computingPower))));
 		if(owner != null)
-		owner.displayClientMessage(Component.literal("fuel cost: " + fuelCost).withStyle(ChatFormatting.YELLOW), false);
 		for (int slot = 0; slot < rocketFuels.getTanks(); slot++) {
 			if(NorthstarTags.NorthstarFluidTags.TIER_1_ROCKET_FUEL.matches(rocketFuels.getFluidInTank(slot).getFluid()) && rocketFuels.getFluidInTank(slot).getAmount() > fuelCost) 
 			{rocketFuels.drain(fuelCost, FluidAction.EXECUTE);
@@ -135,17 +121,30 @@ public class RocketContraption extends TranslatingContraption{
 			BlockEntity ent = world.getBlockEntity(pos);
 			if(ent instanceof RocketStationBlockEntity rsbe) {
 				name = rsbe.name;
+				
+				// this is a bit sketchy in game, it should delete the ticket after it's
+				// actually been used, not when assembling the rocket
+				// though I can't figure that out so this may have to do
+				
+				if(rsbe.container.getItem(0).is(NorthstarItems.RETURN_TICKET.get())) {
+					if(rsbe.container.getItem(0).getTagElement("Planet") != null) {
+						if(NorthstarPlanets.getPlanetDimension(NorthstarPlanets.targetGetter(rsbe.container.getItem(0).getTagElement("Planet").toString())) == dest)
+						this.isUsingTicket = true;
+						this.isUsingTicket = true;
+					}
+				}
 			}
+		}
+		if (blockState.is(NorthstarBlocks.INTERPLANETARY_NAVIGATOR.get())) {
+			this.hasInterplanetaryNavigation = true;
 		}
 		if(NorthstarTechBlocks.COMPUTER_RACK.has(blockState)) {
 			BlockEntity ent = world.getBlockEntity(pos);
-			System.out.println("COMPUTER RACK DETECTED!");
 			if(ent instanceof TargetingComputerRackBlockEntity crbe) {
 				for(int b = 0; b < crbe.container.getContainerSize(); b++){
 					if(crbe.container.getItem(b).is(NorthstarItems.TARGETING_COMPUTER.get())) {
 						if(computingPower < 0.4)
 							computingPower += 0.0025;
-						System.out.println("CPU detected! " + computingPower);
 					}
 				}
 			}
@@ -153,9 +152,15 @@ public class RocketContraption extends TranslatingContraption{
 		
 		if (NorthstarTechBlocks.ROCKET_CONTROLS.has(blockState)) {
 			hasControls = true;
+			if(this.localControlsPos == null) {
+				this.localControlsPos = this.toLocalPos(pos);
+			}
 		}
 		if (NorthstarTechBlocks.JET_ENGINE.has(blockState)) {
 			jet_engines += 1;
+			if(blockState.getValue(JetEngineBlock.BOTTOM)) {
+				visual_jet_engines++;
+			}
 			assembledJets.add(toLocalPos(pos));
 		}
 		if (AllBlocks.FLUID_TANK.has(blockState)) {
@@ -164,19 +169,16 @@ public class RocketContraption extends TranslatingContraption{
 			if (NorthstarTags.NorthstarFluidTags.TIER_1_ROCKET_FUEL.matches(fluid.getFluid().getFluid())) {
 				if(fluid.getFluidAmount() != 0)
 				fuelAmount += fluid.getFluidAmount();
-				System.out.println("Fuel Amount: " + fuelAmount);
 				has_fuel = true;
 			}
 			if (NorthstarTags.NorthstarFluidTags.TIER_2_ROCKET_FUEL.matches(fluid.getFluid().getFluid())) {
 				if(fluid.getFluidAmount() != 0)
 				fuelAmount += fluid.getFluidAmount() * 2;
-				System.out.println("Fuel Amount: " + fuelAmount);
 				has_fuel = true;
 			}
 			if (NorthstarTags.NorthstarFluidTags.TIER_3_ROCKET_FUEL.matches(fluid.getFluid().getFluid())) {
 				if(fluid.getFluidAmount() != 0)
 				fuelAmount += fluid.getFluidAmount() * 4;
-				System.out.println("Fuel Amount: " + fuelAmount);
 				has_fuel = true;
 			}
 		}
@@ -197,7 +199,7 @@ public class RocketContraption extends TranslatingContraption{
 		{weightCost += 10;} 
 		else if(!blockState.is(Blocks.AIR)){weightCost+=1;}
 		if(blockState.is(NorthstarTags.NorthstarBlockTags.TIER_1_HEAT_RESISTANCE.tag) && !blockState.is(Blocks.AIR)) 
-		{heatShielding++;}
+		{heatShielding += 3;}
 		if(blockState.is(NorthstarTags.NorthstarBlockTags.TIER_2_HEAT_RESISTANCE.tag) && !blockState.is(Blocks.AIR)) 
 		{heatShielding += 8;}
 		if(blockState.is(NorthstarTags.NorthstarBlockTags.TIER_3_HEAT_RESISTANCE.tag) && !blockState.is(Blocks.AIR))
@@ -206,8 +208,8 @@ public class RocketContraption extends TranslatingContraption{
 	}
 	
 	public void changeDim(ResourceKey<Level> targetDim, RocketContraptionEntity entity) {
-		entity.level.getProfiler().push("changeDimension");
-		ServerLevel serverlevel = (ServerLevel)entity.level;
+		entity.level().getProfiler().push("changeDimension");
+		ServerLevel serverlevel = (ServerLevel)entity.level();
         MinecraftServer minecraftserver = serverlevel.getServer();
         ServerLevel target = minecraftserver.getLevel(targetDim);
         target.setChunkForced((int)entity.getX(), (int)entity.getZ(), true);
@@ -218,19 +220,7 @@ public class RocketContraption extends TranslatingContraption{
 		}
 		entity.changeDimension(target);
 		entity.getContraption().getContraptionWorld();
-		System.out.println("AAAAAAAA WE ARE IN SPACE!!!!!! PANIC PANIC PANIC PANIC");
-		entity.level.getProfiler().pop();
-	}
-	
-	
-	public boolean inControl(BlockPos pos, Direction direction) {
-		BlockPos controlsPos = pos.relative(direction);
-		if (!blocks.containsKey(controlsPos))
-			return false;
-		StructureBlockInfo info = blocks.get(controlsPos);
-		if (!AllBlocks.TRAIN_CONTROLS.has(info.state))
-			return false;
-		return info.state.getValue(ControlsBlock.FACING) == direction.getOpposite();
+		entity.level().getProfiler().pop();
 	}
 	
 
@@ -244,18 +234,15 @@ public class RocketContraption extends TranslatingContraption{
 		return NorthstarContraptionTypes.ROCKET;
 	}
 	
-	@Override
-	public CompoundTag writeNBT(boolean spawnPacket) {
-		CompoundTag tag = super.writeNBT(spawnPacket);
-		return tag;
-	}
-	
 	public boolean hasRocketStation() {
 		return rocket_station;
 	}
 
 	public int hasJetEngine() {
 		return jet_engines;
+	}
+	public int getVisualJetEngines() {
+		return visual_jet_engines;
 	}
 	public boolean hasFuel() {
 		return has_fuel;
@@ -267,10 +254,6 @@ public class RocketContraption extends TranslatingContraption{
 		return heatShielding;
 	}
 
-	@Override
-	public void readNBT(Level world, CompoundTag tag, boolean spawnData) {
-		super.readNBT(world, tag, spawnData);
-	}
 	
 	@Override
 	protected boolean isAnchoringBlockAt(BlockPos pos) {

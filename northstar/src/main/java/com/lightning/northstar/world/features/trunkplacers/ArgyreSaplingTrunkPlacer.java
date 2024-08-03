@@ -13,6 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryCodecs;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -34,7 +35,7 @@ public class ArgyreSaplingTrunkPlacer extends TrunkPlacer {
 		         return p_226240_.placeBranchPerLogProbability;
 		      }), IntProvider.NON_NEGATIVE_CODEC.fieldOf("extra_branch_length").forGetter((p_226238_) -> {
 		         return p_226238_.extraBranchLength;
-		      }), RegistryCodecs.homogeneousList(Registry.BLOCK_REGISTRY).fieldOf("can_grow_through").forGetter((p_226234_) -> {
+		      }), RegistryCodecs.homogeneousList(Registries.BLOCK).fieldOf("can_grow_through").forGetter((p_226234_) -> {
 		         return p_226234_.canGrowThrough;
 		      }), IntProvider.NON_NEGATIVE_CODEC.fieldOf("extra_branch_length").forGetter((p_226238_) -> {
 			         return p_226238_.spinFactor;
@@ -189,7 +190,7 @@ public class ArgyreSaplingTrunkPlacer extends TrunkPlacer {
 		   @Override
 		   protected boolean validTreePos(LevelSimulatedReader pLevel, BlockPos pPos) {
 			      return pLevel.isStateAtPosition(pPos, (p_226232_) -> {
-			          return p_226232_.getMaterial().isReplaceable();
+			          return p_226232_.canBeReplaced();
 			       });
 		   }
 }

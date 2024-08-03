@@ -18,7 +18,6 @@ public class RocketStationEditPacket extends BlockEntityConfigurationPacket<Rock
 	}
 
 	public static RocketStationEditPacket tryAssemble(BlockPos pos) {
-		System.out.println("pp");
 		RocketStationEditPacket packet = new RocketStationEditPacket(pos);
 		packet.tryAssemble = true;
 		return packet;

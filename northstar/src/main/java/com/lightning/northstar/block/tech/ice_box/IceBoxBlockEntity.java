@@ -11,11 +11,7 @@ import javax.annotation.Nonnull;
 import com.lightning.northstar.item.NorthstarRecipeTypes;
 import com.lightning.northstar.world.TemperatureStuff;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
-import com.simibubi.create.content.fluids.potion.PotionMixingRecipes;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
-import com.simibubi.create.content.kinetics.mixer.MixingRecipe;
-import com.simibubi.create.content.processing.basin.BasinBlockEntity;
-import com.simibubi.create.content.processing.basin.BasinInventory;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
@@ -35,7 +31,6 @@ import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.LangBuilder;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
-import com.simibubi.create.infrastructure.config.AllConfigs;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -52,13 +47,11 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -66,6 +59,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
+@SuppressWarnings({"unused", "removal"})
 public class IceBoxBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation{
 
 	private boolean contentsChanged;
@@ -166,10 +160,10 @@ public class IceBoxBlockEntity extends SmartBlockEntity implements IHaveGoggleIn
 			InvManipulationBehaviour inserter =
 				be == null ? null : BlockEntityBehaviour.get(level, be.getBlockPos(), InvManipulationBehaviour.TYPE);
 			IItemHandler targetInv = be == null ? null
-				: be.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, direction.getOpposite())
+				: be.getCapability(ForgeCapabilities.ITEM_HANDLER, direction.getOpposite())
 					.orElse(inserter == null ? null : inserter.getInventory());
 			IFluidHandler targetTank = be == null ? null
-				: be.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, direction.getOpposite())
+				: be.getCapability(ForgeCapabilities.FLUID_HANDLER, direction.getOpposite())
 					.orElse(null);
 			boolean externalTankNotPresent = targetTank == null;
 
@@ -379,9 +373,9 @@ public class IceBoxBlockEntity extends SmartBlockEntity implements IHaveGoggleIn
 	@Nonnull
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side) {
-		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+		if (cap == ForgeCapabilities.ITEM_HANDLER)
 			return itemCapability.cast();
-		if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+		if (cap == ForgeCapabilities.FLUID_HANDLER)
 			return fluidCapability.cast();
 		return super.getCapability(cap, side);
 	}
@@ -530,7 +524,7 @@ public class IceBoxBlockEntity extends SmartBlockEntity implements IHaveGoggleIn
 			return matchingRecipes;
 		
 		IItemHandler availableItems = this
-			.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+			.getCapability(ForgeCapabilities.ITEM_HANDLER)
 			.orElse(null);
 		if (availableItems == null)
 			return matchingRecipes;

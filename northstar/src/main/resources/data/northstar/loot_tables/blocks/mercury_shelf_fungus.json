@@ -1,0 +1,90 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "northstar:mercury_shelf_fungus",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 2,
+              "add": false,
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "northstar:mercury_shelf_fungus",
+                  "properties": {
+                    "shelves": "2"
+                  }
+                }
+              ]
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 3,
+              "add": false,
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "northstar:mercury_shelf_fungus",
+                  "properties": {
+                    "shelves": "3"
+                  }
+                }
+              ]
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 4,
+              "add": false,
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "northstar:mercury_shelf_fungus",
+                  "properties": {
+                    "shelves": "4"
+                  }
+                }
+              ]
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 5,
+              "add": false,
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "northstar:mercury_shelf_fungus",
+                  "properties": {
+                    "shelves": "5"
+                  }
+                }
+              ]
+            },
+            {
+              "function": "minecraft:set_count",
+              "count": 6,
+              "add": false,
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "northstar:mercury_shelf_fungus",
+                  "properties": {
+                    "shelves": "6"
+                  }
+                }
+              ]
+            },
+            {
+              "function": "minecraft:explosion_decay"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

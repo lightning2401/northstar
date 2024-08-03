@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
@@ -20,7 +20,7 @@ public class MarsRootsConfig implements FeatureConfiguration {
 		         return p_161151_.requiredVerticalSpaceForTree;
 		      }), Codec.intRange(1, 64).fieldOf("root_radius").forGetter((p_161149_) -> {
 		         return p_161149_.rootRadius;
-		      }), TagKey.hashedCodec(Registry.BLOCK_REGISTRY).fieldOf("root_replaceable").forGetter((p_204838_) -> {
+		      }), TagKey.hashedCodec(Registries.BLOCK).fieldOf("root_replaceable").forGetter((p_204838_) -> {
 		         return p_204838_.rootReplaceable;
 		      }), BlockStateProvider.CODEC.fieldOf("root_state_provider").forGetter((p_161145_) -> {
 		         return p_161145_.rootStateProvider;

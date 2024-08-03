@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.lightning.northstar.sound.NorthstarSounds;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.kinetics.belt.behaviour.BeltProcessingBehaviour;
 import com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackHandlerBehaviour;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
@@ -133,7 +132,7 @@ public class EngravingBehaviour extends BeltProcessingBehaviour {
 
 					for (ItemEntity itemEntity : level.getEntitiesOfClass(ItemEntity.class,
 						new AABB(worldPosition.below()).deflate(.125f))) {
-						if (!itemEntity.isAlive() || !itemEntity.isOnGround())
+						if (!itemEntity.isAlive() || !itemEntity.onGround())
 							continue;
 						if (!specifics.tryProcessInWorld(itemEntity, true))
 							continue;
@@ -200,7 +199,7 @@ public class EngravingBehaviour extends BeltProcessingBehaviour {
 		for (Entity entity : level.getEntities(null, bb)) {
 			if (!(entity instanceof ItemEntity itemEntity))
 				continue;
-			if (!entity.isAlive() || !entity.isOnGround())
+			if (!entity.isAlive() || !entity.onGround())
 				continue;
 
 			entityScanCooldown = 0;

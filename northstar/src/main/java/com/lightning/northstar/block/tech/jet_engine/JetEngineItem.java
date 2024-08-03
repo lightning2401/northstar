@@ -98,8 +98,7 @@ public class JetEngineItem extends BlockItem {
 				BlockState blockState = world.getBlockState(offsetPos);
 				if (JetEngineBlock.isTank(blockState))
 					continue;
-				if (!blockState.getMaterial()
-					.isReplaceable())
+				if (!blockState.canBeReplaced())
 					return;
 				tanksToPlace++;
 			}

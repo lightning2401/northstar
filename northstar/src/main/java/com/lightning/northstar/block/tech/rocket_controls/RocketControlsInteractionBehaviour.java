@@ -15,14 +15,14 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 
 public class RocketControlsInteractionBehaviour extends MovingInteractionBehaviour {
+	@SuppressWarnings("resource")
 	@Override
 	public boolean handlePlayerInteraction(Player player, InteractionHand activeHand, BlockPos localPos,
 		AbstractContraptionEntity contraptionEntity) {
 		if(!(contraptionEntity instanceof RocketContraptionEntity rce))
 			return false;
-		if (AllItems.WRENCH.isIn(player.getItemInHand(activeHand)))
-			return false;
-		System.out.println("Huhh????");
+
+//		System.out.println("Huhh????");
 
 		UUID currentlyControlling = rce.getControllingPlayer()
 			.orElse(null);
@@ -33,12 +33,12 @@ public class RocketControlsInteractionBehaviour extends MovingInteractionBehavio
 				return true;
 		}
 
-		System.out.println("I LIVED!!!!!!!!!");
+//		System.out.println("I LIVED!!!!!!!!!");
 		if (!contraptionEntity.startControlling(localPos, player))
 			return false;
 
 		rce.setControllingPlayer(player.getUUID());
-		if (player.level.isClientSide)
+		if (player.level().isClientSide)
 			DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
 				() -> () -> RocketControlsHandler.startControlling(rce, localPos));
 		return true;

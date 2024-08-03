@@ -15,9 +15,9 @@ import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.critereon.EnchantmentPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.advancements.critereon.NbtPredicate;
-import net.minecraft.advancements.critereon.PlacedBlockTrigger;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
@@ -50,10 +50,8 @@ public class NorthstarAdvancement {
 		Builder t = new Builder();
 		b.apply(t);
 		
-		System.out.println("CHECKING FOR EXTERNAL TRIGGER");
 		if (!t.externalTrigger) {
-			System.out.println("AAAAAAAAAA IS THIS WORKING!!!!!!!!!??????");
-			System.out.println(id + "_builtin");
+
 			builtinTrigger = NorthstarTriggers.addSimple(id + "_builtin");
 			builder.addCriterion("0", builtinTrigger.instance());
 		}
@@ -174,7 +172,7 @@ public class NorthstarAdvancement {
 		}
 
 		Builder whenBlockPlaced(Block block) {
-			return externalTrigger(PlacedBlockTrigger.TriggerInstance.placedBlock(block));
+			return externalTrigger(ItemUsedOnLocationTrigger.TriggerInstance.placedBlock(block));
 		}
 
 		Builder whenIconCollected() {

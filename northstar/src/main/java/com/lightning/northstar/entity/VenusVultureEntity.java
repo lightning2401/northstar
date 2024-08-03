@@ -11,6 +11,7 @@ import com.lightning.northstar.sound.NorthstarSounds;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -32,7 +33,6 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
@@ -45,19 +45,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.IAnimationTickable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.util.ClientUtils;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class VenusVultureEntity extends Monster implements IAnimatable, IAnimationTickable {
-	AnimationFactory factory = GeckoLibUtil.createFactory(this);
+public class VenusVultureEntity extends Monster implements GeoEntity {
+	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 	private static final EntityDataAccessor<Byte> FLYING = SynchedEntityData.defineId(VenusVultureEntity.class, EntityDataSerializers.BYTE);
 	private static final EntityDataAccessor<Byte> IS_LANDING = SynchedEntityData.defineId(VenusVultureEntity.class, EntityDataSerializers.BYTE);
 	private static final EntityDataAccessor<Byte> IS_TAKING_OFF = SynchedEntityData.defineId(VenusVultureEntity.class, EntityDataSerializers.BYTE);
@@ -93,23 +90,31 @@ public class VenusVultureEntity extends Monster implements IAnimatable, IAnimati
 		return state.is(NorthstarBlockTags.NATURAL_VENUS_BLOCKS.tag) && level.canSeeSky(pos);
 	}
 	
-	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-		if(flapTimer > 0 && this.isFlying()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("flap", EDefaultLoopTypes.LOOP));
-			event.getController().animationSpeed = 1;
-		}else if (this.isFlying() && !(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("fly", EDefaultLoopTypes.LOOP));
-			event.getController().animationSpeed = 2;
-		}else if (!(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F)) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", EDefaultLoopTypes.LOOP));
-			event.getController().animationSpeed = event.getLimbSwingAmount();
-		} else {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", EDefaultLoopTypes.LOOP));
-			event.getController().animationSpeed = 1;
-		}
+	@Override
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		RawAnimation flap = RawAnimation.begin().thenLoop("flap");
+		RawAnimation fly = RawAnimation.begin().thenLoop("fly");
+		RawAnimation idle = RawAnimation.begin().thenLoop("idle");
+		RawAnimation walk = RawAnimation.begin().thenLoop("walk");
 
+		
+		controllers.add(
+				new AnimationController<>(this, state -> {
+					if(flapTimer > 0 && this.isFlying()) {return state.setAndContinue(flap);}
+					else if (this.isFlying() && state.isMoving()) {return state.setAndContinue(fly);}
+					else if (state.isMoving()) {return state.setAndContinue(walk);}
+					else return state.setAndContinue(idle);})
+						.setCustomInstructionKeyframeHandler(state -> {
+							Player player = ClientUtils.getClientPlayer();
 
-		return PlayState.CONTINUE;
+							if (player != null)
+								player.displayClientMessage(Component.literal("KeyFraming"), true);
+						})
+		);
+	}
+	@Override
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return cache;
 	}
 
 	@Override
@@ -132,12 +137,6 @@ public class VenusVultureEntity extends Monster implements IAnimatable, IAnimati
 	@Override
 	protected SoundEvent getDeathSound() {
 		return NorthstarSounds.VENUS_VULTURE_DIE.get();
-	}
-	
-	@Override
-	public void registerControllers(AnimationData data) {
-		data.addAnimationController(new AnimationController<VenusVultureEntity>(this, "controller", 2, this::predicate));
-		
 	}
 	
 	//this handles client side stuff, and creates parity between server and client
@@ -163,7 +162,7 @@ public class VenusVultureEntity extends Monster implements IAnimatable, IAnimati
 
 				this.setXRot(this.getXRot() + rotationModifier);
 				flapTimer = Mth.clamp(flapTimer, 0, flapTimer - 1);
-				int surfaceDif = this.blockPosition().getY() - level.getHeight(Heightmap.Types.MOTION_BLOCKING, blockPosition().getX(), blockPosition().getZ());
+				int surfaceDif = this.blockPosition().getY() - level().getHeight(Heightmap.Types.MOTION_BLOCKING, blockPosition().getX(), blockPosition().getZ());
 				Vec3 delta = this.getDeltaMovement();
 				if(isTakingOff() && surfaceDif < 15){
 					this.setDeltaMovement(delta.x,delta.y + 0.9,delta.z);
@@ -176,25 +175,24 @@ public class VenusVultureEntity extends Monster implements IAnimatable, IAnimati
 				}
 				if(isLanding()) {
 					this.setDeltaMovement(delta.x,delta.y - 0.7,delta.z);
-					if(!this.level.getBlockState(this.blockPosition().below()).isAir()) {
-						this.level.broadcastEntityEvent(this, (byte) 120);
+					if(!this.level().getBlockState(this.blockPosition().below()).isAir()) {
+						this.level().broadcastEntityEvent(this, (byte) 120);
 						this.setFlying(false);
 						setTakingOff(false);
 					}
 				}
-				if(level.random.nextInt(3000) == 0) {
+				if(level().random.nextInt(3000) == 0) {
 					setIsLanding(true);
-					System.out.println("BEGINNING LANDING!!!");
 				}
 			}
 			else {
-				rotationModifier = this.level.random.nextFloat();
+				rotationModifier = this.level().random.nextFloat();
 				rotationModifier = Mth.clamp(rotationModifier, 0.2f, 0.8f);
 				flapTimer = 45;
-				rotationModifier = this.level.random.nextBoolean() ? rotationModifier : rotationModifier * -1;
-				rotationTimer = this.level.random.nextIntBetweenInclusive(300, 1500);
+				rotationModifier = this.level().random.nextBoolean() ? rotationModifier : rotationModifier * -1;
+				rotationTimer = this.level().random.nextIntBetweenInclusive(300, 1500);
 			}
-			for(Player player : this.level.getEntitiesOfClass(Player.class, getBoundingBox().inflate(15))) {
+			for(Player player : this.level().getEntitiesOfClass(Player.class, getBoundingBox().inflate(15))) {
 				if(isFood(player.getItemInHand(InteractionHand.MAIN_HAND)) || isFood(player.getItemInHand(InteractionHand.OFF_HAND))) {
 					setIsLanding(true);
 				}
@@ -202,7 +200,7 @@ public class VenusVultureEntity extends Monster implements IAnimatable, IAnimati
 			
 		}else {
 			this.setBoundingBox(new AABB(-0.4, 0, -0.4, 0.4, 1.8, 0.4).move(this.getX(), this.getY(), this.getZ()));
-			if(level.random.nextInt(1000) == 0) {
+			if(level().random.nextInt(1000) == 0) {
 				setFlying(true);
 				setTakingOff(true);
 				setIsLanding(false);
@@ -213,7 +211,7 @@ public class VenusVultureEntity extends Monster implements IAnimatable, IAnimati
 	public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
 	      ItemStack itemstack = pPlayer.getItemInHand(pHand);
 	      if (this.isFood(itemstack)) {
-	         if (this.level.isClientSide) {
+	         if (this.level().isClientSide) {
 	            return InteractionResult.CONSUME;
 	         }
 	         this.usePlayerItem(pPlayer, pHand, itemstack);
@@ -225,7 +223,7 @@ public class VenusVultureEntity extends Monster implements IAnimatable, IAnimati
 	protected void usePlayerItem(Player player, InteractionHand hand, ItemStack stack) {
 		if (this.isFood(stack)) {
 			this.playSound(SoundEvents.CAT_EAT, 1.0F, 1.0F);
-			this.targetPosition = new BlockPos(this.getX(),this.level.getHeight(Heightmap.Types.MOTION_BLOCKING,(int) this.getX(),(int) this.getZ()),this.getZ());
+			this.targetPosition = new BlockPos((int)this.getX(),(int)this.level().getHeight(Heightmap.Types.MOTION_BLOCKING,(int) this.getX(),(int) this.getZ()),(int)this.getZ());
 		}
 	}
 	
@@ -239,7 +237,7 @@ public class VenusVultureEntity extends Monster implements IAnimatable, IAnimati
 		BlockPos blockpos = this.blockPosition();
 		if (this.isFlying()){
 			this.fallDistance = 0;
-			if (this.targetPosition != null && (!this.level.isEmptyBlock(this.targetPosition) || this.targetPosition.getY() <= this.level.getMinBuildHeight())) {
+			if (this.targetPosition != null && (!this.level().isEmptyBlock(this.targetPosition) || this.targetPosition.getY() <= this.level().getMinBuildHeight())) {
 				this.targetPosition = null;
 			}
 			
@@ -252,24 +250,21 @@ public class VenusVultureEntity extends Monster implements IAnimatable, IAnimati
 			
 
 			if (this.targetPosition == null || this.random.nextInt(30) == 0 || (this.targetPosition.closerToCenterThan(this.position(), 2.0D) && !pollinating)) {
-				this.targetPosition = new BlockPos(this.getX() + (double)this.random.nextInt(16) - (double)this.random.nextInt(16), this.getY() + (double)this.random.nextInt(16) - (double)this.random.nextInt(16), this.getZ() + (double)this.random.nextInt(16) - (double)this.random.nextInt(16));
+				this.targetPosition = new BlockPos((int)this.getX() + (int)this.random.nextInt(16) - (int)this.random.nextInt(16),(int) this.getY() + (int)this.random.nextInt(16) - (int)this.random.nextInt(16), (int)this.getZ() + (int)this.random.nextInt(16) - (int)this.random.nextInt(16));
 			}
 			
 			if(pollinating && this.targetPosition.closerToCenterThan(this.position(), 0.5D)) {
-				System.out.println("I AM POLLINATING A FLOWER!!!!!!!!!!!!!!!!!!!!!!");
 				this.pollinating = false;
 				this.pollinationTimer = 6000;
-				if(this.level.getBlockState(this.targetPosition).getBlock() instanceof MartianFlowerBlock) {
-					Item item = ((MartianFlowerBlock)this.level.getBlockState(this.targetPosition).getBlock()).getSeedItem();
-					ItemEntity spawnedItem = new ItemEntity(level, this.getX(), this.getY(), this.getZ(), new ItemStack(item, 1));
-					this.level.addFreshEntity(spawnedItem);
-					System.out.println("I AM POLLINATING A RANDOM FLOWER!!!!!");
+				if(this.level().getBlockState(this.targetPosition).getBlock() instanceof MartianFlowerBlock) {
+					Item item = ((MartianFlowerBlock)this.level().getBlockState(this.targetPosition).getBlock()).getSeedItem();
+					ItemEntity spawnedItem = new ItemEntity(level(), this.getX(), this.getY(), this.getZ(), new ItemStack(item, 1));
+					this.level().addFreshEntity(spawnedItem);
 				}
-				else if(this.level.getBlockState(this.targetPosition).getBlock() instanceof MartianTallFlowerBlock) {
+				else if(this.level().getBlockState(this.targetPosition).getBlock() instanceof MartianTallFlowerBlock) {
 					Item item = NorthstarItems.MARS_SPROUT_SEEDS.get();
-					ItemEntity spawnedItem = new ItemEntity(level, this.getX(), this.getY(), this.getZ(), new ItemStack(item, 1));
-					this.level.addFreshEntity(spawnedItem);
-					System.out.println("I AM POLLINATING A TALL SPROUT FLOWER!!!!!");
+					ItemEntity spawnedItem = new ItemEntity(level(), this.getX(), this.getY(), this.getZ(), new ItemStack(item, 1));
+					this.level().addFreshEntity(spawnedItem);
 				}
 				this.targetPosition = null;
 			}
@@ -284,7 +279,7 @@ public class VenusVultureEntity extends Monster implements IAnimatable, IAnimati
 				float f1 = Mth.wrapDegrees(f - this.getYRot());
 				this.zza = 0.5F;
 				this.setYRot(this.getYRot() + f1);
-				if(this.random.nextInt(300) == 0 && this.level.getBlockState(blockpos.below()).isRedstoneConductor(level, blockpos.below()) && !this.pollinating) {
+				if(this.random.nextInt(300) == 0 && this.level().getBlockState(blockpos.below()).isRedstoneConductor(level(), blockpos.below()) && !this.pollinating) {
 					this.setFlying(false);
 				}
 			}
@@ -318,7 +313,7 @@ public class VenusVultureEntity extends Monster implements IAnimatable, IAnimati
 		if (this.isInvulnerableTo(pSource)) {
 			return false;
 		} else {
-			if(!this.level.isClientSide && !this.isFlying()) {
+			if(!this.level().isClientSide && !this.isFlying()) {
 				setFlying(true);
 				setTakingOff(true);
 				setIsLanding(false);
@@ -335,11 +330,11 @@ public class VenusVultureEntity extends Monster implements IAnimatable, IAnimati
 	public void setFlying(boolean flying) {
 		if (flying) {
 			this.entityData.set(FLYING, (byte) 1 );
-			rotationModifier = this.level.random.nextFloat();
+			rotationModifier = this.level().random.nextFloat();
 			rotationModifier = Mth.clamp(rotationModifier, 0.2f, 0.8f);
 			flapTimer = 45;
-			rotationModifier = this.level.random.nextBoolean() ? rotationModifier : rotationModifier * -1;
-			this.level.broadcastEntityEvent(this, (byte)150);
+			rotationModifier = this.level().random.nextBoolean() ? rotationModifier : rotationModifier * -1;
+			this.level().broadcastEntityEvent(this, (byte)150);
 		} else {
 			this.entityData.set(FLYING, (byte) -2 );
 		}
@@ -379,21 +374,11 @@ public class VenusVultureEntity extends Monster implements IAnimatable, IAnimati
 	}
 	
 	public boolean doHurtTarget(Entity pEntity) {
-		this.level.broadcastEntityEvent(this, (byte)4);
+		this.level().broadcastEntityEvent(this, (byte)4);
 		this.playSound(SoundEvents.RAVAGER_ATTACK, 1.0F, 1.0F);
 		return super.doHurtTarget(pEntity);
 	}
 
-
-	@Override
-	public AnimationFactory getFactory() {
-		return factory;
-	}
-
-	@Override
-	public int tickTimer() {
-		return tickCount;
-	}
 
 //	@Override
 	public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {

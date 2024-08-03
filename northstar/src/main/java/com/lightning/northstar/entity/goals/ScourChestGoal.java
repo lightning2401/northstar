@@ -41,7 +41,7 @@ public class ScourChestGoal extends MoveToBlockGoal {
 	    */
 	   @Override
 	   public boolean canUse() {
-	      if (!net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.disruptor.level, this.disruptor)) {
+	      if (!net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.disruptor.level(), this.disruptor)) {
 	         return false;
 	      } else if (disruptor.stealTimer > 0) {
 	    	  return false;
@@ -58,7 +58,7 @@ public class ScourChestGoal extends MoveToBlockGoal {
 	   }
 
 	   private boolean tryFindBlock() {
-	      return this.blockPos != null && this.isValidTarget(this.mob.level, this.blockPos) ? true : this.findNearestBlock();
+	      return this.blockPos != null && this.isValidTarget(this.mob.level(), this.blockPos) ? true : this.findNearestBlock();
 	   }
 
 	   /**
@@ -91,7 +91,7 @@ public class ScourChestGoal extends MoveToBlockGoal {
 	   @Override
 	   public void tick() {
 	      super.tick();
-	      Level level = this.disruptor.level;
+	      Level level = this.disruptor.level();
 	      BlockState state = level.getBlockState(pos);
 	      
     	  if(searchTime > 0 && this.isReachedTarget()) {
@@ -121,7 +121,6 @@ public class ScourChestGoal extends MoveToBlockGoal {
 	      }
 	      if (this.isReachedTarget() && this.disruptor.stealTimer == 0) {
 	    	  BlockState newstate = level.getBlockState(pos);
-	    	  System.out.println("at the thingy!!!");
 	    	  disruptor.stealTimer = 600;
 	    	  ++this.ticksSinceReachedGoal;
 	    	  if(newstate.getBlock() instanceof ChestBlock chest && searchTime == 0) 

@@ -3,6 +3,7 @@ package com.lightning.northstar.world.features.trunkplacers;
 import com.mojang.serialization.Codec;
 
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 
@@ -14,7 +15,7 @@ public class AlienTrunkPlacerType<P extends TrunkPlacer> {
 	   private final Codec<P> codec;
 	
 	   private static <P extends TrunkPlacer> TrunkPlacerType<P> register(String pKey, Codec<P> pCodec) {
-		      return Registry.register(Registry.TRUNK_PLACER_TYPES, pKey, new TrunkPlacerType<>(pCodec));
+		      return Registry.register(BuiltInRegistries.TRUNK_PLACER_TYPE, pKey, new TrunkPlacerType<>(pCodec));
 	   }
 
 	public AlienTrunkPlacerType(Codec<P> pCodec) {

@@ -82,7 +82,7 @@ public class TelescopeBlockEntity extends SmartBlockEntity implements MenuProvid
     	if (flag == false) {return;}
     	ItemStack paper = inv.getItem(paperslot);
     	paper.setCount(paper.getCount() - 1);
-    	inv.player.level.playSound((Player) null, inv.player.blockPosition(), SoundEvents.UI_CARTOGRAPHY_TABLE_TAKE_RESULT, SoundSource.BLOCKS, 1.0F, 1.0F);
+    	inv.player.level().playSound((Player) null, inv.player.blockPosition(), SoundEvents.UI_CARTOGRAPHY_TABLE_TAKE_RESULT, SoundSource.BLOCKS, 1.0F, 1.0F);
         ItemStack itemstack = new ItemStack(NorthstarItems.ASTRONOMICAL_READING.get(), 1);
         itemstack.setHoverName(Component.translatable("item.northstar.reading_" + name).setStyle(Style.EMPTY.withColor(ChatFormatting.WHITE).withItalic(false)));
         CompoundTag tag = itemstack.getOrCreateTagElement("Planet");

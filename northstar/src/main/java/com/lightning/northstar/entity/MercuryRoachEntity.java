@@ -4,10 +4,10 @@ import java.util.UUID;
 
 import com.lightning.northstar.NorthstarTags.NorthstarBlockTags;
 import com.lightning.northstar.entity.goals.RunToGroupGoal;
-import com.lightning.northstar.entity.goals.ScourChestGoal;
 import com.lightning.northstar.sound.NorthstarSounds;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -21,6 +21,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.monster.Monster;
@@ -29,19 +30,17 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.IAnimationTickable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.util.ClientUtils;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class MercuryRoachEntity extends Monster implements IAnimatable, IAnimationTickable {
-	AnimationFactory factory = GeckoLibUtil.createFactory(this);
+public class MercuryRoachEntity extends Monster implements GeoEntity {
+	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 	private static final UUID SPEED_MODIFIER_ATTACKING_UUID = UUID.fromString("49455A49-7EC5-45BA-B886-3B90B23A1718");
 	private static final AttributeModifier SPEED_MODIFIER_ATTACKING = new AttributeModifier(SPEED_MODIFIER_ATTACKING_UUID, "Attacking speed boost", 0.2D, AttributeModifier.Operation.ADDITION);
 	public int eating = 0;
@@ -50,7 +49,7 @@ public class MercuryRoachEntity extends Monster implements IAnimatable, IAnimati
 	@SuppressWarnings("deprecation")
 	public MercuryRoachEntity(EntityType<? extends MercuryRoachEntity> pEntityType, Level pLevel) {
 		super(pEntityType, pLevel);
-		this.maxUpStep = 1f;
+		this.setMaxUpStep(1f);
 	}
 	
 	public static AttributeSupplier.Builder createAttributes() {
@@ -67,26 +66,27 @@ public class MercuryRoachEntity extends Monster implements IAnimatable, IAnimati
 		}
 	}
 	
-	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-		if (!(event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F) ) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", EDefaultLoopTypes.LOOP));
-			event.getController().animationSpeed = event.getLimbSwingAmount();
-		} else if(eating > 0) {
-			eating--;
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("munch", EDefaultLoopTypes.PLAY_ONCE));
-			event.getController().animationSpeed = 1;
-		}else {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", EDefaultLoopTypes.LOOP));
-			event.getController().animationSpeed = 1;
-		}
-
-		return PlayState.CONTINUE;
-	}
-	
 	@Override
-	public void registerControllers(AnimationData data) {
-		data.addAnimationController(new AnimationController<MercuryRoachEntity>(this, "controller", 2, this::predicate));
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		RawAnimation idle = RawAnimation.begin().thenLoop("idle");
+		RawAnimation walk = RawAnimation.begin().thenLoop("walk");
+
 		
+		controllers.add(
+				// Add our flying animation controller
+				new AnimationController<>(this, 10, state -> state.setAndContinue(state.isMoving() ? walk : idle))
+						// Handle the custom instruction keyframe that is part of our animation json
+						.setCustomInstructionKeyframeHandler(state -> {
+							Player player = ClientUtils.getClientPlayer();
+
+							if (player != null)
+								player.displayClientMessage(Component.literal("KeyFraming"), true);
+						})
+		);
+	}
+	@Override
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return cache;
 	}
 	
 	//this handles client side stuff, and creates parity between server and client
@@ -139,25 +139,15 @@ public class MercuryRoachEntity extends Monster implements IAnimatable, IAnimati
 		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 		this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 	    this.goalSelector.addGoal(9, new RunToGroupGoal<>(this, Player.class, 7, 1, 1.2));
-		this.goalSelector.addGoal(7, new ScourChestGoal(this, 1.0D, 16));
+		this.goalSelector.addGoal(7, new MeleeAttackGoal(this, 1.0D, false));
+//		this.goalSelector.addGoal(7, new ScourChestGoal(this, 1.0D, 16));
 		super.registerGoals();
 	}
 	@Override
 	public boolean doHurtTarget(Entity pEntity) {
-		this.level.broadcastEntityEvent(this, (byte)4);
+		this.level().broadcastEntityEvent(this, (byte)4);
 		this.playSound(SoundEvents.RAVAGER_ATTACK, 1.0F, 1.0F);
 		return super.doHurtTarget(pEntity);
-	}
-
-
-	@Override
-	public AnimationFactory getFactory() {
-		return factory;
-	}
-
-	@Override
-	public int tickTimer() {
-		return tickCount;
 	}
 
 

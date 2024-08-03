@@ -38,7 +38,7 @@ public class FrozenZombieEntity extends Zombie {
 	public boolean doHurtTarget(Entity pEntity) {
 		boolean flag = super.doHurtTarget(pEntity);
 		if (flag && pEntity instanceof LivingEntity) {
-			float f = this.level.getCurrentDifficultyAt(this.blockPosition()).getEffectiveDifficulty();
+			float f = this.level().getCurrentDifficultyAt(this.blockPosition()).getEffectiveDifficulty();
 			((LivingEntity)pEntity).setTicksFrozen((int) (140 + (50 * f)));
 		}
 		return flag;

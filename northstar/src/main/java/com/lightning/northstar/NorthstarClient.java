@@ -5,6 +5,7 @@ import com.lightning.northstar.item.armor.RemainingOxygenOverlay;
 import com.lightning.northstar.particle.NorthstarParticles;
 
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
@@ -12,10 +13,14 @@ import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import software.bernie.example.GeckoLibMod;
 
 @EventBusSubscriber(Dist.CLIENT)
 public class NorthstarClient {
-	
+	@SubscribeEvent
+	public static void registerRenderers(final EntityRenderersEvent.RegisterRenderers event) {
+
+	}
 	@SubscribeEvent
 	public static void onTick(ClientTickEvent event) {
 		

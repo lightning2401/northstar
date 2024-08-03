@@ -43,6 +43,7 @@ public class RocketControlsHandler {
 		currentlyPressed.clear();
 	}
 
+	@SuppressWarnings("resource")
 	public static void startControlling(RocketContraptionEntity entity, BlockPos controllerLocalPos) {
 		entityRef = new WeakReference<RocketContraptionEntity>(entity);
 		controlsPos = controllerLocalPos;
@@ -52,6 +53,7 @@ public class RocketControlsHandler {
 
 	}
 
+	@SuppressWarnings("resource")
 	public static void stopControlling() {
 		ControlsUtil.getControls()
 			.forEach(kb -> kb.setDown(ControlsUtil.isActuallyPressed(kb)));
@@ -70,6 +72,7 @@ public class RocketControlsHandler {
 			true);
 	}
 
+	@SuppressWarnings("resource")
 	public static void tick() {
 		RocketContraptionEntity entity = entityRef.get();
 		LocalPlayer player = Minecraft.getInstance().player;
@@ -82,11 +85,11 @@ public class RocketControlsHandler {
 		if(launchtime % 20 == 0 && player != null && entity != null && launchtime != -20) {
 			player.displayClientMessage(
 			Component.literal(String.valueOf(launchtime / 20)).withStyle(ChatFormatting.AQUA), true);
-			player.level.playSound(player, player.blockPosition(), SoundEvents.NOTE_BLOCK_PLING, SoundSource.BLOCKS, 10, launchtime / 20 == 0 ? 10 : 1);
+			player.level().playSound(player, player.blockPosition(), SoundEvents.NOTE_BLOCK_PLING.get(), SoundSource.BLOCKS, 10, launchtime / 20 == 0 ? 10 : 1);
 		}
 		
 		if(player != null && entity != null) {
-			if(entity.landing && entity.getY() < entity.level.getMaxBuildHeight() + 500) 
+			if(entity.landing && entity.getY() < entity.level().getMaxBuildHeight() + 500) 
 			{player.displayClientMessage(
 					Lang.translateDirect("contraption.controls.landing_warning").withStyle(ChatFormatting.RED), true);}
 		}

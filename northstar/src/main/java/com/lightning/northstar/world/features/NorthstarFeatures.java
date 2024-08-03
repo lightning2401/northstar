@@ -11,12 +11,13 @@ import com.lightning.northstar.world.features.configuration.SphereConfig;
 import com.lightning.northstar.world.features.configuration.StoneClusterConfiguration;
 import com.lightning.northstar.world.features.configuration.StoneColumnConfiguration;
 
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FossilFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.MultifaceGrowthConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -24,7 +25,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public abstract class NorthstarFeatures<FC extends FeatureConfiguration> {
 		public static final DeferredRegister<Feature<?>> FEATURES =
-            DeferredRegister.create(Registry.FEATURE_REGISTRY, Northstar.MOD_ID);
+            DeferredRegister.create(Registries.FEATURE, Northstar.MOD_ID);
 	
 //	    public static final Feature<MarsRootsConfig> MARS_ROOTS = register("mars_roots", new MarsRoots(MarsRootsConfig.CODEC));
 		public static final RegistryObject<Feature<?>> NATURAL_ARGYRE = FEATURES.register("natural_argyre", () -> new ArgyreFeature(AlienTreeConfig.CODEC));
@@ -44,6 +45,9 @@ public abstract class NorthstarFeatures<FC extends FeatureConfiguration> {
 		public static final RegistryObject<Feature<?>> MARS_ROOTS = FEATURES.register("mars_roots", () -> new MarsRootsFeature(MultifaceGrowthConfiguration.CODEC));
 		public static final RegistryObject<Feature<?>> MULTIFACE_GROWTH_CUSTOM = FEATURES.register("multiface_growth_custom", () -> new MultifaceGrowthCustomFeature(MultifaceGrowthConfiguration.CODEC));
 		public static final RegistryObject<Feature<?>> ROOF_VINES = FEATURES.register("roof_vines", () -> new RoofVinesFeature(RoofVinesConfig.CODEC));
+		public static final RegistryObject<Feature<?>> MERCURY_CACTUS = FEATURES.register("mercury_cactus", () -> new MercuryCactusFeature(NoneFeatureConfiguration.CODEC));
+		public static final RegistryObject<Feature<?>> MERCURY_LARGE_SHELVES = FEATURES.register("mercury_large_shelves", () -> new MercuryShelvesFeature(NoneFeatureConfiguration.CODEC));
+		public static final RegistryObject<Feature<?>> MERCURY_SMALL_SHELVES = FEATURES.register("mercury_small_shelves", () -> new MercuryShelvesSmallFeature(NoneFeatureConfiguration.CODEC));
 		
 	    public static void register(IEventBus eventBus) {
 	        FEATURES.register(eventBus);

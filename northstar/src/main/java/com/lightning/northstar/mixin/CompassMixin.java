@@ -110,7 +110,7 @@ public class CompassMixin {
 		return compoundtag != null && (compoundtag.contains("LodestoneDimension") || compoundtag.contains("LodestonePos"));
 	}
 
-	private static void addLodestoneTags(ResourceKey<Level> pLodestoneDimension, BlockPos pLodestonePos, CompoundTag pCompoundTag) {
+	private void addLodestoneTags(ResourceKey<Level> pLodestoneDimension, BlockPos pLodestonePos, CompoundTag pCompoundTag) {
 		pCompoundTag.put("LodestonePos", NbtUtils.writeBlockPos(pLodestonePos));
 		Level.RESOURCE_KEY_CODEC.encodeStart(NbtOps.INSTANCE, pLodestoneDimension).resultOrPartial(LOGGER::error).ifPresent((p_40731_) -> {
 			pCompoundTag.put("LodestoneDimension", p_40731_);

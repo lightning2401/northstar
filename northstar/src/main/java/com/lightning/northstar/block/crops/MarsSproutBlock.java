@@ -1,17 +1,15 @@
 package com.lightning.northstar.block.crops;
 
 import com.lightning.northstar.block.NorthstarBlocks;
-import com.lightning.northstar.block.tech.temperature_regulator.TemperatureRegulatorBlockEntity;
 import com.lightning.northstar.item.NorthstarItems;
-import com.lightning.northstar.world.dimension.NorthstarPlanets;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.DoublePlantBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 
@@ -27,10 +25,11 @@ public class MarsSproutBlock extends MartianFlowerBlock {
 	}
 	
 	@Override
-	public boolean isValidBonemealTarget(BlockGetter pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
+	public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
 		return true;
 	}
 	
+	@SuppressWarnings("static-access")
 	@Override
 	public int getLightEmission(BlockState state, BlockGetter world, BlockPos pos) {
 		if(state.is(this)) {

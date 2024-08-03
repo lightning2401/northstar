@@ -43,7 +43,6 @@ public class AlienTreeConfig implements FeatureConfiguration {
 	         return p_225470_.forceDirt;
 	      })).apply(p_225468_, AlienTreeConfig::new);
 	   });
-	   //TODO: Review this, see if we can hook in the sapling into the Codec
 	   public final BlockStateProvider trunkProvider;
 	   public final BlockStateProvider glowProvider;
 	   public final BlockStateProvider dirtProvider;

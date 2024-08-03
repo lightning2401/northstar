@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "northstar:block/sulfuric_acid"
+      "model": "create:block/chocolate"
     }
   }
 }

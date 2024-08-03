@@ -4,6 +4,7 @@ import com.lightning.northstar.NorthstarTags.NorthstarBlockTags;
 import com.lightning.northstar.sound.NorthstarSounds;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -19,23 +20,21 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.IAnimationTickable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.util.ClientUtils;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class MoonEelEntity extends Monster implements IAnimatable, IAnimationTickable{
-	AnimationFactory factory = GeckoLibUtil.createFactory(this);
+public class MoonEelEntity extends Monster implements GeoEntity{
+	private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
 	protected MoonEelEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
 		super(pEntityType, pLevel);
-		this.maxUpStep = 1;
+		this.setMaxUpStep(1f);
 	}
 
 	protected void registerGoals() {
@@ -59,11 +58,6 @@ public class MoonEelEntity extends Monster implements IAnimatable, IAnimationTic
 		return NorthstarSounds.MOON_EEL_DIE.get();
 	}
 	
-	@Override
-	public int tickTimer() {
-		return tickCount;
-	}
-	
 	public static boolean eelSpawnRules(EntityType<MoonEelEntity> eel, LevelAccessor level, MobSpawnType spawntype, BlockPos pos, RandomSource rando) {
 		int surfaceY = level.getHeight(Heightmap.Types.MOTION_BLOCKING,(int) pos.getX(),(int) pos.getZ());
 		BlockState state = level.getBlockState(pos.below());
@@ -81,22 +75,25 @@ public class MoonEelEntity extends Monster implements IAnimatable, IAnimationTic
 	}
 	
 	@Override
-	public void registerControllers(AnimationData data) {
-		data.addAnimationController(new AnimationController<MoonEelEntity>(this, "controller", 2, this::predicate));
-	}
-	
-	private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
-		if (!(event.getLimbSwingAmount() > -0.05F && event.getLimbSwingAmount() < 0.05F)) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", EDefaultLoopTypes.LOOP));
-		} else {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", EDefaultLoopTypes.LOOP));
-		}
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		RawAnimation idle = RawAnimation.begin().thenLoop("idle");
+		RawAnimation walk = RawAnimation.begin().thenLoop("walk");
 
-		return PlayState.CONTINUE;
-	}
+		
+		controllers.add(
+				// Add our flying animation controller
+				new AnimationController<>(this, 10, state -> state.setAndContinue(state.isMoving() ? walk : idle))
+						// Handle the custom instruction keyframe that is part of our animation json
+						.setCustomInstructionKeyframeHandler(state -> {
+							Player player = ClientUtils.getClientPlayer();
 
+							if (player != null)
+								player.displayClientMessage(Component.literal("KeyFraming"), true);
+						})
+		);
+	}
 	@Override
-	public AnimationFactory getFactory() {
-		return factory;
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return cache;
 	}
 }

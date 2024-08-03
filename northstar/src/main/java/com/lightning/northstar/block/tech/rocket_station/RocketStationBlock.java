@@ -1,9 +1,7 @@
 package com.lightning.northstar.block.tech.rocket_station;
 
 import com.lightning.northstar.block.entity.NorthstarBlockEntityTypes;
-import com.lightning.northstar.block.tech.computer_rack.TargetingComputerRackBlockEntity;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
-import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.utility.Couple;
 
@@ -36,7 +34,7 @@ public class RocketStationBlock extends HorizontalDirectionalBlock implements IB
 
 	public RocketStationBlock(Properties properties) {
 		super(properties);
-		registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
+		registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH).setValue(ASSEMBLING, false));
 	}
 	
 	@Override
@@ -100,7 +98,7 @@ public class RocketStationBlock extends HorizontalDirectionalBlock implements IB
 
 	@Override
 	protected void createBlockStateDefinition(Builder<Block, BlockState> pBuilder) {
-		super.createBlockStateDefinition(pBuilder.add(FACING));
+		super.createBlockStateDefinition(pBuilder.add(FACING, ASSEMBLING));
 	}
 
 

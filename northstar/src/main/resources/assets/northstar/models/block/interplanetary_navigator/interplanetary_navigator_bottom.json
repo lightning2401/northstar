@@ -1,0 +1,38 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "northstar:block/interplanetary_navigator",
+		"1": "northstar:block/interplanetary_navigator_2",
+		"particle": "northstar:block/interplanetary_navigator"
+	},
+	"elements": [
+		{
+			"name": "bottom",
+			"from": [4, 1, 4],
+			"to": [12, 17, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [4, 1, 4]},
+			"faces": {
+				"north": {"uv": [0, 0, 4, 8], "texture": "#0"},
+				"east": {"uv": [4, 0, 8, 8], "texture": "#0"},
+				"south": {"uv": [8, 0, 12, 8], "texture": "#0"},
+				"west": {"uv": [4, 0, 8, 8], "texture": "#0"},
+				"up": {"uv": [12, 0, 16, 4], "texture": "#0"},
+				"down": {"uv": [12, 4, 16, 8], "texture": "#0"}
+			}
+		},
+		{
+			"name": "bottom_base",
+			"from": [2, 0, 2],
+			"to": [14, 3, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 0, 2]},
+			"faces": {
+				"north": {"uv": [0, 0, 6, 1.5], "texture": "#1"},
+				"east": {"uv": [0, 0, 6, 1.5], "texture": "#1"},
+				"south": {"uv": [0, 0, 6, 1.5], "texture": "#1"},
+				"west": {"uv": [0, 0, 6, 1.5], "texture": "#1"},
+				"up": {"uv": [0, 1.5, 6, 7.5], "texture": "#1"},
+				"down": {"uv": [0, 1.5, 6, 7.5], "texture": "#1"}
+			}
+		}
+	]
+}

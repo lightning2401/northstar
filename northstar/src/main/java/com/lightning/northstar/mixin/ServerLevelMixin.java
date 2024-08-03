@@ -9,7 +9,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.lightning.northstar.particle.DustCloudParticleData;
 import com.lightning.northstar.world.dimension.NorthstarDimensions;
 import com.lightning.northstar.world.dimension.NorthstarPlanets;
 
@@ -34,25 +33,27 @@ public class ServerLevelMixin {
     @Inject(method = "tickChunk", at = @At("HEAD"))
     public void tickChunk(LevelChunk pChunk, int pRandomTickSpeed, CallbackInfo info) {
     	ServerLevel level = (ServerLevel)(Object) this;
-    	
-    	if(level.dimension() == NorthstarDimensions.MARS_DIM_KEY) {
- //   		level.setRainLevel(15);
-    	}
-    	if(level.dimension() == NorthstarDimensions.VENUS_DIM_KEY) {
-  //  		level.setRainLevel(15);
-	        ChunkPos chunkpos = pChunk.getPos();
-	        boolean flag = level.isRaining();
-	        int i = chunkpos.getMinBlockX();
-	        int j = chunkpos.getMinBlockZ();
-	        ProfilerFiller profilerfiller = level.getProfiler();
-	        profilerfiller.push("thunder");
-	        if (flag && level.random.nextInt(15000) == 0) {
-	           System.out.println("THUNDER TIME YEEHAW");
-	           BlockPos blockpos = this.findLightningTargetAround(level.getBlockRandomPos(i, 0, j, 15));
-	           LightningBolt lightningbolt = EntityType.LIGHTNING_BOLT.create(level);
-	           lightningbolt.moveTo(Vec3.atBottomCenterOf(blockpos));
-	           level.addFreshEntity(lightningbolt);
-	        }
+    	if(level != null) {
+	    	if(level.dimension() == NorthstarDimensions.MARS_DIM_KEY) {
+	 //   		level.setRainLevel(15);
+	    	}
+	    	if(level.dimension() == NorthstarDimensions.VENUS_DIM_KEY) {
+	  //  		level.setRainLevel(15);
+		        ChunkPos chunkpos = pChunk.getPos();
+		        boolean flag = level.isRaining();
+		        int i = chunkpos.getMinBlockX();
+		        int j = chunkpos.getMinBlockZ();
+		        ProfilerFiller profilerfiller = level.getProfiler();
+		        profilerfiller.push("thunder");
+		        if (flag && level.random.nextInt(15000) == 0) {
+
+			           // THUNDER TIME YEEHAW
+		           BlockPos blockpos = this.findLightningTargetAround(level.getBlockRandomPos(i, 0, j, 15));
+		           LightningBolt lightningbolt = EntityType.LIGHTNING_BOLT.create(level);
+		           lightningbolt.moveTo(Vec3.atBottomCenterOf(blockpos));
+		           level.addFreshEntity(lightningbolt);
+		        }
+	    	}
     	}
 		   
     }
@@ -96,7 +97,10 @@ public class ServerLevelMixin {
 	@Inject(method = "getSeed", at = @At("HEAD"), cancellable = true)
     public void getSeed(CallbackInfoReturnable<Long> info) {
     	ServerLevel level = (ServerLevel) (Object) this;
-        long seed = level.getServer().getWorldData().worldGenSettings().seed();
-        info.setReturnValue(seed + NorthstarPlanets.getSeedOffset(level.dimension()));
+    	if(level != null) {
+	        long seed = level.getServer().getWorldData().worldGenOptions().seed();
+	        info.cancel();
+	        info.setReturnValue(seed + NorthstarPlanets.getSeedOffset(level.dimension()));
+    	}
     }
 }
