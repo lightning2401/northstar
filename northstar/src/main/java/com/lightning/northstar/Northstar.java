@@ -17,6 +17,7 @@ import com.lightning.northstar.client.renderer.armor.IronSpaceSuitLayerRenderer;
 import com.lightning.northstar.client.renderer.armor.IronSpaceSuitModelRenderer;
 import com.lightning.northstar.client.renderer.armor.MartianSteelSpaceSuitLayerRenderer;
 import com.lightning.northstar.client.renderer.armor.MartianSteelSpaceSuitModelRenderer;
+import com.lightning.northstar.contraptions.NorthstarContraptionTypes;
 import com.lightning.northstar.contraptions.RocketHandler;
 import com.lightning.northstar.entity.MarsCobraEntity;
 import com.lightning.northstar.entity.MarsMothEntity;
@@ -119,6 +120,7 @@ public class Northstar
         NorthstarPotions.register(modEventBus);
         NorthstarEnchantments.register();
         NorthstarTechBlocks.register();
+        NorthstarContraptionTypes.register();
   //      NorthstarTechBlocks.register(modEventBus);
         NorthstarBlockEntityTypes.register(modEventBus);
         NorthstarFeatures.register(modEventBus);

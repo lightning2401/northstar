@@ -18,7 +18,9 @@ import com.lightning.northstar.item.NorthstarItems;
 import com.lightning.northstar.world.dimension.NorthstarPlanets;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.contraptions.AssemblyException;
+import com.simibubi.create.content.contraptions.Contraption;
 import com.simibubi.create.content.contraptions.ContraptionType;
+import com.simibubi.create.content.contraptions.ContraptionWorld;
 import com.simibubi.create.content.contraptions.MountedStorageManager;
 import com.simibubi.create.content.contraptions.TranslatingContraption;
 import com.simibubi.create.content.contraptions.minecart.TrainCargoManager;
@@ -28,6 +30,7 @@ import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -221,8 +224,7 @@ public class RocketContraption extends TranslatingContraption{
 		entity.changeDimension(target);
 		entity.getContraption().getContraptionWorld();
 		entity.level.getProfiler().pop();
-	}
-	
+	}	
 
 	@Override
 	public boolean canBeStabilized(Direction facing, BlockPos localPos) {

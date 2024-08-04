@@ -167,7 +167,7 @@ public class RocketContraptionEntity extends AbstractContraptionEntity implement
 		
 		if(this.tickCount % 40 == 0 && !this.level.isClientSide) {
 			NorthstarPackets.getChannel().send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
-					new RocketContraptionSyncPacket(this.position(), lift_vel, this.getId()));
+					new RocketContraptionSyncPacket(this.position(), lift_vel,this.getId(), launchtime,  launched, landing, blasting, slowing, activeLaunch));
 		}
 		
 
@@ -322,6 +322,11 @@ public class RocketContraptionEntity extends AbstractContraptionEntity implement
 			return;
 			rce.lift_vel = packet.lift_vel;
 			rce.setPos(packet.pos.x, packet.pos.y, packet.pos.z);
+			rce.launched = packet.launched;
+			rce.landing = packet.landing;
+			rce.blasting = packet.blasting;
+			rce.slowing = packet.slowing;
+			rce.activeLaunch = packet.activeLaunch;
 	}
 	
 	public ItemStack createReturnTicket(RocketContraptionEntity entity) {
