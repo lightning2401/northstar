@@ -91,7 +91,7 @@ public class Northstar
     public static final double EARTH_GRAV = 1;
     public static final double MARS_GRAV = 0.37;
     public static final double VENUS_GRAV = 0.89;
-
+    //test
     
     public static final String MOD_ID = "northstar";
     // Directly reference a slf4j logger
