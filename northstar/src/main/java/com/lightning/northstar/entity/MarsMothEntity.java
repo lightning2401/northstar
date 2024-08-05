@@ -85,7 +85,7 @@ public class MarsMothEntity extends Monster implements GeoEntity {
 		controllers.add(
 				new AnimationController<>(this, state -> {
 					if(this.isFlying() && !resting) {state.setControllerSpeed(2);  return state.setAndContinue(fly);}
-					else if (state.isMoving()) {state.setControllerSpeed(1); return state.setAndContinue(walk);}
+					else if (!(state.getLimbSwingAmount() > -0.15F && state.getLimbSwingAmount() < 0.15F)) {state.setControllerSpeed(1); return state.setAndContinue(walk);}
 					else if (resting) {state.setControllerSpeed(1); return state.setAndContinue(sleep);}
 					else state.setControllerSpeed(1); return state.setAndContinue(idle);})
 						.setCustomInstructionKeyframeHandler(state -> {

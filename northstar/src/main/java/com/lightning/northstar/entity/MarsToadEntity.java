@@ -70,7 +70,7 @@ public class MarsToadEntity extends Monster implements GeoEntity, RangedAttackMo
 				// Add our flying animation controller
 				new AnimationController<>(this, state -> {
 					if(this.eating > 0) {return state.setAndContinue(eating);}
-					else if (state.isMoving()) {return state.setAndContinue(walk);}
+					else if (!(state.getLimbSwingAmount() > -0.15F && state.getLimbSwingAmount() < 0.15F)) {return state.setAndContinue(walk);}
 					else return state.setAndContinue(idle);})
 						// Handle the custom instruction keyframe that is part of our animation json
 						.setCustomInstructionKeyframeHandler(state -> {

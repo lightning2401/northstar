@@ -3,7 +3,7 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"0": "northstar:item/armor/iron_space_suit",
-		"particle": "northstar:armor/iron_space_suit_texture"
+		"particle": "northstar:item/armor/iron_space_suit"
 	},
 	"elements": [
 		{

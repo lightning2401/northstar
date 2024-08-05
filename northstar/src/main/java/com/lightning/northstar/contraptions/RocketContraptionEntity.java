@@ -169,7 +169,7 @@ public class RocketContraptionEntity extends AbstractContraptionEntity implement
 		
 		if(this.tickCount % 40 == 0 && !this.level().isClientSide) {
 			NorthstarPackets.getChannel().send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
-					new RocketContraptionSyncPacket(this.position(), lift_vel, this.getId()));
+					new RocketContraptionSyncPacket(this.position(), lift_vel,this.getId(), launchtime,  launched, landing, blasting, slowing, activeLaunch));
 		}
 		
 
@@ -184,7 +184,7 @@ public class RocketContraptionEntity extends AbstractContraptionEntity implement
 		if(heatCostHome > heatCost) {
 			heatCost = heatCostHome;
 		}	
-		int requiredJets = ((RocketContraption)this.contraption).fuelCost / 800;
+		int requiredJets = engineCalc();
 		contrap.owner.displayClientMessage(Component.literal
 		("Full Fuel Cost: " + (int)(contrap.weightCost + (contrap.fuelCost - (contrap.fuelCost * contrap.computingPower)))).withStyle(ChatFormatting.GOLD), false);
 		contrap.owner.displayClientMessage(Component.literal
@@ -323,6 +323,11 @@ public class RocketContraptionEntity extends AbstractContraptionEntity implement
 			return;
 			rce.lift_vel = packet.lift_vel;
 			rce.setPos(packet.pos.x, packet.pos.y, packet.pos.z);
+			rce.launched = packet.launched;
+			rce.landing = packet.landing;
+			rce.blasting = packet.blasting;
+			rce.slowing = packet.slowing;
+			rce.activeLaunch = packet.activeLaunch;
 	}
 	
 	public ItemStack createReturnTicket(RocketContraptionEntity entity) {
@@ -686,6 +691,24 @@ public class RocketContraptionEntity extends AbstractContraptionEntity implement
 			.rotateZ(anglePitch)
 			.rotateY(angleInitialYaw)
 			.unCentre();
+	}
+	
+	public int engineCalc() {
+		int homeAtmos = NorthstarPlanets.getPlanetAtmosphereCost(level().dimension()) / 100;
+		int targetAtmos = NorthstarPlanets.getPlanetAtmosphereCost(destination) / 100;
+		
+		double grav = NorthstarPlanets.getGravMultiplier(destination);
+		double homeGrav = NorthstarPlanets.getGravMultiplier(level().dimension());
+		if(grav < homeGrav) {
+			grav = homeGrav;
+		}
+		double constant = NorthstarPlanets.getEngineConstant(destination);
+		double homeConstant = NorthstarPlanets.getEngineConstant(level().dimension());
+		if(constant < homeConstant) {
+			constant = homeConstant;
+		}
+		
+		return (int) (Mth.clamp(((targetAtmos + homeAtmos) * grav), 6, 64)  + constant);
 	}
 	
 	

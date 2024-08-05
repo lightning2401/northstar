@@ -40,8 +40,6 @@ public class ChargeAtTargetGoal extends MoveToBlockGoal {
 	    	  return true;
 	      } else if (this.searchForTarget()) {
 	         this.nextStartTick = reducedTickDelay(20);
-	         this.chargingMob.charging = true;
-	         chargingMob.level().broadcastEntityEvent(chargingMob, (byte)63);
 	         return true;
 	      } else {
 	         this.nextStartTick = this.nextStartTick(this.mob);
@@ -67,7 +65,10 @@ public class ChargeAtTargetGoal extends MoveToBlockGoal {
 			this.chargingMob.playSound(NorthstarSounds.VENUS_STONE_BULL_CHARGE.get(), 1.0F, 1.0F);;
 			chargingMob.chargeTimer = 150;
 			chargingMob.targetPos = this.chargingMob.getTarget().blockPosition();}
-	      return true;
+		  System.out.println("THIS SHOULD BE CHARGING?? I THINK?");
+		  this.chargingMob.charging = true;
+		  chargingMob.level().broadcastEntityEvent(chargingMob, (byte)68);
+		  return true;
 	   }
 
 	   /**
@@ -148,10 +149,9 @@ public class ChargeAtTargetGoal extends MoveToBlockGoal {
 		      if(chargingMob.moveDirection.z < 0) {zFlag = subVec.z > 0;}
 			      
 		      if (xFlag && zFlag && !chargingMob.passedTarget) {
-		    	  if(!chargingMob.passedTarget) {
+		    	  System.out.println("PASSED TARGET");
 		    		  chargingMob.passedTarget = true;
 		    		  chargingMob.level().broadcastEntityEvent(chargingMob, (byte) 66);
-		    	  }
 		      }
 //		      System.out.println("distance: " +  blockPosToVec3(chargingMob.blockPosition()).distanceTo(blockPosToVec3(this.targetPos)));
 		      if(blockPosToVec3(chargingMob.blockPosition()).distanceTo(blockPosToVec3(chargingMob.targetPos)) > 15) {

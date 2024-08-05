@@ -155,7 +155,9 @@ public class NorthstarItems {
 	
 	
 	public static final RegistryObject<Item> ASTRONOMICAL_READING = ITEMS.register("astronomical_reading", () -> new Item(new Item.Properties()));
-	public static final RegistryObject<StarMapItem> STAR_MAP = ITEMS.register("star_map", () -> new StarMapItem(new Item.Properties().stacksTo(1)));
+	public static final ItemEntry<StarMapItem> STAR_MAP = REGISTRATE.item("star_map", StarMapItem::new)
+			.properties(p -> p.stacksTo(1))
+			.register();
 
 	public static final RegistryObject<Item> RETURN_TICKET = ITEMS.register("return_ticket", () -> new Item(new Item.Properties().stacksTo(1)));
 

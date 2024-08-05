@@ -59,6 +59,7 @@ public class VenusStoneBullEntity extends Monster implements GeoEntity{
 	
 	public VenusStoneBullEntity(EntityType<? extends VenusStoneBullEntity> pEntityType, Level pLevel) {
 		super(pEntityType, pLevel);
+		this.setMaxUpStep(1f);
 	}
 	
 	public static AttributeSupplier.Builder createAttributes() {
@@ -76,9 +77,9 @@ public class VenusStoneBullEntity extends Monster implements GeoEntity{
 		controllers.add(
 				// Add our flying animation controller
 				new AnimationController<>(this, state -> {
-					if (state.isMoving() && !charging) {return state.setAndContinue(walk);}
-					else if (state.isMoving() && charging && !passedTarget) {return state.setAndContinue(charge);}
-					else if (state.isMoving() && charging && passedTarget) {return state.setAndContinue(endCharge);}
+					if (!(state.getLimbSwingAmount() > -0.15F && state.getLimbSwingAmount() < 0.15F) && !charging) {return state.setAndContinue(walk);}
+					else if (!(state.getLimbSwingAmount() > -0.15F && state.getLimbSwingAmount() < 0.15F) && charging && !passedTarget) {return state.setAndContinue(charge);}
+					else if (!(state.getLimbSwingAmount() > -0.15F && state.getLimbSwingAmount() < 0.15F) && charging && passedTarget) {return state.setAndContinue(endCharge);}
 					else return state.setAndContinue(idle);})
 						// Handle the custom instruction keyframe that is part of our animation json
 						.setCustomInstructionKeyframeHandler(state -> {
@@ -102,10 +103,9 @@ public class VenusStoneBullEntity extends Monster implements GeoEntity{
 	//this handles client side stuff, and creates parity between server and client
 	@Override
 	public void handleEntityEvent(byte pId) {
-		if (pId == 4) {
-		}
-		if (pId == 63) {
+		if (pId == 68) {
 			charging = true;
+			System.out.println("CHARGING!!!!!!!!!!!!!!!!!!!!!!!!!");
 		}
 		if (pId == 65) {
 			charging = false;
@@ -120,6 +120,7 @@ public class VenusStoneBullEntity extends Monster implements GeoEntity{
 		super.handleEntityEvent(pId);
 	}
 	
+	@SuppressWarnings("resource")
 	@Override
 	public void tick() {
 		super.tick();
@@ -189,7 +190,6 @@ public class VenusStoneBullEntity extends Monster implements GeoEntity{
 	}
 	@Override
 	public boolean doHurtTarget(Entity pEntity) {
-		this.level().broadcastEntityEvent(this, (byte)4);
 		this.playSound(NorthstarSounds.VENUS_STONE_BULL_ATTACK.get(), 1.0F, 1.0F);
 		pEntity.setDeltaMovement(pEntity.getDeltaMovement().x + (this.getDeltaMovement().x / 4), pEntity.getDeltaMovement().y + 1, pEntity.getDeltaMovement().z + (this.getDeltaMovement().z / 4));
 		return super.doHurtTarget(pEntity);

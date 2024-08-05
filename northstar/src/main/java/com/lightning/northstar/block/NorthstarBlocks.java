@@ -1,6 +1,7 @@
 package com.lightning.northstar.block;
 
 import static com.lightning.northstar.Northstar.REGISTRATE;
+import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 import static net.minecraft.world.level.block.Blocks.OAK_PLANKS;
 import static net.minecraft.world.level.block.Blocks.STONE;
 
@@ -22,7 +23,10 @@ import com.lightning.northstar.world.features.NorthstarConfiguredFeatures;
 import com.lightning.northstar.world.features.grower.ArgyreSaplingTreeGrower;
 import com.lightning.northstar.world.features.grower.CoilerTreeGrower;
 import com.lightning.northstar.world.features.grower.WilterTreeGrower;
+import com.simibubi.create.foundation.data.SharedProperties;
+import com.tterrag.registrate.util.entry.BlockEntry;
 
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
@@ -755,13 +759,16 @@ public class NorthstarBlocks {
     public static final RegistryObject<Block> ICICLE = registerBlock("icicle",
             () -> new IcicleBlock(BlockBehaviour.Properties.of().sound(SoundType.GLASS)
                     .strength(3.5f, 12f).noOcclusion().dynamicShape().offsetType(BlockBehaviour.OffsetType.XZ)));
-    
 
-    
-
-    public static final RegistryObject<Block> TELESCOPE = registerBlock("telescope", 
-    		() ->new TelescopeBlock(BlockBehaviour.Properties.of().sound(SoundType.COPPER)
-                    .strength(8f, 8f).noOcclusion().isViewBlocking(NorthstarBlocks::never)));  
+    @SuppressWarnings("removal")
+	public static final BlockEntry<TelescopeBlock> TELESCOPE = REGISTRATE.block("telescope", TelescopeBlock::new)
+    		.initialProperties(SharedProperties::softMetal)
+			.properties(p -> p.noOcclusion().isViewBlocking(NorthstarBlocks::never).strength(8f,8f))
+			.properties(p -> p.sound(SoundType.COPPER))
+    		.transform(pickaxeOnly())
+    		.addLayer(() -> RenderType::cutoutMipped)
+    		.simpleItem()
+    		.register();
     
     public static final RegistryObject<Block> INTERPLANETARY_NAVIGATOR = registerBlock("interplanetary_navigator", 
     		() ->new InterplanetaryNavigatorBlock(BlockBehaviour.Properties.of().sound(SoundType.METAL)

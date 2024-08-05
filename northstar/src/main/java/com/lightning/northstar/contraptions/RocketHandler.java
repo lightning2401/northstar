@@ -65,17 +65,18 @@ public class RocketHandler {
 				if(entries.getKey().first != null)
 				{Player player = event.level.getPlayerByUUID(entries.getKey().first);
 				if(player != null) {
-					RocketContraptionEntity rocket = ((RocketContraptionEntity)event.level.getEntity(entries.getValue()));
-					
-					if(!rocket.getControllingPlayer().isEmpty()) {
-						if(rocket.getControllingPlayer().get() == player.getUUID()) {
+						RocketContraptionEntity rocket = ((RocketContraptionEntity)event.level.getEntity(entries.getValue()));
+						if(rocket != null) {
+							if(!rocket.getControllingPlayer().isEmpty()) {
+								if(rocket.getControllingPlayer().get() == player.getUUID()) {
+									destroy.put(entries.getKey(), entries.getValue());
+									continue;
+								}
+							}
+							
+							rocket.handlePlayerInteraction(player, entries.getKey().second, Direction.NORTH, InteractionHand.MAIN_HAND);
 							destroy.put(entries.getKey(), entries.getValue());
-							continue;
 						}
-					}
-					
-					rocket.handlePlayerInteraction(player, entries.getKey().second, Direction.NORTH, InteractionHand.MAIN_HAND);
-					destroy.put(entries.getKey(), entries.getValue());
 					}
 				}
 			}

@@ -977,9 +977,9 @@ public class LevelRendererMixin {
  //       System.out.println(time);
 
         if (playerEyeLevel > 600)
-        {f = (float) (skycolor.x - ((playerEyeLevel - 600) / 300));
-        f1 = (float) (skycolor.y - ((playerEyeLevel - 600) / 300));
-        f2 = (float) (skycolor.z - ((playerEyeLevel - 600) / 300));
+        {f = (float) (skycolor.x * skydarken - ((playerEyeLevel - 600) / 300));
+        f1 = (float) (skycolor.y * skydarken - ((playerEyeLevel - 600) / 300));
+        f2 = (float) (skycolor.z * skydarken - ((playerEyeLevel - 600) / 300));
         f_alpha = 1 - ((playerEyeLevel - 600) / 300);
         if (f_alpha < 0) {f_alpha = 0;}}
         	//f_alpha = 700 - playerEyeLevel / 200;

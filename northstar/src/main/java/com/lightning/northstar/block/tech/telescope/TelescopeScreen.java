@@ -12,6 +12,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.foundation.gui.AllIcons;
 import com.simibubi.create.foundation.gui.widget.IconButton;
+import com.simibubi.create.foundation.utility.Lang;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -359,6 +360,13 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
 //		printButton.renderButton(gui, mouseX, mouseY, delta);
 //		if(printButton.isMouseOver(mouseX, mouseY)) {printButton.renderToolTip(gui, mouseX, mouseY);}
 		addRenderableWidget(printButton);
+		if ((Math.abs(x + imageWidth - 196 - mouseX) < 9 && Math.abs(y + imageHeight - 1 + 8 - mouseY) < 9)) {
+			List<Component> list = Lists.newArrayList();
+			RenderSystem.colorMask(true, true, true, true);
+			list.add((Lang.translateDirect("northstar.gui.telescope.button_tooltip").withStyle(ChatFormatting.WHITE)));
+
+		    gui.renderComponentTooltip(this.font, list, mouseX, mouseY);
+		}
     }
     
     public void renderSelectedPlanet(GuiGraphics gui) {

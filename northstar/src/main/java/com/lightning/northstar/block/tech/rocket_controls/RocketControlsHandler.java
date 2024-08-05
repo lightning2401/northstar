@@ -79,8 +79,11 @@ public class RocketControlsHandler {
 		if(displaytime < 61)
 		displaytime++;
 		if(displaytime == 60 && player != null && entity != null && launchtime == -20 && !entity.blasting && !entity.landing && entity.launchtime == 0) {
-			player.displayClientMessage(
-					Lang.translateDirect("contraption.controls.rocket_tut").withStyle(ChatFormatting.AQUA), true);
+			if(!entity.getControllingPlayer().isEmpty()) {
+				if(entity.getControllingPlayer().get() == player.getUUID())
+					{player.displayClientMessage(
+							Lang.translateDirect("contraption.controls.rocket_tut").withStyle(ChatFormatting.AQUA), true);}
+			}
 		}
 		if(launchtime % 20 == 0 && player != null && entity != null && launchtime != -20) {
 			player.displayClientMessage(
@@ -90,8 +93,12 @@ public class RocketControlsHandler {
 		
 		if(player != null && entity != null) {
 			if(entity.landing && entity.getY() < entity.level().getMaxBuildHeight() + 500) 
-			{player.displayClientMessage(
+			{if(!entity.getControllingPlayer().isEmpty()) {
+				if(entity.getControllingPlayer().get() == player.getUUID())
+				{player.displayClientMessage(
 					Lang.translateDirect("contraption.controls.landing_warning").withStyle(ChatFormatting.RED), true);}
+			}
+			}
 		}
 		
 		if(launchtime > -20)

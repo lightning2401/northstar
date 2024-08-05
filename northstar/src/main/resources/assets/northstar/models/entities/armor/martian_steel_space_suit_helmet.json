@@ -2,7 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"1": "northstar:armor/martian_steel_space_suit_texture"
+		"0": "northstar:item/armor/martian_steel_space_suit",
+		"particle": "northstar:item/armor/martian_steel_space_suit"
 	},
 	"elements": [
 		{
@@ -11,12 +12,12 @@
 			"to": [12.75, 32, 12.75],
 			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
 			"faces": {
-				"north": {"uv": [2, 2, 4, 4], "texture": "#1"},
-				"east": {"uv": [0, 2, 2, 4], "texture": "#1"},
-				"south": {"uv": [4, 0, 6, 2], "texture": "#1"},
-				"west": {"uv": [4, 2, 6, 4], "texture": "#1"},
-				"up": {"uv": [2, 2, 4, 0], "texture": "#1"},
-				"down": {"uv": [7.5, 0, 9.5, 2], "texture": "#1"}
+				"north": {"uv": [2, 2, 4, 4], "texture": "#0"},
+				"east": {"uv": [0, 2, 2, 4], "texture": "#0"},
+				"south": {"uv": [4, 0, 6, 2], "texture": "#0"},
+				"west": {"uv": [4, 2, 6, 4], "texture": "#0"},
+				"up": {"uv": [2, 2, 4, 0], "texture": "#0"},
+				"down": {"uv": [7.5, 0, 9.5, 2], "texture": "#0"}
 			}
 		}
 	],

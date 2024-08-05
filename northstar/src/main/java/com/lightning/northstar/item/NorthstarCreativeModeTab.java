@@ -81,6 +81,10 @@ public class NorthstarCreativeModeTab {
 					out.accept(NorthstarItems.MARTIAN_STEEL_CHESTPLATE.get());
 					out.accept(NorthstarItems.MARTIAN_STEEL_LEGGINGS.get());
 					out.accept(NorthstarItems.MARTIAN_STEEL_BOOTS.get());
+					out.accept(NorthstarItems.BROKEN_IRON_SPACE_SUIT_HELMET.get());
+					out.accept(NorthstarItems.BROKEN_IRON_SPACE_SUIT_CHESTPIECE.get());
+					out.accept(NorthstarItems.BROKEN_IRON_SPACE_SUIT_LEGGINGS.get());
+					out.accept(NorthstarItems.BROKEN_IRON_SPACE_SUIT_BOOTS.get());
 					out.accept(NorthstarItems.IRON_SPACE_SUIT_HELMET.get());
 					addOxyItem(out, NorthstarItems.IRON_SPACE_SUIT_CHESTPIECE.get());
 					out.accept(NorthstarItems.IRON_SPACE_SUIT_LEGGINGS.get());
@@ -110,6 +114,8 @@ public class NorthstarCreativeModeTab {
 					out.accept(NorthstarItems.POLISHED_AMETHYST.get());
 					
 					out.accept(NorthstarItems.MOON_SAND_PAPER.get());
+					out.accept(NorthstarItems.DORMANT_MARTIAN_SAPLING.get());
+					out.accept(NorthstarItems.DORMANT_MARTIAN_SEED.get());
 					out.accept(NorthstarItems.MARS_SPROUT_SEEDS.get());
 					out.accept(NorthstarItems.MARS_PALM_SEEDS.get());
 					out.accept(NorthstarItems.MARS_TULIP_SEEDS.get());
@@ -123,6 +129,8 @@ public class NorthstarCreativeModeTab {
 					out.accept(NorthstarItems.STRAWBERRY_ICE_CREAM.get());
 					
 					out.accept(NorthstarItems.MARTIAN_STRAWBERRY.get());
+					
+					out.accept(NorthstarItems.FROZEN_ZOMBIE_SPAWN_EGG.get());
 					
 					out.accept(NorthstarItems.MOON_EEL_SPAWN_EGG.get());
 					out.accept(NorthstarItems.MOON_LUNARGRADE_SPAWN_EGG.get());
@@ -244,10 +252,10 @@ public class NorthstarCreativeModeTab {
 					out.accept(NorthstarBlocks.MARS_GRAVEL.get());		
 					out.accept(NorthstarBlocks.MARTIAN_GRASS.get());	
 					out.accept(NorthstarBlocks.MARTIAN_TALL_GRASS.get());	
-					out.accept(NorthstarBlocks.MARS_SPROUT.get());	
+					out.accept(NorthstarItems.MARS_SPROUT_FLOWER.get());	
 					out.accept(NorthstarBlocks.MARS_SPROUT_BIG.get());	
-					out.accept(NorthstarBlocks.MARS_PALM.get());	
-					out.accept(NorthstarBlocks.MARS_TULIP.get());	
+					out.accept(NorthstarItems.MARS_PALM_FLOWER.get());	
+					out.accept(NorthstarItems.MARS_TULIP_FLOWER.get());	
 					
 					out.accept(NorthstarBlocks.MARS_STONE.get());			
 					out.accept(NorthstarBlocks.MARS_COPPER_ORE.get());	
@@ -277,6 +285,7 @@ public class NorthstarCreativeModeTab {
 					
 					out.accept(NorthstarBlocks.MARS_ROOTS.get());	
 					out.accept(NorthstarBlocks.GLOWING_MARS_ROOTS.get());	
+					out.accept(NorthstarBlocks.MARS_WORM_NEST.get());	
 					out.accept(NorthstarBlocks.POINTED_CRIMSITE.get());	
 					
 					out.accept(NorthstarBlocks.ARGYRE_LOG.get());	
@@ -305,6 +314,7 @@ public class NorthstarCreativeModeTab {
 					
 					out.accept(NorthstarBlocks.VENUS_GRAVEL.get());			
 					out.accept(NorthstarBlocks.VENUS_STONE.get());			
+					out.accept(NorthstarBlocks.VENUS_COAL_ORE.get());		
 					out.accept(NorthstarBlocks.VENUS_COPPER_ORE.get());	
 					out.accept(NorthstarBlocks.VENUS_DIAMOND_ORE.get());
 					out.accept(NorthstarBlocks.VENUS_GLOWSTONE_ORE.get());
@@ -331,8 +341,9 @@ public class NorthstarCreativeModeTab {
 					out.accept(NorthstarBlocks.VENUS_STONE_LAMP.get());
 					out.accept(NorthstarBlocks.VENUS_STONE_PILLAR.get());
 					out.accept(NorthstarBlocks.POLISHED_VENUS_STONE.get());
-					out.accept(NorthstarBlocks.CHISELED_VENUS_STONE.get());
+					out.accept(NorthstarBlocks.CHISELED_VENUS_STONE.get());	
 					
+					out.accept(NorthstarBlocks.VENUS_PLUME.get());	
 					out.accept(NorthstarBlocks.VENUS_VINES.get());	
 					out.accept(NorthstarBlocks.GLOWING_VENUS_VINES.get());	
 					
@@ -389,6 +400,8 @@ public class NorthstarCreativeModeTab {
 					out.accept(NorthstarBlocks.CALORIAN_PLANKS.get());	
 					out.accept(NorthstarBlocks.CALORIAN_SLAB.get());	
 					out.accept(NorthstarBlocks.CALORIAN_STAIRS.get());
+					
+					out.accept(NorthstarBlocks.MONOLITHITE.get());
 
 				})
 				.build());
@@ -399,6 +412,7 @@ public class NorthstarCreativeModeTab {
 				.displayItems((pParameters, out) -> {
 					out.accept(NorthstarTechBlocks.AMETHYST_CRYSTAL.get());
 					out.accept(NorthstarTechBlocks.LUNAR_SAPPHIRE_CRYSTAL.get());
+					out.accept(NorthstarTechBlocks.IRON_COGWHEEL.get());
 					out.accept(NorthstarTechBlocks.LASER_LENSE.get());
 					out.accept(NorthstarBlocks.TELESCOPE.get());
 					out.accept(NorthstarTechBlocks.ASTRONOMY_TABLE.get());
@@ -628,7 +642,7 @@ public class NorthstarCreativeModeTab {
 
 		private List<Item> collectBlocks(Predicate<Item> exclusionPredicate) {
 			List<Item> items = new ReferenceArrayList<>();
-			for (RegistryEntry<Block> entry : Create.REGISTRATE.getAll(Registries.BLOCK)) {
+			for (RegistryEntry<Block> entry : Northstar.REGISTRATE.getAll(Registries.BLOCK)) {
 				if (!CreateRegistrate.isInCreativeTab(entry, tabFilter))
 					continue;
 				Item item = entry.get()
@@ -644,7 +658,7 @@ public class NorthstarCreativeModeTab {
 
 		private List<Item> collectItems(Predicate<Item> exclusionPredicate) {
 			List<Item> items = new ReferenceArrayList<>();
-			for (RegistryEntry<Item> entry : Create.REGISTRATE.getAll(Registries.ITEM)) {
+			for (RegistryEntry<Item> entry : Northstar.REGISTRATE.getAll(Registries.ITEM)) {
 				if (!CreateRegistrate.isInCreativeTab(entry, tabFilter))
 					continue;
 				Item item = entry.get();
@@ -725,27 +739,6 @@ public class NorthstarCreativeModeTab {
 	        CompoundTag venusTag = venus.getOrCreateTagElement("Planet");
 	        venusTag.putString("name", "venus");
 	        pGroup.accept(venus);
-	        
-	        ItemStack jupiter = new ItemStack(NorthstarItems.STAR_MAP.get());
-			jupiter.setHoverName(Component.translatable("item.northstar.star_map" + "_" + "jupiter").setStyle(Style.EMPTY.withColor(ChatFormatting.AQUA).withItalic(false)));
-	        CompoundTag jupiterTag = jupiter.getOrCreateTagElement("Planet");
-	        jupiterTag.putString("name", "jupiter");
-	        pGroup.accept(jupiter);
-			ItemStack saturn = new ItemStack(NorthstarItems.STAR_MAP.get());
-			saturn.setHoverName(Component.translatable("item.northstar.star_map" + "_" + "saturn").setStyle(Style.EMPTY.withColor(ChatFormatting.AQUA).withItalic(false)));
-	        CompoundTag saturnTag = saturn.getOrCreateTagElement("Planet");
-	        saturnTag.putString("name", "saturn");
-	        pGroup.accept(saturn);
-			ItemStack uranus = new ItemStack(NorthstarItems.STAR_MAP.get());
-			uranus.setHoverName(Component.translatable("item.northstar.star_map" + "_" + "uranus").setStyle(Style.EMPTY.withColor(ChatFormatting.AQUA).withItalic(false)));
-	        CompoundTag uranusTag = uranus.getOrCreateTagElement("Planet");
-	        uranusTag.putString("name", "uranus");
-	        pGroup.accept(uranus);
-			ItemStack neptune = new ItemStack(NorthstarItems.STAR_MAP.get());
-			neptune.setHoverName(Component.translatable("item.northstar.star_map" + "_" + "neptune").setStyle(Style.EMPTY.withColor(ChatFormatting.AQUA).withItalic(false)));
-	        CompoundTag neptuneTag = neptune.getOrCreateTagElement("Planet");
-	        neptuneTag.putString("name", "neptune");
-	        pGroup.accept(neptune);
     }
 
 	public static void addOxyItem(CreativeModeTab.Output pGroup, Item item) {

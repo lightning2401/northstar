@@ -101,8 +101,8 @@ public class VenusVultureEntity extends Monster implements GeoEntity {
 		controllers.add(
 				new AnimationController<>(this, state -> {
 					if(flapTimer > 0 && this.isFlying()) {return state.setAndContinue(flap);}
-					else if (this.isFlying() && state.isMoving()) {return state.setAndContinue(fly);}
-					else if (state.isMoving()) {return state.setAndContinue(walk);}
+					else if (this.isFlying() && !(state.getLimbSwingAmount() > -0.15F && state.getLimbSwingAmount() < 0.15F)) {return state.setAndContinue(fly);}
+					else if (!(state.getLimbSwingAmount() > -0.15F && state.getLimbSwingAmount() < 0.15F)) {return state.setAndContinue(walk);}
 					else return state.setAndContinue(idle);})
 						.setCustomInstructionKeyframeHandler(state -> {
 							Player player = ClientUtils.getClientPlayer();

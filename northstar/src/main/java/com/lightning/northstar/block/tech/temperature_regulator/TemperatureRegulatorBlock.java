@@ -77,6 +77,8 @@ public class TemperatureRegulatorBlock extends HorizontalKineticBlock implements
 		}
 		if (reg == null)
 			return 0;
+		else if (reg.getLevel() == null)
+			return 0;
 		return reg.temp > NorthstarPlanets.getPlanetTemp(reg.getLevel().dimension()) ? 9 : 0;
 	}
 	

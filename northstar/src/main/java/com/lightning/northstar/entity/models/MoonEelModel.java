@@ -9,6 +9,6 @@ import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 public class MoonEelModel extends DefaultedEntityGeoModel<MoonEelEntity> {
 	
 	public MoonEelModel() {
-		super(new ResourceLocation(Northstar.MOD_ID, "moon_eel"), true);
+		super(new ResourceLocation(Northstar.MOD_ID, "moon_eel"), false);
 	}
 }

@@ -75,7 +75,6 @@ public class MarsWormEntity extends Monster implements GeoEntity, VibrationSyste
 	private UUID notTargetUUID;
 	
 	private int attackTick;
-	private AngerManagement angerManagement = new AngerManagement(this::canTargetEntity, Collections.emptyList());
 	
 	public MarsWormEntity(EntityType<? extends MarsWormEntity> pEntityType, Level pLevel) {
 		super(pEntityType, pLevel);
@@ -99,7 +98,7 @@ public class MarsWormEntity extends Monster implements GeoEntity, VibrationSyste
 				// Add our flying animation controller
 				new AnimationController<>(this, state -> {
 					if(attackTick > 0) {return state.setAndContinue(bite);}
-					else if (state.isMoving()) {return state.setAndContinue(walk);}
+					else if (!(state.getLimbSwingAmount() > -0.15F && state.getLimbSwingAmount() < 0.15F)) {return state.setAndContinue(walk);}
 					else return state.setAndContinue(idle);})
 						// Handle the custom instruction keyframe that is part of our animation json
 						.setCustomInstructionKeyframeHandler(state -> {
@@ -149,17 +148,7 @@ public class MarsWormEntity extends Monster implements GeoEntity, VibrationSyste
 		if (level instanceof ServerLevel serverlevel) {
 			pListenerConsumer.accept(this.dynamicGameEventListener, serverlevel);
 		}
-	}
-	
-	private void syncClientAngerLevel() {
-		this.entityData.set(CLIENT_ANGER_LEVEL, this.getActiveAnger());
-	}
-	
-	private int getActiveAnger() {
-		return this.angerManagement.getActiveAnger(this.getTarget());
-	}
-
-	
+	}	
 	
 	@Override
 	public void tick() {		
@@ -168,6 +157,7 @@ public class MarsWormEntity extends Monster implements GeoEntity, VibrationSyste
 	      if(eggTimer > 0) {eggTimer--;}
 	      
 	      if (level instanceof ServerLevel serverlevel) {
+	          VibrationSystem.Ticker.tick(serverlevel, this.vibrationData, this.vibrationUser);
 	    	  if(notTargetUUID != null) {
 	    		  notTarget = (LivingEntity) ((ServerLevel) level).getEntity(notTargetUUID);
 	    		  notTargetUUID = null;
@@ -391,7 +381,6 @@ public class MarsWormEntity extends Monster implements GeoEntity, VibrationSyste
 	}
 	
 	class VibrationUser implements VibrationSystem.User {
-	      private static final int GAME_EVENT_LISTENER_RANGE = 16;
 	      private final PositionSource positionSource = new EntityPositionSource(MarsWormEntity.this, MarsWormEntity.this.getEyeHeight());	
 
 	      public int getListenerRadius() {
@@ -430,7 +419,7 @@ public class MarsWormEntity extends Monster implements GeoEntity, VibrationSyste
 	  			MarsWormEntity.this.brain.setMemoryWithExpiry(MemoryModuleType.VIBRATION_COOLDOWN, Unit.INSTANCE, 40L);
 	  			MarsWormEntity.this.level().broadcastEntityEvent(MarsWormEntity.this, (byte)61);
 				if(!MarsWormEntity.this.aggro)
-				{MarsWormEntity.this.playSound(NorthstarSounds.MARS_WORM_CLICK_NOTICE.get(), 5.0F, 0);}
+				{MarsWormEntity.this.playSound(NorthstarSounds.MARS_WORM_CLICK_NOTICE.get(), 5.0F, 1);}
 				BlockPos blockpos = source;
 				MarsWormAi.setDisturbanceLocation(MarsWormEntity.this, blockpos);
 				if(MarsWormEntity.this.notTarget != null && !aggro && (MarsWormEntity.this.notTarget == sourceentity || MarsWormEntity.this.notTarget == projOwner)) {

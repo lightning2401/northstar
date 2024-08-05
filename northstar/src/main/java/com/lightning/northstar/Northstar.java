@@ -14,6 +14,7 @@ import com.lightning.northstar.block.tech.telescope.TelescopeScreen;
 import com.lightning.northstar.client.renderer.armor.BrokenIronSpaceSuitLayerRenderer;
 import com.lightning.northstar.client.renderer.armor.IronSpaceSuitLayerRenderer;
 import com.lightning.northstar.client.renderer.armor.MartianSteelSpaceSuitLayerRenderer;
+import com.lightning.northstar.contraptions.NorthstarContraptionTypes;
 import com.lightning.northstar.contraptions.RocketHandler;
 import com.lightning.northstar.entity.MarsCobraEntity;
 import com.lightning.northstar.entity.MarsMothEntity;
@@ -53,6 +54,7 @@ import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.item.TooltipHelper.Palette;
 import com.simibubi.create.foundation.item.TooltipModifier;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -96,7 +98,7 @@ public class Northstar
 
 	static {
 		REGISTRATE.setTooltipModifierFactory(item -> {
-			return new ItemDescription.Modifier(item, Palette.STANDARD_CREATE)
+			return new ItemDescription.Modifier(item, new Palette(TooltipHelper.styleFromColor(0x9ba4ae), TooltipHelper.styleFromColor(0x80afd2)))
 				.andThen(TooltipModifier.mapNull(KineticStats.create(item)));
 		});
 	}
@@ -113,6 +115,7 @@ public class Northstar
         NorthstarPotions.register(modEventBus);
         NorthstarEnchantments.register();
         NorthstarTechBlocks.register();
+        NorthstarContraptionTypes.register();
         NorthstarBlockEntityTypes.register(modEventBus);
         NorthstarFeatures.register(modEventBus); // safe
         NorthstarConfiguredFeatures.register(modEventBus); // safe
@@ -165,12 +168,6 @@ public class Northstar
         LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
 
     }
-
-	static {
-		REGISTRATE.setTooltipModifierFactory(item -> new ItemDescription.Modifier(item, TooltipHelper.Palette.STANDARD_CREATE)
-			.andThen(TooltipModifier.mapNull(KineticStats.create(item))));
-	}
-	
 	private void registerSpawnPlacements(SpawnPlacementRegisterEvent event) {
 		
 		
@@ -224,11 +221,7 @@ public class Northstar
         }
 		@SubscribeEvent	
 		public static void addEntityRendererLayers(EntityRenderersEvent.AddLayers event) {
-			EntityRenderDispatcher dispatcher = Minecraft.getInstance()
-					.getEntityRenderDispatcher();
-				IronSpaceSuitLayerRenderer.registerOnAll(dispatcher);
-				BrokenIronSpaceSuitLayerRenderer.registerOnAll(dispatcher);
-				MartianSteelSpaceSuitLayerRenderer.registerOnAll(dispatcher);
+
 		}
     	@SuppressWarnings({ "removal", "deprecation" })
     	@SubscribeEvent

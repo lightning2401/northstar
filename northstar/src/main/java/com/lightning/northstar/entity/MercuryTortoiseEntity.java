@@ -70,7 +70,7 @@ public class MercuryTortoiseEntity extends Monster implements GeoEntity {
 		
 		controllers.add(
 				// Add our flying animation controller
-				new AnimationController<>(this, 10, state -> state.setAndContinue(state.isMoving() ? walk : idle))
+				new AnimationController<>(this, 10, state -> state.setAndContinue(!(state.getLimbSwingAmount() > -0.15F && state.getLimbSwingAmount() < 0.15F) ? walk : idle))
 						// Handle the custom instruction keyframe that is part of our animation json
 						.setCustomInstructionKeyframeHandler(state -> {
 							Player player = ClientUtils.getClientPlayer();

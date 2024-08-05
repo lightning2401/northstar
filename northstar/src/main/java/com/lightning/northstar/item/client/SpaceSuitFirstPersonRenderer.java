@@ -46,16 +46,14 @@ public class SpaceSuitFirstPersonRenderer{
     
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void onRenderPlayerHand(RenderArmEvent event) {
-		if (!rendererActive)
+		if(!rendererActive)
 			return;
-
 		Minecraft mc = Minecraft.getInstance();
 		LocalPlayer player = mc.player;
 		MultiBufferSource buffer = event.getMultiBufferSource();
 		if (!(mc.getEntityRenderDispatcher()
 			.getRenderer(player) instanceof PlayerRenderer pr))
 			return;
-
 		PlayerModel<AbstractClientPlayer> model = pr.getModel();
 		model.attackTime = 0.0F;
 		model.crouching = false;
@@ -65,7 +63,6 @@ public class SpaceSuitFirstPersonRenderer{
 		armPart.xRot = 0.0F;
 		armPart.render(event.getPoseStack(), buffer.getBuffer(RenderType.entitySolid(activeHand)),
 			LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
-		event.setCanceled(true);
 	}
 	
 }

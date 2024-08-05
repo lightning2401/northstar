@@ -81,8 +81,8 @@ public class VenusMimicEntity extends Monster implements GeoEntity {
 		controllers.add(
 				new AnimationController<>(this, state -> {
 					if(this.attackTick > 0) {return state.setAndContinue(bite);}
-					else if (state.isMoving() && !attacking) {return state.setAndContinue(walk);}
-					else if (state.isMoving() && attacking) {return state.setAndContinue(run);}
+					else if (!(state.getLimbSwingAmount() > -0.15F && state.getLimbSwingAmount() < 0.15F) && !attacking) {return state.setAndContinue(walk);}
+					else if (!(state.getLimbSwingAmount() > -0.15F && state.getLimbSwingAmount() < 0.15F) && attacking) {return state.setAndContinue(run);}
 					else if (hiding && hideTick > 0) {return state.setAndContinue(hide);}
 					else if (hiding) {return state.setAndContinue(hide_idle);}
 					else return state.setAndContinue(idle);})
