@@ -25,7 +25,7 @@
 	"blockstuff.TorchMixin",
 	"blockstuff.WallTorchMixin",
 	"blockstuff.TorchItemMixin",
-	"blockstuff.FluidTankBlockEntityMixin",
+	"blockstuff.FluidTankBlockMixin",
 	"blockstuff.CandleBlockMixin",
 	"blockstuff.CampfireBlockMixin",
 	"blockstuff.LanternBlockMixin"

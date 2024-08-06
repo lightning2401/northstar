@@ -17,7 +17,6 @@ import com.lightning.northstar.block.crops.MartianTallFlowerBlock;
 import com.lightning.northstar.block.crops.TallFungusBlock;
 import com.lightning.northstar.block.crops.VenusVinesBlock;
 import com.lightning.northstar.block.tech.telescope.TelescopeBlock;
-import com.lightning.northstar.item.NorthstarCreativeModeTab;
 import com.lightning.northstar.item.NorthstarItems;
 import com.lightning.northstar.world.features.NorthstarConfiguredFeatures;
 import com.lightning.northstar.world.features.grower.ArgyreSaplingTreeGrower;

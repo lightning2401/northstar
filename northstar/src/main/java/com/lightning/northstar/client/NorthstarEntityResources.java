@@ -3,6 +3,7 @@ package com.lightning.northstar.client;
 import com.lightning.northstar.Northstar;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.eventbus.api.IEventBus;
 
 public class NorthstarEntityResources {
 	
@@ -108,5 +109,6 @@ public class NorthstarEntityResources {
 	public static final ResourceLocation TORTOISE_TEXTURE = new ResourceLocation(Northstar.MOD_ID, "textures/entity/mercury_tortoise.png");
 	public static final ResourceLocation TORTOISE_ANIMATIONS = new ResourceLocation(Northstar.MOD_ID,
 			"animations/mercury_tortoise.animation.json");
-	
+    public static void register() {
+    }
 }

@@ -322,7 +322,7 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
         renderButton(pPoseStack, mouseX, mouseY, delta);
         RenderSystem.setShaderColor(1, 1, 1, 1);
         
-    	pPoseStack.pose().scale(0.5f, 0.5f, 0.5f);
+    	pPoseStack.pose().popPose();
     }
     
     public boolean paperCheck() {
@@ -360,13 +360,6 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
 //		printButton.renderButton(gui, mouseX, mouseY, delta);
 //		if(printButton.isMouseOver(mouseX, mouseY)) {printButton.renderToolTip(gui, mouseX, mouseY);}
 		addRenderableWidget(printButton);
-		if ((Math.abs(x + imageWidth - 196 - mouseX) < 9 && Math.abs(y + imageHeight - 1 + 8 - mouseY) < 9)) {
-			List<Component> list = Lists.newArrayList();
-			RenderSystem.colorMask(true, true, true, true);
-			list.add((Lang.translateDirect("northstar.gui.telescope.button_tooltip").withStyle(ChatFormatting.WHITE)));
-
-		    gui.renderComponentTooltip(this.font, list, mouseX, mouseY);
-		}
     }
     
     public void renderSelectedPlanet(GuiGraphics gui) {
@@ -387,7 +380,15 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
     
     @SuppressWarnings("resource")
 	public void renderPlanetTooltips(GuiGraphics gui, int mouseX, int mouseY) {
-    	
+        int x = ((width - (imageWidth + (imageWidth / 2))) / 2);
+        int y = (height - (imageHeight + (imageHeight / 2))) / 2;
+		if ((Math.abs(x + imageWidth - 196 - mouseX) < 9 && Math.abs(y + imageHeight - 1 + 8 - mouseY) < 9)) {
+			List<Component> list = Lists.newArrayList();
+			RenderSystem.colorMask(true, true, true, true);
+			list.add((Lang.translateDirect("northstar.gui.telescope.button_tooltip").withStyle(ChatFormatting.WHITE)));
+
+		    gui.renderComponentTooltip(this.font, list, mouseX, mouseY);
+		}
     	ResourceKey<Level> player_dim = Minecraft.getInstance().player.level().dimension();
         if ((Math.abs(NorthstarPlanets.mars_x + scrollX + 8 - mouseX) < 8 && Math.abs(NorthstarPlanets.mars_y + scrollY + 8 - mouseY) < 8) && player_dim != NorthstarDimensions.MARS_DIM_KEY) {
             List<Component> list = Lists.newArrayList();

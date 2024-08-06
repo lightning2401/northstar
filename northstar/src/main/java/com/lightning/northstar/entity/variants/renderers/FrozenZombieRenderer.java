@@ -19,10 +19,6 @@ public class FrozenZombieRenderer extends ZombieRenderer {
       super(p_174180_, ModelLayers.ZOMBIE, ModelLayers.ZOMBIE_INNER_ARMOR, ModelLayers.ZOMBIE_OUTER_ARMOR);
    }
 
-   protected void scale(Zombie pLivingEntity, PoseStack pMatrixStack, float pPartialTickTime) {
-      super.scale(pLivingEntity, pMatrixStack, pPartialTickTime);
-   }
-
    /**
     * Returns the location of an entity's texture.
     */

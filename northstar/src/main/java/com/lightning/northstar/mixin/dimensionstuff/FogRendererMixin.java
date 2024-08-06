@@ -199,7 +199,7 @@ public abstract class FogRendererMixin {
   	        if (!(rain_det <= 0.0F) &&  biome.getPrecipitationAt(pCamera.getBlockPosition()) == Biome.Precipitation.NONE)
   	        {fogRed = (float) fogColor.x() * 1.35f;
             fogGreen = (float) fogColor.y() * 1.15f;
-            fogBlue = (float) fogColor.z() * 1f; }
+            fogBlue = (float) fogColor.z() * 1f; return;}
   	        else
             {fogRed = (float) fogColor.x();
             fogGreen = (float) fogColor.y();

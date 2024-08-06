@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
+import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 
@@ -26,25 +27,17 @@ public class FluidTankBlockEntityMixin extends SmartBlockEntity {
 	@Shadow
 	protected BlockPos controller;
 
-	@Inject(method = "getControllerBE", at = @At("HEAD"), cancellable = true)
+//	@Inject(method = "getControllerBE", at = @At("HEAD"), cancellable = true)
 	public void getControllerBECustom(CallbackInfoReturnable<FluidTankBlockEntity> info) {
-		try {
 			FluidTankBlockEntity self = (FluidTankBlockEntity)(Object) this;
-			if (self.isController())
-				info.setReturnValue(self);
-			BlockEntity blockEntity = level.getBlockEntity(controller);
-			if (blockEntity instanceof FluidTankBlockEntity)
-				info.setReturnValue((FluidTankBlockEntity)blockEntity);
-			info.setReturnValue(null);
-		}
-		catch(Exception e) {
-			//oops
-			info.setReturnValue(null);
-		}
+			if(!self.hasLevel())
+				info.cancel();
+				info.setReturnValue(null);
+
 	}
 
 	public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
-		
+		registerAwardables(behaviours, AllAdvancements.STEAM_ENGINE_MAXED, AllAdvancements.PIPE_ORGAN);
 	}
 
 }

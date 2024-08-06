@@ -167,9 +167,13 @@ public class RocketContraptionEntity extends AbstractContraptionEntity implement
 			this.localControlsPos = ((RocketContraption)this.contraption).localControlsPos;
 		}
 		
-		if(this.tickCount % 40 == 0 && !this.level().isClientSide) {
-			NorthstarPackets.getChannel().send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
-					new RocketContraptionSyncPacket(this.position(), lift_vel,this.getId(), launchtime,  launched, landing, blasting, slowing, activeLaunch));
+		if(!this.level().isClientSide) {
+			if(this.tickCount % 40 == 0)
+			{NorthstarPackets.getChannel().send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
+					new RocketContraptionSyncPacket(this.position(), lift_vel,this.getId(), launchtime,  launched, landing, blasting, slowing, activeLaunch));}
+			if(landing)
+			{NorthstarPackets.getChannel().send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
+					new RocketContraptionQuickSyncPacket(slowing, this.getId()));}
 		}
 		
 
@@ -324,10 +328,19 @@ public class RocketContraptionEntity extends AbstractContraptionEntity implement
 			rce.lift_vel = packet.lift_vel;
 			rce.setPos(packet.pos.x, packet.pos.y, packet.pos.z);
 			rce.launched = packet.launched;
+			rce.launchtime = packet.launchtime;
 			rce.landing = packet.landing;
 			rce.blasting = packet.blasting;
 			rce.slowing = packet.slowing;
 			rce.activeLaunch = packet.activeLaunch;
+	}
+	@SuppressWarnings("resource")
+	@OnlyIn(Dist.CLIENT)
+	public static void handleQuickSyncPacket(RocketContraptionQuickSyncPacket packet) {
+		Entity entity = Minecraft.getInstance().level.getEntity(packet.contraptionEntityId);
+		if (!(entity instanceof RocketContraptionEntity rce))
+			return;
+			rce.slowing = packet.slowing;
 	}
 	
 	public ItemStack createReturnTicket(RocketContraptionEntity entity) {

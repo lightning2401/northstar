@@ -42,6 +42,12 @@ Inspired by Micdoodle's Galacticraft, Northstar seeks to return players to the s
     versionRange="[0.5.1.f,)"
     ordering="NONE"
     side="BOTH"
+[[dependencies.northstar]]
+    modId="geckolib"
+    mandatory=true
+    versionRange="[4.4.6,)"
+    ordering="NONE"
+    side="BOTH"
 	
 [[dependencies.northstar]]
     modId="minecraft"

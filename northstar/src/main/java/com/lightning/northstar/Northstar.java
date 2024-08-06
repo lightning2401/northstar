@@ -11,6 +11,7 @@ import com.lightning.northstar.block.tech.NorthstarPartialModels;
 import com.lightning.northstar.block.tech.astronomy_table.AstronomyTableScreen;
 import com.lightning.northstar.block.tech.rocket_station.RocketStationScreen;
 import com.lightning.northstar.block.tech.telescope.TelescopeScreen;
+import com.lightning.northstar.client.NorthstarEntityResources;
 import com.lightning.northstar.client.renderer.armor.BrokenIronSpaceSuitLayerRenderer;
 import com.lightning.northstar.client.renderer.armor.IronSpaceSuitLayerRenderer;
 import com.lightning.northstar.client.renderer.armor.MartianSteelSpaceSuitLayerRenderer;
@@ -54,7 +55,6 @@ import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.item.TooltipHelper.Palette;
 import com.simibubi.create.foundation.item.TooltipModifier;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -125,6 +125,7 @@ public class Northstar
         NorthstarMenuTypes.register(modEventBus); // surprisingly safe
         NorthstarPlanets.register(); //safe
         NorthstarDimensions.register(); //safe
+        NorthstarEntityResources.register();
         NorthstarEntityTypes.register(); //safe
         NorthstarEntityTypes.ENTITIES.register(modEventBus); //safe
         NorthstarFluids.register();
@@ -221,9 +222,13 @@ public class Northstar
         }
 		@SubscribeEvent	
 		public static void addEntityRendererLayers(EntityRenderersEvent.AddLayers event) {
-
+			EntityRenderDispatcher dispatcher = Minecraft.getInstance()
+					.getEntityRenderDispatcher();
+				IronSpaceSuitLayerRenderer.registerOnAll(dispatcher);
+				BrokenIronSpaceSuitLayerRenderer.registerOnAll(dispatcher);
+				MartianSteelSpaceSuitLayerRenderer.registerOnAll(dispatcher);
 		}
-    	@SuppressWarnings({ "removal", "deprecation" })
+    	@SuppressWarnings("deprecation")
     	@SubscribeEvent
     	public static void registerRenderers(final FMLClientSetupEvent event) {
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.LUNAR_SAPPHIRE_CLUSTER.get(), RenderType.cutout());

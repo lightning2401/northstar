@@ -63,6 +63,7 @@ public class SpaceSuitFirstPersonRenderer{
 		armPart.xRot = 0.0F;
 		armPart.render(event.getPoseStack(), buffer.getBuffer(RenderType.entitySolid(activeHand)),
 			LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+		event.setCanceled(true);
 	}
 	
 }

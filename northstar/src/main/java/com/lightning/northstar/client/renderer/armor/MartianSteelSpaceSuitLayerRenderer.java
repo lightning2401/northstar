@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
@@ -39,7 +40,7 @@ public class MartianSteelSpaceSuitLayerRenderer <T extends LivingEntity, M exten
 			return;
 
 		Item item = entity.getItemBySlot(EquipmentSlot.HEAD).getItem();
-		if (!(item instanceof IronSpaceSuitArmorItem))
+		if (!(item instanceof MartianSteelSpaceSuitArmorItem))
 			return;
 
 		M entityModel = getParentModel();
@@ -49,19 +50,22 @@ public class MartianSteelSpaceSuitLayerRenderer <T extends LivingEntity, M exten
 		HumanoidModel<?> model = (HumanoidModel<?>) entityModel;
 		BlockState air = Blocks.AIR.defaultBlockState();
 		RenderType renderType = Sheets.translucentCullBlockSheet();
-		SuperByteBuffer helmet = CachedBufferer.partial(NorthstarPartialModels.IRON_SPACE_SUIT_HELMET, air);
+		SuperByteBuffer helmet = CachedBufferer.partial(NorthstarPartialModels.MARTIAN_STEEL_SPACE_SUIT_HELMET, air);
 		
 		ms.pushPose();
 		
 		model.head.translateAndRotate(ms);
 		ms.translate(0.5, 1.45, -0.5);
-		ms.scale(-1, -1, 1);
 		
 		helmet.forEntityRender()
 		.light(light)
 		.renderInto(ms, buffer.getBuffer(renderType));
 
 		ms.popPose();
+	}
+	@Override
+	protected ResourceLocation getTextureLocation(T p_117348_) {
+		return null;
 	}
 
 	public static void registerOnAll(EntityRenderDispatcher renderManager) {

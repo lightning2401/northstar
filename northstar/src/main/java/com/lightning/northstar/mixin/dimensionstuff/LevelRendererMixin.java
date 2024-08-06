@@ -410,12 +410,12 @@ public class LevelRendererMixin {
 	               this.minecraft.level.addParticle(particleoptions, (double)blockpos1.getX() + d0, (double)blockpos1.getY() + d4 + level.random.nextInt(4), (double)blockpos1.getZ() + d1, 0.0D, 0.0D, 0.0D);}
 	            }
 	         }
-	         if (blockpos1 != null && randomsource.nextInt(12) < this.rainSoundTime++) {
+	         if (blockpos1 != null && randomsource.nextInt(80) < this.rainSoundTime++) {
 	            this.rainSoundTime = 0;
 	            if (blockpos1.getY() > blockpos.getY() + 1 && levelreader.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, blockpos).getY() > Mth.floor((float)blockpos.getY())) {
-	               this.minecraft.level.playLocalSound(blockpos1, NorthstarSounds.MARTIAN_DUST_STORM_ABOVE.get(), SoundSource.WEATHER, 0.1F, 0.5F, false);
+	               this.minecraft.level.playLocalSound(blockpos1, NorthstarSounds.MARTIAN_DUST_STORM_ABOVE.get(), SoundSource.WEATHER, 0.5F, 0.5F, false);
 	            } else {
-	               this.minecraft.level.playLocalSound(blockpos1, NorthstarSounds.MARTIAN_DUST_STORM.get(), SoundSource.WEATHER, 0.5F, 1.0F, false);
+	               this.minecraft.level.playLocalSound(blockpos1, NorthstarSounds.MARTIAN_DUST_STORM.get(), SoundSource.WEATHER, 1F, 1.0F, false);
 	            }
 	         }
 

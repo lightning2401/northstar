@@ -61,41 +61,7 @@ public class BrokenIronSpaceSuitArmorItem extends ArmorItem implements GeoItem{
 	// Let's add our animation controller
 	@Override
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-		controllers.add(new AnimationController<>(this, 20, state -> {
-			// Apply our generic idle animation.
-			// Whether it plays or not is decided down below.
-			state.resetCurrentAnimation();
-
-			// Let's gather some data from the state to use below
-			// This is the entity that is currently wearing/holding the item
-			Entity entity = state.getData(DataTickets.ENTITY);
-
-			// We'll just have ArmorStands always animate, so we can return here
-			if (entity instanceof ArmorStand)
-				return PlayState.CONTINUE;
-
-			// For this example, we only want the animation to play if the entity is wearing all pieces of the armor
-			// Let's collect the armor pieces the entity is currently wearing
-			Set<Item> wornArmor = new ObjectOpenHashSet<>();
-
-			for (ItemStack stack : entity.getArmorSlots()) {
-				// We can stop immediately if any of the slots are empty
-				if (stack.isEmpty())
-					return PlayState.STOP;
-
-				wornArmor.add(stack.getItem());
-			}
-
-			// Check each of the pieces match our set
-			boolean isFullSet = wornArmor.containsAll(ObjectArrayList.of(
-					ItemRegistry.GECKO_ARMOR_BOOTS.get(),
-					ItemRegistry.GECKO_ARMOR_LEGGINGS.get(),
-					ItemRegistry.GECKO_ARMOR_CHESTPLATE.get(),
-					ItemRegistry.GECKO_ARMOR_HELMET.get()));
-
-			// Play the animation if the full set is being worn, otherwise stop
-			return isFullSet ? PlayState.CONTINUE : PlayState.STOP;
-		}));
+		
 	}
 
 	@Override

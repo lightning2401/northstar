@@ -527,6 +527,7 @@
 "create.contraption.controls.landing_warning": "Hold Space to slow down!",
 
 "create.northstar.gui.telescope_fail": "Telescope must be able to see stars",
+"create.northstar.gui.telescope.button_tooltip": "Use paper to take Astronomical Reading",
 "create.northstar.gui.rocket_station.assemble": "Assemble Rocket",
 
 "create.recipe.engraving": "Engraving",
