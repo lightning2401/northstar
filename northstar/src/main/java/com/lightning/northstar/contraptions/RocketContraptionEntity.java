@@ -165,9 +165,13 @@ public class RocketContraptionEntity extends AbstractContraptionEntity implement
 			this.localControlsPos = ((RocketContraption)this.contraption).localControlsPos;
 		}
 		
-		if(this.tickCount % 40 == 0 && !this.level.isClientSide) {
-			NorthstarPackets.getChannel().send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
-					new RocketContraptionSyncPacket(this.position(), lift_vel,this.getId(), launchtime,  launched, landing, blasting, slowing, activeLaunch));
+		if(!this.level.isClientSide) {
+			if(this.tickCount % 40 == 0)
+			{NorthstarPackets.getChannel().send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
+					new RocketContraptionSyncPacket(this.position(), lift_vel,this.getId(), launchtime,  launched, landing, blasting, slowing, activeLaunch));}
+			if(this.landing)
+			{NorthstarPackets.getChannel().send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
+					new RocketContraptionQuickSyncPacket(slowing,this.getId()));}
 		}
 		
 
@@ -320,13 +324,25 @@ public class RocketContraptionEntity extends AbstractContraptionEntity implement
 		Entity entity = Minecraft.getInstance().level.getEntity(packet.contraptionEntityId);
 		if (!(entity instanceof RocketContraptionEntity rce))
 			return;
-			rce.lift_vel = packet.lift_vel;
+		
 			rce.setPos(packet.pos.x, packet.pos.y, packet.pos.z);
+			rce.lift_vel = packet.lift_vel;
+			rce.launchtime = packet.launchtime;
+
 			rce.launched = packet.launched;
 			rce.landing = packet.landing;
 			rce.blasting = packet.blasting;
 			rce.slowing = packet.slowing;
 			rce.activeLaunch = packet.activeLaunch;
+	}
+	@SuppressWarnings("resource")
+	@OnlyIn(Dist.CLIENT)
+	public static void handleQuickSyncPacket(RocketContraptionQuickSyncPacket packet) {
+//		System.out.println("ALERTA!!! ALERTA!!! HANDLING!!!!");
+		Entity entity = Minecraft.getInstance().level.getEntity(packet.contraptionEntityId);
+		if (!(entity instanceof RocketContraptionEntity rce))
+			return;
+			rce.slowing = packet.slowing;
 	}
 	
 	public ItemStack createReturnTicket(RocketContraptionEntity entity) {
@@ -379,6 +395,8 @@ public class RocketContraptionEntity extends AbstractContraptionEntity implement
 
 		if (contraption == null)
 			return false;
+		if(!(contraption instanceof RocketContraption))
+				return false;
 		if (bounds == null)
 			return false;
 

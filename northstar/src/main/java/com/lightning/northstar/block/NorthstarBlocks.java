@@ -1,5 +1,8 @@
 package com.lightning.northstar.block;
 
+import static com.lightning.northstar.Northstar.REGISTRATE;
+import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
+import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 import static net.minecraft.world.level.block.Blocks.OAK_PLANKS;
 import static net.minecraft.world.level.block.Blocks.STONE;
 
@@ -14,6 +17,7 @@ import com.lightning.northstar.block.crops.MartianStrawberryBushBlock;
 import com.lightning.northstar.block.crops.MartianTallFlowerBlock;
 import com.lightning.northstar.block.crops.TallFungusBlock;
 import com.lightning.northstar.block.crops.VenusVinesBlock;
+import com.lightning.northstar.block.tech.solar_panel.SolarPanelBlock;
 import com.lightning.northstar.block.tech.telescope.TelescopeBlock;
 import com.lightning.northstar.item.NorthstarCreativeModeTab;
 import com.lightning.northstar.item.NorthstarItems;
@@ -23,7 +27,13 @@ import com.lightning.northstar.world.features.grower.CoilerTreeGrower;
 import com.lightning.northstar.world.features.grower.MercuryCactusGrower;
 import com.lightning.northstar.world.features.grower.TestTreeGrower;
 import com.lightning.northstar.world.features.grower.WilterTreeGrower;
+import com.simibubi.create.content.kinetics.BlockStressDefaults;
+import com.simibubi.create.foundation.data.AssetLookup;
+import com.simibubi.create.foundation.data.BlockStateGen;
+import com.simibubi.create.foundation.data.SharedProperties;
+import com.tterrag.registrate.util.entry.BlockEntry;
 
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
@@ -759,13 +769,22 @@ public class NorthstarBlocks {
     public static final RegistryObject<Block> ICICLE = registerBlock("icicle",
             () -> new IcicleBlock(BlockBehaviour.Properties.of(Material.ICE, MaterialColor.COLOR_LIGHT_BLUE).sound(SoundType.GLASS)
                     .strength(3.5f, 12f).noOcclusion().dynamicShape().offsetType(BlockBehaviour.OffsetType.XZ)), NorthstarCreativeModeTab.NORTHSTAR_BLOCKS);
-    
+	static {
+		REGISTRATE.creativeModeTab(() -> NorthstarCreativeModeTab.NORTHSTAR_TECH);
+	}
 
-    
-
-    public static final RegistryObject<Block> TELESCOPE = registerBlock("telescope", 
-    		() ->new TelescopeBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_BROWN).sound(SoundType.COPPER)
-                    .strength(8f, 8f).noOcclusion().isViewBlocking(NorthstarBlocks::never)), NorthstarCreativeModeTab.NORTHSTAR_TECH);  
+	@SuppressWarnings("removal")
+	public static final BlockEntry<TelescopeBlock> TELESCOPE = REGISTRATE.block("telescope", TelescopeBlock::new)
+			.initialProperties(SharedProperties::stone)
+			.properties(p -> p.color(MaterialColor.COLOR_BROWN).isViewBlocking(NorthstarBlocks::never).sound(SoundType.COPPER).strength(8f,8f))
+			.properties(BlockBehaviour.Properties::noOcclusion)
+			.transform(axeOrPickaxe())
+			.addLayer(() -> RenderType::cutoutMipped)
+			.transform(BlockStressDefaults.setCapacity(128.0))
+			.transform(BlockStressDefaults.setGeneratorSpeed(SolarPanelBlock::getSpeedRange))
+			.item()
+			.transform(customItemModel())
+			.register();
     
     public static final RegistryObject<Block> INTERPLANETARY_NAVIGATOR = registerBlock("interplanetary_navigator", 
     		() ->new InterplanetaryNavigatorBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_GRAY).sound(SoundType.METAL)

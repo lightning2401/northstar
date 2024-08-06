@@ -103,7 +103,7 @@ public class Northstar
 
 	static {
 		REGISTRATE.setTooltipModifierFactory(item -> {
-			return new ItemDescription.Modifier(item, Palette.STANDARD_CREATE)
+			return new ItemDescription.Modifier(item, new Palette(TooltipHelper.styleFromColor(0x9ba4ae), TooltipHelper.styleFromColor(0x80afd2)))
 				.andThen(TooltipModifier.mapNull(KineticStats.create(item)));
 		});
 	}
@@ -173,11 +173,6 @@ public class Northstar
         LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
 
     }
-
-	static {
-		REGISTRATE.setTooltipModifierFactory(item -> new ItemDescription.Modifier(item, TooltipHelper.Palette.STANDARD_CREATE)
-			.andThen(TooltipModifier.mapNull(KineticStats.create(item))));
-	}
 	
 	private void registerSpawnPlacements(SpawnPlacementRegisterEvent event) {
 		
