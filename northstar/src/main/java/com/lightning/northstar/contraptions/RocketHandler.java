@@ -1,20 +1,10 @@
 package com.lightning.northstar.contraptions;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.UUID;
-
-import org.apache.commons.lang3.mutable.MutableInt;
-
-import com.ibm.icu.impl.Pair;
 import com.lightning.northstar.Northstar;
 import com.lightning.northstar.NorthstarPackets;
 import com.lightning.northstar.block.tech.rocket_station.RocketStationBlockEntity;
 import com.lightning.northstar.world.dimension.NorthstarDimensions;
-
+import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -42,6 +32,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.network.PacketDistributor;
+import org.apache.commons.lang3.mutable.MutableInt;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 @EventBusSubscriber(modid = Northstar.MOD_ID, bus = Bus.FORGE)
 public class RocketHandler {
@@ -62,8 +56,8 @@ public class RocketHandler {
 		if(!CONTROL_QUEUE.isEmpty() && eventTickNumber > eventTickNumberCheck) {
 			HashMap<Pair<UUID, BlockPos>, Integer> destroy = new HashMap<Pair<UUID,BlockPos>, Integer>();
 			for(Entry<Pair<UUID, BlockPos>, Integer> entries : CONTROL_QUEUE.entrySet()) {
-				if(entries.getKey().first != null)
-				{Player player = event.level.getPlayerByUUID(entries.getKey().first);
+				if(entries.getKey().getFirst() != null)
+				{Player player = event.level.getPlayerByUUID(entries.getKey().getFirst());
 				if(player != null) {
 					RocketContraptionEntity rocket = ((RocketContraptionEntity)event.level.getEntity(entries.getValue()));
 					if(rocket != null) {
@@ -74,7 +68,7 @@ public class RocketHandler {
 							}
 						}
 						
-						rocket.handlePlayerInteraction(player, entries.getKey().second, Direction.NORTH, InteractionHand.MAIN_HAND);
+						rocket.handlePlayerInteraction(player, entries.getKey().getSecond(), Direction.NORTH, InteractionHand.MAIN_HAND);
 						destroy.put(entries.getKey(), entries.getValue());
 						}
 					}
@@ -104,8 +98,8 @@ public class RocketHandler {
 			if(!TICKET_QUEUE.isEmpty()) {
 				List<Pair<Level, BlockPos>> DELETE_QUEUE = new ArrayList<>();
 				for(Pair<Level,BlockPos> entries : TICKET_QUEUE) {
-					if(event.level.dimension() == entries.first.dimension()) {
-						if(entries.first.getBlockEntity(entries.second) instanceof RocketStationBlockEntity rsbe) {
+					if(event.level.dimension() == entries.getFirst().dimension()) {
+						if(entries.getFirst().getBlockEntity(entries.getSecond()) instanceof RocketStationBlockEntity rsbe) {
 							rsbe.container.setItem(0, new ItemStack(Blocks.AIR.asItem()));
 							DELETE_QUEUE.add(entries);
 						}
