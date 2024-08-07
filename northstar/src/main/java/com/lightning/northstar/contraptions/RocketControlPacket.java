@@ -1,13 +1,12 @@
 package com.lightning.northstar.contraptions;
 
-import java.util.UUID;
-
-import com.ibm.icu.impl.Pair;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
-
+import com.simibubi.create.foundation.utility.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent.Context;
+
+import java.util.UUID;
 
 public class RocketControlPacket extends SimplePacketBase {
 	int rce;
