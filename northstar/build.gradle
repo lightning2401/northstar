@@ -236,7 +236,7 @@ tasks.named('jar', Jar).configure {
         attributes([
                 "Specification-Title"     : "northstar",
                 "Specification-Vendor"    : "lightning",
-                "Specification-Version"   : "0.1b-1.20.1", // We are version 1 of ourselves
+                "Specification-Version"   : "0.1c-1.20.1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "lightning",

@@ -118,9 +118,6 @@ public class RocketContraptionEntity extends AbstractContraptionEntity implement
 		sequencedOffsetLimit = maxOffset;
 	}
 
-	@OnlyIn(Dist.CLIENT)
-	static RocketAirSound flyingSound = new RocketAirSound(SoundEvents.ELYTRA_FLYING, 0);
-	
 	@Override
 	public Packet<ClientGamePacketListener> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
@@ -217,22 +214,20 @@ public class RocketContraptionEntity extends AbstractContraptionEntity implement
 		{((RocketContraption)this.contraption).burnFuel(); fuelBurned = true;}
 		
 		if (soundTime % 40 == 0 && launchtime == 0 && blasting && !landing) 
-		{this.level().playLocalSound(this.getX(), this.getY() - 20, this.getZ(), NorthstarSounds.ROCKET_BLAST.get(), SoundSource.BLOCKS, 5, 0, false); i = 0;
+		{this.level().playLocalSound(this.getX(), this.getY() - 20, this.getZ(), NorthstarSounds.ROCKET_BLAST.get(), SoundSource.BLOCKS, 3, 0, false); i = 0;
 		soundTime = 0;}else if(!landing){soundTime++;}
 		
 		// this code feels really stupid but I don't care enough to clean it up
 		//also this is the code for the air sound when soaring through the air
-		if(Math.abs(final_lift_vel) > 0.5f)
+		if(Math.abs(final_lift_vel) > 0.5f && landing)
 		{int volume = NorthstarPlanets.getPlanetAtmosphereCost(level().dimension()) / 400;
 		//this is so stupid
 		int final_vol = volume < 1 ? 1 : volume;
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
 		() -> () -> tickAirSound(final_vol));}
-		else if(Math.abs(final_lift_vel) < 0.5f && flyingSound != null)
-		{flyingSound.stopSound();}
-		
+
 		if (slowing && landing) 
-		{this.level().playLocalSound(this.getX(), this.getY() - 8, this.getZ(), NorthstarSounds.ROCKET_LANDING.get(), SoundSource.BLOCKS, 4, 0, false); 
+		{this.level().playLocalSound(this.getX(), this.getY() - 8, this.getZ(), NorthstarSounds.ROCKET_LANDING.get(), SoundSource.BLOCKS, 2, 0, false); 
 		i = 0; soundTime = 0; 
 	//	System.out.println("AAAAAAAAA");
 		}
@@ -257,6 +252,9 @@ public class RocketContraptionEntity extends AbstractContraptionEntity implement
 		}
 		//starting landing
 		if (this.getY() > 1750 && launched) {
+			if(this.level().isClientSide) {
+				flyingSound.stopSound();
+			}
 			this.cooldown = 0;
 			this.launched = false;
 			this.landing = true;
@@ -273,24 +271,29 @@ public class RocketContraptionEntity extends AbstractContraptionEntity implement
 		tickActors();
 		Vec3 movementVec = getDeltaMovement();
 		Direction dir = landing ? Direction.DOWN : Direction.UP;
-		if (customCollision(dir) && !level().isClientSide) {
-			level().playLocalSound(getX(), getY(), getZ(), AllSoundEvents.STEAM.getMainEvent(), SoundSource.BLOCKS, 3, 0, true);
-			flyingSound.stopSound();
-			if (!level().isClientSide && (Math.abs(final_lift_vel) < 3 || hasExploded)) {
-				if(this.landing && !isUsingTicket) {
-					ItemStack returnTicket = this.createReturnTicket(this);
-					if(owner != null) {
-					Player player = owner;
-			        level().addFreshEntity(new ItemEntity(level(), player.getX(), player.getY(), player.getZ(), returnTicket));}
+		if (customCollision(dir)) {
+			if(!level().isClientSide) {
+				level().playLocalSound(getX(), getY(), getZ(), AllSoundEvents.STEAM.getMainEvent(), SoundSource.BLOCKS, 3, 0, true);
+				if (!level().isClientSide && (Math.abs(final_lift_vel) < 3 || hasExploded)) {
+					if(this.landing && !isUsingTicket) {
+						ItemStack returnTicket = this.createReturnTicket(this);
+						if(owner != null) {
+						Player player = owner;
+				        level().addFreshEntity(new ItemEntity(level(), player.getX(), player.getY(), player.getZ(), returnTicket));}
+					}
+					DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
+					() -> () -> tickAirSound(0));
+					disassemble();
+					if(this.landing && isUsingTicket) {
+						RocketHandler.deleteTicket(level(), this.blockPosition());
+					}
 				}
-				disassemble();
-				if(this.landing && isUsingTicket) {
-					RocketHandler.deleteTicket(level(), this.blockPosition());
+				if(Math.abs(final_lift_vel) > 3 && !hasExploded) {
+					level().explode(this, getX(), getY() - 1, getZ(), 30, NorthstarPlanets.getPlanetOxy(destination), Level.ExplosionInteraction.BLOCK);
+					hasExploded = true;
 				}
-			}
-			if(Math.abs(final_lift_vel) > 3 && !hasExploded) {
-				level().explode(this, getX(), getY() - 1, getZ(), 30, NorthstarPlanets.getPlanetOxy(destination), Level.ExplosionInteraction.BLOCK);
-				hasExploded = true;
+			}else {
+				flyingSound.stopSound();
 			}
 		}
 		if (!isStalled() && tickCount > 2) {
@@ -305,18 +308,29 @@ public class RocketContraptionEntity extends AbstractContraptionEntity implement
 		slowing = false;
 	}
 	
+
+	@OnlyIn(Dist.CLIENT)
+	private RocketAirSound flyingSound;
+	
+	@SuppressWarnings("resource")
 	@OnlyIn(Dist.CLIENT)
 	private void tickAirSound(float maxVolume) {
-		float pitch = (float) Mth.clamp(getDeltaMovement()
-			.length(), .2f, 3f);
-		if (flyingSound == null || flyingSound.isStopped()) {
-			flyingSound = new RocketAirSound(SoundEvents.ELYTRA_FLYING, pitch);
-			Minecraft.getInstance()
-				.getSoundManager()
-				.play(flyingSound);
+		if(level().isClientSide) {
+			float playerDist = (float) (20 / Math.abs(this.position().distanceTo(Minecraft.getInstance().cameraEntity.getPosition(0))));
+			System.out.println("playerDist: " + playerDist);
+			float finalVolume = Mth.clamp(playerDist * maxVolume, 0, maxVolume);
+			System.out.println("maxVolume: " + maxVolume);
+			float pitch = (float) Mth.clamp(getDeltaMovement()
+				.length(), .2f, 3f);
+			if (flyingSound == null || flyingSound.isStopped()) {
+				flyingSound = new RocketAirSound(SoundEvents.ELYTRA_FLYING, pitch, this);
+				Minecraft.getInstance()
+					.getSoundManager()
+					.play(flyingSound);
+			}
+			flyingSound.setPitch(pitch);
+			flyingSound.fadeIn(finalVolume);
 		}
-		flyingSound.setPitch(pitch);
-		flyingSound.fadeIn(maxVolume);
 	}
 	@SuppressWarnings("resource")
 	@OnlyIn(Dist.CLIENT)

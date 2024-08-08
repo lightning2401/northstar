@@ -40,17 +40,9 @@ public class PlayerMixin {
                if (j > 0) {
             	   //frezzing
                   pTarget.setTicksFrozen((j * 80) + 150);;
-                  frost(pTarget);
                }
             }           
         	
         }
 	}
-    
-    @SuppressWarnings("resource")
-	public void frost(Entity pEntityHit) {
-    	if(((Object)this) instanceof LocalPlayer)
-    	{Minecraft.getInstance().particleEngine.createTrackingEmitter(pEntityHit, new SnowflakeParticleData());}
-    }
-	
 }

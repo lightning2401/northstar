@@ -36,10 +36,10 @@ public class IceBlockMixin {
     	int highestTemp = checkTemp(pState, pLevel, pPos, pRandom);
     	if(pRandom.nextFloat() > 0.4) {
     		if(100 < highestTemp){
-    			this.evaporate(pState, pLevel, pPos);
+    			this.evaporate2(pState, pLevel, pPos);
     		}
     		else if(32 < highestTemp){
-    			this.melt(pState, pLevel, pPos);
+    			this.melt2(pState, pLevel, pPos);
     	    }
     	}
     	else if(32 < highestTemp){
@@ -77,11 +77,11 @@ public class IceBlockMixin {
 
 	}
     
-    protected void melt(BlockState pState, Level pLevel, BlockPos pPos) {
+    public void melt2(BlockState pState, Level pLevel, BlockPos pPos) {
 	    pLevel.setBlockAndUpdate(pPos, Fluids.WATER.getFluidType().getBlockForFluidState(pLevel, pPos, Fluids.WATER.defaultFluidState()));
 	    pLevel.neighborChanged(pPos, Fluids.WATER.getFluidType().getBlockForFluidState(pLevel, pPos, Fluids.WATER.defaultFluidState()).getBlock(), pPos);
 	}
-	protected void evaporate(BlockState pState, Level pLevel, BlockPos pPos) {
+	protected void evaporate2(BlockState pState, Level pLevel, BlockPos pPos) {
 	    pLevel.setBlockAndUpdate(pPos, Blocks.AIR.defaultBlockState());
 	    pLevel.neighborChanged(pPos, Blocks.AIR, pPos);
         int i = pPos.getX();

@@ -1,6 +1,8 @@
 {
   "values": [
  	"northstar:oxygen",
- 	"northstar:liquid_oxygen"
+ 	"northstar:flowing_oxygen",
+ 	"northstar:liquid_oxygen",
+ 	"northstar:flowing_liquid_oxygen"
   ]
 }

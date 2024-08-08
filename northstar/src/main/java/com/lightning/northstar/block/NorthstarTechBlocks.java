@@ -51,6 +51,7 @@ import net.minecraft.world.level.block.LanternBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MapColor;
 
 public class NorthstarTechBlocks {
 
@@ -62,6 +63,7 @@ public class NorthstarTechBlocks {
 	public static final BlockEntry<SolarPanelBlock> SOLAR_PANEL = REGISTRATE.block("solar_panel", SolarPanelBlock::new)
 			.initialProperties(SharedProperties::stone)
 			.properties(BlockBehaviour.Properties::noOcclusion)
+    		.properties(p -> p.mapColor(MapColor.COLOR_GRAY))
 			.transform(axeOrPickaxe())
 			.blockstate(
 				(c, p) -> BlockStateGen.directionalBlockIgnoresWaterlogged(c, p, s -> AssetLookup.partialBaseModel(c, p)))
@@ -75,7 +77,7 @@ public class NorthstarTechBlocks {
 	public static final BlockEntry<LaserLenseBlock> LASER_LENSE = REGISTRATE.block("laser_lense", LaserLenseBlock::new)
     		.initialProperties(SharedProperties::softMetal)
 			.properties(p -> p.noOcclusion())
-			.properties(p -> p.sound(SoundType.COPPER))
+			.properties(p -> p.sound(SoundType.COPPER).mapColor(MapColor.COLOR_GRAY))
     		.transform(pickaxeOnly())
     		.addLayer(() -> RenderType::cutoutMipped)
     		.simpleItem()
@@ -88,7 +90,7 @@ public class NorthstarTechBlocks {
 			.register();
     public static final BlockEntry<CircuitEngraverBlock> CIRCUIT_ENGRAVER = REGISTRATE.block("circuit_engraver", CircuitEngraverBlock::new)
     		.initialProperties(SharedProperties::softMetal)
-    		.properties(p -> p.isViewBlocking(NorthstarTechBlocks::never))
+    		.properties(p -> p.isViewBlocking(NorthstarTechBlocks::never).mapColor(MapColor.COLOR_GRAY))
 			.properties(BlockBehaviour.Properties::noOcclusion)
 			.transform(axeOrPickaxe())
 			.blockstate(BlockStateGen.horizontalBlockProvider(true))
@@ -100,7 +102,7 @@ public class NorthstarTechBlocks {
 	public static final BlockEntry<OxygenConcentratorBlock> OXYGEN_CONCENTRATOR = REGISTRATE.block("oxygen_concentrator", OxygenConcentratorBlock::new)
     		.initialProperties(SharedProperties::softMetal)
     		.properties(p -> p.isViewBlocking(NorthstarTechBlocks::never)
-    				.strength(6, 6))
+    				.strength(6, 6).mapColor(MapColor.COLOR_LIGHT_GRAY))
 			.properties(BlockBehaviour.Properties::noOcclusion)
 			.transform(axeOrPickaxe())
 			.blockstate(BlockStateGen.horizontalBlockProvider(true))
@@ -112,7 +114,7 @@ public class NorthstarTechBlocks {
 	public static final BlockEntry<OxygenFillerBlock> OXYGEN_FILLER = REGISTRATE.block("oxygen_filler", OxygenFillerBlock::new)
     		.initialProperties(SharedProperties::softMetal)
     		.properties(p -> p.isViewBlocking(NorthstarTechBlocks::never)
-    				.strength(6, 6))
+    				.strength(6, 6).mapColor(MapColor.COLOR_GRAY))
 			.properties(BlockBehaviour.Properties::noOcclusion)
 			.transform(axeOrPickaxe())
 			.blockstate(BlockStateGen.horizontalBlockProvider(true))
@@ -124,7 +126,7 @@ public class NorthstarTechBlocks {
 	public static final BlockEntry<TemperatureRegulatorBlock> TEMPERATURE_REGULATOR = REGISTRATE.block("temperature_regulator", TemperatureRegulatorBlock::new)
     		.initialProperties(SharedProperties::softMetal)
     		.properties(p -> p.isViewBlocking(NorthstarTechBlocks::never)
-    				.strength(8, 8))
+    				.strength(8, 8).mapColor(MapColor.COLOR_GRAY))
 			.properties(BlockBehaviour.Properties::noOcclusion)
 			.transform(axeOrPickaxe())
 			.blockstate(BlockStateGen.horizontalBlockProvider(true))
@@ -136,7 +138,7 @@ public class NorthstarTechBlocks {
 	public static final BlockEntry<OxygenGeneratorBlock> OXYGEN_GENERATOR = REGISTRATE.block("oxygen_generator", OxygenGeneratorBlock::new)
     		.initialProperties(SharedProperties::softMetal)
     		.properties(p -> p.isViewBlocking(NorthstarTechBlocks::never)
-    				.strength(8, 8))
+    				.strength(8, 8).mapColor(MapColor.COLOR_GRAY))
 			.properties(BlockBehaviour.Properties::noOcclusion)
 			.transform(axeOrPickaxe())
 			.blockstate(BlockStateGen.horizontalBlockProvider(true))
@@ -149,7 +151,7 @@ public class NorthstarTechBlocks {
 	public static final BlockEntry<CombustionEngineBlock> COMBUSTION_ENGINE = REGISTRATE.block("combustion_engine", CombustionEngineBlock::new)
     		.initialProperties(SharedProperties::softMetal)
     		.properties(p -> p.isViewBlocking(NorthstarTechBlocks::never)
-    				.strength(8, 8))
+    				.strength(8, 8).mapColor(MapColor.COLOR_ORANGE))
 			.properties(BlockBehaviour.Properties::noOcclusion)
 			.transform(axeOrPickaxe())
 			.blockstate(BlockStateGen.horizontalBlockProvider(true))
@@ -161,7 +163,7 @@ public class NorthstarTechBlocks {
     @SuppressWarnings("removal")
 	public static final BlockEntry<JetEngineBlock> JET_ENGINE = REGISTRATE.block("jet_engine", JetEngineBlock::new)
     		.initialProperties(SharedProperties::softMetal)
-    		.properties(p -> p.isViewBlocking(NorthstarTechBlocks::never))
+    		.properties(p -> p.isViewBlocking(NorthstarTechBlocks::never).mapColor(MapColor.COLOR_GRAY))
 			.properties(BlockBehaviour.Properties::noOcclusion)
 			.transform(pickaxeOnly())
 			.addLayer(() -> RenderType::cutoutMipped)
@@ -173,7 +175,7 @@ public class NorthstarTechBlocks {
     public static final BlockEntry<AstronomyTableBlock> ASTRONOMY_TABLE = REGISTRATE.block("astronomy_table", AstronomyTableBlock::new)
     		.initialProperties(SharedProperties::softMetal)
 			.properties(p -> p.noOcclusion())
-			.properties(p -> p.sound(SoundType.WOOD))
+			.properties(p -> p.sound(SoundType.WOOD).mapColor(MapColor.COLOR_BROWN))
     		.transform(pickaxeOnly())
     		.simpleItem()
     		.register();
@@ -181,7 +183,7 @@ public class NorthstarTechBlocks {
 	@SuppressWarnings("removal")
 	public static final BlockEntry<IceBoxBlock> ICE_BOX = REGISTRATE.block("ice_box", IceBoxBlock::new)
 			.initialProperties(SharedProperties::stone)
-			.properties(p -> p.sound(SoundType.NETHERITE_BLOCK).noOcclusion())
+			.properties(p -> p.sound(SoundType.NETHERITE_BLOCK).noOcclusion().mapColor(MapColor.COLOR_LIGHT_GRAY))
 			.transform(pickaxeOnly())
 			.addLayer(() -> RenderType::cutoutMipped)
 			.onRegister(movementBehaviour(new BasinMovementBehaviour()))
@@ -192,7 +194,7 @@ public class NorthstarTechBlocks {
 	public static final BlockEntry<ElectrolysisMachineBlock> ELECTROLYSIS_MACHINE = REGISTRATE.block("electrolysis_machine", ElectrolysisMachineBlock::new)
 			.initialProperties(SharedProperties::stone)
 			.properties(p -> p.isViewBlocking(NorthstarTechBlocks::never))
-			.properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+			.properties(p -> p.sound(SoundType.NETHERITE_BLOCK).mapColor(MapColor.COLOR_GREEN))
 			.transform(pickaxeOnly())
 			.addLayer(() -> RenderType::cutoutMipped)
 			.item()
@@ -201,7 +203,7 @@ public class NorthstarTechBlocks {
     public static final BlockEntry<RocketStationBlock> ROCKET_STATION = REGISTRATE.block("rocket_station", RocketStationBlock::new)
     		.initialProperties(SharedProperties::softMetal)
 			.properties(p -> p)
-			.properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+			.properties(p -> p.sound(SoundType.NETHERITE_BLOCK).mapColor(MapColor.COLOR_GRAY))
     		.transform(pickaxeOnly())
     		.simpleItem()
     		.onRegister(assignDataBehaviour(new StationSummaryDisplaySource(), "station_summary"))
@@ -211,7 +213,7 @@ public class NorthstarTechBlocks {
     		.register();
     public static final BlockEntry<RocketControlsBlock> ROCKET_CONTROLS = REGISTRATE.block("rocket_controls", RocketControlsBlock::new)
     		.initialProperties(SharedProperties::softMetal)
-			.properties(p -> p.sound(SoundType.NETHERITE_BLOCK).noOcclusion())
+			.properties(p -> p.sound(SoundType.NETHERITE_BLOCK).noOcclusion().mapColor(MapColor.COLOR_GRAY))
     		.transform(pickaxeOnly())
     		.onRegister(movementBehaviour(new RocketControlsMovementBehaviour()))
     		.onRegister(interactionBehaviour(new RocketControlsInteractionBehaviour()))
@@ -220,14 +222,14 @@ public class NorthstarTechBlocks {
     		.register();
     public static final BlockEntry<TargetingComputerRackBlock> COMPUTER_RACK = REGISTRATE.block("computer_rack", TargetingComputerRackBlock::new)
     		.initialProperties(SharedProperties::softMetal)
-			.properties(p -> p.sound(SoundType.NETHERITE_BLOCK).noOcclusion())
+			.properties(p -> p.sound(SoundType.NETHERITE_BLOCK).noOcclusion().mapColor(MapColor.COLOR_GRAY))
     		.transform(pickaxeOnly())
     		.simpleItem()
     		.lang("Computer Rack")
     		.register();
     public static final BlockEntry<OxygenDetectorBlock> OXYGEN_DETECTOR = REGISTRATE.block("oxygen_detector", OxygenDetectorBlock::new)
     		.initialProperties(SharedProperties::softMetal)
-			.properties(p -> p.sound(SoundType.NETHERITE_BLOCK).noOcclusion())
+			.properties(p -> p.sound(SoundType.NETHERITE_BLOCK).noOcclusion().mapColor(MapColor.COLOR_GREEN))
     		.transform(pickaxeOnly())
     		.simpleItem()
     		.lang("Oxygen Detector")
@@ -238,6 +240,7 @@ public class NorthstarTechBlocks {
     			.transform(BuilderTransformers.slidingDoor("iron_space"))
     			.properties(p -> p
     				.sound(SoundType.NETHERITE_BLOCK)
+    				.mapColor(MapColor.COLOR_GRAY)
     				.noOcclusion())
     			.register();
     
@@ -248,56 +251,56 @@ public class NorthstarTechBlocks {
 	
     @SuppressWarnings("removal")
 	public static final BlockEntry<ExtinguishedTorchBlock> EXTINGUISHED_TORCH = REGISTRATE.block("extinguished_torch", ExtinguishedTorchBlock::new)
-			.properties(p -> p.sound(SoundType.WOOD).noCollission().instabreak())
+			.properties(p -> p.sound(SoundType.WOOD).mapColor(MapColor.COLOR_BROWN).noCollission().instabreak())
 			.addLayer(() -> RenderType::cutoutMipped)
 			.register();
     @SuppressWarnings("removal")
 	public static final BlockEntry<ExtinguishedTorchWallBlock> EXTINGUISHED_TORCH_WALL = REGISTRATE.block("extinguished_torch_wall", ExtinguishedTorchWallBlock::new)
-			.properties(p -> p.sound(SoundType.WOOD).noCollission().instabreak())
+			.properties(p -> p.sound(SoundType.WOOD).mapColor(MapColor.COLOR_BROWN).noCollission().instabreak())
 			.addLayer(() -> RenderType::cutoutMipped)
 			.register();
     @SuppressWarnings("removal")  
 	public static final BlockEntry<ExtinguishedLanternBlock> EXTINGUISHED_LANTERN = REGISTRATE.block("extinguished_lantern", ExtinguishedLanternBlock::new)
     		.initialProperties(SharedProperties::softMetal)
-			.properties(p -> p.sound(SoundType.LANTERN))
+			.properties(p -> p.sound(SoundType.LANTERN).mapColor(MapColor.COLOR_GRAY))
 			.addLayer(() -> RenderType::cutoutMipped)
 			.simpleItem()
 			.register();
     @SuppressWarnings("removal")  
 	public static final BlockEntry<GlowstoneTorchBlock> GLOWSTONE_TORCH = REGISTRATE.block("glowstone_torch", GlowstoneTorchBlock::new)
-			.properties(p -> p.lightLevel(value -> 15).sound(SoundType.METAL).noCollission().instabreak())
+			.properties(p -> p.lightLevel(value -> 15).sound(SoundType.METAL).mapColor(MapColor.COLOR_YELLOW).noCollission().instabreak())
 			.addLayer(() -> RenderType::cutoutMipped)
 			.register();
 	@SuppressWarnings("removal")
 	public static final BlockEntry<GlowstoneTorchWallBlock> GLOWSTONE_TORCH_WALL = REGISTRATE.block("glowstone_torch_wall", GlowstoneTorchWallBlock::new)
-			.properties(p -> p.lightLevel(value -> 15).sound(SoundType.METAL).noCollission().instabreak())
+			.properties(p -> p.lightLevel(value -> 15).sound(SoundType.METAL).mapColor(MapColor.COLOR_YELLOW).noCollission().instabreak())
 			.addLayer(() -> RenderType::cutoutMipped)
 			.register();
     @SuppressWarnings("removal")  
 	public static final BlockEntry<LanternBlock> GLOWSTONE_LANTERN = REGISTRATE.block("glowstone_lantern", LanternBlock::new)
     		.initialProperties(SharedProperties::softMetal)
-			.properties(p -> p.lightLevel(value -> 15).sound(SoundType.LANTERN))
+			.properties(p -> p.lightLevel(value -> 15).sound(SoundType.LANTERN).mapColor(MapColor.COLOR_GRAY))
 			.addLayer(() -> RenderType::cutoutMipped)
 			.simpleItem()
 			.register();
     @SuppressWarnings("removal")  
 	public static final BlockEntry<CrystalBlock> AMETHYST_CRYSTAL = REGISTRATE.block("amethyst_crystal", CrystalBlock::new)
     		.initialProperties(SharedProperties::softMetal)
-			.properties(p -> p.lightLevel(value -> 5).sound(SoundType.AMETHYST_CLUSTER))
+			.properties(p -> p.lightLevel(value -> 5).sound(SoundType.AMETHYST_CLUSTER).mapColor(MapColor.COLOR_PURPLE))
 			.addLayer(() -> RenderType::cutoutMipped)
 			.simpleItem()
 			.register();
     @SuppressWarnings("removal")  
 	public static final BlockEntry<CrystalBlock> LUNAR_SAPPHIRE_CRYSTAL = REGISTRATE.block("lunar_sapphire_crystal", CrystalBlock::new)
     		.initialProperties(SharedProperties::softMetal)
-			.properties(p -> p.lightLevel(value -> 7).sound(SoundType.AMETHYST_CLUSTER))
+			.properties(p -> p.lightLevel(value -> 7).sound(SoundType.AMETHYST_CLUSTER).mapColor(MapColor.COLOR_BLUE))
 			.addLayer(() -> RenderType::cutoutMipped)
 			.simpleItem()
 			.register();
     
 	public static final BlockEntry<CustomCogBlock> IRON_COGWHEEL = REGISTRATE.block("iron_cogwheel", CustomCogBlock::small)
 			.initialProperties(SharedProperties::softMetal)
-			.properties(p -> p.sound(SoundType.METAL))
+			.properties(p -> p.sound(SoundType.METAL).mapColor(MapColor.COLOR_GRAY))
 			.transform(BlockStressDefaults.setNoImpact())
 			.blockstate(BlockStateGen.axisBlockProvider(false))
 			.onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))

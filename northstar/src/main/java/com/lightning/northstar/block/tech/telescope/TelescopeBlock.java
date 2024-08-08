@@ -62,8 +62,6 @@ public class TelescopeBlock extends BaseEntityBlock implements IBE<TelescopeBloc
 		{return this.defaultBlockState().setValue(FACING, pContext.getNearestLookingDirection());}
 	}
 
-	
-	 @SuppressWarnings("resource")
 	@Override
 	  public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos,Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
 	        if (!pLevel.isClientSide()) {
@@ -74,7 +72,7 @@ public class TelescopeBlock extends BaseEntityBlock implements IBE<TelescopeBloc
 	                NetworkHooks.openScreen(((ServerPlayer)pPlayer), (TelescopeBlockEntity)entity, pPos);
 
 	            } else {
-	        		Minecraft.getInstance().player.displayClientMessage(
+	            	pPlayer.displayClientMessage(
 	        				Lang.translateDirect("northstar.gui.telescope_fail"), true);
 	            }
 	        }

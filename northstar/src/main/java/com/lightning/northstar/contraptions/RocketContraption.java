@@ -24,6 +24,7 @@ import com.simibubi.create.content.contraptions.TranslatingContraption;
 import com.simibubi.create.content.contraptions.minecart.TrainCargoManager;
 import com.simibubi.create.content.contraptions.render.ContraptionLighter;
 import com.simibubi.create.content.contraptions.render.NonStationaryLighter;
+import com.simibubi.create.content.fluids.tank.CreativeFluidTankBlockEntity;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 
 import net.minecraft.core.BlockPos;
@@ -179,6 +180,23 @@ public class RocketContraption extends TranslatingContraption{
 			if (NorthstarTags.NorthstarFluidTags.TIER_3_ROCKET_FUEL.matches(fluid.getFluid().getFluid())) {
 				if(fluid.getFluidAmount() != 0)
 				fuelAmount += fluid.getFluidAmount() * 4;
+				has_fuel = true;
+			}
+		}
+		
+		if(blockState.is(AllBlocks.CREATIVE_FLUID_TANK.get())) {
+			CreativeFluidTankBlockEntity tank = (CreativeFluidTankBlockEntity) world.getBlockEntity(pos);
+			IFluidTank fluid = tank.getTankInventory();
+			if (NorthstarTags.NorthstarFluidTags.TIER_1_ROCKET_FUEL.matches(fluid.getFluid().getFluid())) {
+				fuelAmount = Integer.MAX_VALUE;
+				has_fuel = true;
+			}
+			if (NorthstarTags.NorthstarFluidTags.TIER_2_ROCKET_FUEL.matches(fluid.getFluid().getFluid())) {
+				fuelAmount = Integer.MAX_VALUE;
+				has_fuel = true;
+			}
+			if (NorthstarTags.NorthstarFluidTags.TIER_3_ROCKET_FUEL.matches(fluid.getFluid().getFluid())) {
+				fuelAmount = Integer.MAX_VALUE;
 				has_fuel = true;
 			}
 		}

@@ -64,9 +64,9 @@ public class RocketStationScreen extends AbstractContainerScreen<RocketStationMe
 			   System.out.println("Ruh roh");
 		   }
 		   if(this.menu.target != null)
-			   gui.drawString(font, Component.literal("Estimated Fuel Cost: " + this.menu.fuelCost + " gJ"), x + imageWidth - 110, y + imageWidth - 100, 0xaed0d0);
+			   gui.drawString(font, Component.literal("Estimated Fuel Cost: " + this.menu.fuelCost + " gJ"), x + imageWidth - 110, y + imageWidth - 100, 0x313a54, false);
 		   if(this.menu.target == null)
-			   gui.drawString(font, Component.literal("Invalid Target"), x + imageWidth - 40, y + imageWidth - 100, 0xaed0d0);
+			   gui.drawString(font, Component.literal("Invalid Target"), x + imageWidth - 40, y + imageWidth - 100, 0x313a54, false);
 	   }
 	   
 	   protected void renderButtons(GuiGraphics pPoseStack, int mouseX, int mouseY, float delta) {

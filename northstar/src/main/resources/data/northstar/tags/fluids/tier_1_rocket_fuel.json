@@ -1,5 +1,6 @@
 {
   "values": [
- 	"northstar:hydrocarbon"
+ 	"northstar:hydrocarbon",
+ 	"northstar:flowing_hydrocarbon"
   ]
 }

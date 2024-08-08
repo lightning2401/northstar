@@ -107,8 +107,8 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
         RenderSystem.setShaderTexture(0, TELESCOPE_TEXTURE);
 
         gui.blit(TELESCOPE_TEXTURE, x, y, 0, 0, 255, 255);
-        gui.pose().popPose();
         gui.disableScissor();
+        gui.pose().popPose();
     }    
     
     @SuppressWarnings("resource")
@@ -117,7 +117,6 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
         int y = (height - (imageHeight + (imageHeight / 2))) / 2;
 
         gui.enableScissor(x + 1, y + 1, x + 255, y + 255);
-        gui.pose().pushPose();
         
     	PoseStack pPoseStack = gui.pose();
     	ResourceKey<Level> player_dim = Minecraft.getInstance().player.level().dimension();
@@ -225,7 +224,7 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
         gui.blit(ERIS, (eris_x * 20) + (int)scrollX * 20, (eris_y * 20) + (int)scrollY * 20, 0, 0, 255, 255);
         pPoseStack.popPose();
         
-    	if (player_dim != ClientLevel.OVERWORLD) {
+    	if (player_dim != ClientLevel.OVERWORLD && player_dim != NorthstarDimensions.MOON_DIM_KEY) {
     		
         int earth_x = (int) NorthstarPlanets.earth_x;
         int earth_y = (int) NorthstarPlanets.earth_y;
@@ -262,6 +261,7 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
         int moon_uv_y = (moon_phase / 4) * 128;
         gui.blit(MOON_GLOW, ((int)NorthstarPlanets.earth_moon_x + (int)scrollX / 2) - 27, ((int)NorthstarPlanets.earth_moon_y + (int)scrollY) - 57, 0 + moon_uv_x, 0 + moon_uv_y, 64, 128);
         pPoseStack.popPose();
+        pPoseStack.pushPose();
         RenderSystem.disableBlend();
         pPoseStack.scale(2F, 1F, 1F);
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -270,7 +270,6 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
         gui.blit(MOON_FLAT, ((int)NorthstarPlanets.earth_moon_x + (int)scrollX / 2) - 27, ((int)NorthstarPlanets.earth_moon_y + (int)scrollY) - 57, 0 + moon_uv_x, 0 + moon_uv_y, 64, 128);
         pPoseStack.popPose();}
     	
-        gui.pose().popPose();
         gui.disableScissor();
     }
     
@@ -321,8 +320,7 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
         renderSelectedPlanet(pPoseStack);
         renderButton(pPoseStack, mouseX, mouseY, delta);
         RenderSystem.setShaderColor(1, 1, 1, 1);
-        
-    	pPoseStack.pose().popPose();
+ 
     }
     
     public boolean paperCheck() {
@@ -401,7 +399,7 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
             list.add((Component.literal("Y:  " + String.valueOf((int)NorthstarPlanets.mars_y)).withStyle(ChatFormatting.WHITE)));
             gui.renderComponentTooltip(this.font, list, mouseX, mouseY);
         }else
-        if ((Math.abs(NorthstarPlanets.earth_x + scrollX + 8 - mouseX) < 8 && Math.abs(NorthstarPlanets.earth_y + scrollY + 8 - mouseY) < 8) && player_dim != ClientLevel.OVERWORLD) {
+        if ((Math.abs(NorthstarPlanets.earth_x + scrollX + 8 - mouseX) < 8 && Math.abs(NorthstarPlanets.earth_y + scrollY + 8 - mouseY) < 8) && player_dim != ClientLevel.OVERWORLD && player_dim != NorthstarDimensions.MOON_DIM_KEY) {
             List<Component> list = Lists.newArrayList();
             RenderSystem.colorMask(true, true, true, true);
             list.add((Component.translatable("planets.earth.name").withStyle(ChatFormatting.AQUA)));
@@ -414,7 +412,7 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
                
             gui.renderComponentTooltip(this.font, list, mouseX, mouseY);
         }else        	
-        if ((Math.abs(NorthstarPlanets.moon_x + scrollX + 8 - mouseX) < 8 && Math.abs(NorthstarPlanets.moon_y + scrollY + 8 - mouseY) < 8) && player_dim != ClientLevel.OVERWORLD) {
+        if ((Math.abs(NorthstarPlanets.moon_x + scrollX + 8 - mouseX) < 8 && Math.abs(NorthstarPlanets.moon_y + scrollY + 8 - mouseY) < 8) && player_dim != ClientLevel.OVERWORLD && player_dim != NorthstarDimensions.MOON_DIM_KEY) {
             List<Component> list = Lists.newArrayList();
             RenderSystem.colorMask(true, true, true, true);
             list.add((Component.translatable("planets.moon.name").withStyle(ChatFormatting.AQUA)));

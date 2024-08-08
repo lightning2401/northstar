@@ -4,6 +4,7 @@ import com.lightning.northstar.Northstar;
 import com.lightning.northstar.NorthstarTags.NorthstarItemTags;
 import com.lightning.northstar.block.NorthstarBlocks;
 import com.lightning.northstar.block.NorthstarTechBlocks;
+import com.lightning.northstar.fluids.NorthstarFluids;
 import com.lightning.northstar.world.OxygenStuff;
 import com.simibubi.create.foundation.utility.Components;
 
@@ -65,6 +66,12 @@ public class NorthstarCreativeModeTab {
 					out.accept(NorthstarItems.MARTIAN_STEEL_SHEET.get());
 					out.accept(NorthstarItems.TUNGSTEN_INGOT.get());
 					out.accept(NorthstarItems.TUNGSTEN_SHEET.get());
+					
+					out.accept(NorthstarFluids.HYDROCARBON.getBucket().get());
+					out.accept(NorthstarFluids.METHANE.getBucket().get());
+					out.accept(NorthstarFluids.LIQUID_OXYGEN.getBucket().get());
+					out.accept(NorthstarFluids.LIQUID_HYDROGEN.getBucket().get());
+					out.accept(NorthstarFluids.SULFURIC_ACID.getBucket().get());
 
 					out.accept(NorthstarItems.LUNAR_SAPPHIRE_SHARD.get());
 					

@@ -38,7 +38,9 @@ public class LanternBlockMixin {
 
     @Inject(method = "getStateForPlacement", at = @At("HEAD"), cancellable = true)
 	public void getStateForPlacement(BlockPlaceContext pContext, CallbackInfoReturnable<BlockState> info) {
-    	if (pContext.getItemInHand().getItem() == Blocks.LANTERN.asItem()) 
+    	try{
+    		if (pContext.getItemInHand().getItem() == Blocks.LANTERN.asItem()) 
+    	
     	{    	boolean hanging = false;
         BlockState blockstate = Blocks.LANTERN.defaultBlockState().setValue(HANGING, true);
         if (blockstate.canSurvive(pContext.getLevel(), pContext.getClickedPos())) {hanging = true;}
@@ -52,12 +54,15 @@ public class LanternBlockMixin {
     		.setValue(ExtinguishedLanternBlock.HANGING, hanging).setValue(ExtinguishedLanternBlock.WATERLOGGED, fluidstate.is(Fluids.WATER)));
     		
     	}
-    	}
+    	
+    }}	catch(Exception e) {
+    }
 	}
 	
     @Inject(method = "updateShape", at = @At("TAIL"), cancellable = true)
 	public void updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, 
 	LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pNeighborPos, CallbackInfoReturnable<BlockState> info) {
+    	try{
     	if(pState.getBlock() == Blocks.LANTERN) {
             System.out.println(OxygenStuff.hasOxygen(pCurrentPos,((Level)pLevel).dimension()));
     	if(!OxygenStuff.hasOxygen(pCurrentPos, ((Level)pLevel).dimension())) {
@@ -66,7 +71,10 @@ public class LanternBlockMixin {
     				.setValue(ExtinguishedLanternBlock.HANGING, pState.getValue(HANGING)).setValue(ExtinguishedLanternBlock.WATERLOGGED, pState.getValue(WATERLOGGED)));
     	}
     	}
-		   
+    	}
+    	catch(Exception e) {
+    		
+    	}
 	}
 
 }
