@@ -73,7 +73,7 @@ public class TelescopeBlock extends BaseEntityBlock implements IBE<TelescopeBloc
 	                NetworkHooks.openScreen(((ServerPlayer)pPlayer), (TelescopeBlockEntity)entity, pPos);
 
 	            } else {
-	        		Minecraft.getInstance().player.displayClientMessage(
+	            	pPlayer.displayClientMessage(
 	        				Lang.translateDirect("northstar.gui.telescope_fail"), true);
 	            }
 	        }

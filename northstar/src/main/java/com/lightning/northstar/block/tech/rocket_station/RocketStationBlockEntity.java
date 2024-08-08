@@ -34,6 +34,7 @@ import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollOptionBehaviour;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.WorldAttached;
+import com.simibubi.create.infrastructure.config.AllConfigs;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -181,6 +182,7 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 		double heatCostHome = 0;
 		try {
 			lastException = null;
+			contraption.owner = owner;
 			if (!contraption.assemble(level, worldPosition))
 				{return;} 
 			engines = contraption.hasJetEngine();
@@ -188,7 +190,6 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 			fuelAmount = contraption.fuelAmount();
 			heatShielding = contraption.heatShielding();
 			hasStation |= contraption.hasRocketStation();
-			contraption.owner = owner;
 			contraption.fuelCost = fuelCost;
 			contraption.fuelReturnCost = fuelReturnCost;
 			contraption.dest = target;
@@ -202,6 +203,9 @@ public class RocketStationBlockEntity extends SmartBlockEntity implements IDispl
 
 			sendData();
 		} catch (AssemblyException e) {
+			owner.displayClientMessage(Component.translatable("northstar.gui.rocket_too_big").withStyle(ChatFormatting.RED), false);
+			owner.displayClientMessage(Component.translatable("northstar.gui.current_config_size").withStyle(ChatFormatting.RED), false);
+			owner.displayClientMessage(Component.literal(AllConfigs.server().kinetics.maxBlocksMoved.get().toString()).withStyle(ChatFormatting.RED), false);
 			lastException = e;
 			sendData();
 			return;

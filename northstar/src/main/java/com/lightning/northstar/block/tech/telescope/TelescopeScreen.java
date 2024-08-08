@@ -223,7 +223,7 @@ public class TelescopeScreen extends AbstractContainerScreen<TelescopeMenu>{
         this.blit(pPoseStack, (eris_x * 20) + (int)scrollX * 20, (eris_y * 20) + (int)scrollY * 20, 0, 0, 255, 255);
         pPoseStack.popPose();
         
-    	if (player_dim != ClientLevel.OVERWORLD) {
+    	if (player_dim != ClientLevel.OVERWORLD && player_dim != NorthstarDimensions.MOON_DIM_KEY) {
     		
         int earth_x = (int) NorthstarPlanets.earth_x;
         int earth_y = (int) NorthstarPlanets.earth_y;

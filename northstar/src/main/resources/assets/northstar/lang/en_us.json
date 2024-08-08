@@ -254,6 +254,10 @@
 "block.northstar.oxygen_detector.tooltip.summary":"Emits _redstone signal_ when block in front is oxygenated.",
 "block.northstar.temperature_regulator":"Temperature Regulator",
 "block.northstar.temperature_regulator.tooltip.summary":"Can be used to manipulate _Temperature_",
+"block.northstar.temperature_regulator.tooltip.condition1":"When in Box Mode",
+"block.northstar.temperature_regulator.tooltip.behaviour1":"Changes temperature in a box of the given coordinates",
+"block.northstar.temperature_regulator.tooltip.condition2":"When in Fill Environment Mode",
+"block.northstar.temperature_regulator.tooltip.behaviour2":"Changes the temperature of all surrounding blocks it can spread to",
 "block.northstar.combustion_engine":"Combustion Engine",
 "block.northstar.combustion_engine.tooltip.summary":"Burns _Rocket Fuel_ to produce _Kinetic Energy_",
 "block.northstar.monolithite":"Monolithite",
@@ -505,6 +509,8 @@
 
 
 "northstar.gui.telescope_fail":"Telescope must be able to see the sky, and it must be night time.",
+"northstar.gui.rocket_too_big":"Rocket size exceeds Create's maximum contraption size. Increase config value or decrease rocket size",
+"northstar.gui.current_config_size":"Current Config value: ",
 "northstar.gui.temperature_regulator.env_fill":"Fill Environment",
 "northstar.gui.temperature_regulator.box":"Box",
 "northstar.gui.combustion_engine.title":"Combustion Engine Stats",

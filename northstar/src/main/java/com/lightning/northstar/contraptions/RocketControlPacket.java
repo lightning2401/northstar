@@ -2,7 +2,7 @@ package com.lightning.northstar.contraptions;
 
 import java.util.UUID;
 
-import com.ibm.icu.impl.Pair;
+import com.mojang.datafixers.util.Pair;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 
 import net.minecraft.core.BlockPos;
