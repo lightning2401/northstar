@@ -410,11 +410,14 @@
 "entity.northstar.venus_scorpion": "Venus Scorpion",
 "entity.northstar.venus_stone_bull": "Venus Stone Bull",
 "entity.northstar.venus_vulture": "Venus Vulture",
+"entity.northstar.mercury_tortoise": "Mercury Tortoise",
+"entity.northstar.venus_scorpion_spit": "Venus Scorpion Spit",
 
 "entity.northstar.moon_lunar_worm": "Moon Eel",
 "entity.northstar.moon_eel": "Moon Eel",
 "entity.northstar.moon_lunargrade": "Moon Lunargrade",
 "entity.northstar.moon_snail": "Moon Snail",
+"entity.northstar.lunargrade_spit": "Lunargrade Spit",
 
 "entity.northstar.mercury_raptor": "Mercrurian Raptor",
 "entity.northstar.mercury_roach": "Mercury Roach",
@@ -528,6 +531,8 @@
 "create.gui.goggles.electrolysis_blue_port": "Blue Port: ",
 "create.gui.goggles.oxygen_filler": "Oxygen Filler Info: ",
 "create.gui.goggles.empty": "Empty",
+
+"entity.northstar.rocket_contraption": "Rocket Contraption",
 
 "create.contraption.controls.rocket_tut": "Press Space to begin launch sequence!",
 "create.contraption.controls.landing_warning": "Hold Space to slow down!",
