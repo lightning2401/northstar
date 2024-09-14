@@ -170,7 +170,7 @@ public class NorthstarPlanets {
 
     @SubscribeEvent
     public static void onWorldTick(TickEvent.LevelTickEvent event){
-    	time = (long) (event.level.getGameTime() * 1.2);
+    	time = (long) (event.level.getGameTime() * 2);
         //mercury!!!! yeah cool
         double mercury_radian = mercury_orbit_speed * time;
         mercury_x = (mercury_origin_x + (Math.cos(mercury_radian)* mercury_orbit_radius_x));

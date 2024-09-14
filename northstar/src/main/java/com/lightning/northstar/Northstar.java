@@ -17,6 +17,7 @@ import com.lightning.northstar.client.renderer.armor.IronSpaceSuitLayerRenderer;
 import com.lightning.northstar.client.renderer.armor.IronSpaceSuitModelRenderer;
 import com.lightning.northstar.client.renderer.armor.MartianSteelSpaceSuitLayerRenderer;
 import com.lightning.northstar.client.renderer.armor.MartianSteelSpaceSuitModelRenderer;
+import com.lightning.northstar.contraptions.NorthstarContraptionTypes;
 import com.lightning.northstar.contraptions.RocketHandler;
 import com.lightning.northstar.entity.MarsCobraEntity;
 import com.lightning.northstar.entity.MarsMothEntity;
@@ -91,7 +92,7 @@ public class Northstar
     public static final double EARTH_GRAV = 1;
     public static final double MARS_GRAV = 0.37;
     public static final double VENUS_GRAV = 0.89;
-
+    //test
     
     public static final String MOD_ID = "northstar";
     // Directly reference a slf4j logger
@@ -102,7 +103,7 @@ public class Northstar
 
 	static {
 		REGISTRATE.setTooltipModifierFactory(item -> {
-			return new ItemDescription.Modifier(item, Palette.STANDARD_CREATE)
+			return new ItemDescription.Modifier(item, new Palette(TooltipHelper.styleFromColor(0x9ba4ae), TooltipHelper.styleFromColor(0x80afd2)))
 				.andThen(TooltipModifier.mapNull(KineticStats.create(item)));
 		});
 	}
@@ -119,6 +120,7 @@ public class Northstar
         NorthstarPotions.register(modEventBus);
         NorthstarEnchantments.register();
         NorthstarTechBlocks.register();
+        NorthstarContraptionTypes.register();
   //      NorthstarTechBlocks.register(modEventBus);
         NorthstarBlockEntityTypes.register(modEventBus);
         NorthstarFeatures.register(modEventBus);
@@ -171,11 +173,6 @@ public class Northstar
         LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
 
     }
-
-	static {
-		REGISTRATE.setTooltipModifierFactory(item -> new ItemDescription.Modifier(item, TooltipHelper.Palette.STANDARD_CREATE)
-			.andThen(TooltipModifier.mapNull(KineticStats.create(item))));
-	}
 	
 	private void registerSpawnPlacements(SpawnPlacementRegisterEvent event) {
 		
@@ -272,6 +269,19 @@ public class Northstar
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.MARTIAN_STEEL_GRATE.get(), RenderType.cutout());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.TUNGSTEN_GRATE.get(), RenderType.cutout());
     		ItemBlockRenderTypes.setRenderLayer(NorthstarBlocks.VENT_BLOCK.get(), RenderType.cutout());
+    		ItemBlockRenderTypes.setRenderLayer(NorthstarFluids.SULFURIC_ACID.get().getSource(), RenderType.translucent());
+    		ItemBlockRenderTypes.setRenderLayer(NorthstarFluids.SULFURIC_ACID.get(), RenderType.translucent());
+    		
+    		ItemBlockRenderTypes.setRenderLayer(NorthstarFluids.LIQUID_HYDROGEN.get().getSource(), RenderType.translucent());
+    		ItemBlockRenderTypes.setRenderLayer(NorthstarFluids.LIQUID_HYDROGEN.get(), RenderType.translucent());
+    		
+    		ItemBlockRenderTypes.setRenderLayer(NorthstarFluids.LIQUID_OXYGEN.get().getSource(), RenderType.translucent());
+    		ItemBlockRenderTypes.setRenderLayer(NorthstarFluids.LIQUID_OXYGEN.get(), RenderType.translucent());
+    		
+    		ItemBlockRenderTypes.setRenderLayer(NorthstarFluids.METHANE.get().getSource(), RenderType.translucent());
+    		ItemBlockRenderTypes.setRenderLayer(NorthstarFluids.METHANE.get(), RenderType.translucent());
+    		
+    		
 
     	}
     }

@@ -38,35 +38,43 @@ public class LanternBlockMixin {
 
     @Inject(method = "getStateForPlacement", at = @At("HEAD"), cancellable = true)
 	public void getStateForPlacement(BlockPlaceContext pContext, CallbackInfoReturnable<BlockState> info) {
-    	if (pContext.getItemInHand().getItem() == Blocks.LANTERN.asItem()) 
-    	{    	boolean hanging = false;
-        BlockState blockstate = Blocks.LANTERN.defaultBlockState().setValue(HANGING, true);
-        if (blockstate.canSurvive(pContext.getLevel(), pContext.getClickedPos())) {hanging = true;}
-    	
-        FluidState fluidstate = pContext.getLevel().getFluidState(pContext.getClickedPos());    	
-        System.out.println(OxygenStuff.hasOxygen(pContext.getClickedPos(),pContext.getLevel().dimension()));
-    	
-    	if(!OxygenStuff.hasOxygen(pContext.getClickedPos(),pContext.getLevel().dimension())) {
-    		pContext.getLevel().playSound(null, pContext.getClickedPos(), SoundEvents.CANDLE_EXTINGUISH, SoundSource.BLOCKS, 1, 0);
-    		info.setReturnValue(NorthstarTechBlocks.EXTINGUISHED_LANTERN.get().defaultBlockState()
-    		.setValue(ExtinguishedLanternBlock.HANGING, hanging).setValue(ExtinguishedLanternBlock.WATERLOGGED, fluidstate.is(Fluids.WATER)));
-    		
-    	}
+    	try {
+	    	if (pContext.getItemInHand().getItem() == Blocks.LANTERN.asItem()) 
+	    	{    	boolean hanging = false;
+	        BlockState blockstate = Blocks.LANTERN.defaultBlockState().setValue(HANGING, true);
+	        if (blockstate.canSurvive(pContext.getLevel(), pContext.getClickedPos())) {hanging = true;}
+	    	
+	        FluidState fluidstate = pContext.getLevel().getFluidState(pContext.getClickedPos());    	
+	        System.out.println(OxygenStuff.hasOxygen(pContext.getClickedPos(),pContext.getLevel().dimension()));
+	    	
+	    	if(!OxygenStuff.hasOxygen(pContext.getClickedPos(),pContext.getLevel().dimension())) {
+	    		pContext.getLevel().playSound(null, pContext.getClickedPos(), SoundEvents.CANDLE_EXTINGUISH, SoundSource.BLOCKS, 1, 0);
+	    		info.setReturnValue(NorthstarTechBlocks.EXTINGUISHED_LANTERN.get().defaultBlockState()
+	    		.setValue(ExtinguishedLanternBlock.HANGING, hanging).setValue(ExtinguishedLanternBlock.WATERLOGGED, fluidstate.is(Fluids.WATER)));
+	    		
+	    	}
+	    	}
+    	} catch (Exception e) {
+		//oops
     	}
 	}
 	
     @Inject(method = "updateShape", at = @At("TAIL"), cancellable = true)
 	public void updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, 
 	LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pNeighborPos, CallbackInfoReturnable<BlockState> info) {
-    	if(pState.getBlock() == Blocks.LANTERN) {
-            System.out.println(OxygenStuff.hasOxygen(pCurrentPos,((Level)pLevel).dimension()));
-    	if(!OxygenStuff.hasOxygen(pCurrentPos, ((Level)pLevel).dimension())) {
-    		pLevel.playSound(null, pCurrentPos, SoundEvents.CANDLE_EXTINGUISH, SoundSource.BLOCKS, 1, 0);
-    		info.setReturnValue(NorthstarTechBlocks.EXTINGUISHED_LANTERN.get().defaultBlockState()
-    				.setValue(ExtinguishedLanternBlock.HANGING, pState.getValue(HANGING)).setValue(ExtinguishedLanternBlock.WATERLOGGED, pState.getValue(WATERLOGGED)));
-    	}
-    	}
-		   
+    	try {
+	    	if(pState.getBlock() == Blocks.LANTERN) {
+	            System.out.println(OxygenStuff.hasOxygen(pCurrentPos,((Level)pLevel).dimension()));
+	    	if(!OxygenStuff.hasOxygen(pCurrentPos, ((Level)pLevel).dimension())) {
+	    		pLevel.playSound(null, pCurrentPos, SoundEvents.CANDLE_EXTINGUISH, SoundSource.BLOCKS, 1, 0);
+	    		info.setReturnValue(NorthstarTechBlocks.EXTINGUISHED_LANTERN.get().defaultBlockState()
+	    				.setValue(ExtinguishedLanternBlock.HANGING, pState.getValue(HANGING)).setValue(ExtinguishedLanternBlock.WATERLOGGED, pState.getValue(WATERLOGGED)));
+	    	}
+	    	}
+    	} catch (Exception e) {
+		//oops
+		}
+	
 	}
 
 }

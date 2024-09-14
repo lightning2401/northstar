@@ -29,6 +29,7 @@ public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implemen
 	public int tempChange = 0;
 	public int maxSize = 0;
 	public boolean envFill = true;
+	public boolean prevEnvFill = false;
 	public int sizeX = 16;
 	public int sizeY = 16;
 	public int sizeZ = 16;
@@ -43,8 +44,9 @@ public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implemen
 		return ClientboundBlockEntityDataPacket.create(this);
 	}
 	
-	@Override
+	@Override   
 	public void tick() {
+		super.tick();
 		if(this.level.getGameTime() % 40 == 0) {
 			maxSize = (int) (Math.abs(this.speed) * 20);
 			if(Math.abs(this.speed) > 0 && !this.overStressed) 
@@ -59,7 +61,7 @@ public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implemen
 //			System.out.println("offset Y: " + entity.offsetY);
 //			System.out.println("offset Z: " + entity.offsetZ);
 //			System.out.println("PLANET TEMP DIF: " + Math.abs(NorthstarPlanets.getPlanetTemp(this.level.dimension()) - this.temp) / 2);
-			if(Math.abs(this.speed) > Math.abs(NorthstarPlanets.getPlanetTemp(this.level.dimension()) - this.temp) / 2 && !this.overStressed) {
+			if(Math.abs(this.speed) > 0 && !this.overStressed) {
 				if(!this.TEMP_ZONES.containsKey(this.getBlockPos())) 
 				{this.TEMP_ZONES.put(this.getBlockPos().above(), this.temp);}
 				
@@ -79,9 +81,11 @@ public class TemperatureRegulatorBlockEntity extends KineticBlockEntity implemen
 					  TemperatureStuff.temperatureSources.put(newList, level.dimension());
 					  TEMP_ZONES.clear();
 					  TEMP_ZONES = newList;
-				  }      
+				  }
+				  this.prevEnvFill = envFill;
+				  
 				 }
-				else {TemperatureStuff.markTemp(this.getBlockPos(), this.level, this.TEMP_ZONES, this.temp, this.sizeX, this.sizeY, this.sizeZ, this.offsetX, this.offsetY, this.offsetZ);}
+				else {if(this.prevEnvFill) {removeTemp(this);this.prevEnvFill = false;}TemperatureStuff.markTemp(this.getBlockPos(), this.level, this.TEMP_ZONES, this.temp, this.sizeX, this.sizeY, this.sizeZ, this.offsetX, this.offsetY, this.offsetZ);}
 			}
 			else {
 				removeTemp(this);

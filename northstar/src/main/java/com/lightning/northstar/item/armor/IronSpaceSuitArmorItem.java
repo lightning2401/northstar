@@ -43,6 +43,8 @@ public class IronSpaceSuitArmorItem extends GeoArmorItem implements IAnimatable{
 	// Predicate runs every frame
     private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event) {
         event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", EDefaultLoopTypes.LOOP));
+        if(event.getAnimatable() instanceof LivingEntity ent) {
+        }
         return PlayState.CONTINUE;
     }
 

@@ -1,6 +1,5 @@
 package com.lightning.northstar.block.tech.oxygen_generator;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,6 +48,7 @@ public class OxygenGeneratorBlockEntity extends KineticBlockEntity implements IH
 	@Override
 	public void tick() {
 //	  System.out.println("big fart" + pBlockEntity.tickCount);
+		super.tick();
 		boolean hasOxy = (this.tank.getPrimaryHandler().getFluid().getFluid().isSame(NorthstarFluids.OXYGEN.get()) || 
 				this.tank.getPrimaryHandler().getFluid().getFluid().is(NorthstarTags.NorthstarFluidTags.IS_OXY.tag))
 				&& this.tank.getPrimaryHandler().getFluid().getAmount() >= minOxy;

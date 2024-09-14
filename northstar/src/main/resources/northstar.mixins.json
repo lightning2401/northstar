@@ -15,15 +15,12 @@
 	"MinecraftServerMixin",
 	"MobMixin",
 	"PlayerMixin",
-	"LivingEntityRendererMixin",
 	"gravitystuff.AbstractArrowGravityMixin",
 	"gravitystuff.AbstractMinecartGravityMixin",
 	"gravitystuff.BoatGravityMixin",
 	"gravitystuff.ItemEntityGravityMixin",
 	"gravitystuff.ThrowableProjectileGravityMixin",
-	"dimensionstuff.DimensionSpecialEffectsMixin",
-	"dimensionstuff.LevelRendererMixin",
-	"dimensionstuff.FogRendererMixin",
+
 	"blockstuff.FluidStateMixin",
 	"blockstuff.IceBlockMixin",
 	"blockstuff.FireBlockMixin",
@@ -33,6 +30,13 @@
 	"blockstuff.CandleBlockMixin",
 	"blockstuff.CampfireBlockMixin",
 	"blockstuff.LanternBlockMixin"
+	],
+	"client": [
+	"dimensionstuff.DimensionSpecialEffectsMixin",
+	"dimensionstuff.LevelRendererMixin",
+	"dimensionstuff.FogRendererMixin",
+	"LivingEntityRendererMixin",
+	"PlayerFrostEffectMixin"
 	],
 	"minVersion": "0.8.5",
 	"injectors": {

@@ -13,18 +13,34 @@ public class RocketContraptionSyncPacket extends SimplePacketBase {
 	public int contraptionEntityId;
 	Vec3 pos;
 	float lift_vel;
+	int launchtime;
+	boolean launched;
+	boolean landing;
+	boolean blasting;
+	boolean slowing;
+	boolean activeLaunch;
 
-	public RocketContraptionSyncPacket(Vec3 syncedPos, float lift_vel2, int id) {
+	public RocketContraptionSyncPacket(Vec3 syncedPos, float lift_vel2, int id,  int vLaunchtime, boolean vLaunched, boolean vLanding, boolean vBlasting, boolean vSlowing, boolean vActiveLaunch) {
 		pos = syncedPos;
-
 		lift_vel = lift_vel2;
-
 		contraptionEntityId = id;
+		launchtime = vLaunchtime;
+		launched = vLaunched;
+		landing = vLanding;
+		blasting = vBlasting;
+		slowing = vSlowing;
+		activeLaunch = vActiveLaunch;
 	}
 	public RocketContraptionSyncPacket(FriendlyByteBuf buffer) {
 		pos = new Vec3(buffer.readDouble(), buffer.readDouble(), buffer.readDouble());
 		lift_vel = buffer.readFloat();
 		contraptionEntityId = buffer.readInt();
+		launchtime = buffer.readInt();
+		launched = buffer.readBoolean();
+		landing = buffer.readBoolean();
+		blasting = buffer.readBoolean();
+		slowing = buffer.readBoolean();
+		activeLaunch = buffer.readBoolean();
 	}
 
 	@Override
@@ -34,6 +50,12 @@ public class RocketContraptionSyncPacket extends SimplePacketBase {
 		buffer.writeDouble(pos.z);
 		buffer.writeFloat(lift_vel);
 		buffer.writeInt(contraptionEntityId);
+		buffer.writeInt(launchtime);
+		buffer.writeBoolean(launched);
+		buffer.writeBoolean(landing);
+		buffer.writeBoolean(blasting);
+		buffer.writeBoolean(slowing);
+		buffer.writeBoolean(activeLaunch);
 	}
 
 	@Override

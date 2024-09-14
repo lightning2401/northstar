@@ -1,9 +1,8 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "##",
-    "##",
-    "##"
+    "#",
+    "#"
   ],
   "key": {
     "#": {
@@ -12,6 +11,6 @@
   },
   "result": {
     "item": "northstar:iron_pillar",
-    "count": 6
+    "count": 2
   }
 }

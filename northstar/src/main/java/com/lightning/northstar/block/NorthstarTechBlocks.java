@@ -10,6 +10,7 @@ import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 import com.lightning.northstar.block.tech.astronomy_table.AstronomyTableBlock;
 import com.lightning.northstar.block.tech.circuit_engraver.CircuitEngraverBlock;
+import com.lightning.northstar.block.tech.cogs.CustomCogBlock;
 import com.lightning.northstar.block.tech.combustion_engine.CombustionEngineBlock;
 import com.lightning.northstar.block.tech.computer_rack.TargetingComputerRackBlock;
 import com.lightning.northstar.block.tech.electrolysis_machine.ElectrolysisMachineBlock;
@@ -296,7 +297,7 @@ public class NorthstarTechBlocks {
 			.simpleItem()
 			.register();
     
-	public static final BlockEntry<CogWheelBlock> IRON_COGWHEEL = REGISTRATE.block("iron_cogwheel", CogWheelBlock::small)
+	public static final BlockEntry<CustomCogBlock> IRON_COGWHEEL = REGISTRATE.block("iron_cogwheel", CustomCogBlock::small)
 			.initialProperties(SharedProperties::softMetal)
 			.properties(p -> p.sound(SoundType.METAL))
 			.properties(p -> p.color(MaterialColor.COLOR_GRAY))

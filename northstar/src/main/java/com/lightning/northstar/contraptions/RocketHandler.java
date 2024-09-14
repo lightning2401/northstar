@@ -9,11 +9,11 @@ import java.util.UUID;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
-import com.ibm.icu.impl.Pair;
 import com.lightning.northstar.Northstar;
 import com.lightning.northstar.NorthstarPackets;
 import com.lightning.northstar.block.tech.rocket_station.RocketStationBlockEntity;
 import com.lightning.northstar.world.dimension.NorthstarDimensions;
+import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -62,12 +62,21 @@ public class RocketHandler {
 		if(!CONTROL_QUEUE.isEmpty() && eventTickNumber > eventTickNumberCheck) {
 			HashMap<Pair<UUID, BlockPos>, Integer> destroy = new HashMap<Pair<UUID,BlockPos>, Integer>();
 			for(Entry<Pair<UUID, BlockPos>, Integer> entries : CONTROL_QUEUE.entrySet()) {
-				if(entries.getKey().first != null)
-				{Player player = event.level.getPlayerByUUID(entries.getKey().first);
+				if(entries.getKey().getFirst() != null)
+				{Player player = event.level.getPlayerByUUID(entries.getKey().getFirst());
 				if(player != null) {
 					RocketContraptionEntity rocket = ((RocketContraptionEntity)event.level.getEntity(entries.getValue()));
-					rocket.handlePlayerInteraction(player, entries.getKey().second, Direction.NORTH, InteractionHand.MAIN_HAND);
-					destroy.put(entries.getKey(), entries.getValue());
+					if(rocket != null) {
+						if(!rocket.getControllingPlayer().isEmpty()) {
+							if(rocket.getControllingPlayer().get() == player.getUUID()) {
+								destroy.put(entries.getKey(), entries.getValue());
+								continue;
+							}
+						}
+						
+						rocket.handlePlayerInteraction(player, entries.getKey().getSecond(), Direction.NORTH, InteractionHand.MAIN_HAND);
+						destroy.put(entries.getKey(), entries.getValue());
+						}
 					}
 				}
 			}
@@ -95,8 +104,8 @@ public class RocketHandler {
 			if(!TICKET_QUEUE.isEmpty()) {
 				List<Pair<Level, BlockPos>> DELETE_QUEUE = new ArrayList<>();
 				for(Pair<Level,BlockPos> entries : TICKET_QUEUE) {
-					if(event.level.dimension() == entries.first.dimension()) {
-						if(entries.first.getBlockEntity(entries.second) instanceof RocketStationBlockEntity rsbe) {
+					if(event.level.dimension() == entries.getFirst().dimension()) {
+						if(entries.getFirst().getBlockEntity(entries.getSecond()) instanceof RocketStationBlockEntity rsbe) {
 							rsbe.container.setItem(0, new ItemStack(Blocks.AIR.asItem()));
 							DELETE_QUEUE.add(entries);
 						}
@@ -197,6 +206,7 @@ public class RocketHandler {
 	    	  		((RocketContraptionEntity)transportedEntity).visualEngineCount = rce.visualEngineCount;
 	    	  		((RocketContraptionEntity)transportedEntity).localControlsPos = rce.localControlsPos;
 	    	  		((RocketContraptionEntity)transportedEntity).setControllingPlayer(controller);
+	    	  		if(pilotID != null)
 					NorthstarPackets.getChannel().send(PacketDistributor.ALL.noArg(),
 							new RocketControlPacket(pilotID, ((RocketContraptionEntity)transportedEntity).getId(), rce.localControlsPos));
 	    	  		

@@ -108,8 +108,8 @@ public class NorthstarSounds {
 	public static final RegistryObject<SoundEvent> LASER_AMBIENT = registerSound("laser_ambient");
 	public static final RegistryObject<SoundEvent> LASER_BURN = registerSound("laser_burn");
 	public static final RegistryObject<SoundEvent> ROCKET_TAKEOFF = registerSound("rocket_takeoff");
-	public static final RegistryObject<SoundEvent> ROCKET_BLAST = registerSound("rocket_blast");
-	public static final RegistryObject<SoundEvent> ROCKET_LANDING = registerSound("rocket_landing");
+	public static final RegistryObject<SoundEvent> ROCKET_BLAST = registerRangedSound("rocket_blast", 32f);
+	public static final RegistryObject<SoundEvent> ROCKET_LANDING = registerRangedSound("rocket_landing", 32f);
 	public static final RegistryObject<SoundEvent> AIRFLOW = registerSound("airflow");
 
 	public static void register(IEventBus eventbus) {
@@ -119,6 +119,10 @@ public class NorthstarSounds {
 	public static RegistryObject<SoundEvent> registerSound(String name){
 		ResourceLocation sound_loc = new ResourceLocation(Northstar.MOD_ID, name);
 		return SOUNDS.register(name, () -> new SoundEvent(sound_loc));
+	}
+	public static RegistryObject<SoundEvent> registerRangedSound(String name, float range){
+		ResourceLocation sound_loc = new ResourceLocation(Northstar.MOD_ID, name);
+		return SOUNDS.register(name, () -> new SoundEvent(sound_loc, range));
 	}
 	
 	
