@@ -243,7 +243,7 @@
 "block.northstar.electrolysis_machine.tooltip.summary":"Converts _Liquid Water_ into _Hydrogen_ and _Oxygen_",
 "block.northstar.oxygen_bubble_generator":"Oxygen Bubble Generator (WIP)",
 "block.northstar.oxygen_generator":"Oxygen Sealer",
-"block.northstar.oxygen_generator.tooltip.summary":"When provided with _Oxygen_ from behind and _Kinetic Energy_ from below, oxygenates the _surrounding environment._",
+"block.northstar.oxygen_generator.tooltip.summary":"When provided with _Oxygen_ from behind and _Kinetic Energy_ from below, oxygenates the _surrounding environment_.",
 "block.northstar.oxygen_concentrator":"Oxygen Concentrator",
 "block.northstar.oxygen_concentrator.tooltip.summary":"Collects _Oxygen_ from the air. _(Doesn't work on other planets!)_",
 "block.northstar.oxygen_filler":"Oxygen Filler",
